@@ -62,26 +62,13 @@
   ],
   "postActions": [
     {
-      "description": "Creating run configuration",
+      "description": "Opens Command.cs in the editor",
       "manualInstructions": [],
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {
-        "executable": "setup.cmd"
+        "files": "0"
       },
       "continueOnError": true
-    },
-    {
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-      "args": {
-        "executable": "setup.cmd"
-      },
-      "manualInstructions": [
-        {
-          "text": "Run 'setup.cmd'"
-        }
-      ],
-      "continueOnError": false,
-      "description ": "setups the project by calling setup.cmd"
     }
   ]
 }

@@ -7,19 +7,43 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nice3point.FrameworkAddIn",
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Release R19|Any CPU = Release R19|Any CPU
 		Debug R19|Any CPU = Debug R19|Any CPU
+		Debug R20|Any CPU = Debug R20|Any CPU
+		Debug R21|Any CPU = Debug R21|Any CPU
+		Debug R22|Any CPU = Debug R22|Any CPU
+		Release R19|Any CPU = Release R19|Any CPU
+		Release R20|Any CPU = Release R20|Any CPU
+		Release R21|Any CPU = Release R21|Any CPU
+		Release R22|Any CPU = Release R22|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R19|Any CPU.ActiveCfg = Release R19|Any CPU
-		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R19|Any CPU.Build.0 = Release R19|Any CPU
 		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R19|Any CPU.ActiveCfg = Debug R19|Any CPU
 		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R19|Any CPU.Build.0 = Debug R19|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R20|Any CPU.ActiveCfg = Debug R20|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R20|Any CPU.Build.0 = Debug R20|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R21|Any CPU.ActiveCfg = Debug R21|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R21|Any CPU.Build.0 = Debug R21|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R22|Any CPU.ActiveCfg = Debug R22|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R22|Any CPU.Build.0 = Debug R22|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R19|Any CPU.ActiveCfg = Release R19|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R19|Any CPU.Build.0 = Release R19|Any CPU
+								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R20|Any CPU.ActiveCfg = Release R20|Any CPU
+								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R20|Any CPU.Build.0 = Release R20|Any CPU
+								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.ActiveCfg = Release R21|Any CPU
+								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.Build.0 = Release R21|Any CPU
+								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.ActiveCfg = Release R22|Any CPU
+								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.Build.0 = Release R22|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46736CB2-4E82-4155-A567-86F91F19B17C}
+	EndGlobalSection
+	GlobalSection(RiderSharedRunConfigurations) = postSolution
+		File = Nice3point.FrameworkAddIn\.run\Revit 2019 ENU.run.xml
+		File = Nice3point.FrameworkAddIn\.run\Revit 2020 ENU.run.xml
+		File = Nice3point.FrameworkAddIn\.run\Revit 2021 ENU.run.xml
+		File = Nice3point.FrameworkAddIn\.run\Revit 2022 ENU.run.xml
 	EndGlobalSection
 EndGlobal
