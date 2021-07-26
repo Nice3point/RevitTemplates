@@ -1,0 +1,87 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nice3point",
+  "name": "Revit AddIn",
+  "shortName": "revit-framework-addin",
+  "identity": "Nice3point.RevitAddIn.NetFramework",
+  "description": "Project for creating add-ins for Revit based on the .Net Framework",
+  "classifications": [
+    "Common",
+    "Library",
+    "NetFramework",
+    "Revit",
+    "AddIn"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project",
+    "platform": ".NET"
+  },
+  "sourceName": "Nice3point.FrameworkAddIn",
+  "preferNameDirectory": true,
+  "placeholderFilename": ".scratch",
+  "guids": [
+    "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
+    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
+    "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"
+  ],
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "text",
+      "replaces": "v4.8",
+      "isRequired": true,
+      "defaultValue": "<FullTargetFramework>"
+    },
+    "CompanyName": {
+      "type": "parameter",
+      "datatype": "text",
+      "replaces": "CompanyName",
+      "defaultValue": "SimpleCompany"
+    },
+    "CompanyTrademark": {
+      "type": "parameter",
+      "datatype": "text",
+      "replaces": "CompanyTrademark",
+      "defaultValue": ""
+    },
+    "Year": {
+      "type": "generated",
+      "generator": "now",
+      "replaces": "Year",
+      "parameters": {
+        "format": "yyyy"
+      }
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "Commands/Command.cs"
+    }
+  ],
+  "postActions": [
+    {
+      "description": "Creating run configuration",
+      "manualInstructions": [],
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "setup.cmd"
+      },
+      "continueOnError": true
+    },
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "setup.cmd"
+      },
+      "manualInstructions": [
+        {
+          "text": "Run 'setup.cmd'"
+        }
+      ],
+      "continueOnError": false,
+      "description ": "setups the project by calling setup.cmd"
+    }
+  ]
+}
