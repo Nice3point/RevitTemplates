@@ -1,0 +1,6 @@
+﻿*.idea/
+*.vs/
+*obj/
+*bin/
+/packages/
+*.DotSettings*
