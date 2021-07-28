@@ -14,10 +14,10 @@ namespace Nice3point.FrameworkAddIn.Commands
             var viewModel = new SimpleViewModel();
             var view = new SimpleView(viewModel);
             if (view.ShowDialog() != true) return Result.Cancelled;
-            
+
             var uiDocument = commandData.Application.ActiveUIDocument;
             var document = uiDocument.Document;
-            
+
             /*caret*/
             return Result.Succeeded;
         }

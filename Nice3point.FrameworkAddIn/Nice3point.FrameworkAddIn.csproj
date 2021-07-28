@@ -193,42 +193,45 @@
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <PropertyGroup>
-        <AddinPath>bin\AddIn $(RevitVersion)\</AddinPath>
-        <AddinLibPath>$(AddinPath)$(AssemblyName)\</AddinLibPath>
-        <MergedLibPath>$(TargetDir)Merged assembly\</MergedLibPath>
+        <AddinDir>bin\AddIn $(RevitVersion)\</AddinDir>
+        <MergedDir>$(TargetDir)Merged assembly\</MergedDir>
+        <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
     </PropertyGroup>
+    <ItemGroup>
+        <OutLibPath Include="$(AddinDir)**\*.*" />
+        <Addin Include="$(TargetDir)\*.addin" />
+        <AddinDll Include="$(TargetDir)$(AssemblyName).dll" />
+        <!--        Add DLLs to output folder or for merging, for example:-->
+        <!--        <AddinDll Include="$(TargetDir)SimplePackage.dll" />-->
+    </ItemGroup>
     <Choose>
         <When Condition="$(Configuration.Contains('Debug'))">
             <ItemGroup>
-                <AddinDll Include="$(TargetDir)$(AssemblyName).dll" />
+                <OutDll Include="$(AddinDll)" />
             </ItemGroup>
         </When>
         <When Condition="$(Configuration.Contains('Release'))">
             <ItemGroup>
-                <AddinDll Include="$(MergedLibPath)*.dll" />
+                <OutDll Include="$(MergedDir)*.dll" />
             </ItemGroup>
         </When>
     </Choose>
-    <ItemGroup>
-        <Addin Include="$(TargetDir)\*.addin" />
-        <OutLibPath Include="$(AddinPath)**\*.*" />
-    </ItemGroup>
     <Target Name="AfterBuild">
-        <RemoveDir Directories="$(AddinPath)" />
-        <Copy SourceFiles="@(Addin)" DestinationFolder="$(AddinPath)" />
+        <RemoveDir Directories="$(AddinDir)" />
+        <Copy SourceFiles="@(Addin)" DestinationFolder="$(AddinDir)" />
         <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="DebugAfterBuild" />
         <CallTarget Condition="$(Configuration.Contains('Release'))" Targets="ReleaseAfterBuild" />
-        <Copy SourceFiles="@(AddinDll)" DestinationFolder="$(AddinLibPath)" />
+        <Copy SourceFiles="@(OutDll)" DestinationFolder="$(OutAddinDir)" />
         <CallTarget Targets="CopyToRevitFolder" />
     </Target>
     <Target Name="DebugAfterBuild">
     </Target>
     <Target Name="ReleaseAfterBuild">
-        <MakeDir Directories="$(MergedLibPath)" ContinueOnError="true" />
+        <MakeDir Directories="$(MergedDir)" ContinueOnError="true" />
         <CallTarget Targets="MergeAssemblies" />
     </Target>
     <Target Name="MergeAssemblies">
-        <ILRepack TargetKind="Dll" LogFile="$(TargetDir)\ILRepackLog.txt" InputAssemblies="@(AddinDll)" OutputFile="$(MergedLibPath)$(AssemblyName).dll" LibraryPath="$(RevitLibPath)" />
+        <ILRepack TargetKind="Dll" LogFile="$(TargetDir)\ILRepackLog.txt" InputAssemblies="@(AddinDll)" OutputFile="$(MergedDir)$(AssemblyName).dll" LibraryPath="$(RevitLibPath)" />
     </Target>
     <Target Name="CopyToRevitFolder">
         <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2019\%(RecursiveDir)" Condition="$(Configuration.Contains('R19'))" OverwriteReadOnlyFiles="true" />

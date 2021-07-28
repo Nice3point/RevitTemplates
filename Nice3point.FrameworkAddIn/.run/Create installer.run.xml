@@ -1,0 +1,18 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Create installer" type="DotNetStaticMethod" factoryName=".NET Static Method">
+    <option name="EXE_PATH" value="C:\Program Files\JetBrains\JetBrains Rider 2020.2.4\lib\ReSharperHost\JetLauncherILc.exe" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Nice3point.FrameworkAddIn/bin/Release R19" />
+    <option name="PASS_PARENT_ENVS" value="1" />
+    <option name="USE_EXTERNAL_CONSOLE" value="0" />
+    <option name="USE_MONO" value="0" />
+    <option name="RUNTIME_ARGUMENTS" value="" />
+    <option name="PROJECT_PATH" value="$PROJECT_DIR$/Nice3point.FrameworkAddIn/Nice3point.FrameworkAddIn.csproj" />
+    <option name="PROJECT_TFM" value=".NETFramework,Version=v4.8" />
+    <option name="CLASS_NAME" value="Nice3point.FrameworkAddIn.Installer" />
+    <option name="METHOD_NAME" value="Install" />
+    <method v="2">
+      <option name="Build" />
+    </method>
+  </configuration>
+</component>

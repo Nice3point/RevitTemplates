@@ -11,6 +11,20 @@ namespace Nice3point.FrameworkAddIn
     {
         private const string InstallationDir = @"%AppDataFolder%\Autodesk\Revit\Addins\";
 
+        /// <remarks>
+        ///     The installer is generated only for the build versions, from the "AddIn 'Revit version'" folder, otherwise you will
+        ///     receive an error.
+        ///     If you still get errors, also check that the "Working directory" in "Run/Debug Configurations" ends with "/bin",
+        ///     everything after you need to delete
+        /// </remarks>
+        /// <example>
+        ///     If the plugin is made only for Revit 2022, the final Dirs collection will look like this:
+        ///     <code>
+        ///         new Dir($"{InstallationDir}",
+        ///             new Dir("2022",
+        ///                 new Files(@"AddIn 2022\*.*")))
+        ///  </code>
+        /// </example>
         public static void Install()
         {
             var project = new Project

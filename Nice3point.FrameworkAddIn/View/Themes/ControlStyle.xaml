@@ -5,4 +5,28 @@
         <ResourceDictionary
             Source="ControlTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <Style
+        TargetType="{x:Type Button}">
+        <!-- <Setter -->
+        <!--     Property="Background" -->
+        <!--     Value="Black" /> -->
+    </Style>
+    <Style
+        TargetType="{x:Type TextBlock}">
+    </Style>
+    <Style
+        TargetType="{x:Type TextBox}">
+    </Style>
+    <Style
+        TargetType="{x:Type Label}">
+    </Style>
+    <Style
+        TargetType="{x:Type CheckBox}">
+    </Style>
+    <Style
+        TargetType="{x:Type RadioButton}">
+    </Style>
+    <Style
+        TargetType="{x:Type ComboBox}">
+    </Style>
 </ResourceDictionary>
