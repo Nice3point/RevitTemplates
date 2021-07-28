@@ -45,5 +45,6 @@ Global
 		File = Nice3point.FrameworkAddIn\.run\Revit 2020 ENU.run.xml
 		File = Nice3point.FrameworkAddIn\.run\Revit 2021 ENU.run.xml
 		File = Nice3point.FrameworkAddIn\.run\Revit 2022 ENU.run.xml
+		File = Nice3point.FrameworkAddIn\.run\Create installer.run.xml
 	EndGlobalSection
 EndGlobal

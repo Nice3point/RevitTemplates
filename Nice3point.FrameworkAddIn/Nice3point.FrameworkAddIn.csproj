@@ -174,7 +174,6 @@
         <Folder Include="Resources\Localization" />
         <Folder Include="Utils" />
     </ItemGroup>
-
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png" />
         <Resource Include="Resources\Icons\InstallerIcon.png" />
@@ -191,49 +190,48 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+    
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    
     <PropertyGroup>
         <AddinDir>bin\AddIn $(RevitVersion)\</AddinDir>
         <MergedDir>$(TargetDir)Merged assembly\</MergedDir>
         <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
     </PropertyGroup>
     <ItemGroup>
-        <OutLibPath Include="$(AddinDir)**\*.*" />
-        <Addin Include="$(TargetDir)\*.addin" />
         <AddinDll Include="$(TargetDir)$(AssemblyName).dll" />
-        <!--        Add DLLs to output folder or for merging, for example:-->
-        <!--        <AddinDll Include="$(TargetDir)SimplePackage.dll" />-->
+<!--        Add DLLs to output folder or for merging below-->
+<!--        <AddinDll Include="$(TargetDir)Simple.dll" />-->
     </ItemGroup>
-    <Choose>
-        <When Condition="$(Configuration.Contains('Debug'))">
-            <ItemGroup>
-                <OutDll Include="$(AddinDll)" />
-            </ItemGroup>
-        </When>
-        <When Condition="$(Configuration.Contains('Release'))">
-            <ItemGroup>
-                <OutDll Include="$(MergedDir)*.dll" />
-            </ItemGroup>
-        </When>
-    </Choose>
+    
     <Target Name="AfterBuild">
+        <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="DebugAfterBuild">
+            <Output TaskParameter="TargetOutputs" ItemName="OutDll" />
+        </CallTarget>
+        <CallTarget Condition="$(Configuration.Contains('Release'))" Targets="ReleaseAfterBuild">
+            <Output TaskParameter="TargetOutputs" ItemName="OutDll" />
+        </CallTarget>
         <RemoveDir Directories="$(AddinDir)" />
-        <Copy SourceFiles="@(Addin)" DestinationFolder="$(AddinDir)" />
-        <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="DebugAfterBuild" />
-        <CallTarget Condition="$(Configuration.Contains('Release'))" Targets="ReleaseAfterBuild" />
+        <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)" />
         <Copy SourceFiles="@(OutDll)" DestinationFolder="$(OutAddinDir)" />
         <CallTarget Targets="CopyToRevitFolder" />
     </Target>
-    <Target Name="DebugAfterBuild">
+    <Target Name="DebugAfterBuild" Outputs="@(OutDll)">
+        <ItemGroup>
+            <OutDll Include="@(AddinDll)" />
+        </ItemGroup>
     </Target>
-    <Target Name="ReleaseAfterBuild">
+    <Target Name="ReleaseAfterBuild" Outputs="@(OutDll)">
+        <ItemGroup>
+            <OutDll Include="$(MergedDir)*.dll" />
+        </ItemGroup>
         <MakeDir Directories="$(MergedDir)" ContinueOnError="true" />
-        <CallTarget Targets="MergeAssemblies" />
-    </Target>
-    <Target Name="MergeAssemblies">
         <ILRepack TargetKind="Dll" LogFile="$(TargetDir)\ILRepackLog.txt" InputAssemblies="@(AddinDll)" OutputFile="$(MergedDir)$(AssemblyName).dll" LibraryPath="$(RevitLibPath)" />
     </Target>
     <Target Name="CopyToRevitFolder">
+        <ItemGroup>
+            <OutLibPath Include="$(AddinDir)**\*.*" />
+        </ItemGroup>
         <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2019\%(RecursiveDir)" Condition="$(Configuration.Contains('R19'))" OverwriteReadOnlyFiles="true" />
         <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2020\%(RecursiveDir)" Condition="$(Configuration.Contains('R20'))" OverwriteReadOnlyFiles="true" />
         <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2021\%(RecursiveDir)" Condition="$(Configuration.Contains('R21'))" OverwriteReadOnlyFiles="true" />
