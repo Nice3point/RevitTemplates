@@ -130,7 +130,7 @@
         <RevitLibPath>C:\Program Files\Autodesk\Revit $(RevitVersion)</RevitLibPath>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="$(RevitLibPath)\RevitAPI.dll">
+        <Reference Include="RevitAPI.dll">
             <HintPath>$(RevitLibPath)\RevitAPI.dll</HintPath>
             <Private>False</Private>
         </Reference>

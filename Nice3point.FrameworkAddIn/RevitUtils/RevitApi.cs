@@ -1,7 +1,6 @@
 ﻿namespace Nice3point.FrameworkAddIn.RevitUtils
 {
-    public class RevitApi
+    public static class RevitApi
     {
-        
     }
 }

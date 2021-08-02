@@ -14,8 +14,7 @@ namespace Nice3point.FrameworkAddIn.ViewModel.Converters
             return value != null && (bool) value ? Visibility.Visible : Visibility.Hidden;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-            CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value != null && (Visibility) value == Visibility.Visible;
         }
@@ -34,8 +33,7 @@ namespace Nice3point.FrameworkAddIn.ViewModel.Converters
             return value != null && (bool) value == false ? Visibility.Visible : Visibility.Hidden;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-            CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value == null || (Visibility) value != Visibility.Visible;
         }
@@ -54,8 +52,7 @@ namespace Nice3point.FrameworkAddIn.ViewModel.Converters
             return value != null && !(bool) value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-            CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Convert(value, targetType, parameter, culture);
         }
