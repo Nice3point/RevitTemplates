@@ -14,13 +14,13 @@ Template Features
   * JetBrains Rider
 * Platforms
   * .Net Framework
-  * .Net Core (Builder)
+  * .Net Core
 * Revit Versions
   * 2019
   * 2020
   * 2021
   * 2022
-* Package contents
+* Package content
   * AddIn template
   * Installer template
   * Nuke builder template
@@ -40,6 +40,18 @@ Usage
 
 Not everything is automated now. Here are some things to do after creating a new project:
 
-* Switch the project manager from **Solution** to **File System** and move the **.run** folder from the .csproj folder to the .sln folder.
-* Move the **.nuke** folder from the installation directory to the solution folder. Rename the solution name in the **parameters.json** file and the project names in the **Build.cs** file.
-* By default, **VendorId** and **AssemblyCompany** are set to **"CompanyName"**. To replace this field with your own value, press the key combination **Ctrl + Shift + R**.
+Switch the project manager from **Solution** to **File System**
+
+AddIn: 
+* Move the **.run** folder from the .csproj folder to the .sln folder.
+* By default, **VendorId** and **AssemblyCompany** are set to **"CompanyName"**. To replace this field with your own value, press the key combination **Ctrl + Shift + R**
+
+Installer:
+* Rename the solution name in the **parameters.json** file.
+
+Builder: 
+* Move the **.nuke** folder from the .csproj folder to the .sln folder. 
+* Rename the installer name in the **Installer.cs** file.
+* Rename the output name in the **Installer.cs** file.
+
+The last step is to switch the installer configuration to Release

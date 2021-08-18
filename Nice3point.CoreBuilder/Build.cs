@@ -6,11 +6,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Nuke.Common;
-using Nuke.Common.Execution;
-using Nuke.Common.ProjectModel;
-using Nuke.Common.Tools.MSBuild;
-using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 [CheckBuildProjectConfigurations]
 class Build : NukeBuild
@@ -19,13 +14,13 @@ class Build : NukeBuild
     const string InstallerName = "Installer";
 
     [Solution] readonly Solution Solution;
-    string _outputDirectory;
 
     Target Cleaning => _ => _
         .Executes(() =>
         {
-            if (!Directory.Exists(OutputDirectory)) return;
-            var directoryInfo = new DirectoryInfo(OutputDirectory);
+            var outputDirectory = GetOutputDirectory();
+            if (!Directory.Exists(outputDirectory)) return;
+            var directoryInfo = new DirectoryInfo(outputDirectory);
             foreach (var file in directoryInfo.GetFiles()) file.Delete();
             foreach (var dir in directoryInfo.GetDirectories()) dir.Delete(true);
         });
@@ -95,16 +90,16 @@ class Build : NukeBuild
             ZipFile.CreateFromDirectory(bundleDirectory, archiveName);
         });
 
-    string OutputDirectory => _outputDirectory ??= Path.Combine(Solution.Directory!, "output");
-
     public static int Main() => Execute<Build>(x => x.Cleaning);
 
-    List<string> GetReleaseConfigurations() =>
-        Solution.Configurations
+    List<string> GetReleaseConfigurations()
+    {
+        return Solution.Configurations
             .Select(pair => pair.Key)
             .Where(s => s.StartsWith("Release"))
             .Select(s => s.Replace("|Any CPU", ""))
             .ToList();
+    }
 
     void CopyFilesContent(string sourcePath, string targetPath)
     {
@@ -112,17 +107,6 @@ class Build : NukeBuild
             Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
         foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
-    }
-
-    List<DirectoryInfo> GetAddInsDirectory()
-    {
-        var projectDirectory = GetBinDirectory(ProjectName);
-        var addInsDirectory = new DirectoryInfo(projectDirectory).GetDirectories()
-            .Where(dir => dir.Name.StartsWith("AddIn"))
-            .ToList();
-
-        if (addInsDirectory.Count == 0) throw new Exception("There are no packaged assemblies in the project. Try to build the project again.");
-        return addInsDirectory;
     }
 
     void IterateVersions(List<DirectoryInfo> directories, Action<DirectoryInfo, string> action)
@@ -141,10 +125,23 @@ class Build : NukeBuild
         }
     }
 
+    string GetOutputDirectory() => Path.Combine(Solution.Directory!, "output");
+
+    List<DirectoryInfo> GetAddInsDirectory()
+    {
+        var projectDirectory = GetBinDirectory(ProjectName);
+        var addInsDirectory = new DirectoryInfo(projectDirectory).GetDirectories()
+            .Where(dir => dir.Name.StartsWith("AddIn"))
+            .ToList();
+
+        if (addInsDirectory.Count == 0) throw new Exception("There are no packaged assemblies in the project. Try to build the project again.");
+        return addInsDirectory;
+    }
+
     string GetBundleDirectory()
     {
         var bundleName = $"{ProjectName}.bundle";
-        var bundleDirectory = Path.Combine(OutputDirectory, bundleName);
+        var bundleDirectory = Path.Combine(GetOutputDirectory(), bundleName);
         return bundleDirectory;
     }
 
