@@ -1,24 +1,24 @@
 ﻿{
   "$schema": "http://json.schemastore.org/template",
   "author": "Nice3point",
-  "name": "Revit AddIn",
-  "shortName": "revit-framework-addin",
-  "identity": "Nice3point.RevitAddIn.NetFramework",
-  "defaultName": "RevitAddIn",
-  "description": "Project for creating Revit add-ins based on the .Net Framework",
+  "name": "Revit Installer",
+  "shortName": "revit-framework-installer",
+  "identity": "Nice3point.RevitInstaller.NetFramework",
+  "defaultName": "Installer",
+  "description": "Project for creating installer for Revit add-ins based on the .Net Framework",
   "classifications": [
     "Common",
-    "Library",
+    "Console",
     "NetFramework",
     "Revit",
-    "AddIn"
+    "Installer"
   ],
   "tags": {
     "language": "C#",
     "type": "project",
     "platform": ".NET"
   },
-  "sourceName": "Nice3point.FrameworkAddIn",
+  "sourceName": "Nice3point.FrameworkInstaller",
   "preferNameDirectory": true,
   "placeholderFilename": ".scratch",
   "guids": [
@@ -57,12 +57,12 @@
   },
   "primaryOutputs": [
     {
-      "path": "Commands/Command.cs"
+      "path": "Installer.cs"
     }
   ],
   "postActions": [
     {
-      "description": "Opens Command.cs in the editor",
+      "description": "Opens Installer.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {

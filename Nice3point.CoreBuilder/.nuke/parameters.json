@@ -1,0 +1,5 @@
+{
+  "$schema": "./build.schema.json",
+  "Solution": "RevitTemplate.sln",
+  "Verbosity": "Minimal"
+}

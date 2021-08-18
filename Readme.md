@@ -8,20 +8,23 @@ Create your add-in for Revit on the .Net platform now.
 </p>
 This repository contains a project template for creating Revit Add-ins.
 
-It currently contains application AddIn type.
-
 Template Features
 ------------
 * Supported IDEs
   * JetBrains Rider
 * Platforms
   * .Net Framework
+  * .Net Core (Builder)
 * Revit Versions
   * 2019
   * 2020
   * 2021
   * 2022
-
+* Package contents
+  * AddIn template
+  * Installer template
+  * Nuke builder template
+  
 Installation
 ------------
 
@@ -38,4 +41,5 @@ Usage
 Not everything is automated now. Here are some things to do after creating a new project:
 
 * Switch the project manager from **Solution** to **File System** and move the **.run** folder from the .csproj folder to the .sln folder.
+* Move the **.nuke** folder from the installation directory to the solution folder. Rename the solution name in the **parameters.json** file and the project names in the **Build.cs** file.
 * By default, **VendorId** and **AssemblyCompany** are set to **"CompanyName"**. To replace this field with your own value, press the key combination **Ctrl + Shift + R**.
