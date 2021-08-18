@@ -47,11 +47,12 @@ AddIn:
 * By default, **VendorId** and **AssemblyCompany** are set to **"CompanyName"**. To replace this field with your own value, press the key combination **Ctrl + Shift + R**
 
 Installer:
-* Rename the solution name in the **parameters.json** file.
-
-Builder: 
-* Move the **.nuke** folder from the .csproj folder to the .sln folder. 
 * Rename the installer name in the **Installer.cs** file.
 * Rename the output name in the **Installer.cs** file.
+
+Builder: 
+* Rename the solution name in the **parameters.json** file.
+* Rename the project names in the **Build.cs** file.
+* Move the **.nuke** folder from the .csproj folder to the .sln folder.
 
 The last step is to switch the installer configuration to Release

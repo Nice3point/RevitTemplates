@@ -31,29 +31,17 @@ Global
 		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R22|Any CPU.Build.0 = Debug R22|Any CPU
 		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R19|Any CPU.ActiveCfg = Release R19|Any CPU
 		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R19|Any CPU.Build.0 = Release R19|Any CPU
-								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R20|Any CPU.ActiveCfg = Release R20|Any CPU
-								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R20|Any CPU.Build.0 = Release R20|Any CPU
-								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.ActiveCfg = Release R21|Any CPU
-								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.Build.0 = Release R21|Any CPU
-								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.ActiveCfg = Release R22|Any CPU
-								{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.Build.0 = Release R22|Any CPU
+        {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R20|Any CPU.ActiveCfg = Release R20|Any CPU
+        {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R20|Any CPU.Build.0 = Release R20|Any CPU
+        {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.ActiveCfg = Release R21|Any CPU
+        {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.Build.0 = Release R21|Any CPU
+        {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.ActiveCfg = Release R22|Any CPU
+        {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.Build.0 = Release R22|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R19|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R19|Any CPU.Build.0 = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R20|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R20|Any CPU.Build.0 = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R21|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R21|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {46736CB2-4E82-4155-A567-86F91F19B17C}
-	EndGlobalSection
-	GlobalSection(RiderSharedRunConfigurations) = postSolution
-		File = Nice3point.FrameworkAddIn\.run\Revit 2019 ENU.run.xml
-		File = Nice3point.FrameworkAddIn\.run\Revit 2020 ENU.run.xml
-		File = Nice3point.FrameworkAddIn\.run\Revit 2021 ENU.run.xml
-		File = Nice3point.FrameworkAddIn\.run\Revit 2022 ENU.run.xml
 	EndGlobalSection
 EndGlobal
