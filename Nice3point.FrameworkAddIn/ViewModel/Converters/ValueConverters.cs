@@ -11,12 +11,12 @@ namespace Nice3point.FrameworkAddIn.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool) value ? Visibility.Visible : Visibility.Hidden;
+            return value != null && (bool)value ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (Visibility) value == Visibility.Visible;
+            return value != null && (Visibility)value == Visibility.Visible;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -30,12 +30,12 @@ namespace Nice3point.FrameworkAddIn.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool) value == false ? Visibility.Visible : Visibility.Hidden;
+            return value != null && (bool)value == false ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null || (Visibility) value != Visibility.Visible;
+            return value == null || (Visibility)value != Visibility.Visible;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -49,7 +49,7 @@ namespace Nice3point.FrameworkAddIn.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && !(bool) value;
+            return value != null && !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

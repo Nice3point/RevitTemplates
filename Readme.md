@@ -55,4 +55,4 @@ Builder:
 * Rename the project names in the **Build.cs** file.
 * Move the **.nuke** folder from the .csproj folder to the .sln folder.
 
-The last step is to switch the installer configuration to Release
+The final step is to remove all builder configurations and Debug installer configuration in the **.sln** file.

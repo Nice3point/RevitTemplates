@@ -11,6 +11,10 @@ namespace Nice3point.FrameworkInstaller
     public static class Installer
     {
         private const string InstallationDir = @"%AppDataFolder%\Autodesk\Revit\Addins\";
+        private const string ProjectName = "Installer";
+        private const string OutputName = "Installer";
+        private const string OutputDir = "output";
+        private const string Version = "1.0.0";
 
         /// <remarks>
         ///     The installer is generated only for the build versions, from the "AddIn 'Revit version'" folder, otherwise you will
@@ -32,28 +36,25 @@ namespace Nice3point.FrameworkInstaller
             var projectStorage = args[1];
             var versions = args.Skip(2);
 
+            var outFileName = new StringBuilder().Append(OutputName).Append("-").Append(Version).ToString();
+
             var project = new Project
             {
-                Name            = "Nice3point.FrameworkInstaller", /*caret*/
-                OutDir          = "output",
-                Version         = new Version(1, 0, 0),
+                Name            = ProjectName,
+                OutDir          = OutputDir,
+                OutFileName     = outFileName,
                 Platform        = Platform.x64,
-                UI              = WUI.WixUI_InstallDir,
+                Version         = new Version(Version),
                 InstallScope    = InstallScope.perUser,
-                BackgroundImage = $@"{projectStorage}\Resources\Icons\InstallerIcon.png",
+                UI              = WUI.WixUI_InstallDir,
                 GUID            = new Guid("BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"),
+                BackgroundImage = $@"{projectStorage}\Resources\Icons\InstallerIcon.png",
                 Dirs = new[]
                 {
                     new Dir($"{InstallationDir}", GetOutputFolders(filesStorage, versions))
                 }
             };
 
-            var outNameBuilder = new StringBuilder();
-            outNameBuilder.Append("Nice3point.FrameworkInstaller");
-            outNameBuilder.Append("-");
-            outNameBuilder.Append(project.Version);
-
-            project.OutFileName = outNameBuilder.ToString();
             project.RemoveDialogsBetween(NativeDialogs.WelcomeDlg, NativeDialogs.InstallDirDlg);
             project.BuildMsi();
         }

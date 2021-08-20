@@ -12,21 +12,15 @@
         <!--     Value="Black" /> -->
     </Style>
     <Style
-        TargetType="{x:Type TextBlock}">
-    </Style>
+        TargetType="{x:Type TextBlock}" />
     <Style
-        TargetType="{x:Type TextBox}">
-    </Style>
+        TargetType="{x:Type TextBox}" />
     <Style
-        TargetType="{x:Type Label}">
-    </Style>
+        TargetType="{x:Type Label}" />
     <Style
-        TargetType="{x:Type CheckBox}">
-    </Style>
+        TargetType="{x:Type CheckBox}" />
     <Style
-        TargetType="{x:Type RadioButton}">
-    </Style>
+        TargetType="{x:Type RadioButton}" />
     <Style
-        TargetType="{x:Type ComboBox}">
-    </Style>
+        TargetType="{x:Type ComboBox}" />
 </ResourceDictionary>
