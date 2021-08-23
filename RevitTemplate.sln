@@ -19,6 +19,7 @@ Global
 		Release R20|Any CPU = Release R20|Any CPU
 		Release R21|Any CPU = Release R21|Any CPU
 		Release R22|Any CPU = Release R22|Any CPU
+        Installer|Any CPU = Installer|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug R19|Any CPU.ActiveCfg = Debug R19|Any CPU
@@ -37,11 +38,8 @@ Global
         {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R21|Any CPU.Build.0 = Release R21|Any CPU
         {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.ActiveCfg = Release R22|Any CPU
         {AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release R22|Any CPU.Build.0 = Release R22|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R19|Any CPU.ActiveCfg = Release|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R19|Any CPU.Build.0 = Release|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R20|Any CPU.ActiveCfg = Release|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R20|Any CPU.Build.0 = Release|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R21|Any CPU.ActiveCfg = Release|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release R21|Any CPU.Build.0 = Release|Any CPU
+        {BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Installer|Any CPU.ActiveCfg = Release|Any CPU
+        {BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Installer|Any CPU.Build.0 = Release|Any CPU
+        		
 	EndGlobalSection
 EndGlobal

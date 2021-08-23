@@ -15,77 +15,77 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <DefineConstants>DEBUG;TRACE;R19</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Debug R19\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>DEBUG;TRACE;R19</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R20|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <DefineConstants>DEBUG;TRACE;R20</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Debug R20\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>DEBUG;TRACE;R20</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R21|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <DefineConstants>DEBUG;TRACE;R21</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Debug R21\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>DEBUG;TRACE;R21</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R22|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <DefineConstants>DEBUG;TRACE;R22</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Debug R22\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>DEBUG;TRACE;R22</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R19|AnyCPU' ">
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
-        <DefineConstants>R19</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Release R19\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>R19</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R20|AnyCPU' ">
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
-        <DefineConstants>R20</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Release R20\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>R20</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R21|AnyCPU' ">
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
-        <DefineConstants>R21</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Release R21\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>R21</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R22|AnyCPU' ">
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
-        <DefineConstants>R22</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <OutputPath>bin\Release R22\</OutputPath>
-        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>R22</DefineConstants>
     </PropertyGroup>
     <Choose>
         <When Condition="$(Configuration.Contains('R19'))">
@@ -169,7 +169,7 @@
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 
     <PropertyGroup>
-        <AddinDir>bin\AddIn $(RevitVersion)\</AddinDir>
+        <AddinDir>bin\AddIn $(RevitVersion) $(Configuration)\</AddinDir>
         <MergedDir>$(TargetDir)Merged assembly\</MergedDir>
         <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
     </PropertyGroup>
@@ -189,12 +189,9 @@
         <RemoveDir Directories="$(AddinDir)"/>
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)"/>
         <Copy SourceFiles="@(OutDll)" DestinationFolder="$(OutAddinDir)"/>
+        <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="CopyToRevitFolder"/>
     </Target>
     <Target Name="DebugAfterBuild" Outputs="@(OutDll)">
-        <ItemGroup>
-            <OutLibPath Include="$(AddinDir)**\*.*"/>
-        </ItemGroup>
-        <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"/>
         <ItemGroup>
             <OutDll Include="@(AddinDll)"/>
         </ItemGroup>
@@ -205,5 +202,11 @@
         <ItemGroup>
             <OutDll Include="$(MergedDir)*.dll"/>
         </ItemGroup>
+    </Target>
+    <Target Name="CopyToRevitFolder">
+        <ItemGroup>
+            <OutLibPath Include="$(AddinDir)**\*.*"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"/>
     </Target>
 </Project>

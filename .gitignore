@@ -2,5 +2,7 @@
 *.vs/
 *obj/
 *bin/
+*temp/
 /packages/
-*.DotSettings*
+/output/
+*.DotSettings.user

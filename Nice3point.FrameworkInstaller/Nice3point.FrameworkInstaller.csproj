@@ -12,17 +12,16 @@
         <LangVersion>9</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
+        <DebugType>none</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
+        <PlatformTarget>x64</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <OutputPath>bin\Release\</OutputPath>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="WixSharp">
-            <Version>1.18.0</Version>
+            <Version>1.18.1</Version>
         </PackageReference>
         <PackageReference Include="WixSharp.wix.bin">
             <Version>3.11.2</Version>

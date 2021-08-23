@@ -1,4 +1,4 @@
-﻿using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.GitHubActions;
 
 [GitHubActions("CreatePackage",
     GitHubActionsImage.WindowsLatest,
@@ -7,8 +7,4 @@
     OnPushBranches = new[] { "main" })]
 partial class Build
 {
-//      - uses: actions/upload-artifact@v1
-//        with:
-//          name: ProjectName
-//          path: output
 }

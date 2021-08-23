@@ -52,7 +52,8 @@ Installer:
 
 Builder: 
 * Rename the solution name in the **parameters.json** file.
-* Rename the project names in the **Build.cs** file.
+* Rename the project names in the **Build.Properties.cs** file.
 * Move the **.nuke** folder from the .csproj folder to the .sln folder.
+* If you are using CI, the project has a customized **azure-pipelines.yml** file and a **.github** folder. Move them to the root of the solution if needed.
 
 The final step is to remove all builder configurations and Debug installer configuration in the **.sln** file.
