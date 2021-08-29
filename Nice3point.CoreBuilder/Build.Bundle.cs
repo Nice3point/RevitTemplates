@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -33,7 +34,10 @@ partial class Build
                 }
             }
 
-            if (foundedDirectories == 0) Logger.Warn($"No \"{BundleSuffixConfiguration}\" configurations found in:{project.GetBinDirectory()}");
+            if (foundedDirectories == 0)
+            {
+                throw new Exception($"No \"{BundleSuffixConfiguration}\" configurations found in:{project.GetBinDirectory()}");
+            }
         });
 
     Target ZipBundle => _ => _
@@ -51,7 +55,7 @@ partial class Build
             }
             else
             {
-                Logger.Warn($"Directory not found for archiving: {bundleDirectory}");
+                throw new Exception($"Directory not found for archiving: {bundleDirectory}");
             }
         });
 

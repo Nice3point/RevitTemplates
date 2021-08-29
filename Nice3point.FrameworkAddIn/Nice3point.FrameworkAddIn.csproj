@@ -1,92 +1,59 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Nice3point.FrameworkAddIn</RootNamespace>
-        <AssemblyName>Nice3point.FrameworkAddIn</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
+        <TargetFramework>net48</TargetFramework>
+        <UseWPF>true</UseWPF>
         <LangVersion>9</LangVersion>
+        <Configurations>Debug R19;Debug R20;Debug R21;Debug R22;Release R19;Release R20;Release R21;Release R22</Configurations>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R19|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Debug R19\</OutputPath>
-        <DefineConstants>DEBUG;TRACE;R19</DefineConstants>
+        <DefineConstants>TRACE;R19</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R20|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Debug R20\</OutputPath>
-        <DefineConstants>DEBUG;TRACE;R20</DefineConstants>
+        <DefineConstants>TRACE;R20</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R21|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Debug R21\</OutputPath>
-        <DefineConstants>DEBUG;TRACE;R21</DefineConstants>
+        <DefineConstants>TRACE;R21</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R22|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Debug R22\</OutputPath>
-        <DefineConstants>DEBUG;TRACE;R22</DefineConstants>
+        <DefineConstants>TRACE;R22</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R19|AnyCPU' ">
-        <DebugType>none</DebugType>
         <Optimize>true</Optimize>
+        <DebugType>none</DebugType>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Release R19\</OutputPath>
         <DefineConstants>R19</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R20|AnyCPU' ">
-        <DebugType>none</DebugType>
         <Optimize>true</Optimize>
+        <DebugType>none</DebugType>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Release R20\</OutputPath>
         <DefineConstants>R20</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R21|AnyCPU' ">
-        <DebugType>none</DebugType>
         <Optimize>true</Optimize>
+        <DebugType>none</DebugType>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Release R21\</OutputPath>
         <DefineConstants>R21</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R22|AnyCPU' ">
-        <DebugType>none</DebugType>
         <Optimize>true</Optimize>
+        <DebugType>none</DebugType>
         <PlatformTarget>x64</PlatformTarget>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\Release R22\</OutputPath>
         <DefineConstants>R22</DefineConstants>
     </PropertyGroup>
+
     <Choose>
         <When Condition="$(Configuration.Contains('R19'))">
             <PropertyGroup>
@@ -109,6 +76,7 @@
             </PropertyGroup>
         </When>
     </Choose>
+
     <ItemGroup>
         <PackageReference Include="ILRepack.Lib.MSBuild.Task">
             <Version>2.0.18.2</Version>
@@ -118,47 +86,19 @@
         </PackageReference>
         <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).0.0"/>
     </ItemGroup>
-    <ItemGroup>
-        <Reference Include="System"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Xml"/>
-        <Reference Include="System.Xaml"/>
-        <Reference Include="WindowsBase"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Application.cs"/>
-        <Compile Include="Commands\Command.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="RevitUtils\Guids.cs"/>
-        <Compile Include="RevitUtils\RevitApi.cs"/>
-        <Compile Include="RevitUtils\TransactionManager.cs"/>
-        <Compile Include="ViewModel\Converters\ValueConverters.cs"/>
-        <Compile Include="ViewModel\Objects\RelayCommand.cs"/>
-        <Compile Include="ViewModel\SimpleViewModel.cs"/>
-        <Compile Include="ViewModel\Utils\ViewModelUtils.cs"/>
-        <Compile Include="View\Utils\ViewUtils.cs"/>
-        <Compile Include="View\SimpleView.xaml.cs">
-            <DependentUpon>SimpleView.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
+
     <ItemGroup>
         <Folder Include="Core"/>
         <Folder Include="Resources\Fonts"/>
         <Folder Include="Resources\Localization"/>
         <Folder Include="Utils"/>
     </ItemGroup>
+
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
-    <ItemGroup>
-        <Page Include="View\SimpleView.xaml"/>
-        <Page Include="View\Themes\ControlStyle.xaml"/>
-        <Page Include="View\Themes\ControlTemplate.xaml"/>
-    </ItemGroup>
+
     <ItemGroup>
         <None Include="App.config"/>
         <None Include="Nice3point.FrameworkAddIn.addin">
@@ -166,30 +106,34 @@
         </None>
     </ItemGroup>
 
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-
-    <PropertyGroup>
-        <AddinDir>bin\AddIn $(RevitVersion) $(Configuration)\</AddinDir>
-        <MergedDir>$(TargetDir)Merged assembly\</MergedDir>
-        <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
-    </PropertyGroup>
     <ItemGroup>
         <AddinDll Include="$(TargetDir)$(AssemblyName).dll"/>
         <!--        Add DLLs to output folder or for merging below-->
         <!--        <AddinDll Include="$(TargetDir)Simple.dll" />-->
     </ItemGroup>
 
-    <Target Name="AfterBuild">
+    <Target Name="AfterBuildTarget" AfterTargets="CoreBuild">
+
+        <PropertyGroup>
+            <AddinDir>bin\AddIn $(RevitVersion) $(Configuration)\</AddinDir>
+            <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <OutLibPath Include="$(AddinDir)**\*.*"/>
+        </ItemGroup>
+
         <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="DebugAfterBuild">
             <Output TaskParameter="TargetOutputs" ItemName="OutDll"/>
         </CallTarget>
         <CallTarget Condition="$(Configuration.Contains('Release'))" Targets="ReleaseAfterBuild">
             <Output TaskParameter="TargetOutputs" ItemName="OutDll"/>
         </CallTarget>
+
         <RemoveDir Directories="$(AddinDir)"/>
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)"/>
         <Copy SourceFiles="@(OutDll)" DestinationFolder="$(OutAddinDir)"/>
-        <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="CopyToRevitFolder"/>
+        <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))"/>
     </Target>
     <Target Name="DebugAfterBuild" Outputs="@(OutDll)">
         <ItemGroup>
@@ -197,16 +141,15 @@
         </ItemGroup>
     </Target>
     <Target Name="ReleaseAfterBuild" Outputs="@(OutDll)">
-        <MakeDir Directories="$(MergedDir)"/>
+
+        <PropertyGroup>
+            <MergedDir>$(TargetDir)Merged assembly\</MergedDir>
+        </PropertyGroup>
+
         <ILRepack TargetKind="Dll" LogFile="$(TargetDir)\ILRepackLog.txt" InputAssemblies="@(AddinDll)" OutputFile="$(MergedDir)$(AssemblyName).dll" LibraryPath="$(TargetDir)"/>
+
         <ItemGroup>
             <OutDll Include="$(MergedDir)*.dll"/>
         </ItemGroup>
-    </Target>
-    <Target Name="CopyToRevitFolder">
-        <ItemGroup>
-            <OutLibPath Include="$(AddinDir)**\*.*"/>
-        </ItemGroup>
-        <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"/>
     </Target>
 </Project>

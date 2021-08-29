@@ -4,6 +4,7 @@
   "name": "Revit Installer",
   "shortName": "revit-framework-installer",
   "identity": "Nice3point.RevitInstaller.NetFramework",
+  "generatorVersions": "[1.0.0.0-*)",
   "defaultName": "Installer",
   "description": "Project for creating installer for Revit add-ins based on the .Net Framework",
   "classifications": [
@@ -22,37 +23,28 @@
   "preferNameDirectory": true,
   "placeholderFilename": ".scratch",
   "guids": [
-    "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
-    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"
+    "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
+    "TargetFrameworkOverride": {
+      "type": "parameter",
+      "description": "Overrides the target framework",
+      "replaces": "TargetFrameworkOverride",
+      "datatype": "string",
+      "defaultValue": ""
+    },
     "Framework": {
       "type": "parameter",
       "description": "The target framework for the project.",
-      "datatype": "text",
-      "replaces": "v4.8",
-      "isRequired": true,
-      "defaultValue": "<FullTargetFramework>"
-    },
-    "CompanyName": {
-      "type": "parameter",
-      "datatype": "text",
-      "replaces": "CompanyName",
-      "defaultValue": "SimpleCompany"
-    },
-    "CompanyTrademark": {
-      "type": "parameter",
-      "datatype": "text",
-      "replaces": "CompanyTrademark",
-      "defaultValue": ""
-    },
-    "Year": {
-      "type": "generated",
-      "generator": "now",
-      "replaces": "Year",
-      "parameters": {
-        "format": "yyyy"
-      }
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net48",
+          "description": "Target net4.8"
+        }
+      ],
+      "replaces": "net48",
+      "defaultValue": "net48"
     }
   },
   "primaryOutputs": [

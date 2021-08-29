@@ -34,7 +34,7 @@ namespace Nice3point.FrameworkInstaller
                 Version         = new Version(Version),
                 InstallScope    = InstallScope.perUser,
                 UI              = WUI.WixUI_InstallDir,
-                GUID            = new Guid("BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"),
+                GUID            = new Guid("AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"),
                 BackgroundImage = $@"{projectStorage}\Resources\Icons\InstallerIcon.png",
                 Dirs = new[]
                 {
