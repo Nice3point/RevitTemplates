@@ -51,6 +51,7 @@ partial class Build : NukeBuild
 
             var project = BuilderExtensions.GetProject(Solution, MainProjectName);
             var binDirectoryInfo = new DirectoryInfo(project.GetBinDirectory());
+            if (!binDirectoryInfo.Exists) return;
             var addInDirectories = binDirectoryInfo.EnumerateDirectories()
                 .Where(info => info.Name.StartsWith(AddInBinPrefix))
                 .ToList();

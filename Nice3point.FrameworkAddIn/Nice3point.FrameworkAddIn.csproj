@@ -100,8 +100,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="App.config"/>
-        <None Include="Nice3point.FrameworkAddIn.addin">
+        <None Update="Nice3point.FrameworkAddIn.addin">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

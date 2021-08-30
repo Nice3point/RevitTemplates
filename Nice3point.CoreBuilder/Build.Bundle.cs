@@ -50,8 +50,10 @@ partial class Build
             if (Directory.Exists(bundleDirectory))
             {
                 var archiveName = $"{bundleDirectory}.zip";
-                Logger.Normal($"Archive creation: {bundleDirectory}\\{archiveName}");
+                Logger.Normal($"Archive creation: {archiveName}");
                 ZipFile.CreateFromDirectory(bundleDirectory, archiveName);
+                Logger.Normal($"Deletion directory: {bundleDirectory}");
+                Directory.Delete(bundleDirectory, true);
             }
             else
             {
