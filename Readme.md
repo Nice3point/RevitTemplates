@@ -41,16 +41,16 @@ Usage
 Switch the project manager from **Solution** to **File System**
 
 AddIn: 
-* Move the **.run** folder from the .csproj folder to the .sln folder.
+* Move the **.run** folder to the solution folder. Rider Run/Debug configurations here.
 
 Installer:
-* Rename the installer name in the **Installer.cs** file.
-* Rename the output name in the **Installer.cs** file.
+* Rename the project name in the **Installer.cs** file. It will be displayed during installation.
+* Rename the output name in the **Installer.cs** file. This will be the name of the installer file.
 
 Builder: 
 * Rename the solution name in the **parameters.json** file.
 * Rename the project names in the **Build.Properties.cs** file.
-* Move the **.nuke** folder from the .csproj folder to the .sln folder.
+* Move the **.nuke** folder to the solution folder.
 * If you are using CI, the project has a customized **azure-pipelines.yml** file and a **.github** folder. Move them to the root of the solution if needed.
 * By default, creating a bundle for uploading to AutodeskStore is disabled. To enable, remove the **Skip** line in the **parameters.json** file.
 
