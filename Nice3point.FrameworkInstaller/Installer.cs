@@ -35,7 +35,12 @@ namespace Nice3point.FrameworkInstaller
                 InstallScope    = InstallScope.perUser,
                 UI              = WUI.WixUI_InstallDir,
                 GUID            = new Guid("AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"),
-                BackgroundImage = $@"{projectStorage}\Resources\Icons\InstallerIcon.png",
+                BackgroundImage = $@"{projectStorage}\Resources\Icons\BackgroundImage.png",
+                BannerImage     = $@"{projectStorage}\Resources\Icons\BannerImage.png",
+                ControlPanelInfo =
+                {
+                    ProductIcon = $@"{projectStorage}\Resources\Icons\ShellIcon.ico"
+                },
                 Dirs = new[]
                 {
                     new Dir($"{InstallationDir}", GetOutputFolders(filesStorage, configurations))

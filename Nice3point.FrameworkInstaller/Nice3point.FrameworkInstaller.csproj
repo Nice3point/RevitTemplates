@@ -19,7 +19,4 @@
             <Version>3.11.2</Version>
         </PackageReference>
     </ItemGroup>
-    <ItemGroup>
-        <None Include="Resources\Icons\InstallerIcon.png"/>
-    </ItemGroup>
 </Project>
