@@ -63,3 +63,9 @@ Solution:
   | Solution      | ![](https://i.imgur.com/LnnjYYu.png) |
   | Installer project   | ![](https://i.imgur.com/uW9Wxjp.png) ![](https://i.imgur.com/OhVDh6m.png) |
   | Main project   | ![](https://i.imgur.com/XpxVFcB.png) ![](https://i.imgur.com/53auQ0K.png) ![](https://i.imgur.com/TuVKQrZ.png)|
+
+* Remove all unnecessary configurations from the solution, the **build** project should not build. The solution file might look like this:
+
+  | File | Example |
+  | ----------- | ----------- |
+  | .sln      | ![](https://i.imgur.com/3VQQtwQ.png) |

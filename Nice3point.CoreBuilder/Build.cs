@@ -21,7 +21,6 @@ partial class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            if (IsLocalBuild) return;
             var releaseConfigurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
             foreach (var configuration in releaseConfigurations) RestoreProject(configuration);
         });
