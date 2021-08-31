@@ -1,8 +1,3 @@
-# Revit template
-Copyright (c) Nice3point
-
-All rights reserved. 
-
 # Apache 2.0 License
 
                                  Apache License
