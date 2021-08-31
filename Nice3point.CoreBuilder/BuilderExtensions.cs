@@ -18,7 +18,7 @@ public static class BuilderExtensions
         var netDirectory = Directory.GetDirectories(configurationDirectory).FirstOrDefault();
         if (netDirectory == null)
         {
-            throw new DirectoryNotFoundException($"Missing net subdirectories in: {configurationDirectory}");
+            throw new DirectoryNotFoundException($"Missing .Net subdirectories in: {configurationDirectory}");
         }
 
         var directoryInfo = new DirectoryInfo(netDirectory);
@@ -30,6 +30,7 @@ public static class BuilderExtensions
         var directory = directories[0].Name;
         var subConfigRegex = new Regex(@"R\d+$");
         foreach (var subCategory in configurations.Select(configuration => configuration.Replace(Build.InstallerConfiguration, "")))
+        {
             if (string.IsNullOrEmpty(subCategory))
             {
                 if (!string.IsNullOrEmpty(subConfigRegex.Match(directory).Value))
@@ -40,6 +41,7 @@ public static class BuilderExtensions
                 if (directory.EndsWith(subCategory))
                     return project.GetInstallerPath($"{Build.BuildConfiguration}{subCategory}");
             }
+        }
 
         return null;
     }

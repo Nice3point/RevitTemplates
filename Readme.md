@@ -38,13 +38,10 @@ Installation
 Usage
 ------------
 
-Not everything is automated now. Here are some things to do after creating a new project:
-
 Switch the project manager from **Solution** to **File System**
 
 AddIn: 
 * Move the **.run** folder from the .csproj folder to the .sln folder.
-* By default, **VendorId** and **AssemblyCompany** are set to **"CompanyName"**. To replace this field with your own value, press the key combination **Ctrl + Shift + R**
 
 Installer:
 * Rename the installer name in the **Installer.cs** file.
@@ -55,5 +52,14 @@ Builder:
 * Rename the project names in the **Build.Properties.cs** file.
 * Move the **.nuke** folder from the .csproj folder to the .sln folder.
 * If you are using CI, the project has a customized **azure-pipelines.yml** file and a **.github** folder. Move them to the root of the solution if needed.
+* By default, creating a bundle for uploading to AutodeskStore is disabled. To enable, remove the **Skip** line in the **parameters.json** file.
 
-The final step is to remove all builder configurations and Debug installer configuration in the **.sln** file.
+Solution:
+* For the installer to work, a configuration must be created in the solution, begins with field value of the **InstallerConfiguration** field in the **Build.Properties.cs** file, by default it is the "Installer". If you want to make unique installers, the name of the main project configuration must have a suffix like the installer project configuration, for example, for the **Release R22 Store** configuration, there must be a **Release Store** installer configuration, the Revit R22 version is ignored.
+ Below are examples of solution and projects configurations:
+  
+  | Section | Example configurations |
+  | ----------- | ----------- |
+  | Solution      | ![](https://i.imgur.com/LnnjYYu.png) |
+  | Installer project   | ![](https://i.imgur.com/uW9Wxjp.png) ![](https://i.imgur.com/OhVDh6m.png) |
+  | Main project   | ![](https://i.imgur.com/XpxVFcB.png) ![](https://i.imgur.com/53auQ0K.png) ![](https://i.imgur.com/TuVKQrZ.png)|
