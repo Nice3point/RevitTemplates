@@ -88,13 +88,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Core"/>
-        <Folder Include="Resources\Fonts"/>
-        <Folder Include="Resources\Localization"/>
-        <Folder Include="Utils"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
@@ -129,7 +122,6 @@
             <Output TaskParameter="TargetOutputs" ItemName="OutDll"/>
         </CallTarget>
 
-        <RemoveDir Directories="$(AddinDir)"/>
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)"/>
         <Copy SourceFiles="@(OutDll)" DestinationFolder="$(OutAddinDir)"/>
         <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))"/>
