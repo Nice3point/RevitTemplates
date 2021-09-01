@@ -5,4 +5,5 @@
 *temp/
 /packages/
 /output/
+*/build.schema.json
 *.DotSettings.user
