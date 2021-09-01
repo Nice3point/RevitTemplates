@@ -18,7 +18,7 @@ Template Features
     * .Net Core
 * Revit Versions
     * Dynamically expandable
-    * Latest version tested - 2022
+    * Latest tested version - 2022
 * Package content
     * AddIn template
     * Installer template
