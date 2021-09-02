@@ -111,10 +111,6 @@
             <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
         </PropertyGroup>
 
-        <ItemGroup>
-            <OutLibPath Include="$(AddinDir)**\*.*"/>
-        </ItemGroup>
-
         <CallTarget Condition="$(Configuration.Contains('Debug'))" Targets="DebugAfterBuild">
             <Output TaskParameter="TargetOutputs" ItemName="OutDll"/>
         </CallTarget>
@@ -124,6 +120,10 @@
 
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)"/>
         <Copy SourceFiles="@(OutDll)" DestinationFolder="$(OutAddinDir)"/>
+
+        <ItemGroup>
+            <OutLibPath Include="$(AddinDir)**\*.*"/>
+        </ItemGroup>
         <Copy SourceFiles="@(OutLibPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))"/>
     </Target>
     <Target Name="DebugAfterBuild" Outputs="@(OutDll)">
