@@ -1,0 +1,23 @@
+trigger:
+  branches:
+    include:
+      - main
+
+stages:
+  - stage: windows_latest
+    displayName: 'windows-latest'
+    dependsOn: [ ]
+    pool:
+      vmImage: 'windows-latest'
+    jobs:
+      - job: CreatePackage
+        displayName: 'CreatePackage'
+        dependsOn: [ ]
+        steps:
+          - task: CmdLine@2
+            inputs:
+              script: './Nice3point.Revit.Builder/build.cmd'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: RevitAddIn
+              pathtoPublish: 'output'

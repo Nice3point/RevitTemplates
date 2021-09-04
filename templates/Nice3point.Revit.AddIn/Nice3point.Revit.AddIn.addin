@@ -1,0 +1,10 @@
+﻿<RevitAddIns>
+    <AddIn Type="Application">
+        <Name>Nice3point.Revit.AddIn</Name>
+        <Assembly>Nice3point.Revit.AddIn\Nice3point.Revit.AddIn.dll</Assembly>
+        <AddInId>AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA</AddInId>
+        <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
+        <VendorId>CompanyName</VendorId>
+        <VendorDescription></VendorDescription>
+    </AddIn>
+</RevitAddIns>

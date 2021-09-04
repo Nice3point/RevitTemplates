@@ -1,0 +1,6 @@
+{
+  "$schema": "./build.schema.json",
+  "Solution": "RevitAddIn.sln",
+  "Verbosity": "Normal",
+  "Skip": ["CreateBundle"]
+}
