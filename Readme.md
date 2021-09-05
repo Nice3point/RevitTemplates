@@ -1,6 +1,6 @@
 <h3 align="center"><img src="https://i.imgur.com/v34P0ro.png" width="500px"></h3>
 
-#Create your Add-In for Revit on the .Net platform now.
+# Create your Add-In for Revit on the .Net platform now.
 
 <p align="center">
   <a href="https://github.com/Nice3point/RevitTemplate/commits/main"><img src="https://img.shields.io/nuget/v/Nice3point.Revit.Templates?style=for-the-badge"></a>
@@ -8,7 +8,7 @@
 </p>
 This repository contains a project templates for creating Revit Add-In.
 
-##Template Features
+## Template Features
 
 * Supported IDEs
     * JetBrains Rider
@@ -23,19 +23,19 @@ This repository contains a project templates for creating Revit Add-In.
     * Installer template
     * Nuke builder template
 
-##Installation
+## Installation
 
 1. Install the latest [.Net SDK](https://dotnet.microsoft.com/download).
 1. Run `dotnet new -i Nice3point.Revit.Templates` to install the project templates.
 
-##Usage
+## Usage
 
 * For testing, switch the solution configuration to Debug, and run the Run/Debug configuration with the appropriate
   revit version. The .dll and .addin files will be automatically copied to the Revit add-ons folder.
 * To build the Release version, enter the **nuke** command in the terminal. More details about Nuke
   [here](https://github.com/nuke-build/nuke).
 
-##First steps
+## First steps
 
 Switch the project manager from **Solution** to **File System**
 
