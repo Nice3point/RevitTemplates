@@ -1,15 +1,14 @@
-<h3 align="center"><img src="https://i.imgur.com/wkZAO9B.png" width="500px"></h3>
+<h3 align="center"><img src="https://i.imgur.com/v34P0ro.png" width="500px"></h3>
 
-Create your add-in for Revit on the .Net platform now.
-==================================================
+#Create your Add-In for Revit on the .Net platform now.
+
 <p align="center">
-  <a href="https://github.com/Nice3point/RevitTemplate/issues"><img src="https://img.shields.io/github/issues/Nice3point/RevitTemplate"></a>
-  <a href="https://github.com/Nice3point/RevitTemplate/commits/main"><img src="https://img.shields.io/github/last-commit/Nice3point/RevitTemplate"></a>
+  <a href="https://github.com/Nice3point/RevitTemplate/commits/main"><img src="https://img.shields.io/nuget/v/Nice3point.Revit.Templates?style=for-the-badge"></a>
+  <a href="https://github.com/Nice3point/RevitTemplate/commits/main"><img src="https://img.shields.io/github/last-commit/Nice3point/RevitTemplate?style=for-the-badge"></a>
 </p>
-This repository contains a project template for creating Revit Add-ins.
+This repository contains a project templates for creating Revit Add-In.
 
-Template Features
-------------
+##Template Features
 
 * Supported IDEs
     * JetBrains Rider
@@ -20,31 +19,24 @@ Template Features
     * Dynamically expandable
     * Latest tested version - 2022
 * Package content
-    * AddIn template
+    * Add-In template
     * Installer template
     * Nuke builder template
 
-Installation
-------------
+##Installation
 
-**Rider**:
+1. Install the latest [.Net SDK](https://dotnet.microsoft.com/download).
+1. Run `dotnet new -i Nice3point.Revit.Templates` to install the project templates.
 
-1. Download the project
-1. Click the New Solution button
-1. Go to the More Templates section
-1. Select template folder
-1. Click Reload Button
-
-Usage
-------------
+##Usage
 
 * For testing, switch the solution configuration to Debug, and run the Run/Debug configuration with the appropriate
   revit version. The .dll and .addin files will be automatically copied to the Revit add-ons folder.
 * To build the Release version, enter the **nuke** command in the terminal. More details about Nuke
   [here](https://github.com/nuke-build/nuke).
 
-First steps
-------------
+##First steps
+
 Switch the project manager from **Solution** to **File System**
 
 AddIn:
