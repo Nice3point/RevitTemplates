@@ -22,8 +22,8 @@ jobs:
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './Nice3point.Revit.Builder/build.cmd '
-        run: ./.build/build.cmd
+        run: ./Nice3point.Revit.Builder/build.cmd
       - uses: actions/upload-artifact@v1
         with:
-          name: RevitAddIn
+          name: Artifacts
           path: output

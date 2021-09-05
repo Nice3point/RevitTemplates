@@ -19,5 +19,5 @@ stages:
               script: './Nice3point.Revit.Builder/build.cmd'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: RevitAddIn
+              artifactName: Artifacts
               pathtoPublish: 'output'

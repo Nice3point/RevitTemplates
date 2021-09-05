@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
-using Autodesk.Windows;
 using Nice3point.Revit.AddIn.Commands;
-using RibbonPanel = Autodesk.Revit.UI.RibbonPanel;
+using Nice3point.Revit.AddIn.RevitUtils;
 
 namespace Nice3point.Revit.AddIn
 {
@@ -16,18 +13,12 @@ namespace Nice3point.Revit.AddIn
 
         public Result OnStartup(UIControlledApplication application)
         {
-            var panel = CreateRibbonTab(application, "Panel name", "Tab name");
-            if (panel.AddItem(
-                    new PushButtonData(nameof(Command),
-                        "Button text",
-                        Assembly.GetExecutingAssembly().Location,
-                        typeof(Command).FullName))
-                is PushButton showPanel)
-            {
-                showPanel.ToolTip    = "Tooltip";
-                showPanel.Image      = new BitmapImage(new Uri(ButtonImageUrl));
-                showPanel.LargeImage = new BitmapImage(new Uri(ButtonLargeImageUrl));
-            }
+            var panel = RibbonUtils.CreateRibbonPanel(application, "Panel name", "Nice3point.Revit.AddIn");/*caret*/
+            
+            var showButton = panel.AddPushButton(typeof(Command), nameof(Command), "Button text");
+            showButton.ToolTip    = "Tooltip";
+            showButton.Image      = new BitmapImage(new Uri(ButtonImageUrl));
+            showButton.LargeImage = new BitmapImage(new Uri(ButtonLargeImageUrl));
 
             return Result.Succeeded;
         }
@@ -35,14 +26,6 @@ namespace Nice3point.Revit.AddIn
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
-        }
-
-        private static RibbonPanel CreateRibbonTab(UIControlledApplication application, string panelName, string tabName = "")
-        {
-            if (string.IsNullOrEmpty(tabName)) return application.CreateRibbonPanel(panelName);
-            var ribbonTab = ComponentManager.Ribbon.Tabs.FirstOrDefault(tab => tab.Id.Equals(tabName));
-            if (ribbonTab == null) application.CreateRibbonTab(tabName);
-            return application.CreateRibbonPanel(tabName, panelName);
         }
     }
 }

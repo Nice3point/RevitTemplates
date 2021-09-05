@@ -9,7 +9,7 @@
     d:DataContext="{d:DesignInstance viewModel:SimpleViewModel}"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    Title="SimpleView"
+    Title="Nice3point.Revit.AddIn"
     Height="450"
     Width="800">
     <Window.Resources>
@@ -20,5 +20,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid />
+    <Grid>
+        <TextBlock
+            Text="Nice3point.Revit.AddIn"
+            FontSize="60"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" />
+    </Grid>
 </Window>

@@ -99,6 +99,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Core"/>
+        <Folder Include="Resources\Fonts"/>
+        <Folder Include="Resources\Localization"/>
+        <Folder Include="Utils"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <AddinDll Include="$(TargetDir)$(AssemblyName).dll"/>
         <!--        Add DLLs to output folder or for merging below-->
         <!--        <AddinDll Include="$(TargetDir)Simple.dll" />-->

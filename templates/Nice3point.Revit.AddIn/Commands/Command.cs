@@ -11,14 +11,13 @@ namespace Nice3point.Revit.AddIn.Commands
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            var uiDocument = commandData.Application.ActiveUIDocument;
+            var document = uiDocument.Document;
+            
             var viewModel = new SimpleViewModel();
             var view = new SimpleView(viewModel);
             if (view.ShowDialog() != true) return Result.Cancelled;
-
-            var uiDocument = commandData.Application.ActiveUIDocument;
-            var document = uiDocument.Document;
-
-            /*caret*/
+            
             return Result.Succeeded;
         }
     }
