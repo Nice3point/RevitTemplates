@@ -12,11 +12,8 @@ namespace Nice3point.Revit.AddIn.RevitUtils
     {
         public static PushButton AddPushButton(this RibbonPanel panel, Type command, string commandName, string buttonText)
         {
-            return (PushButton)panel.AddItem(
-                new PushButtonData(commandName,
-                    buttonText,
-                    Assembly.GetExecutingAssembly().Location,
-                    command.FullName));
+            var pushButtonData = new PushButtonData(commandName, buttonText, Assembly.GetExecutingAssembly().Location, command.FullName);
+            return (PushButton)panel.AddItem(pushButtonData);
         }
         
         public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName)
@@ -25,7 +22,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
             return CreateRibbonPanel(application, panelName, ribbonPanels);
         }
 
-        public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName, string tabName)
+        public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string tabName, string panelName)
         {
             var ribbonTab = ComponentManager.Ribbon.Tabs.FirstOrDefault(tab => tab.Id.Equals(tabName));
             if (ribbonTab is null)
@@ -35,13 +32,19 @@ namespace Nice3point.Revit.AddIn.RevitUtils
             }
 
             var ribbonPanels = application.GetRibbonPanels(tabName);
-            return CreateRibbonPanel(application, panelName, ribbonPanels);
+            return CreateRibbonPanel(application, tabName, panelName, ribbonPanels);
         }
 
         private static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName, IEnumerable<RibbonPanel> ribbonPanels)
         {
             var ribbonPanel = ribbonPanels.FirstOrDefault(panel => panel.Name.Equals(panelName));
             return ribbonPanel ?? application.CreateRibbonPanel(panelName);
+        }
+        
+        private static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string tabName, string panelName, IEnumerable<RibbonPanel> ribbonPanels)
+        {
+            var ribbonPanel = ribbonPanels.FirstOrDefault(panel => panel.Name.Equals(panelName));
+            return ribbonPanel ?? application.CreateRibbonPanel(tabName, panelName);
         }
     }
 }

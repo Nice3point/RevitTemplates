@@ -5,6 +5,6 @@
         <AddInId>AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA</AddInId>
         <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
         <VendorId>CompanyName</VendorId>
-        <VendorDescription></VendorDescription>
+        <VendorDescription>Description</VendorDescription>
     </AddIn>
 </RevitAddIns>

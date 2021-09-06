@@ -1,4 +1,4 @@
-﻿namespace Nice3point.Revit.AddIn.RevitUtils
+﻿namespace Nice3point.Revit.AddIn.Core
 {
     public static class RevitApi
     {
