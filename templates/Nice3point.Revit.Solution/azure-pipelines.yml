@@ -16,8 +16,8 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
-              script: './Nice3point.Revit.Builder/build.cmd'
+              script: './build/build.cmd'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: Artifacts
+              artifactName: Nice3point.Revit.Solution
               pathtoPublish: 'output'

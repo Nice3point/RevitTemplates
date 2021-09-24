@@ -16,7 +16,7 @@ public static class BuilderExtensions
     {
         var configurationDirectory = project.GetBinDirectory() / configuration;
         var netDirectory = Directory.GetDirectories(configurationDirectory).FirstOrDefault();
-        if (netDirectory == null)
+        if (netDirectory is null)
         {
             throw new DirectoryNotFoundException($"Missing .Net subdirectories in: {configurationDirectory}");
         }

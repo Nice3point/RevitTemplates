@@ -1,6 +1,6 @@
 {
   "$schema": "./build.schema.json",
-  "Solution": "RevitAddIn.sln",
+  "Solution": "Nice3point.Revit.Solution.sln",
   "Verbosity": "Normal",
   "Skip": ["CreateBundle"]
 }

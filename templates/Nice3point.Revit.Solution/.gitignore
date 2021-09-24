@@ -1,0 +1,11 @@
+﻿*.idea/
+*.vs/
+*obj/
+*bin/
+*temp/
+
+/packages/
+/output/
+
+*/build.schema.json
+*.DotSettings.user

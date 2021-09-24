@@ -11,12 +11,12 @@ namespace Nice3point.Revit.AddIn.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool)value ? Visibility.Visible : Visibility.Hidden;
+            return value is not null && (bool)value ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (Visibility)value == Visibility.Visible;
+            return value is not null && (Visibility)value == Visibility.Visible;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -30,12 +30,12 @@ namespace Nice3point.Revit.AddIn.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool)value == false ? Visibility.Visible : Visibility.Hidden;
+            return value is not null && (bool)value == false ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null || (Visibility)value != Visibility.Visible;
+            return value is null || (Visibility)value != Visibility.Visible;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -49,7 +49,7 @@ namespace Nice3point.Revit.AddIn.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && !(bool)value;
+            return value is not null && !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

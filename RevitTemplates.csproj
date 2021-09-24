@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <PackageType>Template</PackageType>
         <TargetFramework>net5.0</TargetFramework>
@@ -8,10 +7,11 @@
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <ContentTargetFolders>content</ContentTargetFolders>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <NoDefaultExcludes>true</NoDefaultExcludes>
     </PropertyGroup>
     <PropertyGroup>
         <PackageId>Nice3point.Revit.Templates</PackageId>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <Authors>Nice3point</Authors>
         <Description>Templates for Revit plugin development</Description>
         <PackageLicenseFile>License.md</PackageLicenseFile>

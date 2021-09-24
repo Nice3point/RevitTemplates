@@ -21,9 +21,9 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './Nice3point.Revit.Builder/build.cmd '
-        run: ./Nice3point.Revit.Builder/build.cmd
+      - name: Run './build/build.cmd'
+        run: ./build/build.cmd
       - uses: actions/upload-artifact@v1
         with:
-          name: Artifacts
+          name: Nice3point.Revit.Solution
           path: output

@@ -6,11 +6,10 @@
   "identity": "Nice3point.Revit.AddIn",
   "generatorVersions": "[1.0.0.0-*)",
   "defaultName": "RevitAddIn",
-  "description": "Project for creating Revit AddIns",
+  "description": "Project for creating Revit AddIn",
   "classifications": [
     "Common",
     "Library",
-    "NetFramework",
     "Revit",
     "AddIn"
   ],

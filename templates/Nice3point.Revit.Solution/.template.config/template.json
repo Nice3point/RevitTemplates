@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nice3point",
+  "name": "Revit Solution",
+  "shortName": "revit-sln",
+  "identity": "Nice3point.Revit.Solution",
+  "generatorVersions": "[1.0.0.0-*)",
+  "groupIdentity": "RevitSolution",
+  "defaultName": "RevitAddIn",
+  "sourceName": "Nice3point.Revit.Solution",
+  "description": "Create Revit solution containing build and installer projects",
+  "classifications": [
+    "Solution",
+    "Revit"
+  ],
+  "tags": {
+    "type":"item",
+    "language": "C#",
+    "platform": ".NET"
+  },
+  "guids": [
+    "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
+    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
+    "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC",
+    "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"
+  ],
+  "primaryOutputs": [
+    {
+      "path": "Nice3point.Item.Solution.sln"
+    }
+  ]
+}

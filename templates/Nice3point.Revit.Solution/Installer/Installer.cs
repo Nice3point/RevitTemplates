@@ -7,13 +7,13 @@ using WixSharp;
 using WixSharp.CommonTasks;
 using WixSharp.Controls;
 
-namespace Nice3point.Revit.Installer
+namespace Installer
 {
     public static class Installer
     {
         private const string InstallationDir = @"%AppDataFolder%\Autodesk\Revit\Addins\";
-        private const string ProjectName = "Installer"; /*caret*/
-        private const string OutputName = "Installer";
+        private const string ProjectName = "Nice3point.Revit.Solution";
+        private const string OutputName = "Nice3point.Revit.Solution";
         private const string OutputDir = "output";
         private const string Version = "1.0.0";
 
@@ -36,7 +36,7 @@ namespace Nice3point.Revit.Installer
                 Version         = new Version(Version),
                 InstallScope    = InstallScope.perUser,
                 UI              = WUI.WixUI_InstallDir,
-                GUID            = new Guid("AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"),
+                GUID            = new Guid("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"),
                 BackgroundImage = $@"{projectStorage}\Resources\Icons\BackgroundImage.png",
                 BannerImage     = $@"{projectStorage}\Resources\Icons\BannerImage.png",
                 ControlPanelInfo =

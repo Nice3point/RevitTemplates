@@ -1,6 +1,6 @@
 partial class Build
 {
-    const string MainProjectName = "RevitAddIn"; /*caret*/
+    const string MainProjectName = "Nice3point.Revit.Solution";
     const string InstallerProjectName = "Installer";
 
     public const string BuildConfiguration = "Release";
