@@ -33,24 +33,3 @@ This repository contains a project templates for creating Revit Add-In.
 * To build the Release version, run **nuke** command or use ready-made .yml files for building in the cloud. More details about Nuke
   [here](https://github.com/nuke-build/nuke).
 * For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki)
-
-## First steps
-
-Solution:
-
-* Before building the project, you need to edit the solution file.
-  Make sure that the Installer project is built only in the Installer configuration, remove lines from other configurations.
-  Below are examples of solution and projects configurations:
-
-  | Section             | Example configurations               |
-  | ------------------- | ------------------------------------ |
-  | Solution            | ![](https://i.imgur.com/LnnjYYu.png) |
-  | Installer project   | ![](https://i.imgur.com/uW9Wxjp.png) ![](https://i.imgur.com/OhVDh6m.png) |
-  | Main project        | ![](https://i.imgur.com/XpxVFcB.png) ![](https://i.imgur.com/53auQ0K.png) ![](https://i.imgur.com/TuVKQrZ.png)|
-
-* Remove all unnecessary configurations from the solution, the **build** project should not build. The solution file
-  might look like this:
-
-  | File   | Example                              |
-  | ------ | ------------------------------------ |
-  | .sln   | ![](https://i.imgur.com/3VQQtwQ.png) |
