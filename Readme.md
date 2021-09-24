@@ -32,6 +32,7 @@ This repository contains a project templates for creating Revit Add-In.
   revit version. The .dll and .addin files will be automatically copied to the Revit add-ons folder.
 * To build the Release version, run **nuke** command or use ready-made .yml files for building in the cloud. More details about Nuke
   [here](https://github.com/nuke-build/nuke).
+* For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki)
 
 ## First steps
 
