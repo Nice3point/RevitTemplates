@@ -27,9 +27,6 @@ This repository contains a project templates for creating Revit Add-In.
 
 ## Usage
 
-* For creating project run `dotnet new revit-sln -n ProjectName`, where ProjectName is the name of your project
-* For testing, switch the solution configuration to Debug, and run the Run/Debug configuration with the appropriate
-  revit version. The .dll and .addin files will be automatically copied to the Revit add-ons folder.
-* To build the Release version, run **nuke** command. More details about Nuke
-  [here](https://github.com/nuke-build/nuke).
-* For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki)
+* For creating project run `dotnet new revit-sln -n ProjectName`, where ProjectName is the name of your project.
+* To create a package run **nuke**. More details about Nuke [here](https://github.com/nuke-build/nuke).
+* For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
