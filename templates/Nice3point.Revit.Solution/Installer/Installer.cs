@@ -35,6 +35,7 @@ namespace Installer
                 Platform        = Platform.x64,
                 Version         = new Version(Version),
                 InstallScope    = InstallScope.perUser,
+                MajorUpgrade    = MajorUpgrade.Default,
                 UI              = WUI.WixUI_InstallDir,
                 GUID            = new Guid("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"),
                 BackgroundImage = $@"{projectStorage}\Resources\Icons\BackgroundImage.png",

@@ -6,12 +6,9 @@ Project("{DC6D3A3E-EB5D-4BAD-B47B-17B0A6593D49}") = "RevitTemplates", "RevitTemp
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
