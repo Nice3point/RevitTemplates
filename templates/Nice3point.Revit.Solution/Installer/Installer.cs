@@ -44,9 +44,9 @@ namespace Installer
                 {
                     ProductIcon = $@"{projectStorage}\Resources\Icons\ShellIcon.ico"
                 },
-                Dirs = new[]
+                Dirs = new Dir[]
                 {
-                    new Dir($"{InstallationDir}", GetOutputFolders(filesStorage, configurations))
+                    new InstallDir(InstallationDir, GetOutputFolders(filesStorage, configurations))
                 }
             };
 

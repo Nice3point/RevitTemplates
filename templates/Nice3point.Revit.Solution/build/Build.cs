@@ -10,7 +10,6 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.MSBuild;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
-[CheckBuildProjectConfigurations]
 partial class Build : NukeBuild
 {
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
