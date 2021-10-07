@@ -13,9 +13,9 @@ namespace Nice3point.Revit.AddIn.RevitUtils
         public static PushButton AddPushButton(this RibbonPanel panel, Type command, string commandName, string buttonText)
         {
             var pushButtonData = new PushButtonData(commandName, buttonText, Assembly.GetExecutingAssembly().Location, command.FullName);
-            return (PushButton)panel.AddItem(pushButtonData);
+            return (PushButton) panel.AddItem(pushButtonData);
         }
-        
+
         public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName)
         {
             var ribbonPanels = application.GetRibbonPanels(Tab.AddIns);
@@ -40,7 +40,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
             var ribbonPanel = ribbonPanels.FirstOrDefault(panel => panel.Name.Equals(panelName));
             return ribbonPanel ?? application.CreateRibbonPanel(panelName);
         }
-        
+
         private static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string tabName, string panelName, IEnumerable<RibbonPanel> ribbonPanels)
         {
             var ribbonPanel = ribbonPanels.FirstOrDefault(panel => panel.Name.Equals(panelName));

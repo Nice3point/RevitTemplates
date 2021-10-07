@@ -2,5 +2,7 @@
   "$schema": "./build.schema.json",
   "Solution": "Nice3point.Revit.Solution.sln",
   "Verbosity": "Normal",
-  "Skip": ["CreateBundle"]
+  "Skip": [
+    "CreateBundle"
+  ]
 }

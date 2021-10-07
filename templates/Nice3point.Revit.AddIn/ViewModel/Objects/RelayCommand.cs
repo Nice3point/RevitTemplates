@@ -10,7 +10,7 @@ namespace Nice3point.Revit.AddIn.ViewModel.Objects
 
         public RelayCommand(Action<object> execute, bool canExecute = true)
         {
-            _execute    = execute;
+            _execute = execute;
             _canExecute = canExecute;
         }
 

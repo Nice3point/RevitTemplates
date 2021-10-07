@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.Common;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.MSBuild;
+using Nuke.Common.Tools.VSWhere;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 partial class Build : NukeBuild
@@ -15,11 +16,12 @@ partial class Build : NukeBuild
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
 
     [Solution] public readonly Solution Solution;
-
+    string ProcessToolPath;
 
     Target Restore => _ => _
         .Executes(() =>
         {
+            ProcessToolPath = GetMsBuildPath();
             var releaseConfigurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
             foreach (var configuration in releaseConfigurations) RestoreProject(configuration);
         });
@@ -119,21 +121,42 @@ partial class Build : NukeBuild
         }
     }
 
-    void RestoreProject(string configuration) =>
+    string GetMsBuildPath()
+    {
+        if (IsServerBuild) return null;
+        var vsWherePath = VSWhereTasks.VSWhere(settings => settings
+            .EnableLatest()
+            .AddRequires("Microsoft.Component.MSBuild")
+            .DisableProcessLogOutput()
+            .DisableProcessLogInvocation()
+        );
+
+        if (vsWherePath.Output.Count > 3) return null;
+        if (!File.Exists(CustomMsBuildPath)) throw new Exception($"Missing file: {CustomMsBuildPath}. Change the path to the build platform or install Visual Studio.");
+        return CustomMsBuildPath;
+    }
+
+    void RestoreProject(string configuration)
+    {
         MSBuild(s => s
             .SetTargetPath(Solution)
             .SetTargets("Restore")
-            .SetVerbosity(MSBuildVerbosity.Minimal)
             .SetConfiguration(configuration)
+            .SetProcessToolPath(ProcessToolPath)
+            .SetVerbosity(MSBuildVerbosity.Minimal)
         );
+    }
 
-    void BuildProject(string configuration) =>
+    void BuildProject(string configuration)
+    {
         MSBuild(s => s
             .SetTargetPath(Solution)
             .SetTargets("Rebuild")
-            .SetVerbosity(MSBuildVerbosity.Minimal)
             .SetConfiguration(configuration)
+            .SetProcessToolPath(ProcessToolPath)
+            .SetVerbosity(MSBuildVerbosity.Minimal)
             .SetMSBuildPlatform(MSBuildPlatform.x64)
             .SetMaxCpuCount(Environment.ProcessorCount)
             .DisableNodeReuse());
+    }
 }

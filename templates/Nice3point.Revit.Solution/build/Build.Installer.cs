@@ -27,7 +27,7 @@ partial class Build
                 var directories = directoryGroup.ToList();
                 IterateDirectoriesRegex(directories, configurationPattern, (_, value) => installerConfigurations.Add(value));
 
-                var mainParameters = new string[] { mainProject.GetBinDirectory(), installerProject.Directory };
+                var mainParameters = new string[] {mainProject.GetBinDirectory()};
                 var exeArguments = BuildExeArguments(mainParameters.Concat(installerConfigurations).ToList());
 
                 var exeFile = installerProject.GetExecutableFile(configurations, directories);
@@ -38,7 +38,7 @@ partial class Build
                 }
 
                 var proc = new Process();
-                proc.StartInfo.FileName  = exeFile;
+                proc.StartInfo.FileName = exeFile;
                 proc.StartInfo.Arguments = exeArguments;
                 proc.Start();
                 if (IsServerBuild || releaseAddInDirectories.Count > 1)

@@ -20,8 +20,7 @@ namespace Installer
         public static void Main(string[] args)
         {
             var filesStorage = args[0];
-            var projectStorage = args[1];
-            var configurations = args.Skip(2);
+            var configurations = args.Skip(1);
 
             var outFileNameBuilder = new StringBuilder().Append(OutputName).Append("-").Append(Version);
             //Additional suffixes for unique configurations add here
@@ -29,20 +28,20 @@ namespace Installer
 
             var project = new Project
             {
-                Name            = ProjectName,
-                OutDir          = OutputDir,
-                OutFileName     = outFileName,
-                Platform        = Platform.x64,
-                Version         = new Version(Version),
-                InstallScope    = InstallScope.perUser,
-                MajorUpgrade    = MajorUpgrade.Default,
-                UI              = WUI.WixUI_InstallDir,
-                GUID            = new Guid("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"),
-                BackgroundImage = $@"{projectStorage}\Resources\Icons\BackgroundImage.png",
-                BannerImage     = $@"{projectStorage}\Resources\Icons\BannerImage.png",
+                Name = ProjectName,
+                OutDir = OutputDir,
+                OutFileName = outFileName,
+                Platform = Platform.x64,
+                Version = new Version(Version),
+                InstallScope = InstallScope.perUser,
+                MajorUpgrade = MajorUpgrade.Default,
+                UI = WUI.WixUI_InstallDir,
+                GUID = new Guid("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"),
+                BackgroundImage = @"Installer\Resources\Icons\BackgroundImage.png",
+                BannerImage = @"Installer\Resources\Icons\BannerImage.png",
                 ControlPanelInfo =
                 {
-                    ProductIcon = $@"{projectStorage}\Resources\Icons\ShellIcon.ico"
+                    ProductIcon = @"Installer\Resources\Icons\ShellIcon.ico"
                 },
                 Dirs = new Dir[]
                 {

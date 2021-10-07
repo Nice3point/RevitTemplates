@@ -21,7 +21,7 @@ partial class Build
             {
                 var directories = directoryGroup.ToList();
                 var dirName = directories[0].Name;
-                if (dirName.Contains(BuildConfiguration) && dirName.EndsWith(BundleSuffixConfiguration))
+                if (dirName.Contains(BuildConfiguration) && dirName.EndsWith(BundleConfiguration))
                 {
                     Directory.CreateDirectory(contentDirectory);
                     IterateDirectoriesRegex(directories, versionPatter, (directoryInfo, version) =>
@@ -34,10 +34,7 @@ partial class Build
                 }
             }
 
-            if (foundedDirectories == 0)
-            {
-                throw new Exception($"No \"{BundleSuffixConfiguration}\" configurations found in:{project.GetBinDirectory()}");
-            }
+            if (foundedDirectories == 0) throw new Exception($"No \"{BundleConfiguration}\" configurations found in:{project.GetBinDirectory()}");
         });
 
     Target ZipBundle => _ => _

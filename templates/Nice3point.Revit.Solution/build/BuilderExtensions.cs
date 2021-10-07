@@ -8,18 +8,18 @@ using Nuke.Common.ProjectModel;
 
 public static class BuilderExtensions
 {
-    public static Project GetProject(this Solution solution, string projectName) => solution.GetProject(projectName) ?? throw new NullReferenceException($"Cannon find project \"{projectName}\"");
+    public static Project GetProject(this Solution solution, string projectName) =>
+        solution.GetProject(projectName) ?? throw new NullReferenceException($"Cannon find project \"{projectName}\"");
 
     public static AbsolutePath GetBinDirectory(this Project project) => project.Directory / "bin";
+
+    public static AbsolutePath GetBundleDirectory(this Project project, AbsolutePath basePath) => basePath / $"{project.Name}.bundle";
 
     static AbsolutePath GetInstallerPath(this Project project, string configuration)
     {
         var configurationDirectory = project.GetBinDirectory() / configuration;
         var netDirectory = Directory.GetDirectories(configurationDirectory).FirstOrDefault();
-        if (netDirectory is null)
-        {
-            throw new DirectoryNotFoundException($"Missing .Net subdirectories in: {configurationDirectory}");
-        }
+        if (netDirectory is null) throw new DirectoryNotFoundException($"Missing .Net subdirectories in: {configurationDirectory}");
 
         var directoryInfo = new DirectoryInfo(netDirectory);
         return configurationDirectory / directoryInfo.Name / $"{project.Name}.exe";
@@ -30,7 +30,6 @@ public static class BuilderExtensions
         var directory = directories[0].Name;
         var subConfigRegex = new Regex(@"R\d+$");
         foreach (var subCategory in configurations.Select(configuration => configuration.Replace(Build.InstallerConfiguration, "")))
-        {
             if (string.IsNullOrEmpty(subCategory))
             {
                 if (!string.IsNullOrEmpty(subConfigRegex.Match(directory).Value))
@@ -41,10 +40,7 @@ public static class BuilderExtensions
                 if (directory.EndsWith(subCategory))
                     return project.GetInstallerPath($"{Build.BuildConfiguration}{subCategory}");
             }
-        }
 
         return null;
     }
-
-    public static AbsolutePath GetBundleDirectory(this Project project, AbsolutePath basePath) => basePath / $"{project.Name}.bundle";
 }
