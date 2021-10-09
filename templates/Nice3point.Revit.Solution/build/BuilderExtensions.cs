@@ -13,7 +13,7 @@ public static class BuilderExtensions
 
     public static AbsolutePath GetBinDirectory(this Project project) => project.Directory / "bin";
 
-    public static AbsolutePath GetBundleDirectory(this Project project, AbsolutePath basePath) => basePath / $"{project.Name}.bundle";
+    public static AbsolutePath GetBundleDirectory(this Solution solution, AbsolutePath basePath) => basePath / $"{solution.Name}.bundle";
 
     static AbsolutePath GetInstallerPath(this Project project, string configuration)
     {

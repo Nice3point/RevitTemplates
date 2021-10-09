@@ -1,7 +1,11 @@
 partial class Build
 {
-    const string MainProjectName = "Nice3point.Revit.Solution";
-    const string InstallerProjectName = "Installer";
+    readonly string[] Projects =
+    {
+        "Nice3point.Revit.Solution"
+    };
+    
+    const string InstallerProject = "Installer";
 
     public const string BuildConfiguration = "Release";
     public const string InstallerConfiguration = "Installer";
@@ -20,5 +24,5 @@ partial class Build
 
     //The Wix installer is created in a different thread
     //Increase this value if your installer does not have time to build
-    static readonly int InstallerCreationTime = IsServerBuild ? 15 : 7;
+    readonly int InstallerCreationTime = IsServerBuild ? 15 : 7;
 }

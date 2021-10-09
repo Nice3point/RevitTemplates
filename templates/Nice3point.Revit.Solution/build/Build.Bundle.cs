@@ -11,30 +11,34 @@ partial class Build
         .TriggeredBy(Compile)
         .Executes(() =>
         {
-            var project = BuilderExtensions.GetProject(Solution, MainProjectName);
-            var releaseAddInDirectories = GetReleaseAddInDirectories();
-            var contentDirectory = project.GetBundleDirectory(ArtifactsDirectory) / "Contents";
             var versionPatter = new Regex(@"\d+");
+            var contentDirectory = Solution.GetBundleDirectory(ArtifactsDirectory) / "Contents";
+            var buildDirectories = GetBuildDirectories();
 
-            var foundedDirectories = 0;
-            foreach (var directoryGroup in releaseAddInDirectories)
+            foreach (var directoryGroup in buildDirectories)
             {
                 var directories = directoryGroup.ToList();
-                var dirName = directories[0].Name;
-                if (dirName.Contains(BuildConfiguration) && dirName.EndsWith(BundleConfiguration))
+                if (directories.All(info => info.Name.Contains(BuildConfiguration) && info.Name.EndsWith(BundleConfiguration)))
                 {
                     Directory.CreateDirectory(contentDirectory);
-                    IterateDirectoriesRegex(directories, versionPatter, (directoryInfo, version) =>
+                    foreach (var directoryInfo in directories)
                     {
+                        var version = versionPatter.Match(directoryInfo.Name).Value;
+                        if (string.IsNullOrEmpty(version))
+                        {
+                            Logger.Warn($"Missing version label for directory: \"{directoryInfo.Name}\".");
+                            continue;
+                        }
+
                         var buildDirectory = contentDirectory / version;
-                        Logger.Normal($"Copy files from: {directoryInfo.FullName} to {buildDirectory}");
+                        Logger.Normal($"Copy files from: {directoryInfo.FullName} to {buildDirectory}.");
                         CopyFilesContent(directoryInfo.FullName, buildDirectory);
-                    });
-                    foundedDirectories++;
+                    }
                 }
             }
 
-            if (foundedDirectories == 0) throw new Exception($"No \"{BundleConfiguration}\" configurations found in:{project.GetBinDirectory()}");
+            if (!Directory.Exists(contentDirectory))
+                throw new Exception($"No configuration found to create a bundle. Check that the solution configuration end with \"{BundleConfiguration}\".");
         });
 
     Target ZipBundle => _ => _
@@ -42,8 +46,7 @@ partial class Build
         .Produces(ArtifactsDirectory / "*.zip")
         .Executes(() =>
         {
-            var project = BuilderExtensions.GetProject(Solution, MainProjectName);
-            var bundleDirectory = project.GetBundleDirectory(ArtifactsDirectory);
+            var bundleDirectory = Solution.GetBundleDirectory(ArtifactsDirectory);
             if (Directory.Exists(bundleDirectory))
             {
                 var archiveName = $"{bundleDirectory}.zip";

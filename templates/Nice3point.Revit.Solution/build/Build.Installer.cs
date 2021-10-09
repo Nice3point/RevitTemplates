@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Nuke.Common;
 
@@ -14,22 +13,14 @@ partial class Build
         .Produces(ArtifactsDirectory / "*.msi")
         .Executes(() =>
         {
-            var mainProject = BuilderExtensions.GetProject(Solution, MainProjectName);
-            var installerProject = BuilderExtensions.GetProject(Solution, InstallerProjectName);
-
-            var releaseAddInDirectories = GetReleaseAddInDirectories();
+            var installerProject = BuilderExtensions.GetProject(Solution, InstallerProject);
+            var buildDirectories = GetBuildDirectories();
             var configurations = GetConfigurations(InstallerConfiguration);
-            var configurationPattern = new Regex(@".*");
 
-            foreach (var directoryGroup in releaseAddInDirectories)
+            foreach (var directoryGroup in buildDirectories)
             {
-                var installerConfigurations = new List<string>();
                 var directories = directoryGroup.ToList();
-                IterateDirectoriesRegex(directories, configurationPattern, (_, value) => installerConfigurations.Add(value));
-
-                var mainParameters = new string[] {mainProject.GetBinDirectory()};
-                var exeArguments = BuildExeArguments(mainParameters.Concat(installerConfigurations).ToList());
-
+                var exeArguments = BuildExeArguments(directories.Select(info => info.FullName).ToList());
                 var exeFile = installerProject.GetExecutableFile(configurations, directories);
                 if (string.IsNullOrEmpty(exeFile))
                 {
@@ -41,11 +32,9 @@ partial class Build
                 proc.StartInfo.FileName = exeFile;
                 proc.StartInfo.Arguments = exeArguments;
                 proc.Start();
-                if (IsServerBuild || releaseAddInDirectories.Count > 1)
-                {
-                    Logger.Normal($"Waiting {InstallerCreationTime} seconds to create installer on another thread");
-                    Thread.Sleep(TimeSpan.FromSeconds(InstallerCreationTime));
-                }
+
+                Logger.Normal($"Waiting {InstallerCreationTime} seconds to create installer on another thread");
+                Thread.Sleep(TimeSpan.FromSeconds(InstallerCreationTime));
             }
         });
 

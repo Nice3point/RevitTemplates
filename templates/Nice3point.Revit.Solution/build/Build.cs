@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -48,18 +47,17 @@ partial class Build : NukeBuild
             if (File.Exists(ilTargetPath)) ReplaceFileText("<Target Name=\"ILRepack\">", ilTargetPath, 13);
 
             if (IsServerBuild) return;
-
-            var project = BuilderExtensions.GetProject(Solution, MainProjectName);
-            var binDirectoryInfo = new DirectoryInfo(project.GetBinDirectory());
-            if (!binDirectoryInfo.Exists) return;
-            var addInDirectories = binDirectoryInfo.EnumerateDirectories()
-                .Where(info => info.Name.StartsWith(AddInBinPrefix))
-                .ToList();
-
-            foreach (var addInDirectory in addInDirectories)
+            foreach (var projectName in Projects)
             {
-                foreach (var file in addInDirectory.GetFiles()) file.Delete();
-                addInDirectory.Delete(true);
+                var project = BuilderExtensions.GetProject(Solution, projectName);
+                var binDirectory = new DirectoryInfo(project.GetBinDirectory());
+                if (!binDirectory.Exists) return;
+                var addInDirectories = binDirectory.EnumerateDirectories().Where(info => info.Name.StartsWith(AddInBinPrefix)).ToList();
+                foreach (var addInDirectory in addInDirectories)
+                {
+                    foreach (var file in addInDirectory.GetFiles()) file.Delete();
+                    addInDirectory.Delete(true);
+                }
             }
         });
 
@@ -78,22 +76,33 @@ partial class Build : NukeBuild
         var configurations = Solution.Configurations
             .Select(pair => pair.Key)
             .Where(s => startPatterns.Any(s.StartsWith))
-            .Select(s => s.Replace("|Any CPU", string.Empty))
+            .Select(s =>
+            {
+                var platformIndex = s.LastIndexOf('|');
+                return s.Remove(platformIndex);
+            })
             .ToList();
-        if (configurations.Count == 0) throw new Exception("There are no release configurations in the project.");
+        if (configurations.Count == 0) throw new Exception($"Can't find configurations in the solution by patterns: {string.Join(" | ", startPatterns)}.");
         return configurations;
     }
 
-    List<IGrouping<int, DirectoryInfo>> GetReleaseAddInDirectories()
+    IEnumerable<IGrouping<int, DirectoryInfo>> GetBuildDirectories()
     {
-        var project = BuilderExtensions.GetProject(Solution, MainProjectName);
-        var addInsDirectory = new DirectoryInfo(project.GetBinDirectory()).GetDirectories()
+        var directories = new List<DirectoryInfo>();
+        foreach (var projectName in Projects)
+        {
+            var project = BuilderExtensions.GetProject(Solution, projectName);
+            var directoryInfo = new DirectoryInfo(project.GetBinDirectory()).GetDirectories();
+            directories.AddRange(directoryInfo);
+        }
+
+        if (directories.Count == 0) throw new Exception("There are no packaged assemblies in the project. Try to build the project again.");
+
+        var addInsDirectory = directories
             .Where(dir => dir.Name.StartsWith(AddInBinPrefix))
             .Where(dir => dir.Name.Contains(BuildConfiguration))
-            .GroupBy(info => info.Name.Length)
-            .ToList();
+            .GroupBy(dir => dir.Name.Length);
 
-        if (addInsDirectory.Count == 0) throw new Exception("There are no packaged assemblies in the project. Try to build the project again.");
         return addInsDirectory;
     }
 
@@ -106,32 +115,17 @@ partial class Build : NukeBuild
         File.WriteAllLines(fileName, arrLine);
     }
 
-    void IterateDirectoriesRegex(List<DirectoryInfo> directories, Regex dirRegex, Action<DirectoryInfo, string> action)
-    {
-        foreach (var directoryInfo in directories)
-        {
-            var subName = dirRegex.Match(directoryInfo.Name).Value;
-            if (string.IsNullOrEmpty(subName))
-            {
-                Logger.Warn($"Missing substring for directory: \"{directoryInfo.Name}\"");
-                continue;
-            }
-
-            action?.Invoke(directoryInfo, subName);
-        }
-    }
-
     string GetMsBuildPath()
     {
         if (IsServerBuild) return null;
-        var vsWherePath = VSWhereTasks.VSWhere(settings => settings
+        var vsWhere = VSWhereTasks.VSWhere(settings => settings
             .EnableLatest()
             .AddRequires("Microsoft.Component.MSBuild")
             .DisableProcessLogOutput()
             .DisableProcessLogInvocation()
         );
 
-        if (vsWherePath.Output.Count > 3) return null;
+        if (vsWhere.Output.Count > 3) return null;
         if (!File.Exists(CustomMsBuildPath)) throw new Exception($"Missing file: {CustomMsBuildPath}. Change the path to the build platform or install Visual Studio.");
         return CustomMsBuildPath;
     }
