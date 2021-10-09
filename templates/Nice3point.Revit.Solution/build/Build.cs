@@ -133,8 +133,8 @@ partial class Build : NukeBuild
     void RestoreProject(string configuration)
     {
         MSBuild(s => s
-            .SetTargetPath(Solution)
             .SetTargets("Restore")
+            .SetTargetPath(Solution)
             .SetConfiguration(configuration)
             .SetProcessToolPath(ProcessToolPath)
             .SetVerbosity(MSBuildVerbosity.Minimal)
@@ -144,13 +144,14 @@ partial class Build : NukeBuild
     void BuildProject(string configuration)
     {
         MSBuild(s => s
-            .SetTargetPath(Solution)
             .SetTargets("Rebuild")
+            .SetTargetPath(Solution)
             .SetConfiguration(configuration)
             .SetProcessToolPath(ProcessToolPath)
             .SetVerbosity(MSBuildVerbosity.Minimal)
             .SetMSBuildPlatform(MSBuildPlatform.x64)
             .SetMaxCpuCount(Environment.ProcessorCount)
-            .DisableNodeReuse());
+            .DisableNodeReuse()
+            .EnableRestore());
     }
 }
