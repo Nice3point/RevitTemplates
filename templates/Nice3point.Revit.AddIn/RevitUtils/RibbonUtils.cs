@@ -12,7 +12,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
     {
         public static PushButton AddPushButton(this RibbonPanel panel, Type command, string commandName, string buttonText)
         {
-            var pushButtonData = new PushButtonData(commandName, buttonText, Assembly.GetExecutingAssembly().Location, command.FullName);
+            var pushButtonData = new PushButtonData(commandName, buttonText, Assembly.GetAssembly(command).Location, command.FullName);
             return (PushButton) panel.AddItem(pushButtonData);
         }
 
