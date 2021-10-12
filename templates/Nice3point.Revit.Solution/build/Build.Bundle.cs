@@ -31,8 +31,12 @@ partial class Build
                         }
 
                         var buildDirectory = contentDirectory / version;
-                        Logger.Normal($"Copy files from: {directoryInfo.FullName} to {buildDirectory}.");
                         CopyFilesContent(directoryInfo.FullName, buildDirectory);
+                        var assemblies = Directory.GetFiles(directoryInfo.FullName, "*", SearchOption.AllDirectories);
+                        foreach (var assembly in assemblies)
+                        {
+                            Console.WriteLine($"Added {version} version file: {assembly}");
+                        }
                     }
                 }
             }
