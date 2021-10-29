@@ -32,9 +32,7 @@ partial class Build
                 proc.StartInfo.FileName = exeFile;
                 proc.StartInfo.Arguments = exeArguments;
                 proc.Start();
-
-                Logger.Normal($"Waiting {InstallerCreationTime} seconds to create installer on another thread");
-                Thread.Sleep(TimeSpan.FromSeconds(InstallerCreationTime));
+                proc.WaitForExit();
             }
         });
 

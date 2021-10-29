@@ -35,7 +35,7 @@ partial class Build
                         var assemblies = Directory.GetFiles(directoryInfo.FullName, "*", SearchOption.AllDirectories);
                         foreach (var assembly in assemblies)
                         {
-                            Console.WriteLine($"Added {version} version file: {assembly}");
+                            Logger.Normal($"Added {version} version file: {assembly}");
                         }
                     }
                 }
