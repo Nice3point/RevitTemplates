@@ -3,7 +3,7 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}") = "Installer", "Installer\Installer.csproj", "{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}"
 EndProject
-Project("{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}") = "build", "build\build.csproj", "{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}"
+Project("{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}") = "Build", "Build\Build.csproj", "{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
