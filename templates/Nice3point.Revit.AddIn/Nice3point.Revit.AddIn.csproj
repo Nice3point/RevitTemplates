@@ -1,56 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
         <UseWPF>true</UseWPF>
         <LangVersion>9</LangVersion>
+        <PlatformTarget>x64</PlatformTarget>
+        <TargetFramework>net48</TargetFramework>
         <Configurations>Debug R19;Debug R20;Debug R21;Debug R22;Release R19;Release R20;Release R21;Release R22</Configurations>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R19|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug R19' ">
         <DebugType>full</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
         <DefineConstants>DEBUG;TRACE;R19</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R20|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug R20' ">
         <DebugType>full</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
         <DefineConstants>DEBUG;TRACE;R20</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R21|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug R21' ">
         <DebugType>full</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
         <DefineConstants>DEBUG;TRACE;R21</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug R22|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug R22' ">
         <DebugType>full</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
         <DefineConstants>DEBUG;TRACE;R22</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R19|AnyCPU' ">
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release R19' ">
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
         <DefineConstants>R19</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R20|AnyCPU' ">
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release R20' ">
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
         <DefineConstants>R20</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R21|AnyCPU' ">
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release R21' ">
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
         <DefineConstants>R21</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release R22|AnyCPU' ">
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release R22' ">
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
-        <PlatformTarget>x64</PlatformTarget>
         <DefineConstants>R22</DefineConstants>
     </PropertyGroup>
 
