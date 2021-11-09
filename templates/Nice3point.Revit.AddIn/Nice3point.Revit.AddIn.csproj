@@ -80,11 +80,13 @@
         <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).0.0"/>
     </ItemGroup>
 
+<!--#if (!CommandStyle)
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
-
+    
+#endif-->
     <ItemGroup>
         <None Update="Nice3point.Revit.AddIn.addin">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -94,6 +96,9 @@
     <ItemGroup>
         <Folder Include="Core"/>
         <Folder Include="Resources\Fonts"/>
+<!--#if (CommandStyle)
+        <Folder Include="Resources\Icons"/>
+#endif-->
         <Folder Include="Resources\Localization"/>
         <Folder Include="Utils"/>
     </ItemGroup>

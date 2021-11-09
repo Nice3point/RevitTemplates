@@ -25,13 +25,6 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
-    "TargetFrameworkOverride": {
-      "type": "parameter",
-      "description": "Overrides the target framework",
-      "replaces": "TargetFrameworkOverride",
-      "datatype": "string",
-      "defaultValue": ""
-    },
     "Framework": {
       "type": "parameter",
       "description": "The target framework for the project.",
@@ -44,8 +37,29 @@
       ],
       "replaces": "net48",
       "defaultValue": "net48"
+    },
+    "CommandStyle": {
+      "type": "parameter",
+      "description": "Changes the plugin type to Command.",
+      "datatype": "bool",
+      "defaultValue": "false"
     }
   },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(CommandStyle)",
+          "exclude": [
+            "Application.cs",
+            "RevitUtils/RibbonUtils.cs",
+            "Resources/Icons/RibbonIcon16.png",
+            "Resources/Icons/RibbonIcon32.png"
+          ]
+        }
+      ]
+    }
+  ],
   "primaryOutputs": [
     {
       "path": "Application.cs"
@@ -61,5 +75,22 @@
       },
       "continueOnError": true
     }
-  ]
+  ],
+  "SpecialCustomOperations": {
+    "**/*.addin": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": [ "#if", "<!--#if" ],
+            "actionableElse": [ "#else", "<!--#else" ],
+            "actionableElseif": [ "#elseif", "<!--#elseif" ],
+            "endif": [ "#endif", "#endif-->" ],
+            "trim" : "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    }
+  }
 }

@@ -27,6 +27,6 @@ This repository contains a project templates for creating Revit Add-In.
 
 ## Usage
 
-* For creating project run `dotnet new revit-sln -n ProjectName`, where ProjectName is the name of your project.
+* To create a project, use the **New Project/Solution** button in your IDE or run the dotnet new command in a terminal.
 * To create a package run `nuke`. More details about Nuke [here](https://github.com/nuke-build/nuke).
 * For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
