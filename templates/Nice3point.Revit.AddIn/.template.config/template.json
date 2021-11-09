@@ -38,11 +38,30 @@
       "replaces": "net48",
       "defaultValue": "net48"
     },
-    "CommandStyle": {
+    "ApplicationType": {
       "type": "parameter",
-      "description": "Changes the plugin type to Command.",
-      "datatype": "bool",
-      "defaultValue": "false"
+      "displayName": "Add-In type",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "Application",
+          "description": "Application AddIn"
+        },
+        {
+          "choice": "Command",
+          "description": "Command AddIn"
+        }
+      ],
+      "replaces": "Custom",
+      "defaultValue": "Application"
+    },
+    "CommandStyle": {
+      "type": "computed",
+      "value": "(ApplicationType == \"Command\")"
+    },
+    "ApplicationStyle": {
+      "type": "computed",
+      "value": "(ApplicationType == \"Application\")"
     }
   },
   "sources": [
@@ -82,11 +101,23 @@
         {
           "type": "conditional",
           "configuration": {
-            "actionableIf": [ "#if", "<!--#if" ],
-            "actionableElse": [ "#else", "<!--#else" ],
-            "actionableElseif": [ "#elseif", "<!--#elseif" ],
-            "endif": [ "#endif", "#endif-->" ],
-            "trim" : "true",
+            "actionableIf": [
+              "#if",
+              "<!--#if"
+            ],
+            "actionableElse": [
+              "#else",
+              "<!--#else"
+            ],
+            "actionableElseif": [
+              "#elseif",
+              "<!--#elseif"
+            ],
+            "endif": [
+              "#endif",
+              "#endif-->"
+            ],
+            "trim": "true",
             "wholeLine": "true"
           }
         }

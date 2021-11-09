@@ -1,7 +1,7 @@
 ﻿<RevitAddIns>
 #if (CommandStyle)
     <AddIn Type="Command">
-#else
+#elseif (ApplicationStyle)
     <AddIn Type="Application">
 #endif
         <Name>Nice3point.Revit.AddIn</Name>
@@ -10,7 +10,7 @@
 #if (CommandStyle)
         <FullClassName>Nice3point.Revit.AddIn.Commands.Command</FullClassName>
         <Text>Nice3point.Revit.AddIn</Text>
-#else
+#elseif (ApplicationStyle)
         <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
 #endif
         <VendorId>CompanyName</VendorId>
