@@ -20,7 +20,7 @@ namespace Nice3point.Revit.AddIn.Commands
 #endif
             var viewModel = new SimpleViewModel();
             var view = new SimpleView(viewModel);
-            if (view.ShowDialog() != true) return Result.Cancelled;
+            view.ShowDialog();
 
             return Result.Succeeded;
         }
