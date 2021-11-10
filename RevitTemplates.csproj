@@ -15,16 +15,16 @@
         <Authors>Nice3point</Authors>
         <Description>Templates for Revit plugin development</Description>
         <PackageLicenseFile>License.md</PackageLicenseFile>
-        <PackageIconUrl>Images/PackageIcon.png</PackageIconUrl>
-        <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
         <PackageTags>revit;templates</PackageTags>
+        <PackageIcon>images\PackageIcon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Update="License.md" Pack="true" PackagePath="" />
-        <Content Include="templates\**\*" />
-        <Compile Remove="**\*" />
+        <None Update="Images\PackageIcon.png" Pack="true" PackagePath="images\PackageIcon.png"/>
+        <None Update="License.md" Pack="true" PackagePath=""/>
+        <Content Include="templates\**\*"/>
+        <Compile Remove="**\*"/>
     </ItemGroup>
-
 </Project>
