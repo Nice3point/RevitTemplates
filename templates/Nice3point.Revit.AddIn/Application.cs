@@ -13,8 +13,10 @@ namespace Nice3point.Revit.AddIn
 
         public Result OnStartup(UIControlledApplication application)
         {
-            var panel = RibbonUtils.CreateRibbonPanel(application, "Nice3point.Revit.AddIn", "Panel name"); /*caret*/
-
+            var panel = RibbonUtils.CreateRibbonPanel(application, "Nice3point.Revit.AddIn", "Panel name");
+#if (ApplicationStyle)
+            /*caret*/
+#endif
             var showButton = panel.AddPushButton(typeof(Command), nameof(Command), "Button text");
             showButton.ToolTip = "Tooltip";
             showButton.Image = new BitmapImage(new Uri(ButtonImageUrl));
