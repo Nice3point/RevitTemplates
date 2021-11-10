@@ -15,6 +15,7 @@
         <Authors>Nice3point</Authors>
         <Description>Templates for Revit plugin development</Description>
         <PackageLicenseFile>License.md</PackageLicenseFile>
+        <PackageIconUrl>Images/PackageIcon.png</PackageIconUrl>
         <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>revit;templates</PackageTags>
