@@ -4,13 +4,6 @@
 
 **Description:** 
 
-## Issue type
-
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Documentation
-- [x] Other
-
 ## Quality Checklist
 
 - [ ] My code follows the style guidelines of this project
