@@ -22,9 +22,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Update="Images\PackageIcon.png" Pack="true" PackagePath="images\PackageIcon.png"/>
-        <None Update="License.md" Pack="true" PackagePath=""/>
-        <Content Include="templates\**\*"/>
-        <Compile Remove="**\*"/>
+        <None Update="Images\PackageIcon.png" Pack="true" PackagePath="images\PackageIcon.png" />
+        <None Update="License.md" Pack="true" PackagePath="" />
+        <Content Include="Templates\**\*" />
+        <Compile Remove="**\*" />
     </ItemGroup>
 </Project>
