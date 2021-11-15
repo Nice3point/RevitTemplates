@@ -28,6 +28,7 @@
     "Pipeline": {
       "type": "parameter",
       "displayName": "Pipeline",
+      "description": "Adds support for pipeline to your project",
       "datatype": "choice",
       "choices": [
         {
@@ -38,12 +39,12 @@
         {
           "choice": "Azure",
           "displayName": "Azure DevOps",
-          "description": "Azure pipeline"
+          "description": "Azure DevOps pipeline"
         },
         {
           "choice": "GitHub",
           "displayName": "GitHub Actions",
-          "description": "GitHub pipeline"
+          "description": "GitHub Actions pipeline"
         }
       ],
       "defaultValue": "GitHub"
