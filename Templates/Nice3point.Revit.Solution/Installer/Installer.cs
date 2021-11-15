@@ -22,6 +22,11 @@ namespace Installer
         {
             var outFileNameBuilder = new StringBuilder().Append(OutputName).Append("-").Append(Version);
             //Additional suffixes for unique configurations add here
+<!--#if (Bundle)
+#if RELEASE_STORE
+            outFileNameBuilder.Append("-Store");
+#endif
+#endif-->
             var outFileName = outFileNameBuilder.ToString();
 
             var project = new Project

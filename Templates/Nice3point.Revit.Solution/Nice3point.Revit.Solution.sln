@@ -15,10 +15,21 @@ Global
 		Release R20|Any CPU = Release R20|Any CPU
 		Release R21|Any CPU = Release R21|Any CPU
 		Release R22|Any CPU = Release R22|Any CPU
-		Installer|Any CPU = Installer|Any CPU
+        Installer|Any CPU = Installer|Any CPU
+<!--#if (Bundle)
+		Release R19 Store|Any CPU = Release R19 Store|Any CPU
+		Release R20 Store|Any CPU = Release R20 Store|Any CPU
+		Release R21 Store|Any CPU = Release R21 Store|Any CPU
+		Release R22 Store|Any CPU = Release R22 Store|Any CPU
+		Installer Store|Any CPU = Installer Store|Any CPU
+#endif-->
 	EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
         {BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Installer|Any CPU.ActiveCfg = Release|Any CPU
         {BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Installer|Any CPU.Build.0 = Release|Any CPU
+<!--#if (Bundle)
+        {BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Installer Store|Any CPU.ActiveCfg = Release Store|Any CPU
+        {BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Installer Store|Any CPU.Build.0 = Release Store|Any CPU
+#endif-->
     EndGlobalSection
 EndGlobal

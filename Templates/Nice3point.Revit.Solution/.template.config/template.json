@@ -14,7 +14,7 @@
     "Revit"
   ],
   "tags": {
-    "type":"item",
+    "type": "item",
     "language": "C#",
     "platform": ".NET"
   },
@@ -48,13 +48,9 @@
       ],
       "defaultValue": "GitHub"
     },
-    "CommandStyle": {
+    "NoPipeline": {
       "type": "computed",
-      "value": "(ApplicationType == \"Command\")"
-    },
-    "ApplicationStyle": {
-      "type": "computed",
-      "value": "(ApplicationType == \"Application\")"
+      "value": "(Pipeline == \"None\")"
     },
     "AzurePipeline": {
       "type": "computed",
@@ -63,6 +59,12 @@
     "GitHubPipeline": {
       "type": "computed",
       "value": "(Pipeline == \"GitHub\")"
+    },
+    "Bundle": {
+      "type": "parameter",
+      "dataType": "bool",
+      "description": "Enable Autodesk Store Bundle. Adds target and configurations for easy publishing of the plugin in the store",
+      "defaultValue": "false"
     }
   },
   "sources": [
@@ -75,6 +77,12 @@
             "RevitUtils/RibbonUtils.cs",
             "Resources/Icons/RibbonIcon16.png",
             "Resources/Icons/RibbonIcon32.png"
+          ]
+        },
+        {
+          "condition": "(NoPipeline)",
+          "exclude": [
+            "Changelog.md"
           ]
         },
         {
@@ -91,6 +99,13 @@
             "Build/Build.GitHubRelease.cs",
             "Build/Build.CI.GitHubActions.cs"
           ]
+        },
+        {
+          "condition": "(!Bundle)",
+          "exclude": [
+            "Build/Build.Bundle.Create.cs",
+            "Build/Build.Bundle.Zip.cs"
+          ]
         }
       ]
     }
@@ -99,5 +114,30 @@
     {
       "path": "Nice3point.Item.Solution.sln"
     }
-  ]
+  ],
+  "SpecialCustomOperations": {
+    "**/*.cs": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": [
+              "<!--#if"
+            ],
+            "actionableElse": [
+              "<!--#else"
+            ],
+            "actionableElseif": [
+              "<!--#elseif"
+            ],
+            "endif": [
+              "#endif-->"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    }
+  }
 }

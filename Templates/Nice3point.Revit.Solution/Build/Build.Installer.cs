@@ -4,14 +4,18 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Nuke.Common;
-using Nuke.Common.Git;
+<!--#if (!NoPipeline)
+    using Nuke.Common.Git;
+#endif-->
 
 partial class Build
 {
     Target CreateInstaller => _ => _
         .TriggeredBy(Compile)
         .Produces(ArtifactsDirectory / "*.msi")
+<!--#if (HazPipeline)
         .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
+#endif-->
         .Executes(() =>
         {
             var installerProject = BuilderExtensions.GetProject(Solution, InstallerProject);

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+<!--#if (!NoPipeline)
 using Nuke.Common.Git;
+#endif-->
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -14,9 +16,13 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 partial class Build : NukeBuild
 {
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
+<!--#if (GitHubPipeline)
     readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
+#endif-->
+<!--#if (!NoPipeline)
     [GitRepository] readonly GitRepository GitRepository;
-
+#endif-->
+    
     [Solution] public readonly Solution Solution;
     string ProcessToolPath;
 

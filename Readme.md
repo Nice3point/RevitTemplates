@@ -10,16 +10,14 @@
 This repository contains a project templates for creating Revit Add-In.
 
 ## Template Features
-
-* Platforms
-    * .Net Framework
-    * .Net Core
-* Revit Versions
-    * Dynamically expandable
-    * Latest tested version - 2022
-* Package content
-    * Solution template
-    * Add-In template
+* Build projects for all versions of Revit.
+* The templates have all the necessary files for a quick start.
+* Maximum automation with the **Nuke** build system.
+* Automatic **Installer** creation.
+* Automatically publishing a Release to **GitHub**.
+* Creating a Bundle to publish an Application to the **Autodesk Store**.
+* Support for **Azure DevOps** pipelines and **GitHub Actions**.
+* Creating a plugin of **Application** and **Command** types.
 
 ## Installation
 
@@ -28,6 +26,6 @@ This repository contains a project templates for creating Revit Add-In.
 
 ## Usage
 
-* To create a project, use the **New Project/Solution** button in your IDE or run the dotnet new command in a terminal.
+* To create a project, use the **New Project/Solution** button in your IDE or run `dotnet new` command in a terminal.
 * To create a package run `nuke`. More details about Nuke [here](https://github.com/nuke-build/nuke).
 * For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).

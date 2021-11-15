@@ -9,7 +9,9 @@ partial class Build
 
     public const string BuildConfiguration = "Release";
     public const string InstallerConfiguration = "Installer";
+<!--#if (Bundle)
     public const string BundleConfiguration = "Store";
+#endif-->
 
     const string AddInBinPrefix = "AddIn";
     const string ArtifactsFolder = "output";

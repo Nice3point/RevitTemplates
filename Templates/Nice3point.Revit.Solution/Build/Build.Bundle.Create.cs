@@ -1,14 +1,17 @@
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.Common;
+using Nuke.Common.Git;
 
 partial class Build
 {
     Target CreateBundle => _ => _
         .TriggeredBy(Compile)
+<!--#if (HazPipeline)
+        .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
+#endif-->
         .Executes(() =>
         {
             var versionPatter = new Regex(@"\d+");
@@ -43,26 +46,6 @@ partial class Build
 
             if (!Directory.Exists(contentDirectory))
                 throw new Exception($"No configuration found to create a bundle. Check that the solution configuration end with \"{BundleConfiguration}\".");
-        });
-
-    Target ZipBundle => _ => _
-        .TriggeredBy(CreateBundle)
-        .Produces(ArtifactsDirectory / "*.zip")
-        .Executes(() =>
-        {
-            var bundleDirectory = Solution.GetBundleDirectory(ArtifactsDirectory);
-            if (Directory.Exists(bundleDirectory))
-            {
-                var archiveName = $"{bundleDirectory}.zip";
-                Logger.Normal($"Archive creation: {archiveName}");
-                ZipFile.CreateFromDirectory(bundleDirectory, archiveName);
-                Logger.Normal($"Deletion directory: {bundleDirectory}");
-                Directory.Delete(bundleDirectory, true);
-            }
-            else
-            {
-                throw new Exception($"Directory not found for archiving: {bundleDirectory}");
-            }
         });
 
     void CopyFilesContent(string sourcePath, string targetPath)
