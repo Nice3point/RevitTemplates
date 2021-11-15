@@ -24,6 +24,77 @@
     "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC",
     "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"
   ],
+  "symbols": {
+    "Pipeline": {
+      "type": "parameter",
+      "displayName": "Pipeline",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "None",
+          "displayName": "None",
+          "description": "Pipeline not used"
+        },
+        {
+          "choice": "Azure",
+          "displayName": "Azure DevOps",
+          "description": "Azure pipeline"
+        },
+        {
+          "choice": "GitHub",
+          "displayName": "GitHub Actions",
+          "description": "GitHub pipeline"
+        }
+      ],
+      "defaultValue": "GitHub"
+    },
+    "CommandStyle": {
+      "type": "computed",
+      "value": "(ApplicationType == \"Command\")"
+    },
+    "ApplicationStyle": {
+      "type": "computed",
+      "value": "(ApplicationType == \"Application\")"
+    },
+    "AzurePipeline": {
+      "type": "computed",
+      "value": "(Pipeline == \"Azure\")"
+    },
+    "GitHubPipeline": {
+      "type": "computed",
+      "value": "(Pipeline == \"GitHub\")"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(CommandStyle)",
+          "exclude": [
+            "Application.cs",
+            "RevitUtils/RibbonUtils.cs",
+            "Resources/Icons/RibbonIcon16.png",
+            "Resources/Icons/RibbonIcon32.png"
+          ]
+        },
+        {
+          "condition": "(!AzurePipeline)",
+          "exclude": [
+            "azure-pipelines.yml",
+            "Build/Build.CI.AzurePipelines.cs"
+          ]
+        },
+        {
+          "condition": "(!GitHubPipeline)",
+          "exclude": [
+            ".github/**",
+            "Build/Build.GitHubRelease.cs",
+            "Build/Build.CI.GitHubActions.cs"
+          ]
+        }
+      ]
+    }
+  ],
   "primaryOutputs": [
     {
       "path": "Nice3point.Item.Solution.sln"
