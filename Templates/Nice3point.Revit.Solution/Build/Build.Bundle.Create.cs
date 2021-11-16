@@ -3,13 +3,15 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.Common;
+<!--#if (!NoPipeline)
 using Nuke.Common.Git;
+#endif-->
 
 partial class Build
 {
     Target CreateBundle => _ => _
         .TriggeredBy(Compile)
-<!--#if (HazPipeline)
+<!--#if (!NoPipeline)
         .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
 #endif-->
         .Executes(() =>
@@ -36,10 +38,7 @@ partial class Build
                         var buildDirectory = contentDirectory / version;
                         CopyFilesContent(directoryInfo.FullName, buildDirectory);
                         var assemblies = Directory.GetFiles(directoryInfo.FullName, "*", SearchOption.AllDirectories);
-                        foreach (var assembly in assemblies)
-                        {
-                            Logger.Normal($"Added {version} version file: {assembly}");
-                        }
+                        foreach (var assembly in assemblies) Logger.Normal($"Added {version} version file: {assembly}");
                     }
                 }
             }

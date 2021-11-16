@@ -22,7 +22,7 @@ partial class Build : NukeBuild
 <!--#if (!NoPipeline)
     [GitRepository] readonly GitRepository GitRepository;
 #endif-->
-    
+
     [Solution] public readonly Solution Solution;
     string ProcessToolPath;
 
@@ -151,8 +151,7 @@ partial class Build : NukeBuild
         return CustomMsBuildPath;
     }
 
-    void RestoreProject(string configuration)
-    {
+    void RestoreProject(string configuration) =>
         MSBuild(s => s
             .SetTargets("Restore")
             .SetTargetPath(Solution)
@@ -160,10 +159,8 @@ partial class Build : NukeBuild
             .SetProcessToolPath(ProcessToolPath)
             .SetVerbosity(MSBuildVerbosity.Minimal)
         );
-    }
 
-    void BuildProject(string configuration)
-    {
+    void BuildProject(string configuration) =>
         MSBuild(s => s
             .SetTargets("Rebuild")
             .SetTargetPath(Solution)
@@ -174,5 +171,4 @@ partial class Build : NukeBuild
             .SetMaxCpuCount(Environment.ProcessorCount)
             .DisableNodeReuse()
             .EnableRestore());
-    }
 }

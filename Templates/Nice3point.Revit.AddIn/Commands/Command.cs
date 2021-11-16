@@ -16,7 +16,7 @@ namespace Nice3point.Revit.AddIn.Commands
 #if (CommandStyle)
             /*caret*/
 #else
-            
+
 #endif
             var viewModel = new SimpleViewModel();
             var view = new SimpleView(viewModel);

@@ -12,10 +12,10 @@ using Octokit;
 
 partial class Build
 {
-    readonly Regex VersionRegex = new(@"(\d+\.)+\d+", RegexOptions.Compiled);
-    
-    [Parameter] string GitHubToken { get; set; }
     [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
+    readonly Regex VersionRegex = new(@"(\d+\.)+\d+", RegexOptions.Compiled);
+
+    [Parameter] string GitHubToken { get; set; }
 
     Target PublishGitHubRelease => _ => _
         .TriggeredBy(CreateInstaller)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Nuke.Common;
 <!--#if (!NoPipeline)
-    using Nuke.Common.Git;
+using Nuke.Common.Git;
 #endif-->
 
 partial class Build
@@ -13,7 +13,7 @@ partial class Build
     Target CreateInstaller => _ => _
         .TriggeredBy(Compile)
         .Produces(ArtifactsDirectory / "*.msi")
-<!--#if (HazPipeline)
+<!--#if (!NoPipeline)
         .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
 #endif-->
         .Executes(() =>
