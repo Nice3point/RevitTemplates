@@ -16,10 +16,6 @@ partial class Build
     const string AddInBinPrefix = "AddIn";
     const string ArtifactsFolder = "output";
 
-    //The libraries below use the AfterBuild target
-    //Change the version here if it is different from the one specified in the .csproj file
-    const string IlRepackTargetPath = @"%USERPROFILE%\.nuget\packages\ilrepack.lib.msbuild.task\2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets";
-
     //Specify the path to the MSBuild.exe file here if you are not using VisualStudio
     const string CustomMsBuildPath = @"C:\Program Files\JetBrains\JetBrains Rider\tools\MSBuild\Current\Bin\MSBuild.exe";
 }
