@@ -58,11 +58,8 @@ partial class Build : NukeBuild
                 Directory.CreateDirectory(ArtifactsDirectory);
             }
 
-            var wixTargetPath = Environment.ExpandEnvironmentVariables(WixTargetPath);
             var ilTargetPath = Environment.ExpandEnvironmentVariables(IlRepackTargetPath);
 
-            Logger.Normal("Updating target: WixSharp");
-            if (File.Exists(wixTargetPath)) ReplaceFileText("<Target Name=\"MSIAuthoring\">", wixTargetPath, 3);
             Logger.Normal("Updating target: ILRepack");
             if (File.Exists(ilTargetPath)) ReplaceFileText("<Target Name=\"ILRepack\">", ilTargetPath, 13);
 
