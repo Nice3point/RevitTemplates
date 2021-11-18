@@ -45,6 +45,7 @@ partial class Build : NukeBuild
             }
             else
             {
+                Logger.Normal($"Creating directory: {ArtifactsDirectory}");
                 Directory.CreateDirectory(ArtifactsDirectory);
             }
 

@@ -1,8 +1,8 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Nice3point.Revit.AddIn.View;
-using Nice3point.Revit.AddIn.ViewModel;
+using Nice3point.Revit.AddIn.ViewModels;
+using Nice3point.Revit.AddIn.Views;
 
 namespace Nice3point.Revit.AddIn.Commands
 {

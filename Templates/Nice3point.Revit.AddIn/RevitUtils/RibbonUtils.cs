@@ -10,18 +10,32 @@ namespace Nice3point.Revit.AddIn.RevitUtils
 {
     public static class RibbonUtils
     {
+        /// <summary>
+        ///     Adds a button to the ribbon
+        /// </summary>
         public static PushButton AddPushButton(this RibbonPanel panel, Type command, string commandName, string buttonText)
         {
             var pushButtonData = new PushButtonData(commandName, buttonText, Assembly.GetAssembly(command).Location, command.FullName);
             return (PushButton) panel.AddItem(pushButtonData);
         }
 
+        /// <summary>
+        ///     Creates a panel in the Add-ins tab
+        /// </summary>
+        /// <param name="application">Revit application</param>
+        /// <param name="panelName">Panel name</param>
         public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName)
         {
             var ribbonPanels = application.GetRibbonPanels(Tab.AddIns);
             return CreateRibbonPanel(application, panelName, ribbonPanels);
         }
 
+        /// <summary>
+        ///     Creates a panel in a new tab
+        /// </summary>
+        /// <param name="application">Revit application</param>
+        /// <param name="tabName">Tab name</param>
+        /// <param name="panelName">Panel name</param>
         public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string tabName, string panelName)
         {
             var ribbonTab = ComponentManager.Ribbon.Tabs.FirstOrDefault(tab => tab.Id.Equals(tabName));

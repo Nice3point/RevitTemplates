@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
-namespace Nice3point.Revit.AddIn.ViewModel
+namespace Nice3point.Revit.AddIn.ViewModels
 {
     public sealed class SimpleViewModel : INotifyPropertyChanged
     {

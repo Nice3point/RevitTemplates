@@ -1,4 +1,4 @@
-﻿namespace Nice3point.Revit.AddIn.View.Utils
+﻿namespace Nice3point.Revit.AddIn.Views.Utils
 {
     public static class ViewUtils
     {

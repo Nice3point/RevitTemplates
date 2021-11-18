@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Nice3point.Revit.AddIn.ViewModel.Objects
+namespace Nice3point.Revit.AddIn.ViewModels.Objects
 {
     public class RelayCommand : ICommand
     {
