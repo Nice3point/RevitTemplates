@@ -22,7 +22,8 @@ Global
 		File = templates\Nice3point.Revit.Solution\.run\Revit 2020 ENU.run.xml
 		File = templates\Nice3point.Revit.Solution\.run\Revit 2021 ENU.run.xml
 		File = templates\Nice3point.Revit.Solution\.run\Revit 2022 ENU.run.xml
-		File = Templates\Nice3point.Revit.Solution\.run\Nuke Plan.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke.run.xml
+		File = Templates\Nice3point.Revit.Solution\.run\Nuke Plan.run.xml
+		File = Templates\Nice3point.Revit.Solution\.run\Nuke Clean.run.xml
 	EndGlobalSection
 EndGlobal

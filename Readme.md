@@ -11,14 +11,12 @@ This repository contains a project templates for creating Revit Add-In.
 
 ## Template Features
 
-- Build projects for all versions of Revit.
-- The templates have all the necessary files for a quick start.
-- Maximum automation with the **Nuke** build system.
+- Building a project for all versions of Revit.
 - Automatic **Installer** creation.
-- Automatically publishing a Release to **GitHub**.
-- Creating a Bundle to publish an Application to the **Autodesk Store**.
-- Support for **Azure DevOps** pipelines and **GitHub Actions**.
+- Automatic publishing of releases to **GitHub**.
 - Creating a plugin of **Application** and **Command** types.
+- Support for **Azure DevOps** pipelines and **GitHub Actions**.
+- Creating a Bundle to publish an Application to the **Autodesk Store**.
 
 ## Installation
 
