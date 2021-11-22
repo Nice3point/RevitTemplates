@@ -1,6 +1,6 @@
 <h3 align="center"><img src="https://i.imgur.com/v34P0ro.png" width="500px"></h3>
 
-# Create your Add-In for Revit on the .Net platform now.
+# Create your Add-In for Revit on the .Net platform now
 
 <p align="center">
   <a href="https://www.nuget.org/packages/Nice3point.Revit.Templates"><img src="https://img.shields.io/nuget/v/Nice3point.Revit.Templates?style=for-the-badge"></a>
