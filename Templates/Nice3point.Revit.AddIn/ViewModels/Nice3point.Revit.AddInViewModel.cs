@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Nice3point.Revit.AddIn.ViewModels
 {
-    public sealed class SimpleViewModel : INotifyPropertyChanged
+    public sealed class Nice3point.Revit.AddInViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

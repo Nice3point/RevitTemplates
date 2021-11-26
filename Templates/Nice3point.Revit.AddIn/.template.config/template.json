@@ -25,34 +25,21 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
-    "Framework": {
-      "type": "parameter",
-      "description": "The target framework for the project.",
-      "datatype": "choice",
-      "choices": [
-        {
-          "choice": "net48",
-          "description": "Target net4.8"
-        }
-      ],
-      "replaces": "net48",
-      "defaultValue": "net48"
-    },
     "ApplicationType": {
       "type": "parameter",
       "displayName": "Add-In type",
       "datatype": "choice",
+      "description": "The type of add-in to be registered in the .addin manifest",
       "choices": [
         {
           "choice": "Application",
-          "description": "Application AddIn"
+          "description": "Registers the add-in in the manifest with the Application type"
         },
         {
           "choice": "Command",
-          "description": "Command AddIn"
+          "description": "Registers the add-in in the manifest with the Command type"
         }
       ],
-      "replaces": "Custom",
       "defaultValue": "Application"
     },
     "CommandStyle": {
@@ -62,6 +49,39 @@
     "ApplicationStyle": {
       "type": "computed",
       "value": "(ApplicationType == \"Application\")"
+    },
+    "WindowType": {
+      "type": "parameter",
+      "displayName": "Window type",
+      "datatype": "choice",
+      "description": "The type of window to be used by the add-in",
+      "choices": [
+        {
+          "choice": "None",
+          "description": "The add-in will not use windows"
+        },
+        {
+          "choice": "Modal",
+          "description": "A modal window that blocks Revit until the user closes the window"
+        },
+        {
+          "choice": "Modeless",
+          "description": "A modeless window does not block any other window while it is visible"
+        }
+      ],
+      "defaultValue": "Modal"
+    },
+    "NoWindow": {
+      "type": "computed",
+      "value": "(WindowType == \"None\")"
+    },
+    "ModalWindow": {
+      "type": "computed",
+      "value": "(WindowType == \"Modal\")"
+    },
+    "ModelessWindow": {
+      "type": "computed",
+      "value": "(WindowType == \"Modeless\")"
     }
   },
   "sources": [
@@ -74,6 +94,19 @@
             "RevitUtils/RibbonUtils.cs",
             "Resources/Icons/RibbonIcon16.png",
             "Resources/Icons/RibbonIcon32.png"
+          ]
+        },
+        {
+          "condition": "(NoWindow)",
+          "exclude": [
+            "Views/**",
+            "ViewModels/**"
+          ]
+        },
+        {
+          "condition": "(!ModelessWindow)",
+          "exclude": [
+            "Commands/Handlers/**"
           ]
         }
       ]

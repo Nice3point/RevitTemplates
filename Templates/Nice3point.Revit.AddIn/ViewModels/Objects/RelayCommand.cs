@@ -3,6 +3,10 @@ using System.Windows.Input;
 
 namespace Nice3point.Revit.AddIn.ViewModels.Objects
 {
+    /// <summary>
+    ///     The class contains a command called from View.
+    /// </summary>
+    /// <remarks>Instances of this class must be created in the ViewModel and binding in the View.</remarks>
     public class RelayCommand : ICommand
     {
         private readonly bool _canExecute;

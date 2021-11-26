@@ -11,7 +11,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <PackageId>Nice3point.Revit.Templates</PackageId>
-        <PackageVersion>1.5.0</PackageVersion>
+        <PackageVersion>1.6.0</PackageVersion>
         <Authors>Nice3point</Authors>
         <Description>Templates for Revit plugin development</Description>
         <PackageLicenseFile>License.md</PackageLicenseFile>
@@ -24,7 +24,7 @@
     <ItemGroup>
         <None Update="Images\PackageIcon.png" Pack="true" PackagePath="images\PackageIcon.png" />
         <None Update="License.md" Pack="true" PackagePath="" />
-        <Content Include="Templates\**\*" />
+        <Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
         <Compile Remove="**\*" />
     </ItemGroup>
 </Project>

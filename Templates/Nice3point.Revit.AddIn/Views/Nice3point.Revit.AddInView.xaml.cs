@@ -2,9 +2,9 @@
 
 namespace Nice3point.Revit.AddIn.Views
 {
-    public partial class SimpleView
+    public partial class Nice3point.Revit.AddInView
     {
-        public SimpleView(SimpleViewModel viewModel)
+        public Nice3point.Revit.AddInView(Nice3point.Revit.AddInViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
