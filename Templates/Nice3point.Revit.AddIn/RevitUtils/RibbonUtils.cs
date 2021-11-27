@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
+using RibbonPanel = Autodesk.Revit.UI.RibbonPanel;
 using RibbonPanel = Autodesk.Revit.UI.RibbonPanel;
 
 namespace Nice3point.Revit.AddIn.RevitUtils
@@ -42,6 +44,22 @@ namespace Nice3point.Revit.AddIn.RevitUtils
 
             var ribbonPanels = application.GetRibbonPanels(tabName);
             return CreateRibbonPanel(application, tabName, panelName, ribbonPanels);
+        }
+        
+        /// <summary>
+        ///     Adds a 16x16-96 dpi image from the URI source
+        /// </summary>
+        public static void SetImage(this RibbonButton button, string uri)
+        {
+            button.Image = new BitmapImage(new Uri(uri, UriKind.Relative));
+        }
+        
+        /// <summary>
+        ///     Adds a 32x32-96 dpi image from the URI source
+        /// </summary>
+        public static void SetLargeImage(this RibbonButton button, string uri)
+        {
+            button.LargeImage = new BitmapImage(new Uri(uri, UriKind.Relative));
         }
 
         private static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName, IEnumerable<RibbonPanel> ribbonPanels)
