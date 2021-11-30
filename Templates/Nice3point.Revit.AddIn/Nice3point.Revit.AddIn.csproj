@@ -61,6 +61,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <RootItem Include="$(TargetDir)$(AssemblyName).addin" />
         <AddinItem Include="$(TargetDir)$(AssemblyName).dll" />
         <!--Files to copy to Revit add-ins folder-->
         <!--<AddinItem Include="$(TargetDir)Simple.dll" />-->
@@ -68,15 +69,15 @@
 
     <Target Name="AfterBuildTarget" AfterTargets="CoreBuild">
         <PropertyGroup>
-            <AddinDir>bin\AddIn $(RevitVersion) $(Configuration)\</AddinDir>
-            <AddinFilesDir>$(AddinDir)$(AssemblyName)\</AddinFilesDir>
+            <RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
+            <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
         </PropertyGroup>
 
-        <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)" />
-        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinFilesDir)" />
+        <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
+        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)" />
 
         <ItemGroup>
-            <AddinFiles Include="$(AddinDir)**\*.*" />
+            <AddinFiles Include="$(RootDir)**\*.*" />
         </ItemGroup>
 
         <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
