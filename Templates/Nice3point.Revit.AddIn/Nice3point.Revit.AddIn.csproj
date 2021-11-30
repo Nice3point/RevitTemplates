@@ -33,7 +33,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
         <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).*" />
     </ItemGroup>
 
@@ -45,12 +45,6 @@
 
 #endif-->
     <ItemGroup>
-        <None Update="Nice3point.Revit.AddIn.addin">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup>
         <Folder Include="Core" />
         <Folder Include="Resources\Fonts" />
 <!--#if (CommandStyle)
@@ -60,9 +54,9 @@
         <Folder Include="Utils" />
     </ItemGroup>
 
-    <Target Name="AfterBuildTarget" AfterTargets="CoreBuild">
+    <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
-            <RootItem Include="$(TargetDir)$(AssemblyName).addin" />
+            <RootItem Include="$(ProjectDir)*.addin" />
             <AddinItem Include="$(TargetDir)$(AssemblyName).dll" />
             <!--Files to copy to Revit add-ins folder-->
             <!--<AddinItem Include="$(TargetDir)Simple.dll" />-->
@@ -80,6 +74,8 @@
             <AddinFiles Include="$(RootDir)**\*.*" />
         </ItemGroup>
 
-        <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+        <Copy SourceFiles="@(AddinFiles)"
+              DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"
+              Condition="$(Configuration.Contains('Debug'))" />
     </Target>
 </Project>
