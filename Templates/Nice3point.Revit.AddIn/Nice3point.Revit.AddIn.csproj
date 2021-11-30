@@ -60,14 +60,14 @@
         <Folder Include="Utils" />
     </ItemGroup>
 
-    <ItemGroup>
-        <RootItem Include="$(TargetDir)$(AssemblyName).addin" />
-        <AddinItem Include="$(TargetDir)$(AssemblyName).dll" />
-        <!--Files to copy to Revit add-ins folder-->
-        <!--<AddinItem Include="$(TargetDir)Simple.dll" />-->
-    </ItemGroup>
-
     <Target Name="AfterBuildTarget" AfterTargets="CoreBuild">
+        <ItemGroup>
+            <RootItem Include="$(TargetDir)$(AssemblyName).addin" />
+            <AddinItem Include="$(TargetDir)$(AssemblyName).dll" />
+            <!--Files to copy to Revit add-ins folder-->
+            <!--<AddinItem Include="$(TargetDir)Simple.dll" />-->
+        </ItemGroup>
+        
         <PropertyGroup>
             <RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
             <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
