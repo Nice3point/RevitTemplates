@@ -12,12 +12,12 @@ This repository contains a project templates for creating Revit Add-In.
 ## Template Features
 
 - Building a project for all versions of Revit.
-- Automatic **Installer** creation.
-- Automatic publishing of releases to **GitHub**.
-- Creating a plugin of **Application** and **Command** types.
-- Support for **Modal** and **Modeless** windows.
-- Support for **Azure DevOps** pipelines and **GitHub Actions**.
-- Creating a Bundle to publish an Application to the **Autodesk Store**.
+- Automatic Installer creation.
+- Support for automatic publishing of releases to GitHub.
+- Support for Application and Command add-in types.
+- Support for Modal and Modeless windows.
+- Support for Azure DevOps pipelines and GitHub Actions.
+- Support for bundle to publish an application to the Autodesk Store.
 
 ## Installation
 
