@@ -17,7 +17,7 @@ namespace Nice3point.Revit.AddIn
 #if (ApplicationStyle)
             /*caret*/
 #endif
-            var showButton = panel.AddPushButton(typeof(Command), nameof(Command), "Button text");
+            var showButton = panel.AddPushButton(typeof(Command), "Button text");
             showButton.ToolTip = "Tooltip";
             showButton.SetImage(RibbonImageUri);
             showButton.SetLargeImage(RibbonLargeImageUri);
