@@ -13,7 +13,7 @@ namespace Nice3point.Revit.AddIn
 
         public Result OnStartup(UIControlledApplication application)
         {
-            var panel = RibbonUtils.CreateRibbonPanel(application, "Nice3point.Revit.AddIn", "Panel name");
+            var panel = application.CreatePanel("Panel name", "Nice3point.Revit.AddIn");
 #if (ApplicationStyle)
             /*caret*/
 #endif

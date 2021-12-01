@@ -22,18 +22,18 @@ namespace Nice3point.Revit.AddIn.RevitUtils
         }
 
         /// <summary>
-        ///     Creates a panel in the Add-ins tab.
+        ///     Creates a panel in the Add-ins tab
         /// </summary>
-        public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string panelName)
+        public static RibbonPanel CreatePanel(this UIControlledApplication application, string panelName)
         {
             var ribbonPanels = application.GetRibbonPanels(Tab.AddIns);
             return CreateRibbonPanel(application, panelName, ribbonPanels);
         }
 
         /// <summary>
-        ///     Creates a panel in a new tab.
+        ///     Creates a panel in the specified tab
         /// </summary>
-        public static RibbonPanel CreateRibbonPanel(UIControlledApplication application, string tabName, string panelName)
+        public static RibbonPanel CreatePanel(this UIControlledApplication application, string panelName, string tabName)
         {
             var ribbonTab = ComponentManager.Ribbon.Tabs.FirstOrDefault(tab => tab.Id.Equals(tabName));
             if (ribbonTab is null)
@@ -47,7 +47,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
         }
         
         /// <summary>
-        ///     Adds a 16x16-96 dpi image from the URI source
+        ///     Adds a 16x16px-96dpi image from the URI source
         /// </summary>
         public static void SetImage(this RibbonButton button, string uri)
         {
@@ -55,7 +55,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
         }
         
         /// <summary>
-        ///     Adds a 32x32-96 dpi image from the URI source
+        ///     Adds a 32x32px-96dpi image from the URI source
         /// </summary>
         public static void SetLargeImage(this RibbonButton button, string uri)
         {
