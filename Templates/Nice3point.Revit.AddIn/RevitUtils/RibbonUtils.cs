@@ -24,6 +24,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
         /// <summary>
         ///     Creates a panel in the Add-ins tab
         /// </summary>
+        /// <returns>New or existing Ribbon panel</returns>
         public static RibbonPanel CreatePanel(this UIControlledApplication application, string panelName)
         {
             var ribbonPanels = application.GetRibbonPanels(Tab.AddIns);
@@ -33,6 +34,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
         /// <summary>
         ///     Creates a panel in the specified tab
         /// </summary>
+        /// <returns>New or existing Ribbon panel</returns>
         public static RibbonPanel CreatePanel(this UIControlledApplication application, string panelName, string tabName)
         {
             var ribbonTab = ComponentManager.Ribbon.Tabs.FirstOrDefault(tab => tab.Id.Equals(tabName));

@@ -42,9 +42,6 @@ namespace Nice3point.Revit.AddIn.Commands
 #elif (NoWindow)
             TaskDialog.Show("Revit add-in", "Nice3point.Revit.AddIn");
 #endif
-#if (CommandStyle)
-            /*caret*/
-#else
 
 #endif
             return Result.Succeeded;

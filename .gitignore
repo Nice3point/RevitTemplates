@@ -1,4 +1,7 @@
-﻿*.idea/
+﻿#IDE folders
+*.idea/
 *.vs/
+
+#Project-specific folders
 *obj/
 *bin/

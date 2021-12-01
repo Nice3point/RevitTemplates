@@ -111,11 +111,6 @@
       ]
     }
   ],
-  "primaryOutputs": [
-    {
-      "path": "Nice3point.Item.Solution.sln"
-    }
-  ],
   "SpecialCustomOperations": {
     "**/*.cs": {
       "operations": [
