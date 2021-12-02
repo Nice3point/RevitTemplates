@@ -6,6 +6,24 @@ namespace Nice3point.Revit.AddIn.RevitUtils
     public static class TransactionManager
     {
         /// <summary>
+        ///     The method used to create a single sub-transaction.
+        /// </summary>
+        public static void CreateSubTransaction(Document document, Action action)
+        {
+            using var transaction = new SubTransaction(document);
+            transaction.Start();
+            try
+            {
+                action?.Invoke();
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                if (!transaction.HasEnded()) transaction.RollBack();
+            }
+        }
+        
+        /// <summary>
         ///     The method used to create a single transaction.
         /// </summary>
         public static void CreateTransaction(Document document, string transactionName, Action action)
@@ -19,7 +37,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
             }
             catch (Exception)
             {
-                transaction.RollBack();
+                if (!transaction.HasEnded()) transaction.RollBack();
             }
         }
 
@@ -37,7 +55,7 @@ namespace Nice3point.Revit.AddIn.RevitUtils
             }
             catch (Exception)
             {
-                transaction.RollBack();
+                if (!transaction.HasEnded()) transaction.RollBack();
             }
         }
     }
