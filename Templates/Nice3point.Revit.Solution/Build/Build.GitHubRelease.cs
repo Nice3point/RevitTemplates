@@ -61,20 +61,20 @@ partial class Build
         }
 
         Logger.Normal($"Detected Changelog: {ChangeLogPath}");
+        
         var logBuilder = new StringBuilder();
+        var changelogLineRegex = new Regex($"^.*{version}.? ");
+        
         foreach (var line in File.ReadLines(ChangeLogPath))
         {
             if (logBuilder.Length > 0)
             {
-                if (line.StartsWith("-")) break;
                 logBuilder.AppendLine(line);
                 continue;
             }
 
-            var match = VersionRegex.Match(line);
-            if (!match.Success) continue;
-            if (!match.Value.Equals(version)) continue;
-            var truncatedLine = Regex.Replace(line, $"^.*{version}.? ", string.Empty);
+            if (!changelogLineRegex.Match(line).Success) continue;
+            var truncatedLine = changelogLineRegex.Replace(line, string.Empty);
             logBuilder.AppendLine(truncatedLine);
         }
 
