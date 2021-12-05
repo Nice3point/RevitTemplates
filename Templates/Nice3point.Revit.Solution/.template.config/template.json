@@ -4,8 +4,6 @@
   "name": "Revit Solution",
   "shortName": "revit-sln",
   "identity": "Nice3point.Revit.Solution",
-  "generatorVersions": "[1.0.0.0-*)",
-  "groupIdentity": "RevitSolution",
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.Solution",
   "description": "Create Revit solution containing build and installer projects",
@@ -14,7 +12,7 @@
     "Revit"
   ],
   "tags": {
-    "type": "item",
+    "type": "solution",
     "language": "C#",
     "platform": ".NET"
   },
@@ -109,6 +107,11 @@
           ]
         }
       ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "Nice3point.Item.Solution.sln"
     }
   ],
   "SpecialCustomOperations": {
