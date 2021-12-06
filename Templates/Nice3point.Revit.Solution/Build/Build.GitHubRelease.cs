@@ -56,15 +56,15 @@ partial class Build
     {
         if (!File.Exists(ChangeLogPath))
         {
-            Logger.Info($"Can't find changelog file: {ChangeLogPath}");
+            Logger.Warn($"Can't find changelog file: {ChangeLogPath}");
             return string.Empty;
         }
 
         Logger.Normal($"Detected Changelog: {ChangeLogPath}");
-        
+
         var logBuilder = new StringBuilder();
         var changelogLineRegex = new Regex($"^.*{version}.? ");
-        
+
         foreach (var line in File.ReadLines(ChangeLogPath))
         {
             if (logBuilder.Length > 0)
@@ -78,9 +78,8 @@ partial class Build
             logBuilder.AppendLine(truncatedLine);
         }
 
-        var log = logBuilder.ToString();
-        if (string.IsNullOrEmpty(log)) Logger.Info($"There is no version entry in the changelog: {version}");
-        return log;
+        if (logBuilder.Length == 0) Logger.Warn($"There is no version entry in the changelog: {version}");
+        return logBuilder.ToString();
     }
 
     static void CheckTags(string gitHubOwner, string gitHubName, string version)
