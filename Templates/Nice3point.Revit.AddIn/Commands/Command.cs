@@ -43,7 +43,6 @@ namespace Nice3point.Revit.AddIn.Commands
             TaskDialog.Show("Revit add-in", "Nice3point.Revit.AddIn");
 #endif
 
-#endif
             return Result.Succeeded;
         }
     }

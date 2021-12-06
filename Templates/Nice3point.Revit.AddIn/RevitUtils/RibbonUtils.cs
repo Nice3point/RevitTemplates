@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
-using RibbonPanel = Autodesk.Revit.UI.RibbonPanel;
+using RibbonButton = Autodesk.Revit.UI.RibbonButton;
 using RibbonPanel = Autodesk.Revit.UI.RibbonPanel;
 
 namespace Nice3point.Revit.AddIn.RevitUtils
