@@ -8,8 +8,8 @@ namespace Nice3point.Revit.AddIn
 {
     public class Application : IExternalApplication
     {
-        private const string RibbonImageUri = "/ModelessAddIn;component/Resources/Icons/RibbonIcon16.png";
-        private const string RibbonLargeImageUri = "/ModelessAddIn;component/Resources/Icons/RibbonIcon32.png";
+        private const string RibbonImageUri = "/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png";
+        private const string RibbonLargeImageUri = "/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png";
 
         public Result OnStartup(UIControlledApplication application)
         {
