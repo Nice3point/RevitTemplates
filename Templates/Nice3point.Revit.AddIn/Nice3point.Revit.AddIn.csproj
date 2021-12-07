@@ -31,6 +31,11 @@
         <RevitVersion>2022</RevitVersion>
         <DefineConstants>$(DefineConstants);R22</DefineConstants>
     </PropertyGroup>
+    <PropertyGroup>
+        <Version>$(RevitVersion)</Version>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
