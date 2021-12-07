@@ -102,10 +102,11 @@ partial class Build : NukeBuild
 
         if (directories.Count == 0) throw new Exception("There are no packaged assemblies in the project. Try to build the project again.");
 
+        var versionRegex = new Regex(@"^.*R\d+ ?");
         var addInsDirectory = directories
             .Where(dir => dir.Name.StartsWith(AddInBinPrefix))
             .Where(dir => dir.Name.Contains(BuildConfiguration))
-            .GroupBy(dir => dir.Name.Length);
+            .GroupBy(dir => versionRegex.Replace(dir.Name, string.Empty));
 
         return addInsDirectory;
     }
