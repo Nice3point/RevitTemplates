@@ -4,7 +4,7 @@ trigger:
       - main
 
 stages:
-  - stage: windows-2022
+  - stage: windows_2022
     displayName: 'windows-2022'
     dependsOn: [ ]
     pool:

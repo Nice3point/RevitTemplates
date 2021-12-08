@@ -20,7 +20,8 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
     "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
     "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC",
-    "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"
+    "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD",
+    "EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE"
   ],
   "symbols": {
     "Pipeline": {
@@ -79,7 +80,7 @@
           ]
         },
         {
-          "condition": "(NoPipeline)",
+          "condition": "(!GitHubPipeline)",
           "exclude": [
             "Changelog.md"
           ]

@@ -128,8 +128,7 @@ partial class Build : NukeBuild
         return CustomMsBuildPath;
     }
 
-    void BuildProject(string configuration)
-    {
+    void BuildProject(string configuration) =>
         MSBuild(s => s
             .SetTargets("Rebuild")
             .SetTargetPath(Solution)
@@ -140,5 +139,4 @@ partial class Build : NukeBuild
             .SetMaxCpuCount(Environment.ProcessorCount)
             .DisableNodeReuse()
             .EnableRestore());
-    }
 }
