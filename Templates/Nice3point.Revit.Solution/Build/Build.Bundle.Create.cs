@@ -6,6 +6,7 @@ using Nuke.Common;
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
 #endif-->
+using Serilog;
 
 partial class Build
 {
@@ -31,14 +32,15 @@ partial class Build
                         var version = versionPatter.Match(directoryInfo.Name).Value;
                         if (string.IsNullOrEmpty(version))
                         {
-                            Logger.Warn($"Missing version label for directory: \"{directoryInfo.Name}\".");
+                            Log.Warning("Missing version label for directory: \"{Directory}\".", directoryInfo.Name);
                             continue;
                         }
 
                         var buildDirectory = contentDirectory / version;
                         CopyFilesContent(directoryInfo.FullName, buildDirectory);
                         var assemblies = Directory.GetFiles(directoryInfo.FullName, "*", SearchOption.AllDirectories);
-                        foreach (var assembly in assemblies) Logger.Normal($"Added {version} version file: {assembly}");
+                        Log.Debug("Added {Version} version files: ", version);
+                        foreach (var assembly in assemblies) Log.Debug("\t{Assembly}", assembly);
                     }
                 }
             }

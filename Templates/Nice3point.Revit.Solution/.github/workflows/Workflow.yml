@@ -1,4 +1,4 @@
-name: Pipeline
+name: Workflow
 
 on:
   push:
@@ -9,9 +9,9 @@ on:
       - '!main'
 
 jobs:
-  windows-latest:
-    name: windows-latest
-    runs-on: windows-latest
+  windows:
+    name: windows-2022
+    runs-on: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v1

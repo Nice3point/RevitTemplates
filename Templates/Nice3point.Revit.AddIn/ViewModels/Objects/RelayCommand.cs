@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Nice3point.Revit.AddIn.ViewModels.Objects
+namespace Nice3point.Revit.AddIn.ViewModels.Objects;
 
 /// <summary>
 ///     The class contains a command called from View.

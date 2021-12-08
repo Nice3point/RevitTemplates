@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Nuke.Common;
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
@@ -11,6 +12,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.VSWhere;
+using Serilog;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 partial class Build : NukeBuild
@@ -33,19 +35,19 @@ partial class Build : NukeBuild
                 var directoryInfo = new DirectoryInfo(ArtifactsDirectory);
                 foreach (var file in directoryInfo.GetFiles())
                 {
-                    Logger.Normal($"Deleting file: {file.FullName}");
+                    Log.Debug("Deleting file: {Name}", file.FullName);
                     file.Delete();
                 }
 
                 foreach (var dir in directoryInfo.GetDirectories())
                 {
-                    Logger.Normal($"Deleting directory: {dir.FullName}");
+                    Log.Debug("Deleting directory: {Name}", dir.FullName);
                     dir.Delete(true);
                 }
             }
             else
             {
-                Logger.Normal($"Creating directory: {ArtifactsDirectory}");
+                Log.Debug("Creating directory: {Directory}", ArtifactsDirectory);
                 Directory.CreateDirectory(ArtifactsDirectory);
             }
 
@@ -58,7 +60,7 @@ partial class Build : NukeBuild
                 var addInDirectories = binDirectory.EnumerateDirectories().Where(info => info.Name.StartsWith(AddInBinPrefix)).ToList();
                 foreach (var addInDirectory in addInDirectories)
                 {
-                    Logger.Normal($"Deleting directory: {addInDirectory.FullName}");
+                    Log.Debug("Deleting directory: {Name}", addInDirectory.FullName);
                     foreach (var file in addInDirectory.GetFiles()) file.Delete();
                     addInDirectory.Delete(true);
                 }
@@ -90,7 +92,7 @@ partial class Build : NukeBuild
         return configurations;
     }
 
-    IEnumerable<IGrouping<int, DirectoryInfo>> GetBuildDirectories()
+    IEnumerable<IGrouping<string, DirectoryInfo>> GetBuildDirectories()
     {
         var directories = new List<DirectoryInfo>();
         foreach (var projectName in Projects)

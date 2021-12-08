@@ -10,7 +10,7 @@ using Nice3point.Revit.AddIn.Commands.Handlers;
 using Nice3point.Revit.AddIn.Core;
 #endif
 
-namespace Nice3point.Revit.AddIn.Commands
+namespace Nice3point.Revit.AddIn.Commands;
 
 [Transaction(TransactionMode.Manual)]
 public class Command : IExternalCommand

@@ -1,4 +1,4 @@
-﻿namespace Nice3point.Revit.AddIn.ViewModels.Utils
+﻿namespace Nice3point.Revit.AddIn.ViewModels.Utils;
 
 /// <summary>
 ///     The class contains common methods for several ViewModels.

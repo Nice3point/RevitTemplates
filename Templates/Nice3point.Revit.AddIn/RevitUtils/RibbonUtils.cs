@@ -8,7 +8,7 @@ using Autodesk.Windows;
 using RibbonButton = Autodesk.Revit.UI.RibbonButton;
 using RibbonPanel = Autodesk.Revit.UI.RibbonPanel;
 
-namespace Nice3point.Revit.AddIn.RevitUtils
+namespace Nice3point.Revit.AddIn.RevitUtils;
 
 public static class RibbonUtils
 {

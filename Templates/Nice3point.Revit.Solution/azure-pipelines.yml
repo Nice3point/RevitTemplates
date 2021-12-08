@@ -4,11 +4,11 @@ trigger:
       - main
 
 stages:
-  - stage: windows_latest
-    displayName: 'windows-latest'
+  - stage: windows-2022
+    displayName: 'windows-2022'
     dependsOn: [ ]
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'windows-2022'
     jobs:
       - job: CreatePackage
         displayName: 'CreatePackage'

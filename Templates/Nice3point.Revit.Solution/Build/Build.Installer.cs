@@ -7,6 +7,7 @@ using Nuke.Common;
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
 #endif-->
+using Serilog;
 
 partial class Build
 {
@@ -29,7 +30,7 @@ partial class Build
                 var exeFile = installerProject.GetExecutableFile(configurations, directories);
                 if (string.IsNullOrEmpty(exeFile))
                 {
-                    Logger.Warn($"No installer executable was found for these packages:\n {string.Join("\n", directories)}");
+                    Log.Warning("No installer executable was found for these packages:\n {Directories}", string.Join("\n", directories));
                     continue;
                 }
 

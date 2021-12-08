@@ -2,7 +2,7 @@
 using Nice3point.Revit.AddIn.Commands;
 using Nice3point.Revit.AddIn.RevitUtils;
 
-namespace Nice3point.Revit.AddIn
+namespace Nice3point.Revit.AddIn;
  
 public class Application : IExternalApplication
 {

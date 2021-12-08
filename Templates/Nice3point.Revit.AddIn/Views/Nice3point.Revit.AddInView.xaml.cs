@@ -1,6 +1,6 @@
 ﻿using Nice3point.Revit.AddIn.ViewModels;
 
-namespace Nice3point.Revit.AddIn.Views
+namespace Nice3point.Revit.AddIn.Views;
 
 public partial class Nice3point.Revit.AddInView
 {

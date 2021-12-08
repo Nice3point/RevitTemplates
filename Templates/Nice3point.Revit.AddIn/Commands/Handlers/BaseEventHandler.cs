@@ -1,7 +1,7 @@
 ﻿using System;
 using Autodesk.Revit.UI;
 
-namespace Nice3point.Revit.AddIn.Commands.Handlers
+namespace Nice3point.Revit.AddIn.Commands.Handlers;
 
 /// <summary>
 ///     Base external event used to change the model.
