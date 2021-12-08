@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <UseWPF>true</UseWPF>
-        <LangVersion>9</LangVersion>
+        <LangVersion>latest</LangVersion>
         <PlatformTarget>x64</PlatformTarget>
         <TargetFramework>net48</TargetFramework>
         <Configurations>Debug R19;Debug R20;Debug R21;Debug R22</Configurations>
@@ -39,7 +39,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+        <PackageReference Include="JetBrains.Annotations" Version="*" />
         <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).*" />
     </ItemGroup>
 

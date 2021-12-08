@@ -6,15 +6,17 @@ using System.Text.RegularExpressions;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 
-public static class BuilderExtensions
+static class BuilderExtensions
 {
     public static Project GetProject(this Solution solution, string projectName) =>
         solution.GetProject(projectName) ?? throw new NullReferenceException($"Cannon find project \"{projectName}\"");
 
     public static AbsolutePath GetBinDirectory(this Project project) => project.Directory / "bin";
 
+<!--#if (Bundle)
     public static AbsolutePath GetBundleDirectory(this Solution solution, AbsolutePath basePath) => basePath / $"{solution.Name}.bundle";
-
+    
+#endif-->
     static AbsolutePath GetInstallerPath(this Project project, string configuration) => project.GetBinDirectory() / configuration / $"{project.Name}.exe";
 
     public static AbsolutePath GetExecutableFile(this Project project, IEnumerable<string> configurations, List<DirectoryInfo> directories)

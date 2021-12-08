@@ -5,3 +5,6 @@
 #Project-specific folders
 *obj/
 *bin/
+
+#User-specific files
+*.user
