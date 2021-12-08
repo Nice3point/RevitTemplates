@@ -126,7 +126,7 @@ partial class Build
                 RawData = File.OpenRead(file)
             };
             var _ = GitHubTasks.GitHubClient.Repository.Release.UploadAsset(createdRelease, releaseAssetUpload).Result;
-            Log.Debug("Added MSI file: {Path}", file);
+            Log.Debug("Added artifact: {Path}", file);
         }
     }
 
