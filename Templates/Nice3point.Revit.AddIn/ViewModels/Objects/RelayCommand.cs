@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Input;
 
 namespace Nice3point.Revit.AddIn.ViewModels.Objects;

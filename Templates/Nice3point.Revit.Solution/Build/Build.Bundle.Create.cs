@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.Common;
 <!--#if (!NoPipeline)
@@ -39,8 +36,8 @@ partial class Build
                         var buildDirectory = contentDirectory / version;
                         CopyFilesContent(directoryInfo.FullName, buildDirectory);
                         var assemblies = Directory.GetFiles(directoryInfo.FullName, "*", SearchOption.AllDirectories);
-                        Log.Debug("Added {Version} version files: ", version);
-                        foreach (var assembly in assemblies) Log.Debug("\t{Assembly}", assembly);
+                        Log.Information("Added {Version} version files: ", version);
+                        foreach (var assembly in assemblies) Log.Information("\t{Assembly}", assembly);
                     }
                 }
             }
@@ -49,7 +46,7 @@ partial class Build
                 throw new Exception($"No configuration found to create a bundle. Check that the solution configuration end with \"{BundleConfiguration}\".");
         });
 
-    void CopyFilesContent(string sourcePath, string targetPath)
+    static void CopyFilesContent(string sourcePath, string targetPath)
     {
         foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.Common;
 <!--#if (!NoPipeline)
@@ -9,71 +5,17 @@ using Nuke.Common.Git;
 #endif-->
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
-using Nuke.Common.Tools.MSBuild;
-using Nuke.Common.Tools.VSWhere;
-using Serilog;
-using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 partial class Build : NukeBuild
 {
-    readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
-<!--#if (GitHubPipeline)
-    readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
-#endif-->
+    [Solution] readonly Solution Solution;
 <!--#if (!NoPipeline)
     [GitRepository] readonly GitRepository GitRepository;
 #endif-->
-
-    [Solution] public readonly Solution Solution;
-
-    Target Cleaning => _ => _
-        .Executes(() =>
-        {
-            if (Directory.Exists(ArtifactsDirectory))
-            {
-                var directoryInfo = new DirectoryInfo(ArtifactsDirectory);
-                foreach (var file in directoryInfo.GetFiles())
-                {
-                    Log.Debug("Deleting file: {Name}", file.FullName);
-                    file.Delete();
-                }
-
-                foreach (var dir in directoryInfo.GetDirectories())
-                {
-                    Log.Debug("Deleting directory: {Name}", dir.FullName);
-                    dir.Delete(true);
-                }
-            }
-            else
-            {
-                Log.Debug("Creating directory: {Directory}", ArtifactsDirectory);
-                Directory.CreateDirectory(ArtifactsDirectory);
-            }
-
-            if (IsServerBuild) return;
-            foreach (var projectName in Projects)
-            {
-                var project = BuilderExtensions.GetProject(Solution, projectName);
-                var binDirectory = new DirectoryInfo(project.GetBinDirectory());
-                if (!binDirectory.Exists) return;
-                var addInDirectories = binDirectory.EnumerateDirectories().Where(info => info.Name.StartsWith(AddInBinPrefix)).ToList();
-                foreach (var addInDirectory in addInDirectories)
-                {
-                    Log.Debug("Deleting directory: {Name}", addInDirectory.FullName);
-                    foreach (var file in addInDirectory.GetFiles()) file.Delete();
-                    addInDirectory.Delete(true);
-                }
-            }
-        });
-
-    Target Compile => _ => _
-        .TriggeredBy(Cleaning)
-        .Executes(() =>
-        {
-            var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
-            foreach (var configuration in configurations) BuildProject(configuration);
-        });
+<!--#if (GitHubPipeline)
+    readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
+#endif-->
+    readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
 
     public static int Main() => Execute<Build>(x => x.Cleaning);
 
@@ -112,31 +54,4 @@ partial class Build : NukeBuild
 
         return addInsDirectory;
     }
-
-    string GetMsBuildPath()
-    {
-        if (IsServerBuild) return null;
-        var vsWhere = VSWhereTasks.VSWhere(settings => settings
-            .EnableLatest()
-            .AddRequires("Microsoft.Component.MSBuild")
-            .DisableProcessLogOutput()
-            .DisableProcessLogInvocation()
-        );
-
-        if (vsWhere.Output.Count > 3) return null;
-        if (!File.Exists(CustomMsBuildPath)) throw new Exception($"Missing file: {CustomMsBuildPath}. Change the path to the build platform or install Visual Studio.");
-        return CustomMsBuildPath;
-    }
-
-    void BuildProject(string configuration) =>
-        MSBuild(s => s
-            .SetTargets("Rebuild")
-            .SetTargetPath(Solution)
-            .SetConfiguration(configuration)
-            .SetProcessToolPath(GetMsBuildPath())
-            .SetVerbosity(MSBuildVerbosity.Minimal)
-            .SetMSBuildPlatform(MSBuildPlatform.x64)
-            .SetMaxCpuCount(Environment.ProcessorCount)
-            .DisableNodeReuse()
-            .EnableRestore());
 }

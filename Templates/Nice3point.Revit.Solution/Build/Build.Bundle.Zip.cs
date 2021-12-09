@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using System.IO.Compression;
 using Nuke.Common;
 using Serilog;
@@ -15,9 +13,9 @@ partial class Build
             if (Directory.Exists(bundleDirectory))
             {
                 var archiveName = $"{bundleDirectory}.zip";
-                Log.Debug("Archive creation: {Directory}", archiveName);
+                Log.Information("Archive creation: {Directory}", archiveName);
                 ZipFile.CreateFromDirectory(bundleDirectory, archiveName);
-                Log.Debug("Deletion directory: {Directory}", bundleDirectory);
+                Log.Information("Deletion directory: {Directory}", bundleDirectory);
                 Directory.Delete(bundleDirectory, true);
             }
             else

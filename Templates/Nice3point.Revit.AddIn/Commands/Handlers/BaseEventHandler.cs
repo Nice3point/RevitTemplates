@@ -1,5 +1,4 @@
-﻿using System;
-using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.UI;
 
 namespace Nice3point.Revit.AddIn.Commands.Handlers;
 
