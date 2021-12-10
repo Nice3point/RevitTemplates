@@ -14,7 +14,17 @@ partial class Build
     readonly Regex VersionRegex = new(@"(\d+\.)+\d+", RegexOptions.Compiled);
 
     Target PublishGitHubRelease => _ => _
+<!--#if (Installer)
+<!--#if (Bundle)
+        .TriggeredBy(CreateInstaller, ZipBundle)
+<!--#else
         .TriggeredBy(CreateInstaller)
+#endif-->
+<!--#elseif (Bundle)
+        .TriggeredBy(ZipBundle)
+<!--#else
+        .TriggeredBy(Compile)
+#endif-->
         .Requires(() => GitHubToken)
         .Requires(() => GitRepository)
         .Requires(() => GitVersion)

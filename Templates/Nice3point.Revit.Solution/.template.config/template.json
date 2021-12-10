@@ -71,7 +71,7 @@
       "type": "parameter",
       "displayName": "Bundle support",
       "dataType": "bool",
-      "description": "Packs project files into a bundle. Used for uploading to Autodesk Store.",
+      "description": "Packs project files into a bundle. Used for uploading to Autodesk Store",
       "defaultValue": "false"
     }
   },

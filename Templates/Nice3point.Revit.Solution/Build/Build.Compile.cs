@@ -12,10 +12,9 @@ partial class Build
         {
 <!--#if (Installer)
             var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
-#else
+<!--#else
             var configurations = GetConfigurations(BuildConfiguration);
 #endif-->
-            var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
             foreach (var configuration in configurations) BuildProject(configuration);
         });
 

@@ -1,4 +1,6 @@
+<!--#if (Installer)
 using System.Text.RegularExpressions;
+#endif-->
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 
