@@ -27,7 +27,7 @@
     "Pipeline": {
       "type": "parameter",
       "displayName": "Pipeline",
-      "description": "Adds support for pipeline to your project",
+      "description": "Adds support for CI/CD pipeline to your project",
       "datatype": "choice",
       "choices": [
         {
@@ -60,10 +60,18 @@
       "type": "computed",
       "value": "(Pipeline == \"GitHub\")"
     },
+    "Installer": {
+      "type": "parameter",
+      "displayName": "Installer support",
+      "dataType": "bool",
+      "description": "Creates a project installer",
+      "defaultValue": "true"
+    },
     "Bundle": {
       "type": "parameter",
+      "displayName": "Bundle support",
       "dataType": "bool",
-      "description": "Enable Autodesk Store Bundle. Adds target and configurations for easy publishing of the plugin in the store",
+      "description": "Packs project files into a bundle. Used for uploading to Autodesk Store.",
       "defaultValue": "false"
     }
   },
@@ -98,6 +106,13 @@
             ".github/**",
             "Build/Build.GitHubRelease.cs",
             "Build/Build.CI.GitHubActions.cs"
+          ]
+        },
+        {
+          "condition": "(!Installer)",
+          "exclude": [
+            "Installer/**",
+            "Build/Build.Installer.cs"
           ]
         },
         {

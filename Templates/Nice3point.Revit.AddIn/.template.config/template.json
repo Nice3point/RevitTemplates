@@ -51,7 +51,7 @@
     },
     "WindowType": {
       "type": "parameter",
-      "displayName": "Window type",
+      "displayName": "User interface",
       "datatype": "choice",
       "description": "The type of window to be used by the add-in",
       "choices": [

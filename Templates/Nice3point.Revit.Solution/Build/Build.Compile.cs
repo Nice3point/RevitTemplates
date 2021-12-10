@@ -10,6 +10,11 @@ partial class Build
         .TriggeredBy(Cleaning)
         .Executes(() =>
         {
+<!--#if (Installer)
+            var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
+#else
+            var configurations = GetConfigurations(BuildConfiguration);
+#endif-->
             var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
             foreach (var configuration in configurations) BuildProject(configuration);
         });

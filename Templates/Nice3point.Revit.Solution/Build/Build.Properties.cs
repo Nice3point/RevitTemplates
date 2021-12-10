@@ -5,12 +5,16 @@ partial class Build
         "Nice3point.Revit.Solution"
     };
     
+<!--#if (Installer)
     const string InstallerProject = "Installer";
+#endif-->
 
     public const string BuildConfiguration = "Release";
+<!--#if (Installer)
     public const string InstallerConfiguration = "Installer";
+#endif-->
 <!--#if (Bundle)
-    public const string BundleConfiguration = "Store";
+    public const string BundleConfiguration = "";
 #endif-->
 
     const string AddInBinPrefix = "AddIn";
