@@ -14,7 +14,6 @@ static class BuilderExtensions
 
     public static AbsolutePath GetBundleDirectory(this Solution solution, AbsolutePath basePath) => basePath / $"{solution.Name}.bundle";
 #endif-->
-
 <!--#if (Installer)
 
     static AbsolutePath GetInstallerPath(this Project project, string configuration) => project.GetBinDirectory() / configuration / $"{project.Name}.exe";
