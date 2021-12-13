@@ -15,7 +15,7 @@ partial class Build
 <!--#else
             var configurations = GetConfigurations(BuildConfiguration);
 #endif-->
-            foreach (var configuration in configurations) BuildProject(configuration);
+            foreach (var configuration in configurations) CompileProject(configuration);
         });
 
     static string GetMsBuildPath()
@@ -33,7 +33,7 @@ partial class Build
         return CustomMsBuildPath;
     }
 
-    void BuildProject(string configuration) =>
+    void CompileProject(string configuration) =>
         MSBuild(s => s
             .SetTargets("Rebuild")
             .SetTargetPath(Solution)

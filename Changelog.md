@@ -1,3 +1,5 @@
+## 1.7.0
+
 Last big update in the outgoing year.
 
 - .Net SDK 6 support
