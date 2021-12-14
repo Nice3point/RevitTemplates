@@ -1,4 +1,6 @@
+<!--#if (Installer || Bundle)
 using System.Text.RegularExpressions;
+#endif-->
 using Nuke.Common;
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
@@ -33,7 +35,8 @@ partial class Build : NukeBuild
         if (configurations.Count == 0) throw new Exception($"Can't find configurations in the solution by patterns: {string.Join(" | ", startPatterns)}.");
         return configurations;
     }
-
+<!--#if (Installer || Bundle)
+        
     IEnumerable<IGrouping<string, DirectoryInfo>> GetBuildDirectories()
     {
         var directories = new List<DirectoryInfo>();
@@ -54,4 +57,5 @@ partial class Build : NukeBuild
 
         return addInsDirectory;
     }
+#endif-->
 }

@@ -40,6 +40,9 @@ public class Command : IExternalCommand
         var view = new Nice3point.Revit.AddInView(viewModel);
         view.ShowDialog();
 #elif (NoWindow)
+        var uiDocument = commandData.Application.ActiveUIDocument;
+        var document = uiDocument.Document;
+
         TaskDialog.Show("Revit add-in", "Nice3point.Revit.AddIn");
 #endif
 
