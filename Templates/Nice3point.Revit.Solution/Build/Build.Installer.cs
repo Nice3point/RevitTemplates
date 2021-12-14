@@ -49,12 +49,15 @@ partial class Build
     void ParseProcessOutput([CanBeNull] string value)
     {
         if (value is null) return;
-        var match = StreamRegex.Match(value);
-        if (match.Success)
+        var matches = StreamRegex.Matches(value);
+        if (matches.Count > 0)
         {
-            var parameter = match.Value.Substring(1, match.Value.Length - 2);
+            var parameters = matches.Select(match => match.Value
+                    .Substring(1, match.Value.Length - 2))
+                .Cast<object>()
+                .ToArray();
             var line = StreamRegex.Replace(value, "{Parameter}");
-            Log.Information(line, parameter);
+            Log.Information(line, parameters);
         }
         else
         {
