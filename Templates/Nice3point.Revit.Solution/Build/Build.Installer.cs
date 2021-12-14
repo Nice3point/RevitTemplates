@@ -56,7 +56,7 @@ partial class Build
                     .Substring(1, match.Value.Length - 2))
                 .Cast<object>()
                 .ToArray();
-            var line = StreamRegex.Replace(value, "{Parameter}");
+            var line = StreamRegex.Replace(value, match => $"{{Parameter{match.Index}}}");
             Log.Information(line, parameters);
         }
         else
