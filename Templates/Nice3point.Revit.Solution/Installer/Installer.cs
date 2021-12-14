@@ -14,23 +14,22 @@ const string outputName = "Nice3point.Revit.Solution";
 const string outputDir = "output";
 const string version = "1.0.0";
 
-var outFileNameBuilder = new StringBuilder().Append(outputName).Append("-").Append(version);
+var fileName = new StringBuilder().Append(outputName).Append("-").Append(version);
 //Additional suffixes for unique configurations add here
-var outFileName = outFileNameBuilder.ToString();
 
 var project = new Project
 {
     Name = projectName,
     OutDir = outputDir,
-    OutFileName = outFileName,
     Platform = Platform.x64,
+    UI = WUI.WixUI_InstallDir,
     Version = new Version(version),
+    OutFileName = fileName.ToString(),
     InstallScope = InstallScope.perUser,
     MajorUpgrade = MajorUpgrade.Default,
-    UI = WUI.WixUI_InstallDir,
     GUID = new Guid("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"),
-    BackgroundImage = @"Installer\Resources\Icons\BackgroundImage.png",
     BannerImage = @"Installer\Resources\Icons\BannerImage.png",
+    BackgroundImage = @"Installer\Resources\Icons\BackgroundImage.png",
     ControlPanelInfo =
     {
         Manufacturer = Environment.UserName,
@@ -61,8 +60,8 @@ WixEntity[] GenerateWixEntities()
             versionStorages.Add(fileVersion, new List<WixEntity> {files});
 
         var assemblies = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
-        Console.WriteLine($"Added {fileVersion} version files: ");
-        foreach (var assembly in assemblies) Console.WriteLine($"\t{assembly}");
+        Console.WriteLine($"Added  {fileVersion}  version files: ");
+        foreach (var assembly in assemblies) Console.WriteLine($" {assembly} ");
     }
 
     return versionStorages.Select(storage => new Dir(storage.Key, storage.Value.ToArray())).Cast<WixEntity>().ToArray();
