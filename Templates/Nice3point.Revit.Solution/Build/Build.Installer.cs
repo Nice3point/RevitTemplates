@@ -10,7 +10,7 @@ using Serilog;
 
 partial class Build
 {
-    readonly Regex StreamRegex = new(" (.+?) ", RegexOptions.Compiled);
+    readonly Regex StreamRegex = new("'(.+?)'", RegexOptions.Compiled);
 
     Target CreateInstaller => _ => _
         .TriggeredBy(Compile)
