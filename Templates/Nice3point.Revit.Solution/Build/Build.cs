@@ -10,14 +10,14 @@ using Nuke.Common.ProjectModel;
 
 partial class Build : NukeBuild
 {
-    [Solution] readonly Solution Solution;
-<!--#if (!NoPipeline)
-    [GitRepository] readonly GitRepository GitRepository;
-#endif-->
+    readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
 <!--#if (GitHubPipeline)
     readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
 #endif-->
-    readonly AbsolutePath ArtifactsDirectory = RootDirectory / ArtifactsFolder;
+<!--#if (!NoPipeline)
+    [GitRepository] readonly GitRepository GitRepository;
+#endif-->
+    [Solution] readonly Solution Solution;
 
     public static int Main() => Execute<Build>(x => x.Cleaning);
 
@@ -36,7 +36,7 @@ partial class Build : NukeBuild
         return configurations;
     }
 <!--#if (Installer || Bundle)
-        
+
     IEnumerable<IGrouping<string, DirectoryInfo>> GetBuildDirectories()
     {
         var directories = new List<DirectoryInfo>();

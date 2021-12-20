@@ -21,7 +21,7 @@ public static class TransactionManager
             if (!transaction.HasEnded()) transaction.RollBack();
         }
     }
-    
+
     /// <summary>
     ///     The method used to create a single transaction.
     /// </summary>

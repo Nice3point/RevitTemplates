@@ -16,7 +16,7 @@ static class BuilderExtensions
 #endif-->
 <!--#if (Installer)
 
-    static AbsolutePath GetInstallerPath(this Project project, string configuration) => project.GetBinDirectory() / configuration / $"{project.Name}.exe";
+    static AbsolutePath GetExePath(this Project project, string configuration) => project.GetBinDirectory() / configuration / $"{project.Name}.exe";
 
     public static AbsolutePath GetExecutableFile(this Project project, IEnumerable<string> configurations, List<DirectoryInfo> directories)
     {
@@ -26,12 +26,12 @@ static class BuilderExtensions
             if (string.IsNullOrEmpty(subCategory))
             {
                 if (!string.IsNullOrEmpty(subConfigRegex.Match(directory).Value))
-                    return project.GetInstallerPath(Build.BuildConfiguration);
+                    return project.GetExePath(Build.BuildConfiguration);
             }
             else
             {
                 if (directory.EndsWith(subCategory))
-                    return project.GetInstallerPath($"{Build.BuildConfiguration}{subCategory}");
+                    return project.GetExePath($"{Build.BuildConfiguration}{subCategory}");
             }
 
         return null;

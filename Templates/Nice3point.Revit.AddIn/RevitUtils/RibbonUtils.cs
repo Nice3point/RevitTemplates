@@ -44,7 +44,7 @@ public static class RibbonUtils
         var ribbonPanels = application.GetRibbonPanels(tabName);
         return CreateRibbonPanel(application, tabName, panelName, ribbonPanels);
     }
-    
+
     /// <summary>
     ///     Adds a 16x16px-96dpi image from the URI source
     /// </summary>
@@ -52,7 +52,7 @@ public static class RibbonUtils
     {
         button.Image = new BitmapImage(new Uri(uri, UriKind.Relative));
     }
-    
+
     /// <summary>
     ///     Adds a 32x32px-96dpi image from the URI source
     /// </summary>

@@ -10,35 +10,35 @@ partial class Build
         .TriggeredBy(Cleaning)
         .Executes(() =>
         {
+            var msBuildPath = GetMsBuildPath();
 <!--#if (Installer)
             var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
 <!--#else
             var configurations = GetConfigurations(BuildConfiguration);
 #endif-->
-            foreach (var configuration in configurations) CompileProject(configuration);
+            foreach (var configuration in configurations) CompileProject(configuration, msBuildPath);
         });
 
     static string GetMsBuildPath()
     {
         if (IsServerBuild) return null;
-        var vsWhere = VSWhereTasks.VSWhere(settings => settings
+        var (_, output) = VSWhereTasks.VSWhere(settings => settings
             .EnableLatest()
             .AddRequires("Microsoft.Component.MSBuild")
-            .DisableProcessLogOutput()
-            .DisableProcessLogInvocation()
+            .SetProperty("installationPath")
         );
 
-        if (vsWhere.Output.Count > 3) return null;
+        if (output.Count > 0) return null;
         if (!File.Exists(CustomMsBuildPath)) throw new Exception($"Missing file: {CustomMsBuildPath}. Change the path to the build platform or install Visual Studio.");
         return CustomMsBuildPath;
     }
 
-    void CompileProject(string configuration) =>
+    void CompileProject(string configuration, string toolPath) =>
         MSBuild(s => s
             .SetTargets("Rebuild")
             .SetTargetPath(Solution)
+            .SetProcessToolPath(toolPath)
             .SetConfiguration(configuration)
-            .SetProcessToolPath(GetMsBuildPath())
             .SetVerbosity(MSBuildVerbosity.Minimal)
             .SetMSBuildPlatform(MSBuildPlatform.x64)
             .SetMaxCpuCount(Environment.ProcessorCount)

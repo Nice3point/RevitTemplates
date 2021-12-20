@@ -6,9 +6,9 @@ partial class Build
     };
     
 <!--#if (Installer)
-    const string InstallerProject = "Installer";
-#endif-->
+    public const string InstallerProject = "Installer";
 
+#endif-->
     public const string BuildConfiguration = "Release";
 <!--#if (Installer)
     public const string InstallerConfiguration = "Installer";
