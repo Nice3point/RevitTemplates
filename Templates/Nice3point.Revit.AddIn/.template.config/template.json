@@ -6,9 +6,8 @@
   "identity": "Nice3point.Revit.AddIn",
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
-  "description": "Project for creating Revit AddIn",
+  "description": "Template for creating a Revit add-in",
   "classifications": [
-    "Common",
     "Library",
     "Revit",
     "AddIn"
@@ -16,7 +15,7 @@
   "tags": {
     "type": "project",
     "language": "C#",
-    "platform": ".NET"
+    "platform": "Windows"
   },
   "preferNameDirectory": true,
   "placeholderFilename": "keep.folder",

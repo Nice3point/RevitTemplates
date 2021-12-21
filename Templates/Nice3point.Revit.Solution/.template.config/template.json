@@ -6,7 +6,7 @@
   "identity": "Nice3point.Revit.Solution",
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.Solution",
-  "description": "Create Revit solution containing build and installer projects",
+  "description": "Template for creating a solution for Revit Add-Ins",
   "classifications": [
     "Solution",
     "Revit"
@@ -14,7 +14,7 @@
   "tags": {
     "type": "solution",
     "language": "C#",
-    "platform": ".NET"
+    "platform": "Windows"
   },
   "guids": [
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",

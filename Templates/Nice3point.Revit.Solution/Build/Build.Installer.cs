@@ -14,7 +14,6 @@ partial class Build
 
     Target CreateInstaller => _ => _
         .TriggeredBy(Compile)
-        .Produces(ArtifactsDirectory / "*.msi")
 <!--#if (!NoPipeline)
         .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
 #endif-->

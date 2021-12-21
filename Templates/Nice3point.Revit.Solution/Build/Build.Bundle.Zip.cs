@@ -6,7 +6,6 @@ partial class Build
 {
     Target ZipBundle => _ => _
         .TriggeredBy(CreateBundle)
-        .Produces(ArtifactsDirectory / "*.zip")
         .Executes(() =>
         {
             var bundleDirectory = Solution.GetBundleDirectory(ArtifactsDirectory);
