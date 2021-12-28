@@ -1,6 +1,5 @@
 ﻿using Autodesk.Revit.UI;
 using Nice3point.Revit.AddIn.Commands;
-using Nice3point.Revit.AddIn.RevitUtils;
 
 namespace Nice3point.Revit.AddIn;
 
