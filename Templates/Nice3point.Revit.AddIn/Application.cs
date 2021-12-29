@@ -3,6 +3,7 @@ using Nice3point.Revit.AddIn.Commands;
 
 namespace Nice3point.Revit.AddIn;
 
+[UsedImplicitly]
 public class Application : IExternalApplication
 {
     private const string RibbonImageUri = "/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png";

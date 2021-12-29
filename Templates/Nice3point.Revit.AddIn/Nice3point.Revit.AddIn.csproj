@@ -41,13 +41,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3" />
-        <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
     </ItemGroup>
 
     <ItemGroup>
         <Using Include="Nice3point.Revit.Extensions" />
+        <Using Include="JetBrains.Annotations" />
     </ItemGroup>
 
 <!--#if (ApplicationStyle)
