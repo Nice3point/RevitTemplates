@@ -14,11 +14,12 @@
         <PackageVersion>1.7.1</PackageVersion>
         <Authors>Nice3point</Authors>
         <Description>Templates for Revit plugin development</Description>
-        <PackageLicenseFile>License.md</PackageLicenseFile>
+        <PackageTags>revit;templates</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
-        <PackageTags>revit;templates</PackageTags>
         <PackageIcon>images\PackageIcon.png</PackageIcon>
+        <PackageLicenseFile>License.md</PackageLicenseFile>
+        <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(SolutionDir)\Changelog.md"))</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
