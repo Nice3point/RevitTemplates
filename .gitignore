@@ -5,6 +5,7 @@
 #Project-specific folders
 *obj/
 *bin/
+*output/
 
 #User-specific files
 *.user
