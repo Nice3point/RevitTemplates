@@ -16,26 +16,12 @@ partial class Build
 <!--#else
             var configurations = GetConfigurations(BuildConfiguration);
 #endif-->
-            foreach (var configuration in configurations) CompileProject(configuration, msBuildPath);
+            configurations.ForEach(configuration =>
+            {
+                DotNetBuild(settings => settings
+                    .SetProcessToolPath(MsBuildPath.Value)
+                    .SetConfiguration(configuration)
+                    .SetVerbosity(DotNetVerbosity.Minimal));
+            });
         });
-
-    static string GetMsBuildPath()
-    {
-        if (IsServerBuild) return null;
-        var (_, output) = VSWhereTasks.VSWhere(settings => settings
-            .EnableLatest()
-            .AddRequires("Microsoft.Component.MSBuild")
-            .SetProperty("installationPath")
-        );
-
-        if (output.Count > 0) return null;
-        if (!File.Exists(CustomMsBuildPath)) throw new Exception($"Missing file: {CustomMsBuildPath}. Change the path to the build platform or install Visual Studio.");
-        return CustomMsBuildPath;
-    }
-
-    void CompileProject(string configuration, string toolPath) =>
-        DotNetBuild(settings => settings
-            .SetProcessToolPath(toolPath)
-            .SetConfiguration(configuration)
-            .SetVerbosity(DotNetVerbosity.Minimal));
 }
