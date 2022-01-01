@@ -1,5 +1,3 @@
-<h3 align="center"><img src="https://user-images.githubusercontent.com/20504884/147851930-168b19cc-2a41-444e-8e03-c940418a2bb2.png" width="500px"></h3>
-
 Project templates for creating Revit Add-In
 
 ## Template Features
