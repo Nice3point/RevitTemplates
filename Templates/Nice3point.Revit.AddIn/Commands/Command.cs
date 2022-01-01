@@ -12,6 +12,9 @@ using Nice3point.Revit.AddIn.Views;
 
 namespace Nice3point.Revit.AddIn.Commands;
 
+#if (CommandStyle)
+[UsedImplicitly]
+#endif
 [Transaction(TransactionMode.Manual)]
 public class Command : IExternalCommand
 {
