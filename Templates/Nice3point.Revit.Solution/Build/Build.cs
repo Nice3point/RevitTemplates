@@ -7,6 +7,7 @@ using Nuke.Common.Git;
 #endif-->
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tools.VSWhere;
 
 partial class Build : NukeBuild
 {

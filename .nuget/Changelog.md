@@ -1,4 +1,3 @@
-# NextVersion
 - Added Revit Extensions
 - Added annotations for IExternalApplication, IExternalCommand
 - Switched MsBuild to DotNet build

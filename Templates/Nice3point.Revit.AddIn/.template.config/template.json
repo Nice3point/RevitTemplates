@@ -15,7 +15,7 @@
   "tags": {
     "type": "project",
     "language": "C#",
-    "platform": "Windows"
+    "platform": ".NET"
   },
   "preferNameDirectory": true,
   "placeholderFilename": "keep.folder",

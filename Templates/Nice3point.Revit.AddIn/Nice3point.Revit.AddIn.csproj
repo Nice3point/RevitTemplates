@@ -42,6 +42,7 @@
 
     <ItemGroup>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
+        <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).*" />
     </ItemGroup>
 
     <ItemGroup>

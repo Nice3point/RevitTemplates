@@ -14,7 +14,7 @@
   "tags": {
     "type": "solution",
     "language": "C#",
-    "platform": "Windows"
+    "platform": ".NET"
   },
   "guids": [
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",

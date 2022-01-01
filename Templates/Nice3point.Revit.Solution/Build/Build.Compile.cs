@@ -1,7 +1,6 @@
 ﻿using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.VSWhere;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 partial class Build
@@ -10,7 +9,6 @@ partial class Build
         .TriggeredBy(Cleaning)
         .Executes(() =>
         {
-            var msBuildPath = GetMsBuildPath();
 <!--#if (Installer)
             var configurations = GetConfigurations(BuildConfiguration, InstallerConfiguration);
 <!--#else
