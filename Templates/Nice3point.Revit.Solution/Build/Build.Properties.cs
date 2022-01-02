@@ -4,7 +4,7 @@ partial class Build
     {
         "Nice3point.Revit.Solution"
     };
-    
+
 <!--#if (Installer)
     public const string InstallerProject = "Installer";
 

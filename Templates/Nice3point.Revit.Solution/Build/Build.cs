@@ -19,8 +19,8 @@ partial class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
 #endif-->
     [Solution] readonly Solution Solution;
-    
-    static Lazy<string> MsBuildPath => new(() =>
+
+    static readonly Lazy<string> MsBuildPath = new(() =>
     {
         if (IsServerBuild) return null;
         var (_, output) = VSWhereTasks.VSWhere(settings => settings

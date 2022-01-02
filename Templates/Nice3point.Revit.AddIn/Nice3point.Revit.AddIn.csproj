@@ -74,7 +74,7 @@
             <!--Files to copy to Revit add-ins folder-->
             <AddinItem Include="$(TargetDir)Nice3point.Revit.Extensions.dll" />
         </ItemGroup>
-        
+
         <PropertyGroup>
             <RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
             <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
