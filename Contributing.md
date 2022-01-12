@@ -1,7 +1,5 @@
 ## Fork, Clone, Branch and Create your PR
 
-Once you've discussed your proposed feature/fix/etc. with a team member, and you've agreed an approach or a spec has been written and approved, it's time to start development:
-
 1. Fork the repo if you haven't already
 2. Clone your fork locally
 3. Create & push a feature branch
