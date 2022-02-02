@@ -26,5 +26,6 @@ Global
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke Plan.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke Clean.run.xml
+		File = Templates\Nice3point.Revit.Solution\.run\Revit 2023 ENU.run.xml
 	EndGlobalSection
 EndGlobal
