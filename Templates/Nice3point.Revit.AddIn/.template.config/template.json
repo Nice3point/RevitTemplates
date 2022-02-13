@@ -89,7 +89,6 @@
           "condition": "(CommandStyle)",
           "exclude": [
             "Application.cs",
-            "RevitUtils/RibbonUtils.cs",
             "Resources/Icons/RibbonIcon16.png",
             "Resources/Icons/RibbonIcon32.png"
           ]

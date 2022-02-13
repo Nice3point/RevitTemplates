@@ -64,7 +64,6 @@
 #endif-->
     <ItemGroup>
         <Folder Include="Core" />
-        <Folder Include="Resources\Fonts" />
 <!--#if (CommandStyle)
         <Folder Include="Resources\Icons"/>
 #endif-->
