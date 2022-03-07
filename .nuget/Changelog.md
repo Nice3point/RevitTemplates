@@ -1,4 +1,6 @@
-- Added Revit Extensions
-- Added annotations for IExternalApplication, IExternalCommand
-- Switched MsBuild to DotNet build
-- Bootstrapper files moved to another folder
+- Revit 2023 support
+- Now https://github.com/Nice3point/RevitApi packages is used by default
+- Updated Nuget packages
+- Removed styles
+- Removed deprecated folders
+- Removed deprecated files
