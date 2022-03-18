@@ -17,7 +17,6 @@ partial class Build
             configurations.ForEach(configuration =>
             {
                 DotNetBuild(settings => settings
-                    .SetProcessToolPath(MsBuildPath.Value)
                     .SetConfiguration(configuration)
                     .SetVerbosity(DotNetVerbosity.Minimal));
             });

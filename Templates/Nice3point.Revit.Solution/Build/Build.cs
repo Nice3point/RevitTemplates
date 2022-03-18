@@ -20,20 +20,6 @@ partial class Build : NukeBuild
 #endif-->
     [Solution] readonly Solution Solution;
 
-    static readonly Lazy<string> MsBuildPath = new(() =>
-    {
-        if (IsServerBuild) return null;
-        var (_, output) = VSWhereTasks.VSWhere(settings => settings
-            .EnableLatest()
-            .AddRequires("Microsoft.Component.MSBuild")
-            .SetProperty("installationPath")
-        );
-
-        if (output.Count > 0) return null;
-        if (!File.Exists(CustomMsBuildPath)) throw new Exception($"Missing file: {CustomMsBuildPath}. Change the path to the build platform or install Visual Studio.");
-        return CustomMsBuildPath;
-    });
-
     public static int Main() => Execute<Build>(x => x.Cleaning);
 
     List<string> GetConfigurations(params string[] startPatterns)
