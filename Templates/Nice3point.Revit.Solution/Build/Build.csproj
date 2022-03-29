@@ -16,7 +16,7 @@
     </ItemGroup>
 <!--#if (GitHubPipeline)
     <ItemGroup>
-        <PackageDownload Include="GitVersion.Tool" Version="[5.8.1]"/>
+        <PackageDownload Include="GitVersion.Tool" Version="[5.9.0]"/>
     </ItemGroup>
 #endif-->
 </Project>
