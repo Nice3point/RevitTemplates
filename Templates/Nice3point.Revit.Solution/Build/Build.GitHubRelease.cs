@@ -10,8 +10,8 @@ using Serilog;
 partial class Build
 {
     [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
-    [Parameter] string GitHubToken { get; set; }
     readonly Regex VersionRegex = new(@"(\d+\.)+\d+", RegexOptions.Compiled);
+    [Parameter] string GitHubToken { get; set; }
 
     Target PublishGitHubRelease => _ => _
 <!--#if (Installer && Bundle)

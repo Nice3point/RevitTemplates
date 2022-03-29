@@ -64,5 +64,8 @@ WixEntity[] GenerateWixEntities()
         foreach (var assembly in assemblies) Console.WriteLine($"'{assembly}'");
     }
 
-    return versionStorages.Select(storage => new Dir(storage.Key, storage.Value.ToArray())).Cast<WixEntity>().ToArray();
+    return versionStorages
+        .Select(storage => new Dir(storage.Key, storage.Value.ToArray()))
+        .Cast<WixEntity>()
+        .ToArray();
 }

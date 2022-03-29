@@ -67,7 +67,6 @@
 <!--#if (CommandStyle)
         <Folder Include="Resources\Icons"/>
 #endif-->
-        <Folder Include="Resources\Localization" />
         <Folder Include="Utils" />
     </ItemGroup>
 
