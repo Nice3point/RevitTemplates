@@ -1,5 +1,5 @@
 - Revit 2023 support
-- Nice3point.Revit.Api.* packages is used by default
+- Nice3point.Revit.* packages is used by default
 - Updated Nuget packages
 - Removed MsBuild, VsWhere support, build is now using dotNet
 - Removed styles, using libraries is preferred
