@@ -19,6 +19,7 @@ public static class TransactionManager
         catch (Exception)
         {
             if (!transaction.HasEnded()) transaction.RollBack();
+            throw;
         }
     }
 
@@ -37,6 +38,7 @@ public static class TransactionManager
         catch (Exception)
         {
             if (!transaction.HasEnded()) transaction.RollBack();
+            throw;
         }
     }
 
@@ -55,6 +57,7 @@ public static class TransactionManager
         catch (Exception)
         {
             if (!transaction.HasEnded()) transaction.RollBack();
+            throw;
         }
     }
 }
