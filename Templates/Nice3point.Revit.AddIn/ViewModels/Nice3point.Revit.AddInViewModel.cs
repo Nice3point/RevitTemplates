@@ -2,6 +2,6 @@
 
 namespace Nice3point.Revit.AddIn.ViewModels;
 
-public sealed class Nice3point.Revit.AddInViewModell : ObservableObject
+public sealed class Nice3point.Revit.AddInViewModel : ObservableObject
 {
 }

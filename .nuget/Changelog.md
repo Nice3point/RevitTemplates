@@ -1,7 +1,1 @@
-- Revit 2023 support
-- Nice3point.Revit.* packages is used by default
-- Updated Nuget packages
-- Removed MsBuild, VsWhere support, build is now using dotNet
-- Removed styles, using libraries is preferred
-- Removed deprecated folders
-- Removed deprecated files
+- Add Microsoft.Toolkit.Mvvm package to the project
