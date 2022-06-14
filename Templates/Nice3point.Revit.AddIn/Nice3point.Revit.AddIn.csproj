@@ -48,6 +48,7 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
+        <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -68,6 +69,7 @@
         <Folder Include="Resources\Icons"/>
 #endif-->
         <Folder Include="Utils" />
+        <Folder Include="ViewModels\Objects" />
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
@@ -76,6 +78,7 @@
             <AddinItem Include="$(TargetDir)$(AssemblyName).*" />
             <!--Files to copy to Revit add-ins folder-->
             <AddinItem Include="$(TargetDir)Nice3point.Revit.Extensions.dll" />
+            <AddinItem Include="$(TargetDir)Microsoft*"/>
         </ItemGroup>
 
         <PropertyGroup>

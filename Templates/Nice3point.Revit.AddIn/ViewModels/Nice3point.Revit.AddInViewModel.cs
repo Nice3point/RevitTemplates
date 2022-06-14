@@ -1,15 +1,7 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace Nice3point.Revit.AddIn.ViewModels;
 
-public sealed class Nice3point.Revit.AddInViewModel : INotifyPropertyChanged
+public sealed class Nice3point.Revit.AddInViewModell : ObservableObject
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    [NotifyPropertyChangedInvocator]
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }
