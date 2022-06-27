@@ -27,12 +27,16 @@ public class Application : IExternalApplication
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
 
+    /// <summary>
+    ///     Forced loading of libraries into the project. Typically used for XAML related libraries
+    /// </summary>
     private static void ForceLoadLibraries()
     {
         var assemblies = new List<string>
         {
+<!--#if (!NoWindow)
             "Microsoft.Xaml.Behaviors",
-            "System.ComponentModel.Annotations"
+#endif-->
         };
 
         foreach (var assembly in assemblies) AppDomain.CurrentDomain.Load(assembly);
