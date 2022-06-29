@@ -8,15 +8,21 @@ public class Application : IExternalApplication
 {
     public Result OnStartup(UIControlledApplication application)
     {
+<!--#if (Logger)
+        CreateLogger();
+#endif-->
+        CreateRibbon(application);
 <!--#if (!NoWindow)
         ForceLoadLibraries();
 #endif-->
-        CreateRibbon(application);
         return Result.Succeeded;
     }
 
     public Result OnShutdown(UIControlledApplication application)
     {
+<!--#if (Logger)
+        Log.CloseAndFlush();
+#endif-->
         return Result.Succeeded;
     }
 
@@ -29,6 +35,7 @@ public class Application : IExternalApplication
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
 <!--#if (!NoWindow)
+
     /// <summary>
     ///     Forced loading of libraries into the project. Typically used for XAML related libraries
     /// </summary>
@@ -40,6 +47,24 @@ public class Application : IExternalApplication
         };
 
         foreach (var assembly in assemblies) AppDomain.CurrentDomain.Load(assembly);
+    }
+#endif-->
+<!--#if (Logger)
+
+    private static void CreateLogger()
+    {
+        const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
+
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Debug(LogEventLevel.Debug, outputTemplate)
+            .MinimumLevel.Debug()
+            .CreateLogger();
+
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+        {
+            var e = (Exception) args.ExceptionObject;
+            Log.Fatal(e, "Domain unhandled exception");
+        };
     }
 #endif-->
 }

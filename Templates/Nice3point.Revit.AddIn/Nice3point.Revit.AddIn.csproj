@@ -52,18 +52,22 @@
         <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.*" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.*" />
 #endif-->
-    </ItemGroup>
+<!--#if (Logger)
+        <PackageReference Include="Serilog" Version="2.11.0"/>
+        <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0"/>
+#endif-->
+</ItemGroup>
 
-    <ItemGroup>
-        <Using Include="Nice3point.Revit.Extensions" />
-        <Using Include="JetBrains.Annotations" />
-    </ItemGroup>
+<ItemGroup>
+    <Using Include="Nice3point.Revit.Extensions" />
+    <Using Include="JetBrains.Annotations" />
+</ItemGroup>
 
 <!--#if (ApplicationStyle)
-    <ItemGroup>
-        <Resource Include="Resources\Icons\RibbonIcon16.png"/>
-        <Resource Include="Resources\Icons\RibbonIcon32.png"/>
-    </ItemGroup>
+<ItemGroup>
+    <Resource Include="Resources\Icons\RibbonIcon16.png"/>
+    <Resource Include="Resources\Icons\RibbonIcon32.png"/>
+</ItemGroup>
 
 #endif-->
     <ItemGroup>
@@ -86,6 +90,9 @@
             <AddinItem Include="$(TargetDir)Microsoft*"/>
             <AddinItem Include="$(TargetDir)System.ComponentModel.Annotations.dll"
                        Condition="$(Configuration.Contains('R19')) or $(Configuration.Contains('R20'))"
+#endif-->
+<!--#if (Logger)
+            <AddinItem Include="$(TargetDir)Serilog*"/>
 #endif-->
         </ItemGroup>
 

@@ -69,6 +69,13 @@
       ],
       "defaultValue": "Modal"
     },
+    "Logger": {
+      "type": "parameter",
+      "displayName": "Serilog support",
+      "dataType": "bool",
+      "description": "Adds logging support for the application",
+      "defaultValue": "false"
+    },
     "NoWindow": {
       "type": "computed",
       "value": "(WindowType == \"None\")"
