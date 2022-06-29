@@ -1,1 +1,3 @@
+- Add Microsoft.Xaml.Behaviors.Wpf library
 - Serilog support option for add-in template
+- New method to force loading XAML related libraries. Revit won't load them
