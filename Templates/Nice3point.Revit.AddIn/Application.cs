@@ -8,7 +8,9 @@ public class Application : IExternalApplication
 {
     public Result OnStartup(UIControlledApplication application)
     {
+<!--#if (!NoWindow)
         ForceLoadLibraries();
+#endif-->
         CreateRibbon(application);
         return Result.Succeeded;
     }
@@ -26,7 +28,7 @@ public class Application : IExternalApplication
         showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
-
+<!--#if (!NoWindow)
     /// <summary>
     ///     Forced loading of libraries into the project. Typically used for XAML related libraries
     /// </summary>
@@ -34,11 +36,10 @@ public class Application : IExternalApplication
     {
         var assemblies = new List<string>
         {
-<!--#if (!NoWindow)
-            "Microsoft.Xaml.Behaviors",
-#endif-->
+            "Microsoft.Xaml.Behaviors"
         };
 
         foreach (var assembly in assemblies) AppDomain.CurrentDomain.Load(assembly);
     }
+#endif-->
 }
