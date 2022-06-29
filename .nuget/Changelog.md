@@ -1,1 +1,1 @@
-- Add Microsoft.Toolkit.Mvvm package to the project
+- Serilog support option for add-in template

@@ -1,5 +1,8 @@
 ﻿using Autodesk.Revit.UI;
 using Nice3point.Revit.AddIn.Commands;
+<!--#if (Logger)
+using Serilog.Events;
+#endif-->
 
 namespace Nice3point.Revit.AddIn;
 
@@ -51,6 +54,9 @@ public class Application : IExternalApplication
 #endif-->
 <!--#if (Logger)
 
+    /// <summary>
+    ///     Globally-shared logger. To connect new sinks install additional nuget packages
+    /// </summary>
     private static void CreateLogger()
     {
         const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";

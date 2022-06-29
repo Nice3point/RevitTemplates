@@ -56,11 +56,14 @@
         <PackageReference Include="Serilog" Version="2.11.0"/>
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0"/>
 #endif-->
-</ItemGroup>
+    </ItemGroup>
 
 <ItemGroup>
     <Using Include="Nice3point.Revit.Extensions" />
     <Using Include="JetBrains.Annotations" />
+<!--#if (Logger)
+    <Using Include="Serilog" />
+#endif-->
 </ItemGroup>
 
 <!--#if (ApplicationStyle)
@@ -89,7 +92,7 @@
 <!--#if (!NoWindow)
             <AddinItem Include="$(TargetDir)Microsoft*"/>
             <AddinItem Include="$(TargetDir)System.ComponentModel.Annotations.dll"
-                       Condition="$(Configuration.Contains('R19')) or $(Configuration.Contains('R20'))"
+                       Condition="$(Configuration.Contains('R19')) or $(Configuration.Contains('R20'))"/>
 #endif-->
 <!--#if (Logger)
             <AddinItem Include="$(TargetDir)Serilog*"/>

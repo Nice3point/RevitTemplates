@@ -6,7 +6,7 @@
   "identity": "Nice3point.Revit.Solution",
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.Solution",
-  "description": "Template for creating a solution for Revit Add-Ins",
+  "description": "Template for creating a solution for Revit add-ins",
   "classifications": [
     "Solution",
     "Revit"

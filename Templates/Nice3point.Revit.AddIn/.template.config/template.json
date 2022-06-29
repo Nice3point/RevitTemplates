@@ -73,7 +73,7 @@
       "type": "parameter",
       "displayName": "Serilog support",
       "dataType": "bool",
-      "description": "Adds logging support for the application",
+      "description": "Logging support for the add-in",
       "defaultValue": "false"
     },
     "NoWindow": {
