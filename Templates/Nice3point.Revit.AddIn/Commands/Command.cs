@@ -24,7 +24,7 @@ public class Command : IExternalCommand
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
 #if (ModelessWindow)
-        if (_view is not null && _view.IsLoaded)
+        if (_view is {IsLoaded: true})
         {
             _view.Focus();
             return Result.Succeeded;
