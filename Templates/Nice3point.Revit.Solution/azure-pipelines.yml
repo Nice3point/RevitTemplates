@@ -16,7 +16,7 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
-              script: './Build/Build.cmd'
+              script: './.nuke/build.cmd'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: Nice3point.Revit.Solution

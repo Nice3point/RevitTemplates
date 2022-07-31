@@ -2,7 +2,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 #if (ModelessWindow)
-using Nice3point.Revit.AddIn.Commands.Handlers;
 using Nice3point.Revit.AddIn.Core;
 #endif
 #if (!NoWindow)
@@ -18,7 +17,6 @@ public class Command : IExternalCommand
 {
 #if (ModelessWindow)
     private static Nice3point.Revit.AddInView _view;
-    public static readonly CommandEventHandler EventHandler = new();
 
 #endif
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)

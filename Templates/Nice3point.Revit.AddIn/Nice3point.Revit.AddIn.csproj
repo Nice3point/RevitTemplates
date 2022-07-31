@@ -45,6 +45,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />

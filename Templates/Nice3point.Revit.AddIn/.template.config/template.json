@@ -106,12 +106,6 @@
             "Views/**",
             "ViewModels/**"
           ]
-        },
-        {
-          "condition": "(!ModelessWindow)",
-          "exclude": [
-            "Commands/Handlers/**"
-          ]
         }
       ]
     }
