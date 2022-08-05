@@ -31,7 +31,7 @@ public class Command : IExternalCommand
         RevitApi.UiApplication = commandData.Application;
         var viewModel = new Nice3point.Revit.AddInViewModel();
         _view = new Nice3point.Revit.AddInView(viewModel);
-        _view.Show();
+        _view.Show(commandData.Application);
 #elif (ModalWindow)
         var uiDocument = commandData.Application.ActiveUIDocument;
         var document = uiDocument.Document;
