@@ -106,6 +106,12 @@
             "Views/**",
             "ViewModels/**"
           ]
+        },
+        {
+          "condition": "(!ModelessWindow)",
+          "exclude": [
+            "Utils/WindowController.cs"
+          ]
         }
       ]
     }

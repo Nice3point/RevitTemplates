@@ -10,12 +10,12 @@ public class BoolVisibilityConverter : MarkupExtension, IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not null && (bool) value ? Visibility.Visible : Visibility.Hidden;
+        return (bool) value! ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not null && (Visibility) value == Visibility.Visible;
+        return (Visibility) value! == Visibility.Visible;
     }
 
     public override object ProvideValue(IServiceProvider serviceProvider)
@@ -29,12 +29,12 @@ public class InverseBoolVisibilityConverter : MarkupExtension, IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not null && (bool) value == false ? Visibility.Visible : Visibility.Hidden;
+        return (bool) value! == false ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is null || (Visibility) value != Visibility.Visible;
+        return (Visibility) value! != Visibility.Visible;
     }
 
     public override object ProvideValue(IServiceProvider serviceProvider)
@@ -48,12 +48,12 @@ public class InverseBooleanConverter : MarkupExtension, IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not null && !(bool) value;
+        return !(bool) value!;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return Convert(value, targetType, parameter, culture);
+        return !(bool) value!;
     }
 
     public override object ProvideValue(IServiceProvider serviceProvider)

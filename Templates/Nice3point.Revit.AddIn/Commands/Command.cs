@@ -1,51 +1,63 @@
 ﻿using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
+using Nice3point.Revit.Toolkit.External;
+#if (NoWindow)
 using Autodesk.Revit.UI;
-#if (ModelessWindow)
-using Nice3point.Revit.AddIn.Core;
 #endif
 #if (!NoWindow)
 using Nice3point.Revit.AddIn.ViewModels;
 using Nice3point.Revit.AddIn.Views;
+#endif
+#if (ModelessWindow)
+using Nice3point.Revit.AddIn.Utils;
+#endif
+#if (Logger && CommandStyle)
+using Serilog.Events;
 #endif
 
 namespace Nice3point.Revit.AddIn.Commands;
 
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]
-public class Command : IExternalCommand
+public class Command : ExternalCommand
 {
-#if (ModelessWindow)
-    private static Nice3point.Revit.AddInView _view;
-
-#endif
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public override void Execute()
     {
+#if (Logger && CommandStyle)
+        CreateLogger();
+#endif
 #if (ModelessWindow)
-        if (_view is {IsLoaded: true})
-        {
-            _view.Focus();
-            return Result.Succeeded;
-        }
+        if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
 
-        RevitApi.UiApplication = commandData.Application;
         var viewModel = new Nice3point.Revit.AddInViewModel();
-        _view = new Nice3point.Revit.AddInView(viewModel);
-        _view.Show(commandData.Application);
+        var view = new Nice3point.Revit.AddInView(viewModel);
+        WindowController.Show(view, UiApplication.MainWindowHandle);
 #elif (ModalWindow)
-        var uiDocument = commandData.Application.ActiveUIDocument;
-        var document = uiDocument.Document;
-
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         view.ShowDialog();
 #elif (NoWindow)
-        var uiDocument = commandData.Application.ActiveUIDocument;
-        var document = uiDocument.Document;
-
         TaskDialog.Show("Revit add-in", "Nice3point.Revit.AddIn");
 #endif
-
-        return Result.Succeeded;
+#if (Logger && CommandStyle)
+        Log.CloseAndFlush();
+#endif
     }
+#if (Logger && CommandStyle)
+
+    private static void CreateLogger()
+    {
+        const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
+
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Debug(LogEventLevel.Debug, outputTemplate)
+            .MinimumLevel.Debug()
+            .CreateLogger();
+
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+        {
+            var e = (Exception) args.ExceptionObject;
+            Log.Fatal(e, "Domain unhandled exception");
+        };
+    }
+#endif
 }

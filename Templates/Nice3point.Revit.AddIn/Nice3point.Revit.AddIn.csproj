@@ -59,26 +59,23 @@
 #endif-->
     </ItemGroup>
 
-<ItemGroup>
-    <Using Include="Nice3point.Revit.Extensions" />
-    <Using Include="JetBrains.Annotations" />
+    <ItemGroup>
+        <Using Include="Nice3point.Revit.Extensions" />
+        <Using Include="Nice3point.Revit.Toolkit.Utils" />
+        <Using Include="JetBrains.Annotations" />
 <!--#if (Logger)
-    <Using Include="Serilog" />
+        <Using Include="Serilog" />
 #endif-->
-</ItemGroup>
+    </ItemGroup>
 
 <!--#if (ApplicationStyle)
-<ItemGroup>
-    <Resource Include="Resources\Icons\RibbonIcon16.png"/>
-    <Resource Include="Resources\Icons\RibbonIcon32.png"/>
-</ItemGroup>
+    <ItemGroup>
+        <Resource Include="Resources\Icons\RibbonIcon16.png"/>
+        <Resource Include="Resources\Icons\RibbonIcon32.png"/>
+    </ItemGroup>
 
 #endif-->
     <ItemGroup>
-<!--#if (CommandStyle)
-        <Folder Include="Resources\Icons"/>
-#endif-->
-        <Folder Include="Utils" />
 <!--#if (!NoWindow)
         <Folder Include="ViewModels\Objects" />
 #endif-->
@@ -86,14 +83,15 @@
 
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
+            <!--Files to copy to Revit add-ins folder-->
+            <!--Copying all files (not recommended):-->
+            <!--<AddinItem Include="$(TargetDir)*" />-->
             <RootItem Include="$(ProjectDir)*.addin" />
             <AddinItem Include="$(TargetDir)$(AssemblyName).*" />
-            <!--Files to copy to Revit add-ins folder-->
             <AddinItem Include="$(TargetDir)Nice3point*" />
 <!--#if (!NoWindow)
             <AddinItem Include="$(TargetDir)Microsoft*"/>
-            <AddinItem Include="$(TargetDir)System.ComponentModel.Annotations.dll"
-                       Condition="$(Configuration.Contains('R19')) or $(Configuration.Contains('R20'))"/>
+            <AddinItem Include="$(TargetDir)System*"/>
 #endif-->
 <!--#if (Logger)
             <AddinItem Include="$(TargetDir)Serilog*"/>

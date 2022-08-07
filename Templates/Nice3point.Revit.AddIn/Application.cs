@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.UI;
+﻿using Nice3point.Revit.Toolkit.External;
 using Nice3point.Revit.AddIn.Commands;
 <!--#if (Logger)
 using Serilog.Events;
@@ -7,56 +7,33 @@ using Serilog.Events;
 namespace Nice3point.Revit.AddIn;
 
 [UsedImplicitly]
-public class Application : IExternalApplication
+public class Application : ExternalApplication
 {
-    public Result OnStartup(UIControlledApplication application)
+    public override void OnStartup()
     {
 <!--#if (Logger)
         CreateLogger();
 #endif-->
-        CreateRibbon(application);
-<!--#if (!NoWindow)
-        ForceLoadLibraries();
-#endif-->
-        return Result.Succeeded;
+        CreateRibbon();
     }
-
-    public Result OnShutdown(UIControlledApplication application)
-    {
 <!--#if (Logger)
-        Log.CloseAndFlush();
-#endif-->
-        return Result.Succeeded;
-    }
 
-    private static void CreateRibbon(UIControlledApplication application)
+    public override void OnShutdown()
     {
-        var panel = application.CreatePanel("Panel name", "Nice3point.Revit.AddIn");
+        Log.CloseAndFlush();
+    }
+#endif-->
+
+    private void CreateRibbon()
+    {
+        var panel = Application.CreatePanel("Panel name", "Nice3point.Revit.AddIn");
 
         var showButton = panel.AddPushButton<Command>("Button text");
         showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
-<!--#if (!NoWindow)
-
-    /// <summary>
-    ///     Forced loading of libraries into the project. Typically used for XAML related libraries
-    /// </summary>
-    private static void ForceLoadLibraries()
-    {
-        var assemblies = new List<string>
-        {
-            "Microsoft.Xaml.Behaviors"
-        };
-
-        foreach (var assembly in assemblies) AppDomain.CurrentDomain.Load(assembly);
-    }
-#endif-->
 <!--#if (Logger)
 
-    /// <summary>
-    ///     Globally-shared logger. To connect new sinks install additional nuget packages
-    /// </summary>
     private static void CreateLogger()
     {
         const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
