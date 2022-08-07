@@ -79,6 +79,9 @@
 <!--#if (!NoWindow)
         <Folder Include="ViewModels\Objects" />
 #endif-->
+<!--#if (CommandStyle)
+        <Folder Include="Resources"/>
+#endif-->
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
