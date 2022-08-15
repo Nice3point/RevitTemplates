@@ -1,3 +1,2 @@
-- Add Nice3point.Revit.Toolkit
-- Removed duplicate classes from Toolkit
-- Fix Azure pipeline
+Added .Net Project config to launch Revit from Visual Studio.
+Removed .Net Executable configs for Rider (.Net Project maintained by Rider).

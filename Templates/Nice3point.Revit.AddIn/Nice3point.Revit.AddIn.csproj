@@ -43,6 +43,11 @@
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
+    <PropertyGroup>
+        <StartAction>Program</StartAction>
+        <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
+        <StartArguments>/language ENG</StartArguments>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
@@ -54,8 +59,8 @@
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.*" />
 #endif-->
 <!--#if (Logger)
-        <PackageReference Include="Serilog" Version="2.11.0"/>
-        <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0"/>
+        <PackageReference Include="Serilog" Version="2.*"/>
+        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
 #endif-->
     </ItemGroup>
 

@@ -19,13 +19,8 @@ Global
 		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(RiderSharedRunConfigurations) = postSolution
-		File = templates\Nice3point.Revit.Solution\.run\Revit 2019 ENU.run.xml
-		File = templates\Nice3point.Revit.Solution\.run\Revit 2020 ENU.run.xml
-		File = templates\Nice3point.Revit.Solution\.run\Revit 2021 ENU.run.xml
-		File = templates\Nice3point.Revit.Solution\.run\Revit 2022 ENU.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke Plan.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke Clean.run.xml
-		File = Templates\Nice3point.Revit.Solution\.run\Revit 2023 ENU.run.xml
 	EndGlobalSection
 EndGlobal
