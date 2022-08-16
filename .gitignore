@@ -1,11 +1,18 @@
 ﻿#IDE folders
 *.idea/
 *.vs/
+*.vscode/
 
 #Project-specific folders
 *obj/
 *bin/
-*output/
+*temp/
+
+#Nuke output folder
+/output/
+
+#Project-specific files
+*/build.schema.json
 
 #User-specific files
 *.user

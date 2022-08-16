@@ -10,6 +10,8 @@ ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{114BF9D5-DD32-468D-9877-4CCB85204598}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|Any CPU = Release|Any CPU
@@ -17,6 +19,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{114BF9D5-DD32-468D-9877-4CCB85204598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(RiderSharedRunConfigurations) = postSolution
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke.run.xml
