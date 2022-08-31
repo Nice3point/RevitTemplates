@@ -73,6 +73,7 @@ public static class WindowController
             if (window.GetType() == type)
             {
                 if (window.WindowState == WindowState.Minimized) window.WindowState = WindowState.Normal;
+                if (window.Visibility != Visibility.Visible) window.Show();
                 window.Focus();
                 return true;
             }
