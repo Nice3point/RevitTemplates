@@ -12,7 +12,7 @@
         <Configurations>Release;Debug</Configurations>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Nuke.Common" Version="6.1.2"/>
+        <PackageReference Include="Nuke.Common" Version="6.2.1"/>
     </ItemGroup>
 <!--#if (GitHubPipeline)
     <ItemGroup>

@@ -55,7 +55,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
 <!--#if (!NoWindow)
-        <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.*" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.*" />
 #endif-->
 <!--#if (Logger)
