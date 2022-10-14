@@ -99,6 +99,7 @@
             <AddinItem Include="$(TargetDir)Nice3point*" />
 <!--#if (!NoWindow)
             <AddinItem Include="$(TargetDir)Microsoft*"/>
+            <AddinItem Include="$(TargetDir)Community*"/>
             <AddinItem Include="$(TargetDir)System*"/>
 #endif-->
 <!--#if (Logger)
