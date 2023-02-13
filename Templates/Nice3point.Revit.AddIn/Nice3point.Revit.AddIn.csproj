@@ -56,7 +56,6 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
 <!--#if (!NoWindow)
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
-        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.*" />
 #endif-->
 <!--#if (Logger)
         <PackageReference Include="Serilog" Version="2.*"/>
@@ -91,20 +90,8 @@
 
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
-            <!--Files to copy to Revit add-ins folder-->
-            <!--Copying all files (not recommended):-->
-            <!--<AddinItem Include="$(TargetDir)*" />-->
             <RootItem Include="$(ProjectDir)*.addin" />
-            <AddinItem Include="$(TargetDir)$(AssemblyName).*" />
-            <AddinItem Include="$(TargetDir)Nice3point*" />
-<!--#if (!NoWindow)
-            <AddinItem Include="$(TargetDir)Microsoft*"/>
-            <AddinItem Include="$(TargetDir)Community*"/>
-            <AddinItem Include="$(TargetDir)System*"/>
-#endif-->
-<!--#if (Logger)
-            <AddinItem Include="$(TargetDir)Serilog*"/>
-#endif-->
+            <AddinItem Include="$(TargetDir)*" />
         </ItemGroup>
 
         <PropertyGroup>
