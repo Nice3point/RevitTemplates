@@ -6,7 +6,7 @@
         <ImplicitUsings>true</ImplicitUsings>
         <TargetFramework>net48</TargetFramework>
         <Configurations>Debug R20;Debug R21;Debug R22;Debug R23;Debug R24</Configurations>
-        <Configurations>$(Configurations)Release R20;Release R21;Release R22;Release R23;Debug R24</Configurations>
+        <Configurations>$(Configurations)Release R20;Release R21;Release R22;Release R23;Release R24</Configurations>
     </PropertyGroup>
     <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
         <DebugSymbols>true</DebugSymbols>
@@ -57,8 +57,8 @@
     <ItemGroup>
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*" />
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*" />
 <!--#if (!NoWindow)
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
 #endif-->
