@@ -1,5 +1,1 @@
-- Library versions updated
-- Deprecated Microsoft.Toolkit.Mvvm replaced by CommunityToolkit.Mvvm
-- New methods for window controller
-- Added .Net Project config to launch Revit from Visual Studio.
-- Removed .Net Executable configs for Rider (.Net Project maintained by Rider)
+Revit 2024 support
