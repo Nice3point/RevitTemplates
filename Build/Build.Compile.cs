@@ -1,4 +1,5 @@
-﻿using Nuke.Common.Tools.DotNet;
+﻿using System.IO.Enumeration;
+using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 partial class Build
@@ -7,12 +8,34 @@ partial class Build
         .TriggeredBy(Cleaning)
         .Executes(() =>
         {
-            var configurations = GetConfigurations(BuildConfiguration);
-            configurations.ForEach(configuration =>
-            {
+            foreach (var configuration in GlobBuildConfigurations())
                 DotNetBuild(settings => settings
                     .SetConfiguration(configuration)
                     .SetVerbosity(DotNetVerbosity.Minimal));
-            });
         });
+
+    List<string> GlobBuildConfigurations()
+    {
+        var configurations = Solution.Configurations
+            .Select(pair => pair.Key)
+            .Select(config =>
+            {
+                var platformIndex = config.LastIndexOf('|');
+                return config.Remove(platformIndex);
+            })
+            .Where(config =>
+            {
+                foreach (var wildcard in Configurations)
+                    if (FileSystemName.MatchesSimpleExpression(wildcard, config))
+                        return true;
+
+                return false;
+            })
+            .ToList();
+
+        if (configurations.Count == 0)
+            throw new Exception($"The solution's configurations cannot be found using the specified patterns: {string.Join(" | ", Configurations)}");
+
+        return configurations;
+    }
 }

@@ -1,6 +1,14 @@
 partial class Build
 {
-    const string BuildConfiguration = "Release";
-    const string ArtifactsFolder = "output";
-    const string PackageVersion = "3.0.1";
+    readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
+
+    readonly string[] Configurations =
+    {
+        "Release"
+    };
+
+    readonly Dictionary<string, string> VersionMap = new()
+    {
+        {"Release", "3.0.2"}
+    };
 }

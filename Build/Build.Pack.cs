@@ -7,14 +7,11 @@ partial class Build
         .TriggeredBy(Compile)
         .Executes(() =>
         {
-            var configurations = GetConfigurations(BuildConfiguration);
-            configurations.ForEach(configuration =>
-            {
+            foreach (var configuration in GlobBuildConfigurations())
                 DotNetPack(settings => settings
                     .SetConfiguration(configuration)
-                    .SetVersion(PackageVersion)
+                    .SetVersion(VersionMap[configuration])
                     .SetOutputDirectory(ArtifactsDirectory)
                     .SetVerbosity(DotNetVerbosity.Minimal));
-            });
         });
 }

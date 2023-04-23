@@ -3,8 +3,12 @@
 partial class Build
 {
     Target Cleaning => _ => _
+        .OnlyWhenStatic(() => IsLocalBuild)
         .Executes(() =>
         {
             EnsureCleanDirectory(ArtifactsDirectory);
+
+            foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
+                EnsureCleanDirectory(project.Directory / "bin");
         });
 }
