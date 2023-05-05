@@ -25,7 +25,7 @@ This repository contains a project templates for creating Revit Add-In
 ## Installation
 
 1. Install the latest [.Net SDK](https://dotnet.microsoft.com/download)
-1. Run `dotnet new -i Nice3point.Revit.Templates` to install the project templates
+2. Run `dotnet new -i Nice3point.Revit.Templates` to install the project templates
 
 ## Usage
 
