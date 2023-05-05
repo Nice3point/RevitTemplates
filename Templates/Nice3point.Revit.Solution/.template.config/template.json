@@ -87,16 +87,14 @@
         {
           "condition": "(!AzurePipeline)",
           "exclude": [
-            "azure-pipelines.yml",
-            "Build/Build.CI.AzurePipelines.cs"
+            "azure-pipelines.yml"
           ]
         },
         {
           "condition": "(!GitHubPipeline)",
           "exclude": [
             ".github/**",
-            "Build/Build.GitHubRelease.cs",
-            "Build/Build.CI.GitHubActions.cs"
+            "Build/Build.CI.GitHub.cs"
           ]
         },
         {
@@ -111,6 +109,12 @@
           "exclude": [
             "Build/Build.Bundle.Create.cs",
             "Build/Build.Bundle.Zip.cs"
+          ]
+        },
+        {
+          "condition": "(!Bundle && !Installer && !GitHubPipeline)",
+          "exclude": [
+            "Build/Build.Regex.cs"
           ]
         }
       ]

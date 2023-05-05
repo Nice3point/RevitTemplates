@@ -8,18 +8,15 @@ partial class Build
         .TriggeredBy(CreateBundle)
         .Executes(() =>
         {
-            var bundleDirectory = Solution.GetBundleDirectory(ArtifactsDirectory);
-            if (Directory.Exists(bundleDirectory))
+            foreach (var project in Bundles)
             {
+                var bundleDirectory = ArtifactsDirectory / $"{project.Name}.bundle";
+
                 var archiveName = $"{bundleDirectory}.zip";
-                Log.Information("Archive creation: {Directory}", archiveName);
                 ZipFile.CreateFromDirectory(bundleDirectory, archiveName);
-                Log.Information("Deletion directory: {Directory}", bundleDirectory);
                 Directory.Delete(bundleDirectory, true);
-            }
-            else
-            {
-                throw new Exception($"Directory not found for archiving: {bundleDirectory}");
+
+                Log.Information("Bundle: {Directory}", archiveName);
             }
         });
 }

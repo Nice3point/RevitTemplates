@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <Platforms>AnyCPU</Platforms>
         <NoWarn>CS0649;CS0169</NoWarn>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>true</ImplicitUsings>
@@ -9,10 +8,9 @@
         <NukeRootDirectory>..</NukeRootDirectory>
         <NukeScriptDirectory>..</NukeScriptDirectory>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
-        <Configurations>Release;Debug</Configurations>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Nuke.Common" Version="6.2.1"/>
+        <PackageReference Include="Nuke.Common" Version="6.3.0"/>
     </ItemGroup>
 <!--#if (GitHubPipeline)
     <ItemGroup>

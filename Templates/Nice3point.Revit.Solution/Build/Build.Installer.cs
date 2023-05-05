@@ -1,17 +1,13 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using Nuke.Common;
-<!--#if (!NoPipeline)
 using Nuke.Common.Git;
-#endif-->
 using Serilog;
+using Serilog.Events;
 
 partial class Build
 {
-    readonly Regex StreamRegex = new("'(.+?)'", RegexOptions.Compiled);
-
     Target CreateInstaller => _ => _
         .TriggeredBy(Compile)
 <!--#if (!NoPipeline)
@@ -19,48 +15,54 @@ partial class Build
 #endif-->
         .Executes(() =>
         {
-            var installerProject = BuilderExtensions.GetProject(Solution, InstallerProject);
-            var buildDirectories = GetBuildDirectories();
-            var configurations = GetConfigurations(InstallerConfiguration);
-
-            foreach (var directoryGroup in buildDirectories)
+            foreach (var (installer, project) in InstallersMap)
             {
-                var directories = directoryGroup.ToList();
-                var exeArguments = BuildExeArguments(directories.Select(info => info.FullName).ToList());
-                var exeFile = installerProject.GetExecutableFile(configurations, directories);
-                if (string.IsNullOrEmpty(exeFile))
-                {
-                    Log.Warning("No installer executable was found for these packages:\n {Directories}", string.Join("\n", directories));
-                    continue;
-                }
+                Log.Information("Project: {Name}", project.Name);
+
+                var exePattern = $"*{installer.Name}.exe";
+                var exeFile = Directory.EnumerateFiles(installer.Directory, exePattern, SearchOption.AllDirectories).First();
+
+                var publishDirectories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
+                if (publishDirectories.Length == 0) throw new Exception("No files were found to create an installer");
 
                 var proc = new Process();
                 proc.StartInfo.FileName = exeFile;
-                proc.StartInfo.Arguments = exeArguments;
+                proc.StartInfo.Arguments = BuildExeArguments(publishDirectories);
                 proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.RedirectStandardError = true;
                 proc.Start();
-                while (!proc.StandardOutput.EndOfStream) ParseProcessOutput(proc.StandardOutput.ReadLine());
+
+                RedirectStream(proc.StandardOutput, LogEventLevel.Information);
+                RedirectStream(proc.StandardError, LogEventLevel.Error);
+
                 proc.WaitForExit();
-                if (proc.ExitCode != 0) throw new Exception("The installer creation failed.");
+                if (proc.ExitCode != 0) throw new Exception($"The installer creation failed with ExitCode {proc.ExitCode}");
             }
         });
 
-    void ParseProcessOutput([CanBeNull] string value)
+    [SuppressMessage("ReSharper", "TemplateIsNotCompileTimeConstantProblem")]
+    void RedirectStream(StreamReader reader, LogEventLevel eventLevel)
     {
-        if (value is null) return;
-        var matches = StreamRegex.Matches(value);
-        if (matches.Count > 0)
+        while (!reader.EndOfStream)
         {
-            var parameters = matches.Select(match => match.Value
-                    .Substring(1, match.Value.Length - 2))
-                .Cast<object>()
-                .ToArray();
-            var line = StreamRegex.Replace(value, match => $"{{Parameter{match.Index}}}");
-            Log.Information(line, parameters);
-        }
-        else
-        {
-            Log.Debug(value);
+            var value = reader.ReadLine();
+            if (value is null) continue;
+
+            var matches = ArgumentsRegex.Matches(value);
+            if (matches.Count > 0)
+            {
+                var parameters = matches
+                    .Select(match => match.Value.Substring(1, match.Value.Length - 2))
+                    .Cast<object>()
+                    .ToArray();
+
+                var line = ArgumentsRegex.Replace(value, match => $"{{Parameter{match.Index}}}");
+                Log.Write(eventLevel, line, parameters);
+            }
+            else
+            {
+                Log.Debug(value);
+            }
         }
     }
 

@@ -7,8 +7,8 @@
     xmlns:viewModel="clr-namespace:Nice3point.Revit.AddIn.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModel:Nice3point.Revit.AddInViewModel}"
-    WindowStartupLocation="CenterScreen"
     ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     Title="Nice3point.Revit.AddIn"
     Height="450"
     Width="800">
