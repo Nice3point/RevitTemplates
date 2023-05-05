@@ -16,6 +16,7 @@
         <PackageTags>revit;templates</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>
         <PackageIcon>images\PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
         <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(SolutionDir)\.nuget\Changelog.md"))</PackageReleaseNotes>
