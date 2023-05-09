@@ -10,13 +10,11 @@ partial class Build
         {
             foreach (var project in Bundles)
             {
-                var bundleDirectory = ArtifactsDirectory / $"{project.Name}.bundle";
+                var bundleDirectory = ArtifactsDirectory / "{project.Name}.bundle";
+                bundleDirectory.CompressTo(bundleDirectory / ".zip");
+                bundleDirectory.DeleteDirectory();
 
-                var archiveName = $"{bundleDirectory}.zip";
-                ZipFile.CreateFromDirectory(bundleDirectory, archiveName);
-                Directory.Delete(bundleDirectory, true);
-
-                Log.Information("Bundle: {Directory}", archiveName);
+                Log.Information("Bundle: {Name}", archiveName);
             }
         });
 }

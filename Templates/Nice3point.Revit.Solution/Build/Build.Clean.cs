@@ -1,5 +1,4 @@
-﻿using Nuke.Common;
-using static Nuke.Common.IO.FileSystemTasks;
+﻿using Serilog;
 
 partial class Build
 {
@@ -8,10 +7,16 @@ partial class Build
         .Executes(() =>
         {
 <!--#if (Bundle || Installer || GitHubPipeline)
-            EnsureCleanDirectory(ArtifactsDirectory);
+            CleanDirectory(ArtifactsDirectory);
 
 #endif-->
             foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
-                EnsureCleanDirectory(project.Directory / "bin");
+                CleanDirectory(project.Directory / "bin");
         });
+
+    static void CleanDirectory(AbsolutePath path)
+    {
+        Log.Information("Cleaning directory: {Directory}", path);
+        path.CreateOrCleanDirectory();
+    }
 }
