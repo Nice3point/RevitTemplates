@@ -18,7 +18,14 @@ public static class Generator
         {
             var directoryInfo = new DirectoryInfo(directory);
             var fileVersion = versionRegex.Match(directoryInfo.Name).Value;
-            var files = new Files($@"{directory}\*.*");
+            var feature = new Feature
+            {
+                Name = $"Revit {fileVersion}",
+                Description = $"Install add-in for Revit {fileVersion}",
+                ConfigurableDir = $"INSTALLDIR{fileVersion}"
+            };
+
+            var files = new Files(feature, $@"{directory}\*.*");
             if (versionStorages.TryGetValue(fileVersion, out var storage))
                 storage.Add(files);
             else
@@ -29,6 +36,9 @@ public static class Generator
             foreach (var assembly in assemblies) Console.WriteLine($"'{assembly}'");
         }
 
-        return versionStorages.Select(storage => new Dir(storage.Key, storage.Value.ToArray())).Cast<WixEntity>().ToArray();
+        return versionStorages
+            .Select(storage => new Dir(new Id($"INSTALLDIR{storage.Key}"), storage.Key, storage.Value.ToArray()))
+            .Cast<WixEntity>()
+            .ToArray();
     }
 }

@@ -13,7 +13,7 @@ var project = new Project
     Name = projectName,
     OutDir = "output",
     Platform = Platform.x64,
-    UI = WUI.WixUI_InstallDir,
+    UI = WUI.WixUI_FeatureTree,
     Version = new Version(version),
     MajorUpgrade = MajorUpgrade.Default,
     GUID = new Guid("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"),
@@ -27,7 +27,7 @@ var project = new Project
 };
 
 var wixEntities = Generator.GenerateWixEntities(args);
-project.RemoveDialogsBetween(NativeDialogs.WelcomeDlg, NativeDialogs.InstallDirDlg);
+project.RemoveDialogsBetween(NativeDialogs.WelcomeDlg, NativeDialogs.CustomizeDlg);
 
 BuildSingleUserMsi();
 BuildMultiUserUserMsi();
