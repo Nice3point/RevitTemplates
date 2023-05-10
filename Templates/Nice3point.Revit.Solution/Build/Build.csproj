@@ -9,12 +9,20 @@
         <NukeScriptDirectory>..</NukeScriptDirectory>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
     </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Nuke.Common" Version="7.0.0"/>
     </ItemGroup>
 <!--#if (GitHubPipeline)
+
     <ItemGroup>
         <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]"/>
     </ItemGroup>
 #endif-->
+
+    <ItemGroup>
+        <Using Include="Nuke.Common"/>
+        <Using Include="Nuke.Common.IO"/>
+        <Using Include="Serilog"/>
+    </ItemGroup>
 </Project>

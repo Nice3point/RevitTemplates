@@ -1,7 +1,7 @@
 ﻿using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-partial class Build
+sealed partial class Build
 {
     Target Pack => _ => _
         .TriggeredBy(Compile)

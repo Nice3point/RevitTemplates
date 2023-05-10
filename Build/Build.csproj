@@ -11,6 +11,7 @@
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
         <Configurations>Release;Debug</Configurations>
     </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Nuke.Common" Version="7.0.0" />
     </ItemGroup>
@@ -20,7 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Nuke.Common" />
-        <Using Include="Nuke.Common.IO" />
+        <Using Include="Nuke.Common"/>
+        <Using Include="Nuke.Common.IO"/>
+        <Using Include="Serilog"/>
     </ItemGroup>
 </Project>

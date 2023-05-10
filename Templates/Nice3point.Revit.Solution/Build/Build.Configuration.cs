@@ -1,8 +1,4 @@
-﻿<!--#if (Bundle || Installer || GitHubPipeline)
-    using Nuke.Common.IO;
-
-#endif-->
-partial class Build
+﻿sealed partial class Build
 {
 <!--#if (Bundle || Installer || GitHubPipeline)
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";

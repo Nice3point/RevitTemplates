@@ -1,7 +1,7 @@
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 
-partial class Build : NukeBuild
+sealed partial class Build : NukeBuild
 {
     string[] Configurations;
     Dictionary<string, string> VersionMap;

@@ -1,8 +1,6 @@
-using Nuke.Common;
 using Nuke.Common.Git;
-using Serilog;
 
-partial class Build
+sealed partial class Build
 {
     Target CreateBundle => _ => _
         .TriggeredBy(Compile)

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-partial class Build
+sealed partial class Build
 {
 <!--#if (Bundle)
     readonly Regex YearRegex = YearRegexGenerator();

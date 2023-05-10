@@ -1,8 +1,6 @@
 using System.IO.Compression;
-using Nuke.Common;
-using Serilog;
 
-partial class Build
+sealed partial class Build
 {
     Target ZipBundle => _ => _
         .TriggeredBy(CreateBundle)

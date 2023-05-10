@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-partial class Build
+sealed partial class Build
 {
     Target Clean => _ => _
         .OnlyWhenStatic(() => IsLocalBuild)

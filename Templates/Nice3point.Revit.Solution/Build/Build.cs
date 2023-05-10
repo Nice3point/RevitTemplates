@@ -1,4 +1,3 @@
-using Nuke.Common;
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
 #endif-->
@@ -7,7 +6,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitVersion;
 #endif-->
 
-partial class Build : NukeBuild
+sealed partial class Build : NukeBuild
 {
     string[] Configurations;
 <!--#if (Bundle)

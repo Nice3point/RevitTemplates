@@ -1,9 +1,8 @@
 ﻿using System.IO.Enumeration;
-using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-partial class Build
+sealed partial class Build
 {
     Target Compile => _ => _
         .TriggeredBy(Clean)
