@@ -1,5 +1,6 @@
 ﻿sealed partial class Build
 {
+    const string Version = "1.0.0";
 <!--#if (Bundle || Installer || GitHubPipeline)
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
 #endif-->

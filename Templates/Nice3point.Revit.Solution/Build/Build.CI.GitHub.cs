@@ -30,15 +30,14 @@ sealed partial class Build
             var gitHubName = GitRepository.GetGitHubName();
             var gitHubOwner = GitRepository.GetGitHubOwner();
             var artifacts = Directory.GetFiles(ArtifactsDirectory, "*");
-            var version = GetProductVersion(artifacts);
 
-            await CheckTagsAsync(gitHubOwner, gitHubName, version);
-            Log.Information("Tag: {Version}", version);
+            await CheckTagsAsync(gitHubOwner, gitHubName, Version);
+            Log.Information("Tag: {Version}", Version);
 
-            var newRelease = new NewRelease(version)
+            var newRelease = new NewRelease(Version)
             {
-                Name = version,
-                Body = CreateChangelog(version),
+                Name = Version,
+                Body = CreateChangelog(Version),
                 Draft = true,
                 TargetCommitish = GitVersion.Sha
             };
@@ -107,26 +106,5 @@ sealed partial class Build
 
         if (logBuilder.Length == 0) Log.Warning("No version entry exists in the changelog: {Version}", version);
         return logBuilder.ToString();
-    }
-
-    string GetProductVersion(IEnumerable<string> artifacts)
-    {
-        var stringVersion = string.Empty;
-        var doubleVersion = 0d;
-        foreach (var file in artifacts)
-        {
-            var fileInfo = new FileInfo(file);
-            var match = VersionRegex.Match(fileInfo.Name);
-            if (!match.Success) continue;
-            var version = match.Value;
-            var parsedValue = double.Parse(version.Replace(".", ""));
-            if (parsedValue > doubleVersion)
-            {
-                doubleVersion = parsedValue;
-                stringVersion = version;
-            }
-        }
-
-        return stringVersion;
     }
 }

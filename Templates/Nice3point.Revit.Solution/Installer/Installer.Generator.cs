@@ -22,7 +22,7 @@ public static class Generator
             {
                 Name = $"Revit {fileVersion}",
                 Description = $"Install add-in for Revit {fileVersion}",
-                ConfigurableDir = $"INSTALLDIR{fileVersion}"
+                ConfigurableDir = $"INSTALL{fileVersion}"
             };
 
             var files = new Files(feature, $@"{directory}\*.*");
@@ -37,7 +37,7 @@ public static class Generator
         }
 
         return versionStorages
-            .Select(storage => new Dir(new Id($"INSTALLDIR{storage.Key}"), storage.Key, storage.Value.ToArray()))
+            .Select(storage => new Dir(new Id($"INSTALL{storage.Key}"), storage.Key, storage.Value.ToArray()))
             .Cast<WixEntity>()
             .ToArray();
     }
