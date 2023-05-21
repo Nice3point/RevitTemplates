@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using Nuke.Common.Git;
+using Nuke.Common.Utilities;
 using Serilog.Events;
 
 sealed partial class Build
