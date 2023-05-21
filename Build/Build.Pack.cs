@@ -10,7 +10,7 @@ sealed partial class Build
             foreach (var configuration in GlobBuildConfigurations())
                 DotNetPack(settings => settings
                     .SetConfiguration(configuration)
-                    .SetVersion(VersionMap[configuration])
+                    .SetVersion(Version)
                     .SetOutputDirectory(ArtifactsDirectory)
                     .SetVerbosity(DotNetVerbosity.Minimal));
         });

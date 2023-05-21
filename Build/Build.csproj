@@ -21,8 +21,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Nuke.Common"/>
-        <Using Include="Nuke.Common.IO"/>
-        <Using Include="Serilog"/>
+        <Using Include="Nuke.Common" />
+        <Using Include="Nuke.Common.IO" />
+        <Using Include="Serilog" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Build.CI.GitHub.cs" />
     </ItemGroup>
 </Project>

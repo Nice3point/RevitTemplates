@@ -9,6 +9,7 @@ ProjectSection(SolutionItems) = preProject
 	Readme.md = Readme.md
 	.gitignore = .gitignore
 	Build\Build.Configuration.cs = Build\Build.Configuration.cs
+	Changelog.md = Changelog.md
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{114BF9D5-DD32-468D-9877-4CCB85204598}"
