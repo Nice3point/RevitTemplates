@@ -6,7 +6,7 @@ using Octokit;
 
 sealed partial class Build
 {
-    Target Publish => _ => _
+    Target PublishGitHub => _ => _
 <!--#if (Installer && Bundle)
         .TriggeredBy(CreateInstaller, ZipBundle)
 <!--#elseif (Installer)

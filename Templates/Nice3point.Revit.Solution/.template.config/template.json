@@ -112,7 +112,7 @@
           ]
         },
         {
-          "condition": "(!Bundle && !Installer && !GitHubPipeline)",
+          "condition": "(!Bundle && !Installer)",
           "exclude": [
             "Build/Build.Regex.cs"
           ]

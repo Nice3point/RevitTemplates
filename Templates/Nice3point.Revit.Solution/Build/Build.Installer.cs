@@ -20,12 +20,12 @@ sealed partial class Build
                 var exePattern = $"*{installer.Name}.exe";
                 var exeFile = Directory.EnumerateFiles(installer.Directory, exePattern, SearchOption.AllDirectories).First();
 
-                var publishDirectories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
-                if (publishDirectories.Length == 0) throw new Exception("No files were found to create an installer");
+                var fileDirectories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
+                if (fileDirectories.Length == 0) throw new Exception("No files were found to create an installer");
 
                 var proc = new Process();
                 proc.StartInfo.FileName = exeFile;
-                proc.StartInfo.Arguments = BuildExeArguments(publishDirectories);
+                proc.StartInfo.Arguments = fileDirectories.Select(path => path.DoubleQuoteIfNeeded()).JoinSpace();
                 proc.StartInfo.RedirectStandardOutput = true;
                 proc.StartInfo.RedirectStandardError = true;
                 proc.Start();
@@ -62,19 +62,5 @@ sealed partial class Build
                 Log.Debug(value);
             }
         }
-    }
-
-    static string BuildExeArguments(IReadOnlyList<string> args)
-    {
-        var argumentBuilder = new StringBuilder();
-        for (var i = 0; i < args.Count; i++)
-        {
-            if (i > 0) argumentBuilder.Append(' ');
-            var value = args[i];
-            if (value.Contains(' ')) value = $"\"{value}\"";
-            argumentBuilder.Append(value);
-        }
-
-        return argumentBuilder.ToString();
     }
 }
