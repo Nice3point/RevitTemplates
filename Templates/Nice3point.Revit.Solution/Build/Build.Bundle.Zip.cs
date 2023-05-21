@@ -8,11 +8,12 @@ sealed partial class Build
         {
             foreach (var project in Bundles)
             {
-                var bundleDirectory = ArtifactsDirectory / "{project.Name}.bundle";
-                bundleDirectory.CompressTo(bundleDirectory / ".zip");
-                bundleDirectory.DeleteDirectory();
+                var bundlePath = ArtifactsDirectory / $"{project.Name}.bundle";
+                var bundleName = bundlePath.WithExtension(".zip");
+                bundlePath.CompressTo(bundleName);
+                bundlePath.DeleteDirectory();
 
-                Log.Information("Bundle: {Name}", archiveName);
+                Log.Information("Bundle: {Name}", bundleName);
             }
         });
 }

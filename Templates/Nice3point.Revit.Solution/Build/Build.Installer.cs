@@ -20,12 +20,12 @@ sealed partial class Build
                 var exePattern = $"*{installer.Name}.exe";
                 var exeFile = Directory.EnumerateFiles(installer.Directory, exePattern, SearchOption.AllDirectories).First();
 
-                var fileDirectories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
-                if (fileDirectories.Length == 0) throw new Exception("No files were found to create an installer");
+                var directories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
+                if (directories.Length == 0) throw new Exception("No files were found to create an installer");
 
                 var proc = new Process();
                 proc.StartInfo.FileName = exeFile;
-                proc.StartInfo.Arguments = fileDirectories.Select(path => path.DoubleQuoteIfNeeded()).JoinSpace();
+                proc.StartInfo.Arguments = directories.Select(path => path.DoubleQuoteIfNeeded()).JoinSpace();
                 proc.StartInfo.RedirectStandardOutput = true;
                 proc.StartInfo.RedirectStandardError = true;
                 proc.Start();

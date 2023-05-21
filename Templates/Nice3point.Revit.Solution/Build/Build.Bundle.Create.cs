@@ -13,16 +13,16 @@ sealed partial class Build
             {
                 Log.Information("Project: {Name}", project.Name);
 
-                var publishDirectories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
-                if (publishDirectories.Length == 0) throw new Exception("No files were found to create a bundle");
+                var directories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
+                if (directories.Length == 0) throw new Exception("No files were found to create a bundle");
 
                 var contentsDirectory = ArtifactsDirectory / $"{project.Name}.bundle" / "Contents";
-                foreach (var folder in publishDirectories)
+                foreach (var path in directories)
                 {
-                    var version = YearRegex.Match(folder).Value;
+                    var version = YearRegex.Match(path).Value;
 
                     Log.Information("Bundle files for version {Version}:", version);
-                    CopyAssemblies(folder, contentsDirectory / version);
+                    CopyAssemblies(path, contentsDirectory / version);
                 }
             }
         });
