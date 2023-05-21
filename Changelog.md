@@ -6,4 +6,4 @@
 - Installer project reworked
 - Installer project now supports SingleUser and MultiUser builds
 - Installer project now supports feature tree for Revit versions
-  ![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/ba1270c0-0593-486e-804c-ee923dba89de)
+  ![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/d5a3431d-7704-422c-8eba-9c06a00cf0a3)
