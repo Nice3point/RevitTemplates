@@ -65,8 +65,8 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
 #endif-->
 <!--#if (Logger)
-        <PackageReference Include="Serilog" Version="2.*"/>
-        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
+        <PackageReference Include="Serilog" Version="2.*" />
+        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*" />
 #endif-->
     </ItemGroup>
 
@@ -81,8 +81,8 @@
 
 <!--#if (ApplicationStyle)
     <ItemGroup>
-        <Resource Include="Resources\Icons\RibbonIcon16.png"/>
-        <Resource Include="Resources\Icons\RibbonIcon32.png"/>
+        <Resource Include="Resources\Icons\RibbonIcon16.png" />
+        <Resource Include="Resources\Icons\RibbonIcon32.png" />
     </ItemGroup>
 
 #endif-->
@@ -91,7 +91,7 @@
         <Folder Include="ViewModels\Objects" />
 #endif-->
 <!--#if (CommandStyle)
-        <Folder Include="Resources"/>
+        <Folder Include="Resources" />
 #endif-->
     </ItemGroup>
 
@@ -114,7 +114,11 @@
         </ItemGroup>
 
         <Copy SourceFiles="@(AddinFiles)"
-              DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"
-              Condition="$(Configuration.Contains('Debug'))" />
+              DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" />
+    </Target>
+
+    <Target Name="DeleteFiles" AfterTargets="Clean">
+        <RemoveDir Directories="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName)" />
+        <Delete Files="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName).addin" />
     </Target>
 </Project>
