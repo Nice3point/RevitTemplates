@@ -1,4 +1,6 @@
+<!--#if (!NoPipeline)
 using Nuke.Common.Git;
+#endif-->
 
 sealed partial class Build
 {

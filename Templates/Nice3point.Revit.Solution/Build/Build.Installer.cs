@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+<!--#if (!NoPipeline)
 using Nuke.Common.Git;
+#endif-->
 using Nuke.Common.Utilities;
 using Serilog.Events;
 

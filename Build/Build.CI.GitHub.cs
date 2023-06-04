@@ -31,6 +31,7 @@ sealed partial class Build
                 Name = Version,
                 Body = CreateChangelog(Version),
                 Draft = true,
+                Prerelease = true,
                 TargetCommitish = GitVersion.Sha
             };
 
