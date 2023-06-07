@@ -1,7 +1,7 @@
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
-#endif-->
 
+#endif-->
 sealed partial class Build
 {
     Target CreateBundle => _ => _
@@ -18,7 +18,8 @@ sealed partial class Build
                 var directories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
                 if (directories.Length == 0) throw new Exception("No files were found to create a bundle");
 
-                var contentsDirectory = ArtifactsDirectory / $"{project.Name}.bundle" / "Contents";
+                var bundlePath = ArtifactsDirectory / $"{project.Name}.bundle";
+                var contentsDirectory = bundlePath / "Contents";
                 foreach (var path in directories)
                 {
                     var version = YearRegex.Match(path).Value;
@@ -26,8 +27,19 @@ sealed partial class Build
                     Log.Information("Bundle files for version {Version}:", version);
                     CopyAssemblies(path, contentsDirectory / version);
                 }
+
+                CompressFolder(bundlePath);
             }
         });
+
+    static void CompressFolder(AbsolutePath bundlePath)
+    {
+        var bundleName = bundlePath.WithExtension(".zip");
+        bundlePath.CompressTo(bundleName);
+        bundlePath.DeleteDirectory();
+
+        Log.Information("Compressing into a Zip: {Name}", bundleName);
+    }
 
     static void CopyAssemblies(string sourcePath, string targetPath)
     {
