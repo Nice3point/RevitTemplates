@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - '**'
+
   pull_request:
     branches:
       - '!main'
+      - '!master'
 
 jobs:
   windows:
