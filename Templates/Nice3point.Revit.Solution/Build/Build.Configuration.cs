@@ -8,7 +8,7 @@
     readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
 #endif-->
 
-    protected override void OnBuildCreated()
+    protected override void OnBuildInitialized()
     {
         Configurations = new[]
         {
