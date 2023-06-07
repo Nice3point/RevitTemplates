@@ -1,15 +1,23 @@
-﻿sealed partial class Build
+﻿using Nuke.Common.Tools.DotNet;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
+
+sealed partial class Build
 {
     Target Clean => _ => _
         .OnlyWhenStatic(() => IsLocalBuild)
         .Executes(() =>
         {
-<!--#if (Bundle || Installer || GitHubPipeline)
-            CleanDirectory(ArtifactsDirectory);
+            foreach (var configuration in GlobBuildConfigurations())
+                DotNetClean(settings => settings
+                        .SetConfiguration(configuration)
+                        .SetVerbosity(DotNetVerbosity.Minimal));
 
-#endif-->
             foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
                 CleanDirectory(project.Directory / "bin");
+<!--#if (Bundle || Installer || GitHubPipeline)
+
+            CleanDirectory(ArtifactsDirectory);
+#endif-->
         });
 
     static void CleanDirectory(AbsolutePath path)
