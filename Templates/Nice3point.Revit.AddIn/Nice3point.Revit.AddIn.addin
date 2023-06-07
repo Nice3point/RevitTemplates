@@ -13,7 +13,7 @@
 #elseif (ApplicationStyle)
         <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
 #endif
-        <VendorId>Developer</VendorId>
+        <VendorId>Development</VendorId>
         <VendorDescription></VendorDescription>
     </AddIn>
 </RevitAddIns>
