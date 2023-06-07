@@ -20,7 +20,8 @@ sealed partial class Build
                 Log.Information("Project: {Name}", project.Name);
 
                 var exePattern = $"*{installer.Name}.exe";
-                var exeFile = Directory.EnumerateFiles(installer.Directory, exePattern, SearchOption.AllDirectories).First();
+                var exeFile = Directory.EnumerateFiles(installer.Directory, exePattern, SearchOption.AllDirectories).FirstOrDefault();
+                if (exeFile is null) throw new Exception($"No installer file was found for the project: {installer.Name}");
 
                 var directories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
                 if (directories.Length == 0) throw new Exception("No files were found to create an installer");
