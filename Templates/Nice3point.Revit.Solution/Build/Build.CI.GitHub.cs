@@ -8,11 +8,11 @@ sealed partial class Build
 {
     Target PublishGitHub => _ => _
 <!--#if (Installer && Bundle)
-        .TriggeredBy(CreateInstaller, ZipBundle)
+        .TriggeredBy(CreateInstaller, CreateBundle)
 <!--#elseif (Installer)
         .TriggeredBy(CreateInstaller)
 <!--#elseif (Bundle)
-        .TriggeredBy(ZipBundle)
+        .TriggeredBy(CreateBundle)
 <!--#else
         .TriggeredBy(Compile)
 #endif-->

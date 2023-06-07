@@ -107,8 +107,7 @@
         {
           "condition": "(!Bundle)",
           "exclude": [
-            "Build/Build.Bundle.Create.cs",
-            "Build/Build.Bundle.Zip.cs"
+            "Build/Build.Bundle.cs"
           ]
         },
         {
