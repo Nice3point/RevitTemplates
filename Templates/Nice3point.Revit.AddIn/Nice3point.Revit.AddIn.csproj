@@ -98,7 +98,7 @@
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
             <RootItem Include="$(ProjectDir)*.addin" />
-            <AddinItem Include="$(TargetDir)*" />
+            <AddinItem Include="$(TargetDir)**\*.*" />
         </ItemGroup>
 
         <PropertyGroup>
@@ -107,7 +107,7 @@
         </PropertyGroup>
 
         <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
-        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)" />
+        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)\%(RecursiveDir)" />
 
         <ItemGroup>
             <AddinFiles Include="$(RootDir)**\*.*" />
