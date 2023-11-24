@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Nice3point.Revit.AddIn.ViewModels.Converters;
+namespace Nice3point.Revit.AddIn.Views.Converters;
 
 [ValueConversion(typeof(bool), typeof(Visibility))]
 public class BoolVisibilityConverter : MarkupExtension, IValueConverter

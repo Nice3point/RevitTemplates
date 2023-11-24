@@ -13,13 +13,10 @@ sealed partial class Build
         .OnlyWhenStatic(() => IsLocalBuild && GitRepository.IsOnMainOrMasterBranch())
         .Executes(() =>
         {
-            ArtifactsDirectory.GlobFiles("*.nupkg")
-                .ForEach(package =>
-                {
-                    DotNetNuGetPush(settings => settings
-                        .SetTargetPath(package)
-                        .SetSource(NugetApiUrl)
-                        .SetApiKey(NugetApiKey));
-                });
+            foreach (var package in ArtifactsDirectory.GlobFiles("*.nupkg"))
+                DotNetNuGetPush(settings => settings
+                    .SetTargetPath(package)
+                    .SetSource(NugetApiUrl)
+                    .SetApiKey(NugetApiKey));
         });
 }

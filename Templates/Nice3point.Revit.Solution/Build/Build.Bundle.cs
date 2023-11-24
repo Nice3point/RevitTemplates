@@ -1,7 +1,10 @@
+using System.Xml.Linq;
+using Autodesk.PackageBuilder;
 <!--#if (!NoPipeline)
 using Nuke.Common.Git;
-
 #endif-->
+using Nuke.Common.ProjectModel;
+using Nuke.Common.Utilities;
 sealed partial class Build
 {
     Target CreateBundle => _ => _
@@ -15,10 +18,11 @@ sealed partial class Build
             {
                 Log.Information("Project: {Name}", project.Name);
 
-                var directories = Directory.GetDirectories(project.Directory, "Publish*", SearchOption.AllDirectories);
+                var directories = Directory.GetDirectories(project.Directory, "* Release *", SearchOption.AllDirectories);
                 if (directories.Length == 0) throw new Exception("No files were found to create a bundle");
 
-                var bundlePath = ArtifactsDirectory / $"{project.Name}.bundle";
+                var bundleRoot = ArtifactsDirectory / project.Name;
+                var bundlePath = bundleRoot / $"{project.Name}.bundle";
                 var contentsDirectory = bundlePath / "Contents";
                 foreach (var path in directories)
                 {
@@ -28,15 +32,62 @@ sealed partial class Build
                     CopyAssemblies(path, contentsDirectory / version);
                 }
 
-                CompressFolder(bundlePath);
+                GenerateManifest(project, directories, manifestPath);
+                CompressFolder(bundleRoot);
             }
         });
 
-    static void CompressFolder(AbsolutePath bundlePath)
+    void GenerateManifest(Project project, string[] directories, AbsolutePath manifestDirectory)
     {
-        var bundleName = bundlePath.WithExtension(".zip");
-        bundlePath.CompressTo(bundleName);
-        bundlePath.DeleteDirectory();
+        BuilderUtils.Build<PackageContentsBuilder>(builder =>
+        {
+            var versions = directories.Select(path => YearRegex.Match(path).Value).Select(int.Parse);
+            var company = GetConfigurationValue(project, config => config.Name == "VendorId");
+            var email = GetConfigurationValue(project, config => config.Name == "VendorEmail");
+
+            builder.ApplicationPackage.Create()
+                .ProductType(ProductTypes.Application)
+                .AutodeskProduct(AutodeskProducts.Revit)
+                .Name(Solution.Name)
+                .AppVersion(Version);
+
+            builder.CompanyDetails.Create(company)
+                .Email(email);
+
+            foreach (var version in versions)
+            {
+                builder.Components.CreateEntry($"Revit {version}")
+                    .RevitPlatform(version)
+                    .AppName(project.Name)
+                    .ModuleName($"./Contents/{version}/{project.Name}.addin");
+            }
+        }, manifestDirectory);
+    }
+
+    string GetConfigurationValue(Project project, Func<XElement, bool> filter)
+    {
+        var defaultValue = string.Empty;
+        var configPath = project.Directory.GetFiles("*.addin").FirstOrDefault();
+
+        if (configPath is null) return defaultValue;
+
+        var configDocument = configPath.ReadXml();
+        if (configDocument.Root is null) return defaultValue;
+
+        var sectionElement = configDocument.Root.Elements().FirstOrDefault();
+        if (sectionElement is null) return defaultValue;
+
+        var configElement = sectionElement.Elements().FirstOrDefault(filter);
+        if (configElement is null) return defaultValue;
+
+        return configElement.Value;
+    }
+
+    static void CompressFolder(AbsolutePath bundleRoot)
+    {
+        var bundleName = bundleRoot.WithExtension(".zip");
+        bundleRoot.CompressTo(bundleName);
+        bundleRoot.DeleteDirectory();
 
         Log.Information("Compressing into a Zip: {Name}", bundleName);
     }

@@ -11,13 +11,11 @@
     <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
         <DebugType>full</DebugType>
         <DebugSymbols>true</DebugSymbols>
-        <SharingType>Local</SharingType>
         <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition="$(Configuration.Contains('Release'))">
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
-        <SharingType>Publish</SharingType>
         <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition="$(Configuration.Contains('R20'))">
@@ -48,6 +46,7 @@
     <PropertyGroup>
         <Version>$(RevitVersion)</Version>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <PropertyGroup>
@@ -98,11 +97,11 @@
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
             <RootItem Include="$(ProjectDir)*.addin" />
-            <AddinItem Include="$(TargetDir)**\*.*" />
+            <AddinItem Include="$(TargetDir)**\*" />
         </ItemGroup>
 
         <PropertyGroup>
-            <RootDir>bin\$(SharingType) $(RevitVersion) $(Configuration)\</RootDir>
+            <RootDir>bin\$(RevitVersion) $(Configuration)\</RootDir>
             <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
         </PropertyGroup>
 
@@ -110,7 +109,7 @@
         <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)\%(RecursiveDir)" />
 
         <ItemGroup>
-            <AddinFiles Include="$(RootDir)**\*.*" />
+            <AddinFiles Include="$(RootDir)**\*" />
         </ItemGroup>
 
         <Copy SourceFiles="@(AddinFiles)"

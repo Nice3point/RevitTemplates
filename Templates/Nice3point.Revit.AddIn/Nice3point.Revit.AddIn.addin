@@ -15,5 +15,6 @@
 #endif
         <VendorId>Development</VendorId>
         <VendorDescription></VendorDescription>
+        <VendorEmail></VendorEmail>
     </AddIn>
 </RevitAddIns>

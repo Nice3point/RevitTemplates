@@ -1,6 +1,7 @@
 ﻿#if (ModelessWindow)
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+
 #endif
 namespace Nice3point.Revit.AddIn.Core;
 
@@ -14,6 +15,7 @@ public static class RevitApi
     public static Autodesk.Revit.ApplicationServices.Application Application => UiApplication.Application;
     public static UIDocument UiDocument => UiApplication.ActiveUIDocument;
     public static Document Document => UiDocument.Document;
+
     public static View ActiveView
     {
         get => UiDocument.ActiveView;

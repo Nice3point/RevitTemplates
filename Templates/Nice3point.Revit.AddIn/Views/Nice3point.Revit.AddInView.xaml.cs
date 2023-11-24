@@ -2,7 +2,7 @@
 
 namespace Nice3point.Revit.AddIn.Views;
 
-public partial class Nice3point.Revit.AddInView
+public sealed partial class Nice3point.Revit.AddInView
 {
     public Nice3point.Revit.AddInView(Nice3point.Revit.AddInViewModel viewModel)
     {
