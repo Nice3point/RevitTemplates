@@ -23,6 +23,7 @@ sealed partial class Build
 
                 var bundleRoot = ArtifactsDirectory / project.Name;
                 var bundlePath = bundleRoot / $"{project.Name}.bundle";
+                var manifestPath = bundlePath / "PackageContents.xml";
                 var contentsDirectory = bundlePath / "Contents";
                 foreach (var path in directories)
                 {
