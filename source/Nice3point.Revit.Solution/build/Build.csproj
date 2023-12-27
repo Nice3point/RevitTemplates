@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <NoWarn>CS0649;CS0169</NoWarn>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>true</ImplicitUsings>
+        <TargetFramework>net7.0</TargetFramework>
+        <NukeRootDirectory>..</NukeRootDirectory>
+        <NukeScriptDirectory>..</NukeScriptDirectory>
+        <NukeTelemetryVersion>1</NukeTelemetryVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Nuke.Common" Version="7.0.6"/>
+<!--#if (Bundle)
+        <PackageReference Include="Autodesk.PackageBuilder" Version="1.0.5"/>
+#endif-->
+</ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Nuke.Common"/>
+        <Using Include="Nuke.Common.IO"/>
+        <Using Include="Serilog"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nice3point",
+  "name": "Revit Solution",
+  "shortName": "revit-sln",
+  "identity": "Nice3point.Revit.Solution",
+  "defaultName": "RevitAddIn",
+  "sourceName": "Nice3point.Revit.Solution",
+  "description": "Template for creating a solution for Revit add-ins",
+  "classifications": [
+    "Solution",
+    "Revit"
+  ],
+  "tags": {
+    "type": "solution",
+    "language": "C#",
+    "platform": ".NET"
+  },
+  "guids": [
+    "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
+    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
+    "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC",
+    "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD",
+    "EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE"
+  ],
+  "symbols": {
+    "Pipeline": {
+      "type": "parameter",
+      "displayName": "Pipeline",
+      "description": "Adds support for CI/CD pipeline to your project",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "None",
+          "displayName": "None",
+          "description": "Pipeline not used"
+        },
+        {
+          "choice": "Azure",
+          "displayName": "Azure DevOps",
+          "description": "Azure DevOps pipeline"
+        },
+        {
+          "choice": "GitHub",
+          "displayName": "GitHub Actions",
+          "description": "GitHub Actions pipeline"
+        }
+      ],
+      "defaultValue": "GitHub"
+    },
+    "NoPipeline": {
+      "type": "computed",
+      "value": "(Pipeline == \"None\")"
+    },
+    "AzurePipeline": {
+      "type": "computed",
+      "value": "(Pipeline == \"Azure\")"
+    },
+    "GitHubPipeline": {
+      "type": "computed",
+      "value": "(Pipeline == \"GitHub\")"
+    },
+    "Installer": {
+      "type": "parameter",
+      "displayName": "Installer support",
+      "dataType": "bool",
+      "description": "Creates a project installer",
+      "defaultValue": "true"
+    },
+    "Bundle": {
+      "type": "parameter",
+      "displayName": "Bundle support",
+      "dataType": "bool",
+      "description": "Packs project files into a bundle. Used for uploading to Autodesk Store",
+      "defaultValue": "false"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!GitHubPipeline)",
+          "exclude": [
+            "Changelog.md"
+          ]
+        },
+        {
+          "condition": "(!AzurePipeline)",
+          "exclude": [
+            "azure-pipelines.yml"
+          ]
+        },
+        {
+          "condition": "(!GitHubPipeline)",
+          "exclude": [
+            ".github/**",
+            "Build/Build.CI.GitHub.cs"
+          ]
+        },
+        {
+          "condition": "(!Installer)",
+          "exclude": [
+            "Installer/**",
+            "Build/Build.Installer.cs"
+          ]
+        },
+        {
+          "condition": "(!Bundle)",
+          "exclude": [
+            "Build/Build.Bundle.cs"
+          ]
+        },
+        {
+          "condition": "(!Bundle && !Installer)",
+          "exclude": [
+            "Build/Build.Regex.cs"
+          ]
+        }
+      ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "Nice3point.Item.Solution.sln"
+    }
+  ],
+  "SpecialCustomOperations": {
+    "**/*.cs": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": [
+              "<!--#if"
+            ],
+            "actionableElse": [
+              "<!--#else"
+            ],
+            "actionableElseif": [
+              "<!--#elseif"
+            ],
+            "endif": [
+              "#endif-->"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    }
+  }
+}
