@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <Platforms>AnyCPU</Platforms>
@@ -9,20 +10,16 @@
         <NukeRootDirectory>..</NukeRootDirectory>
         <NukeScriptDirectory>..</NukeScriptDirectory>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
-        <Configurations>Release;Debug</Configurations>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Nuke.Common" Version="7.0.6" />
+        <PackageReference Include="Nuke.Common" Version="7.0.6"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
+        <Using Include="Nuke.Common"/>
+        <Using Include="Nuke.Common.IO"/>
+        <Using Include="Serilog"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="Nuke.Common" />
-        <Using Include="Nuke.Common.IO" />
-        <Using Include="Serilog" />
-    </ItemGroup>
 </Project>

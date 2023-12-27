@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
         <OutputType>Exe</OutputType>
+        <Platforms>AnyCPU</Platforms>
         <NoWarn>CS0649;CS0169</NoWarn>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>true</ImplicitUsings>
@@ -12,18 +14,12 @@
 
     <ItemGroup>
         <PackageReference Include="Nuke.Common" Version="7.0.6"/>
-        <PackageReference Include="Autodesk.PackageBuilder" Version="1.0.5"/>
     </ItemGroup>
-<!--#if (GitHubPipeline)
-
-    <ItemGroup>
-        <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]"/>
-    </ItemGroup>
-#endif-->
 
     <ItemGroup>
         <Using Include="Nuke.Common"/>
         <Using Include="Nuke.Common.IO"/>
         <Using Include="Serilog"/>
     </ItemGroup>
+
 </Project>

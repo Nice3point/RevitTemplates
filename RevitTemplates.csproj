@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <NoWarn>$(NoWarn);NU5128;NU5110;NU5111</NoWarn>
@@ -8,6 +9,7 @@
         <NoDefaultExcludes>true</NoDefaultExcludes>
         <OutputPath>output</OutputPath>
     </PropertyGroup>
+
     <PropertyGroup>
         <PackageType>Template</PackageType>
         <PackageId>Nice3point.Revit.Templates</PackageId>
@@ -19,14 +21,13 @@
         <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>
         <PackageIcon>images\PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
-        <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(SolutionDir)\.nuget\Changelog.md"))</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include=".nuget\PackageIcon.png" PackagePath="images\" Pack="true" />
-        <None Include=".nuget\Changelog.md" PackagePath="\" Pack="false" />
-        <None Include="License.md" PackagePath="" Pack="true" />
-        <Content Include="Templates\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
-        <Compile Remove="**\*" />
+        <None Include=".nuget\PackageIcon.png" PackagePath="images\" Pack="true"/>
+        <None Include="License.md" PackagePath="" Pack="true"/>
+        <Content Include="source\**\*" Exclude="**\bin\**\*;**\obj\**\*"/>
+        <Compile Remove="**\*"/>
     </ItemGroup>
+
 </Project>

@@ -5,7 +5,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 sealed partial class Build
 {
     Target Compile => _ => _
-        .TriggeredBy(Clean)
+        .DependsOn(Clean)
         .Executes(() =>
         {
             foreach (var configuration in GlobBuildConfigurations())
@@ -22,9 +22,7 @@ sealed partial class Build
             .Where(config => Configurations.Any(wildcard => FileSystemName.MatchesSimpleExpression(wildcard, config)))
             .ToList();
 
-        if (configurations.Count == 0)
-            throw new Exception($"No solution configurations have been found. Pattern: {string.Join(" | ", Configurations)}");
-
+        Assert.NotEmpty(configurations, $"No solution configurations have been found. Pattern: {string.Join(" | ", Configurations)}");
         return configurations;
     }
 }

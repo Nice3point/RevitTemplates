@@ -2,8 +2,6 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{DC6D3A3E-EB5D-4BAD-B47B-17B0A6593D49}") = "RevitTemplates", "RevitTemplates.csproj", "{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54D6B6B5-F661-4B55-B787-46BE8CC5C6A3}"
 ProjectSection(SolutionItems) = preProject
 	Readme.md = Readme.md
@@ -12,7 +10,9 @@ ProjectSection(SolutionItems) = preProject
 	Changelog.md = Changelog.md
 EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{114BF9D5-DD32-468D-9877-4CCB85204598}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\Build.csproj", "{114BF9D5-DD32-468D-9877-4CCB85204598}"
+EndProject
+Project("{DC6D3A3E-EB5D-4BAD-B47B-17B0A6593D49}") = "RevitTemplates", "RevitTemplates.csproj", "{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,5 +27,8 @@ Global
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke Plan.run.xml
 		File = Templates\Nice3point.Revit.Solution\.run\Nuke Clean.run.xml
+		File = source\Nice3point.Revit.Solution\.run\Nuke Clean.run.xml
+		File = source\Nice3point.Revit.Solution\.run\Nuke Plan.run.xml
+		File = source\Nice3point.Revit.Solution\.run\Nuke.run.xml
 	EndGlobalSection
 EndGlobal
