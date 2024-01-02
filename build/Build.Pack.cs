@@ -6,11 +6,11 @@ sealed partial class Build
 {
     Target Pack => _ => _
         .DependsOn(Compile)
-        .OnlyWhenStatic(() => GitRepository.IsOnMainOrMasterBranch())
+        .OnlyWhenStatic(() => IsLocalBuild && GitRepository.IsOnMainOrMasterBranch())
         .Executes(() =>
         {
             ValidateRelease();
-            
+
             foreach (var configuration in GlobBuildConfigurations())
                 DotNetPack(settings => settings
                     .SetConfiguration(configuration)
@@ -19,7 +19,7 @@ sealed partial class Build
                     .SetVerbosity(DotNetVerbosity.Minimal)
                     .SetPackageReleaseNotes(CreateNugetChangelog()));
         });
-    
+
     string CreateNugetChangelog()
     {
         Assert.True(File.Exists(ChangeLogPath), $"Unable to locate the changelog file: {ChangeLogPath}");
