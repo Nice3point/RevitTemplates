@@ -60,48 +60,50 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
-        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*" />
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*" />
-<!--#if (!NoWindow)
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
-#endif-->
-<!--#if (Logger)
-        <PackageReference Include="Serilog" Version="3.*" />
-        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*" />
-#endif-->
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
+#if (!NoWindow)
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
+#endif
+#if (Logger)
+        <PackageReference Include="Serilog" Version="3.*"/>
+        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
+#endif
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Nice3point.Revit.Extensions" />
-        <Using Include="Nice3point.Revit.Toolkit.Utils" />
-        <Using Include="JetBrains.Annotations" />
-<!--#if (Logger)
-        <Using Include="Serilog" />
-#endif-->
+        <Using Include="Nice3point.Revit.Extensions"/>
+        <Using Include="Nice3point.Revit.Toolkit.Utils"/>
+        <Using Include="JetBrains.Annotations"/>
+#if (Logger)
+        <Using Include="Serilog"/>
+#endif
     </ItemGroup>
 
-<!--#if (ApplicationStyle)
+#if (ApplicationStyle)
     <ItemGroup>
-        <Resource Include="Resources\Icons\RibbonIcon16.png" />
-        <Resource Include="Resources\Icons\RibbonIcon32.png" />
+        <Resource Include="Resources\Icons\RibbonIcon16.png"/>
+        <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
 
-#endif-->
+#endif
+#if (!NoWindow || CommandStyle)
     <ItemGroup>
-<!--#if (!NoWindow)
-        <Folder Include="ViewModels\Objects" />
-#endif-->
-<!--#if (CommandStyle)
-        <Folder Include="Resources" />
-#endif-->
+#if (!NoWindow)
+        <Folder Include="Models"/>
+#endif
+#if (CommandStyle)
+        <Folder Include="Resources"/>
+#endif
     </ItemGroup>
 
+#endif
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
-            <RootItem Include="$(ProjectDir)*.addin" />
-            <AddinItem Include="$(TargetDir)**\*" />
+            <RootItem Include="$(ProjectDir)*.addin"/>
+            <AddinItem Include="$(TargetDir)**\*"/>
         </ItemGroup>
 
         <PropertyGroup>
@@ -109,20 +111,20 @@
             <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
         </PropertyGroup>
 
-        <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
-        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)\%(RecursiveDir)" />
+        <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)"/>
+        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)\%(RecursiveDir)"/>
 
         <ItemGroup>
-            <AddinFiles Include="$(RootDir)**\*" />
+            <AddinFiles Include="$(RootDir)**\*"/>
         </ItemGroup>
 
         <Copy SourceFiles="@(AddinFiles)"
-              DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" />
+              DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"/>
     </Target>
 
     <Target Name="DeleteFiles" AfterTargets="Clean">
-        <RemoveDir Directories="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName)" />
-        <Delete Files="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName).addin" />
+        <RemoveDir Directories="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName)"/>
+        <Delete Files="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName).addin"/>
     </Target>
 
 </Project>

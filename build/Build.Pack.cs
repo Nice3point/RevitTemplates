@@ -10,7 +10,7 @@ sealed partial class Build
         .Executes(() =>
         {
             ValidateRelease();
-            
+
             foreach (var configuration in GlobBuildConfigurations())
                 DotNetPack(settings => settings
                     .SetConfiguration(configuration)
@@ -19,7 +19,7 @@ sealed partial class Build
                     .SetVerbosity(DotNetVerbosity.Minimal)
                     .SetPackageReleaseNotes(CreateNugetChangelog()));
         });
-    
+
     string CreateNugetChangelog()
     {
         Assert.True(File.Exists(ChangeLogPath), $"Unable to locate the changelog file: {ChangeLogPath}");
@@ -28,6 +28,13 @@ sealed partial class Build
         var changelog = BuildChangelog();
         Assert.True(changelog.Length > 0, $"No version entry exists in the changelog: {Version}");
 
-        return changelog.ToString();
+        return EscapeMsBuild(changelog.ToString());
+    }
+
+    static string EscapeMsBuild(string value)
+    {
+        return value
+            .Replace(";", "%3B")
+            .Replace(",", "%2C");
     }
 }

@@ -16,9 +16,12 @@ using Serilog.Events;
 
 namespace Nice3point.Revit.AddIn.Commands;
 
+/// <summary>
+///     External command entry point invoked from the Revit interface
+/// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]
-public class Command : ExternalCommand
+public class ApplicationCommand : ExternalCommand
 {
     public override void Execute()
     {

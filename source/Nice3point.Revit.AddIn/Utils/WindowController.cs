@@ -2,6 +2,12 @@
 
 namespace Nice3point.Revit.AddIn.Utils;
 
+/// <summary>
+///     Controller for non-modal windows
+/// </summary>
+/// <remarks>
+///     Manages window lifecycle, prevents reopening of an already opened window. Used for non-hosted environments
+/// </remarks>
 public static class WindowController
 {
     private static readonly List<Window> Windows = new();
@@ -86,7 +92,7 @@ public static class WindowController
         Windows.Add(window);
         window.Closed += (sender, _) =>
         {
-            var modelessWindow = (Window) sender;
+            var modelessWindow = (Window)sender;
             Windows.Remove(modelessWindow);
         };
     }

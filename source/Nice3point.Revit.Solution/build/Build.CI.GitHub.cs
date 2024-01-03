@@ -51,8 +51,8 @@ sealed partial class Build
         var tags = GitTasks.Git("describe --tags --abbrev=0", logInvocation: false, logOutput: false);
         if (tags.Count == 0) return;
 
-        Assert.False(tags.Last().Text == version, $"A Release with the specified tag already exists in the repository: {version}");
-        Log.Information("Version: {Version}", version);
+        Assert.False(tags.Last().Text == Version, $"A Release with the specified tag already exists in the repository: {Version}");
+        Log.Information("Version: {Version}", Version);
     }
 
     static async Task UploadArtifactsAsync(Release release, IEnumerable<string> artifacts)
@@ -118,7 +118,7 @@ sealed partial class Build
                 continue;
             }
 
-            if (line.StartsWith(separator) && line.Contains(version))
+            if (line.StartsWith(separator) && line.Contains(Version))
             {
                 hasEntry = true;
             }

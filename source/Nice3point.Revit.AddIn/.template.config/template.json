@@ -103,6 +103,7 @@
         {
           "condition": "(NoWindow)",
           "exclude": [
+            "Models/**",
             "Views/**",
             "ViewModels/**"
           ]
@@ -155,20 +156,39 @@
           "type": "conditional",
           "configuration": {
             "actionableIf": [
-              "#if",
-              "<!--#if"
+              "#if"
             ],
             "actionableElse": [
-              "#else",
-              "<!--#else"
+              "#else"
             ],
             "actionableElseif": [
-              "#elseif",
-              "<!--#elseif"
+              "#elseif"
             ],
             "endif": [
-              "#endif",
-              "#endif-->"
+              "#endif"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    },
+    "**/*.csproj": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": [
+              "#if"
+            ],
+            "actionableElse": [
+              "#else"
+            ],
+            "actionableElseif": [
+              "#elseif"
+            ],
+            "endif": [
+              "#endif"
             ],
             "trim": "true",
             "wholeLine": "true"

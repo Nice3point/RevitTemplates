@@ -29,7 +29,7 @@ public static class Generator
             if (versionStorages.TryGetValue(fileVersion, out var storage))
                 storage.Add(files);
             else
-                versionStorages.Add(fileVersion, new List<WixEntity> {files});
+                versionStorages.Add(fileVersion, [files]);
 
             var assemblies = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
             Console.WriteLine($"Installer files for version '{fileVersion}':");

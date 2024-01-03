@@ -16,7 +16,15 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
+#if (Bundle && Installer)
+              script: './.nuke/build.cmd CreateBundle CreateInstaller'
+#elseif (Installer)
+              script: './.nuke/build.cmd CreateInstaller'
+#elseif (Bundle)
+              script: './.nuke/build.cmd CreateBundle'
+#else
               script: './.nuke/build.cmd'
+#endif
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: Nice3point.Revit.Solution

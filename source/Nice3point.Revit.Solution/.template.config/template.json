@@ -16,6 +16,7 @@
     "language": "C#",
     "platform": ".NET"
   },
+  "placeholderFilename": "keep.folder",
   "guids": [
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
     "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
@@ -94,26 +95,26 @@
           "condition": "(!GitHubPipeline)",
           "exclude": [
             ".github/**",
-            "Build/Build.CI.GitHub.cs"
+            "build/Build.CI.GitHub.cs"
           ]
         },
         {
           "condition": "(!Installer)",
           "exclude": [
-            "Installer/**",
-            "Build/Build.Installer.cs"
+            "install/**",
+            "build/Build.Installer.cs"
           ]
         },
         {
           "condition": "(!Bundle)",
           "exclude": [
-            "Build/Build.Bundle.cs"
+            "build/Build.Bundle.cs"
           ]
         },
         {
           "condition": "(!Bundle && !Installer)",
           "exclude": [
-            "Build/Build.Regex.cs"
+            "build/Build.Regex.cs"
           ]
         }
       ]
@@ -141,6 +142,52 @@
             ],
             "endif": [
               "#endif-->"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    },
+    "**/*.yml": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": [
+              "#if"
+            ],
+            "actionableElse": [
+              "#else"
+            ],
+            "actionableElseif": [
+              "#elseif"
+            ],
+            "endif": [
+              "#endif"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    },
+    "**/*.csproj": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": [
+              "#if"
+            ],
+            "actionableElse": [
+              "#else"
+            ],
+            "actionableElseif": [
+              "#elseif"
+            ],
+            "endif": [
+              "#endif"
             ],
             "trim": "true",
             "wholeLine": "true"

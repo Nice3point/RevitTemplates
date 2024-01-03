@@ -6,6 +6,9 @@ using Serilog.Events;
 
 namespace Nice3point.Revit.AddIn;
 
+/// <summary>
+///     Application entry point
+/// </summary>
 [UsedImplicitly]
 public class Application : ExternalApplication
 {
@@ -28,7 +31,7 @@ public class Application : ExternalApplication
     {
         var panel = Application.CreatePanel("Commands", "Nice3point.Revit.AddIn");
 
-        var showButton = panel.AddPushButton<Command>("Execute");
+        var showButton = panel.AddPushButton<ApplicationCommand>("Execute");
         showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
@@ -45,8 +48,8 @@ public class Application : ExternalApplication
 
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {
-            var e = (Exception) args.ExceptionObject;
-            Log.Fatal(e, "Domain unhandled exception");
+            var exception = (Exception)args.ExceptionObject;
+            Log.Fatal(exception, "Domain unhandled exception");
         };
     }
 #endif-->

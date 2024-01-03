@@ -19,7 +19,7 @@
         ];
 <!--#if (Bundle)
 
-        Bundles = new[]
+        Bundles =
         [
             Solution.Nice3point.Revit.Solution
         ];
