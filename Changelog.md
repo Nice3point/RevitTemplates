@@ -1,6 +1,10 @@
 # 3.2.0
 
-- TODO
+- .NET 8 support.
+- Redesigned project structure, added `source` folder for storing projects.
+- Redesigned Nuke project. More checks, logs, compare url record for GitHub releases. Now you can run on a local machine without having a local git repository.
+- Added PackageContent.xml file support for bundles.
+- Update bundle structure for Design Automation
 
 # 3.1.1
 
