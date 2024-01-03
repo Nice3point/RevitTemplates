@@ -27,7 +27,7 @@ from [here](https://www.jetbrains.com/rider/).
 2. Click on `File -> Open` and choose the solution file that you want to open.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
-Also, ypu can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
+Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
 2. Click on `File -> Open -> Project/Solution` and locate your solution file to open.
