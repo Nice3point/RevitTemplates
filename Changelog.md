@@ -1,3 +1,7 @@
+# 3.2.2
+
+- Fix Github release version validation
+
 # 3.2.1
 
 - Fix Github release version validation
