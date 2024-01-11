@@ -46,12 +46,13 @@ sealed partial class Build
             await UploadArtifactsAsync(release, artifacts);
         });
 
-    static void ValidateRelease()
+    void ValidateRelease()
     {
-        var tags = GitTasks.Git("describe --tags --abbrev=0", logInvocation: false, logOutput: false);
-        if (tags.Count == 0) return;
+        var tags = GitTasks.Git("describe --tags --abbrev=0 --always", logInvocation: false, logOutput: false);
+        var latestTag = tags.First().Text;
+        if (latestTag == GitRepository.Commit) return;
 
-        Assert.False(tags.Last().Text == Version, $"A Release with the specified tag already exists in the repository: {Version}");
+        Assert.False(latestTag == Version, $"A Release with the specified tag already exists in the repository: {Version}");
         Log.Information("Version: {Version}", Version);
     }
 
@@ -94,12 +95,13 @@ sealed partial class Build
 
     void WriteCompareUrl(StringBuilder changelog)
     {
-        var tags = GitTasks.Git("describe --tags --abbrev=0", logInvocation: false, logOutput: false);
-        if (tags.Count == 0) return;
+        var tags = GitTasks.Git("describe --tags --abbrev=0 --always", logInvocation: false, logOutput: false);
+        var latestTag = tags.First().Text;
+        if (latestTag == GitRepository.Commit) return;
 
         if (changelog[^1] != '\r' || changelog[^1] != '\n') changelog.AppendLine(Environment.NewLine);
         changelog.Append("Full changelog: ");
-        changelog.Append(GitRepository.GetGitHubCompareTagsUrl(Version, tags.Last().Text));
+        changelog.Append(GitRepository.GetGitHubCompareTagsUrl(Version, latestTag));
     }
 
     StringBuilder BuildChangelog()
