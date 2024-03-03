@@ -14,7 +14,7 @@ sealed partial class Build : NukeBuild
 #endif-->
 
 <!--#if (GitHubPipeline)
-    [Parameter] string GitHubToken;
+    [Secret] [Parameter] string GitHubToken;
 #endif-->
 <!--#if (!NoPipeline)
     [GitRepository] readonly GitRepository GitRepository;
