@@ -12,7 +12,7 @@ sealed partial class Build
                 DotNetBuild(settings => settings
                     .SetConfiguration(configuration)
                     .SetVersion(Version)
-                    .SetVerbosity(DotNetVerbosity.Minimal));
+                    .SetVerbosity(DotNetVerbosity.minimal));
         });
 
     List<string> GlobBuildConfigurations()

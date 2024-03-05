@@ -14,8 +14,8 @@
         <PackageType>Template</PackageType>
         <PackageId>Nice3point.Revit.Templates</PackageId>
         <Authors>Nice3point</Authors>
-        <Description>Templates for Revit plugin development</Description>
-        <PackageTags>revit;templates</PackageTags>
+        <Description>Templates for Revit add-ins development</Description>
+        <PackageTags>revit;templates;addin</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>

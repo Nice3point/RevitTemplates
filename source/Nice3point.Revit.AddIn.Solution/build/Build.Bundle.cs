@@ -1,8 +1,8 @@
 using Autodesk.PackageBuilder;
 using System.Xml.Linq;
-<!--#if (!NoPipeline)
+#if (!NoPipeline)
 using Nuke.Common.Git;
-#endif-->
+#endif
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 
@@ -10,9 +10,9 @@ sealed partial class Build
 {
     Target CreateBundle => _ => _
         .DependsOn(Compile)
-<!--#if (!NoPipeline)
+#if (!NoPipeline)
         .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
-#endif-->
+#endif
         .Executes(() =>
         {
             foreach (var project in Bundles)

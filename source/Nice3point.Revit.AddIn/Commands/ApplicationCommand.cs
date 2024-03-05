@@ -3,8 +3,10 @@ using Nice3point.Revit.Toolkit.External;
 #if (NoWindow)
 using Autodesk.Revit.UI;
 #endif
-#if (!NoWindow)
+#if (!NoWindow && !IOC)
 using Nice3point.Revit.AddIn.ViewModels;
+#endif
+#if (!NoWindow)
 using Nice3point.Revit.AddIn.Views;
 #endif
 #if (ModelessWindow)
@@ -25,42 +27,43 @@ public class ApplicationCommand : ExternalCommand
 {
     public override void Execute()
     {
-#if (Logger && CommandStyle)
-        CreateLogger();
+#if (Logger && CommandStyle && !IOC)
+        var logger = CreateLogger();
 #endif
-#if (ModelessWindow)
+#if (ModelessWindow && IOC)
+        if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
+
+        var view = Host.GetService<Nice3point.Revit.AddInView>();
+        WindowController.Show(view, UiApplication.MainWindowHandle);
+#elseif (ModalWindow && IOC)
+        var view = Host.GetService<Nice3point.Revit.AddInView>();
+        view.ShowDialog();
+#elseif (NoWindow && IOC)
+        TaskDialog.Show(Document.Title, "Nice3point.Revit.AddIn");
+#elseif (ModelessWindow)
         if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
 
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         WindowController.Show(view, UiApplication.MainWindowHandle);
-#elif (ModalWindow)
+#elseif (ModalWindow)
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         view.ShowDialog();
-#elif (NoWindow)
+#elseif (NoWindow)
         TaskDialog.Show(Document.Title, "Nice3point.Revit.AddIn");
 #endif
-#if (Logger && CommandStyle)
-        Log.CloseAndFlush();
-#endif
     }
-#if (Logger && CommandStyle)
+#if (Logger && CommandStyle && !IOC)
 
-    private static void CreateLogger()
+    private static ILogger CreateLogger()
     {
         const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
 
-        Log.Logger = new LoggerConfiguration()
+        return new LoggerConfiguration()
             .WriteTo.Debug(LogEventLevel.Debug, outputTemplate)
             .MinimumLevel.Debug()
             .CreateLogger();
-
-        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
-        {
-            var e = (Exception) args.ExceptionObject;
-            Log.Fatal(e, "Domain unhandled exception");
-        };
     }
 #endif
 }

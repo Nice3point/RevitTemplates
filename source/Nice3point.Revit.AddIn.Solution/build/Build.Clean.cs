@@ -10,14 +10,14 @@ sealed partial class Build
             foreach (var configuration in GlobBuildConfigurations())
                 DotNetClean(settings => settings
                     .SetConfiguration(configuration)
-                    .SetVerbosity(DotNetVerbosity.Minimal));
+                    .SetVerbosity(DotNetVerbosity.minimal));
 
             foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
                 CleanDirectory(project.Directory / "bin");
-<!--#if (Bundle || Installer || GitHubPipeline)
+#if (Bundle || Installer || GitHubPipeline)
 
             CleanDirectory(ArtifactsDirectory);
-#endif-->
+#endif
         });
 
     static void CleanDirectory(AbsolutePath path)

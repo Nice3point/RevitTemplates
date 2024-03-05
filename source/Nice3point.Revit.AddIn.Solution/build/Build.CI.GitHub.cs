@@ -7,15 +7,15 @@ using Octokit;
 sealed partial class Build
 {
     Target PublishGitHub => _ => _
-<!--#if (Installer && Bundle)
+#if (Installer && Bundle)
         .DependsOn(CreateInstaller, CreateBundle)
-<!--#elseif (Installer)
+#elseif (Installer)
         .DependsOn(CreateInstaller)
-<!--#elseif (Bundle)
+#elseif (Bundle)
         .DependsOn(CreateBundle)
-<!--#else
+#else
         .DependsOn(Compile)
-#endif-->
+#endif
         .Requires(() => GitHubToken)
         .Requires(() => GitRepository)
         .OnlyWhenStatic(() => IsServerBuild && GitRepository.IsOnMainOrMasterBranch())

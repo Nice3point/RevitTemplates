@@ -5,8 +5,8 @@ using WixSharp.CommonTasks;
 using WixSharp.Controls;
 using Assembly = System.Reflection.Assembly;
 
-const string outputName = "Nice3point.Revit.Solution";
-const string projectName = "Nice3point.Revit.Solution";
+const string outputName = "Nice3point.Revit.AddIn.Solution";
+const string projectName = "Nice3point.Revit.AddIn.Solution";
 
 var project = new Project
 {

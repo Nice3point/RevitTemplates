@@ -64,42 +64,47 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
-#if (!NoWindow)
+<!--#if (!NoWindow)-->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
-#endif
-#if (Logger)
-        <PackageReference Include="Serilog" Version="3.*"/>
+<!--#endif-->
+<!--#if (Logger && !Hosting)-->
+        <PackageReference Include="Serilog" Version="3.*" />
+<!--#endif-->
+<!--#if (Logger)-->
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
-#endif
+<!--#endif-->
+<!--#if (Logger && Hosting)-->
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" />
+<!--#endif-->
+<!--#if (ServicesContainer)-->
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
+<!--#endif-->
+<!--#if (Hosting)-->
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*"/>
+<!--#endif-->
     </ItemGroup>
 
     <ItemGroup>
         <Using Include="Nice3point.Revit.Extensions"/>
         <Using Include="Nice3point.Revit.Toolkit.Utils"/>
         <Using Include="JetBrains.Annotations"/>
-#if (Logger)
+<!--#if (Logger)-->
         <Using Include="Serilog"/>
-#endif
+<!--#endif-->
     </ItemGroup>
 
-#if (ApplicationStyle)
+<!--#if (ApplicationStyle)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
 
-#endif
-#if (!NoWindow || CommandStyle)
+<!--#if (!NoWindow)-->
     <ItemGroup>
-#if (!NoWindow)
         <Folder Include="Models"/>
-#endif
-#if (CommandStyle)
-        <Folder Include="Resources"/>
-#endif
     </ItemGroup>
 
-#endif
+<!--#endif-->
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
             <RootItem Include="$(ProjectDir)*.addin"/>

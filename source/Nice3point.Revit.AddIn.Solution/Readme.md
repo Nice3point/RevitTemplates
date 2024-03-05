@@ -1,4 +1,4 @@
-# Nice3point.Revit.Solution
+# Nice3point.Revit.AddIn.Solution
 
 Autodesk Revit plugin project organised into multiple solution files that target versions 2020 - 2024.
 

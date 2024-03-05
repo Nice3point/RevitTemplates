@@ -69,6 +69,28 @@
       ],
       "defaultValue": "Modal"
     },
+    "IocType": {
+      "type": "parameter",
+      "displayName": "IoC",
+      "datatype": "choice",
+      "description": "Supports the dependency injection (DI) software design pattern which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies",
+      "choices": [
+        {
+          "choice": "Disabled",
+          "description": "The add-in will not use IoC"
+        },
+        {
+          "choice": "Container",
+          "displayName": "Service container",
+          "description": "Use Microsoft.Extensions.DependencyInjection implementation"
+        },
+        {
+          "choice": "Hosting",
+          "description": "Use Microsoft.Extensions.Hosting implementation"
+        }
+      ],
+      "defaultValue": "Disabled"
+    },
     "Logger": {
       "type": "parameter",
       "displayName": "Serilog support",
@@ -87,6 +109,18 @@
     "ModelessWindow": {
       "type": "computed",
       "value": "(WindowType == \"Modeless\")"
+    },
+    "ServicesContainer": {
+      "type": "computed",
+      "value": "(IocType == \"Container\")"
+    },
+    "Hosting": {
+      "type": "computed",
+      "value": "(IocType == \"Hosting\")"
+    },
+    "IOC": {
+      "type": "computed",
+      "value": "(IocType != \"Disabled\")"
     }
   },
   "sources": [
@@ -112,6 +146,18 @@
           "condition": "(!ModelessWindow)",
           "exclude": [
             "Utils/WindowController.cs"
+          ]
+        },
+        {
+          "condition": "(!IOC)",
+          "exclude": [
+            "Host.cs"
+          ]
+        },
+        {
+          "condition": "(!Logger || !IOC)",
+          "exclude": [
+            "Config/LoggerConfigurator.cs"
           ]
         }
       ]
@@ -151,29 +197,6 @@
   ],
   "SpecialCustomOperations": {
     "**/*.addin": {
-      "operations": [
-        {
-          "type": "conditional",
-          "configuration": {
-            "actionableIf": [
-              "#if"
-            ],
-            "actionableElse": [
-              "#else"
-            ],
-            "actionableElseif": [
-              "#elseif"
-            ],
-            "endif": [
-              "#endif"
-            ],
-            "trim": "true",
-            "wholeLine": "true"
-          }
-        }
-      ]
-    },
-    "**/*.csproj": {
       "operations": [
         {
           "type": "conditional",

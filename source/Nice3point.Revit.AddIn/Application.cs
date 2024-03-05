@@ -1,8 +1,8 @@
 ﻿using Nice3point.Revit.Toolkit.External;
 using Nice3point.Revit.AddIn.Commands;
-<!--#if (Logger)
+#if (Logger && !IOC)
 using Serilog.Events;
-#endif-->
+#endif
 
 namespace Nice3point.Revit.AddIn;
 
@@ -14,18 +14,25 @@ public class Application : ExternalApplication
 {
     public override void OnStartup()
     {
-<!--#if (Logger)
+#if (IOC)
+        Host.Start();
+#endif
+#if (Logger && !IOC)
         CreateLogger();
-#endif-->
+#endif
         CreateRibbon();
     }
-<!--#if (Logger)
+#if (Hosting || (!IOC && Logger))
 
     public override void OnShutdown()
     {
+#if (Hosting)
+        Host.Stop();
+#elseif (Logger)
         Log.CloseAndFlush();
+#endif
     }
-#endif-->
+#endif
 
     private void CreateRibbon()
     {
@@ -35,7 +42,7 @@ public class Application : ExternalApplication
         showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
-<!--#if (Logger)
+#if (Logger && !IOC)
 
     private static void CreateLogger()
     {
@@ -52,5 +59,5 @@ public class Application : ExternalApplication
             Log.Fatal(exception, "Domain unhandled exception");
         };
     }
-#endif-->
+#endif
 }

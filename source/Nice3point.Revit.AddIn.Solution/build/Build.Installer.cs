@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-<!--#if (!NoPipeline)
+#if (!NoPipeline)
 using Nuke.Common.Git;
-#endif-->
+#endif
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -9,9 +9,9 @@ sealed partial class Build
 {
     Target CreateInstaller => _ => _
         .DependsOn(Compile)
-<!--#if (!NoPipeline)
+#if (!NoPipeline)
         .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
-#endif-->
+#endif
         .Executes(() =>
         {
             foreach (var (installer, project) in InstallersMap)

@@ -5,17 +5,17 @@
         <NoWarn>CS0649;CS0169</NoWarn>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>true</ImplicitUsings>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <NukeRootDirectory>..</NukeRootDirectory>
         <NukeScriptDirectory>..</NukeScriptDirectory>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Nuke.Common" Version="7.0.6"/>
-#if (Bundle)
+        <PackageReference Include="Nuke.Common" Version="8.0.0"/>
+<!--#if (Bundle)-->
         <PackageReference Include="Autodesk.PackageBuilder" Version="1.0.5"/>
-#endif
+<!--#endif-->
 </ItemGroup>
 
     <ItemGroup>

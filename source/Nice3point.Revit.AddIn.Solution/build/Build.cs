@@ -1,24 +1,24 @@
-<!--#if (!NoPipeline)
+#if (!NoPipeline)
 using Nuke.Common.Git;
-#endif-->
+#endif
 using Nuke.Common.ProjectModel;
 
 sealed partial class Build : NukeBuild
 {
     string[] Configurations;
-<!--#if (Bundle)
+#if (Bundle)
     Project[] Bundles;
-#endif-->
-<!--#if (Installer)
+#endif
+#if (Installer)
     Dictionary<Project, Project> InstallersMap;
-#endif-->
+#endif
 
-<!--#if (GitHubPipeline)
+#if (GitHubPipeline)
     [Secret] [Parameter] string GitHubToken;
-#endif-->
-<!--#if (!NoPipeline)
+#endif
+#if (!NoPipeline)
     [GitRepository] readonly GitRepository GitRepository;
-#endif-->
+#endif
     [Solution(GenerateProjects = true)] Solution Solution;
 
     public static int Main() => Execute<Build>(x => x.Compile);

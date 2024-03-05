@@ -1,15 +1,16 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Nice3point",
-  "name": "Revit Solution",
-  "shortName": "revit-sln",
-  "identity": "Nice3point.Revit.Solution",
+  "name": "Revit AddIn Solution",
+  "shortName": "revit-addin-sln",
+  "identity": "Nice3point.Revit.AddIn.Solution",
   "defaultName": "RevitAddIn",
-  "sourceName": "Nice3point.Revit.Solution",
+  "sourceName": "Nice3point.Revit.AddIn.Solution",
   "description": "Template for creating a solution for Revit add-ins",
   "classifications": [
     "Solution",
-    "Revit"
+    "Revit",
+    "AddIn"
   ],
   "tags": {
     "type": "solution",
@@ -119,81 +120,5 @@
         }
       ]
     }
-  ],
-  "primaryOutputs": [
-    {
-      "path": "Nice3point.Item.Solution.sln"
-    }
-  ],
-  "SpecialCustomOperations": {
-    "**/*.cs": {
-      "operations": [
-        {
-          "type": "conditional",
-          "configuration": {
-            "actionableIf": [
-              "<!--#if"
-            ],
-            "actionableElse": [
-              "<!--#else"
-            ],
-            "actionableElseif": [
-              "<!--#elseif"
-            ],
-            "endif": [
-              "#endif-->"
-            ],
-            "trim": "true",
-            "wholeLine": "true"
-          }
-        }
-      ]
-    },
-    "**/*.yml": {
-      "operations": [
-        {
-          "type": "conditional",
-          "configuration": {
-            "actionableIf": [
-              "#if"
-            ],
-            "actionableElse": [
-              "#else"
-            ],
-            "actionableElseif": [
-              "#elseif"
-            ],
-            "endif": [
-              "#endif"
-            ],
-            "trim": "true",
-            "wholeLine": "true"
-          }
-        }
-      ]
-    },
-    "**/*.csproj": {
-      "operations": [
-        {
-          "type": "conditional",
-          "configuration": {
-            "actionableIf": [
-              "#if"
-            ],
-            "actionableElse": [
-              "#else"
-            ],
-            "actionableElseif": [
-              "#elseif"
-            ],
-            "endif": [
-              "#endif"
-            ],
-            "trim": "true",
-            "wholeLine": "true"
-          }
-        }
-      ]
-    }
-  }
+  ]
 }
