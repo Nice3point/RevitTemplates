@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <UseWPF>true</UseWPF>
         <LangVersion>latest</LangVersion>
         <PlatformTarget>x64</PlatformTarget>
         <ImplicitUsings>true</ImplicitUsings>
@@ -64,9 +63,6 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
-<!--#if (!NoWindow)-->
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
-<!--#endif-->
 <!--#if (Logger && !Hosting)-->
         <PackageReference Include="Serilog" Version="3.*" />
 <!--#endif-->
@@ -98,14 +94,7 @@
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
-<!--#endif-->
 
-<!--#if (!NoWindow)-->
-    <ItemGroup>
-        <Folder Include="Models"/>
-    </ItemGroup>
-
-<!--#endif-->
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>
             <RootItem Include="$(ProjectDir)*.addin"/>

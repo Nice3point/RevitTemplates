@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+<!--#if (!NoWindow)-->
         <UseWPF>true</UseWPF>
+<!--#endif-->
         <LangVersion>latest</LangVersion>
         <PlatformTarget>x64</PlatformTarget>
         <ImplicitUsings>true</ImplicitUsings>
@@ -53,12 +55,6 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <StartAction>Program</StartAction>
-        <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
-        <StartArguments>/language ENG</StartArguments>
-    </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
@@ -67,38 +63,13 @@
 <!--#if (!NoWindow)-->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
 <!--#endif-->
-<!--#if (Logger && !Hosting)-->
-        <PackageReference Include="Serilog" Version="3.*" />
-<!--#endif-->
-<!--#if (Logger)-->
-        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
-<!--#endif-->
-<!--#if (Logger && Hosting)-->
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" />
-<!--#endif-->
-<!--#if (ServicesContainer)-->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
-<!--#endif-->
-<!--#if (Hosting)-->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*"/>
-<!--#endif-->
     </ItemGroup>
 
     <ItemGroup>
         <Using Include="Nice3point.Revit.Extensions"/>
         <Using Include="Nice3point.Revit.Toolkit.Utils"/>
         <Using Include="JetBrains.Annotations"/>
-<!--#if (Logger)-->
-        <Using Include="Serilog"/>
-<!--#endif-->
     </ItemGroup>
-
-<!--#if (ApplicationStyle)-->
-    <ItemGroup>
-        <Resource Include="Resources\Icons\RibbonIcon16.png"/>
-        <Resource Include="Resources\Icons\RibbonIcon32.png"/>
-    </ItemGroup>
-<!--#endif-->
 
 <!--#if (!NoWindow)-->
     <ItemGroup>
@@ -106,31 +77,4 @@
     </ItemGroup>
 
 <!--#endif-->
-    <Target Name="CopyFiles" AfterTargets="CoreBuild">
-        <ItemGroup>
-            <RootItem Include="$(ProjectDir)*.addin"/>
-            <AddinItem Include="$(TargetDir)**\*"/>
-        </ItemGroup>
-
-        <PropertyGroup>
-            <RootDir>bin\$(RevitVersion) $(Configuration)\</RootDir>
-            <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
-        </PropertyGroup>
-
-        <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)"/>
-        <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)\%(RecursiveDir)"/>
-
-        <ItemGroup>
-            <AddinFiles Include="$(RootDir)**\*"/>
-        </ItemGroup>
-
-        <Copy SourceFiles="@(AddinFiles)"
-              DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)"/>
-    </Target>
-
-    <Target Name="DeleteFiles" AfterTargets="Clean">
-        <RemoveDir Directories="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName)"/>
-        <Delete Files="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(ProjectName).addin"/>
-    </Target>
-
 </Project>

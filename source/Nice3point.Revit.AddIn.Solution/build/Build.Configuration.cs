@@ -21,14 +21,14 @@
 
         Bundles =
         [
-            Solution.Nice3point.Revit.AddIn.Solution
+            Solution.Nice3point.Revit.AddIn
         ];
 #endif
 #if (Installer)
 
         InstallersMap = new()
         {
-            {Solution.Installer, Solution.Nice3point.Revit.AddIn.Solution}
+            {Solution.Installer, Solution.Nice3point.Revit.AddIn}
         };
 #endif
     }

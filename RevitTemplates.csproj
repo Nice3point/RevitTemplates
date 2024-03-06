@@ -21,11 +21,13 @@
         <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>
         <PackageIcon>images\PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include=".nuget\PackageIcon.png" PackagePath="images\" Pack="true"/>
         <None Include="License.md" PackagePath="" Pack="true"/>
+        <None Include="Readme.md" PackagePath="" Pack="true"/>
         <Content Include="source\**\*" Exclude="**\bin\**\*;**\obj\**\*"/>
         <Compile Remove="**\*"/>
     </ItemGroup>

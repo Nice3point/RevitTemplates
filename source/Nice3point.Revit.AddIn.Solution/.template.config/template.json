@@ -5,12 +5,12 @@
   "shortName": "revit-addin-sln",
   "identity": "Nice3point.Revit.AddIn.Solution",
   "defaultName": "RevitAddIn",
-  "sourceName": "Nice3point.Revit.AddIn.Solution",
+  "sourceName": "Nice3point.Revit.AddIn",
   "description": "Template for creating a solution for Revit add-ins",
   "classifications": [
-    "Solution",
     "Revit",
-    "AddIn"
+    "AddIn",
+    "Solution"
   ],
   "tags": {
     "type": "solution",

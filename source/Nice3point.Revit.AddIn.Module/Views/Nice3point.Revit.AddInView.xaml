@@ -1,0 +1,22 @@
+﻿<Window
+    x:Class="Nice3point.Revit.AddIn.Views.Nice3point.Revit.AddInView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModel="clr-namespace:Nice3point.Revit.AddIn.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModel:Nice3point.Revit.AddInViewModel}"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    Title="Nice3point.Revit.AddIn"
+    Height="450"
+    Width="800">
+    <Grid>
+        <TextBlock
+            Text="Nice3point.Revit.AddIn"
+            FontSize="60"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" />
+    </Grid>
+</Window>

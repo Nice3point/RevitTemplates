@@ -27,5 +27,5 @@ stages:
 #endif
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: Nice3point.Revit.AddIn.Solution
+              artifactName: Nice3point.Revit.AddIn
               pathtoPublish: 'output'

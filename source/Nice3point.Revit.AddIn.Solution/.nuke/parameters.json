@@ -1,5 +1,5 @@
 {
   "$schema": "./build.schema.json",
-  "Solution": "Nice3point.Revit.AddIn.Solution.sln",
+  "Solution": "Nice3point.Revit.AddIn.sln",
   "Verbosity": "Normal"
 }

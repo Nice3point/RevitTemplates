@@ -1,0 +1,72 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nice3point",
+  "name": "Revit AddIn Module",
+  "shortName": "revit-addin-module",
+  "identity": "Nice3point.Revit.AddIn.Module",
+  "defaultName": "RevitAddIn",
+  "sourceName": "Nice3point.Revit.AddIn",
+  "description": "Template for creating an empty module for Revit add-in application",
+  "classifications": [
+    "Revit",
+    "AddIn",
+    "Library",
+    "Module"
+  ],
+  "tags": {
+    "type": "project",
+    "language": "C#",
+    "platform": ".NET"
+  },
+  "preferNameDirectory": true,
+  "placeholderFilename": "keep.folder",
+  "symbols": {
+    "WindowType": {
+      "type": "parameter",
+      "displayName": "User interface",
+      "datatype": "choice",
+      "description": "The type of window to be used by the add-in",
+      "choices": [
+        {
+          "choice": "None",
+          "description": "The add-in will not use windows"
+        },
+        {
+          "choice": "Modal",
+          "description": "A modal window that blocks Revit until the user closes the window"
+        },
+        {
+          "choice": "Modeless",
+          "description": "A modeless window does not block any other window while it is visible"
+        }
+      ],
+      "defaultValue": "Modal"
+    },
+    "NoWindow": {
+      "type": "computed",
+      "value": "(WindowType == \"None\")"
+    },
+    "ModalWindow": {
+      "type": "computed",
+      "value": "(WindowType == \"Modal\")"
+    },
+    "ModelessWindow": {
+      "type": "computed",
+      "value": "(WindowType == \"Modeless\")"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(NoWindow)",
+          "exclude": [
+            "Models/**",
+            "Views/**",
+            "ViewModels/**"
+          ]
+        }
+      ]
+    }
+  ]
+}

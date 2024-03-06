@@ -1,4 +1,4 @@
-# Nice3point.Revit.AddIn.Solution
+# Nice3point.Revit.AddIn
 
 Autodesk Revit plugin project organised into multiple solution files that target versions 2020 - 2024.
 
@@ -102,4 +102,4 @@ To execute your NUKE build on GitHub, you can follow these steps:
 
 ### Learn More
 
-* You can learn more in the [RevitTemplates wiki](https://github.com/Nice3point/RevitTemplates/wiki) page.
+* You can explore more in the [RevitTemplates wiki](https://github.com/Nice3point/RevitTemplates/wiki) page.
