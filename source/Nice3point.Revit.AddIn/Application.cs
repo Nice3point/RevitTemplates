@@ -38,7 +38,7 @@ public class Application : ExternalApplication
     {
         var panel = Application.CreatePanel("Commands", "Nice3point.Revit.AddIn");
 
-        var showButton = panel.AddPushButton<ApplicationCommand>("Execute");
+        var showButton = panel.AddPushButton<StartupCommand>("Execute");
         showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
