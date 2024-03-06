@@ -1,4 +1,4 @@
-﻿#if (ServicesContainer)
+﻿#if (Container)
 using Microsoft.Extensions.DependencyInjection;
 #endif
 #if (Hosting)
@@ -11,13 +11,13 @@ namespace Nice3point.Revit.AddIn.Config;
 
 public static class LoggerConfigurator
 {
-#if (ServicesContainer)
+#if (Container)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}]: {Message:lj}{NewLine}{Exception}";
 #elseif (Hosting)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}";
 #endif
 
-#if (ServicesContainer)
+#if (Container)
     public static void AddSerilogConfiguration(this IServiceCollection services)
     {
         var logger = CreateDefaultLogger();
@@ -43,7 +43,7 @@ public static class LoggerConfigurator
             .CreateLogger();
     }
 
-#if (ServicesContainer)
+#if (Container)
     private static void OnOnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;

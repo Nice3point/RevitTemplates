@@ -14,7 +14,7 @@ sealed partial class Build
 
             foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
                 CleanDirectory(project.Directory / "bin");
-#if (Bundle || Installer || GitHubPipeline)
+#if (bundle || installer || GitHubPipeline)
 
             CleanDirectory(ArtifactsDirectory);
 #endif

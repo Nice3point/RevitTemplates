@@ -26,7 +26,7 @@
     "EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE"
   ],
   "symbols": {
-    "Pipeline": {
+    "pipeline": {
       "type": "parameter",
       "displayName": "Pipeline",
       "description": "Adds support for CI/CD pipeline to your project",
@@ -50,70 +50,70 @@
       ],
       "defaultValue": "GitHub"
     },
-    "NoPipeline": {
-      "type": "computed",
-      "value": "(Pipeline == \"None\")"
-    },
-    "AzurePipeline": {
-      "type": "computed",
-      "value": "(Pipeline == \"Azure\")"
-    },
-    "GitHubPipeline": {
-      "type": "computed",
-      "value": "(Pipeline == \"GitHub\")"
-    },
-    "Installer": {
+    "installer": {
       "type": "parameter",
       "displayName": "Installer support",
       "dataType": "bool",
       "description": "Creates a project installer",
       "defaultValue": "true"
     },
-    "Bundle": {
+    "bundle": {
       "type": "parameter",
       "displayName": "Bundle support",
       "dataType": "bool",
       "description": "Packs project files into a bundle. Used for uploading to Autodesk Store",
       "defaultValue": "false"
+    },
+    "NoPipeline": {
+      "type": "computed",
+      "value": "pipeline == \"None\""
+    },
+    "AzurePipeline": {
+      "type": "computed",
+      "value": "pipeline == \"Azure\""
+    },
+    "GitHubPipeline": {
+      "type": "computed",
+      "value": "pipeline == \"GitHub\""
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(!GitHubPipeline)",
+          "condition": "!GitHubPipeline",
           "exclude": [
             "Changelog.md"
           ]
         },
         {
-          "condition": "(!AzurePipeline)",
+          "condition": "!AzurePipeline",
           "exclude": [
             "azure-pipelines.yml"
           ]
         },
         {
-          "condition": "(!GitHubPipeline)",
+          "condition": "!GitHubPipeline",
           "exclude": [
             ".github/**",
             "build/Build.CI.GitHub.cs"
           ]
         },
         {
-          "condition": "(!Installer)",
+          "condition": "!installer",
           "exclude": [
             "install/**",
             "build/Build.Installer.cs"
           ]
         },
         {
-          "condition": "(!Bundle)",
+          "condition": "!bundle",
           "exclude": [
             "build/Build.Bundle.cs"
           ]
         },
         {
-          "condition": "(!Bundle && !Installer)",
+          "condition": "!bundle && !installer",
           "exclude": [
             "build/Build.Regex.cs"
           ]

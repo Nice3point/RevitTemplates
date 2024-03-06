@@ -1,7 +1,7 @@
 ﻿sealed partial class Build
 {
     const string Version = "1.0.0";
-#if (Bundle || Installer || GitHubPipeline)
+#if (bundle || installer || GitHubPipeline)
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
 #endif
 #if (GitHubPipeline)
@@ -13,18 +13,18 @@
         Configurations =
         [
             "Release*",
-#if (Installer)
+#if (installer)
             "Installer*"
 #endif
         ];
-#if (Bundle)
+#if (bundle)
 
         Bundles =
         [
             Solution.Nice3point.Revit.AddIn
         ];
 #endif
-#if (Installer)
+#if (installer)
 
         InstallersMap = new()
         {

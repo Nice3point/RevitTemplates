@@ -6,10 +6,10 @@ using Nuke.Common.ProjectModel;
 sealed partial class Build : NukeBuild
 {
     string[] Configurations;
-#if (Bundle)
+#if (bundle)
     Project[] Bundles;
 #endif
-#if (Installer)
+#if (installer)
     Dictionary<Project, Project> InstallersMap;
 #endif
 

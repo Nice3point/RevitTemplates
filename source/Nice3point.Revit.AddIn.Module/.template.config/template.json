@@ -21,7 +21,7 @@
   "preferNameDirectory": true,
   "placeholderFilename": "keep.folder",
   "symbols": {
-    "WindowType": {
+    "window": {
       "type": "parameter",
       "displayName": "User interface",
       "datatype": "choice",
@@ -43,27 +43,27 @@
           "description": "A modeless window does not block any other window while it is visible"
         }
       ],
-      "defaultValue": "Modal"
+      "defaultValue": "modal"
     },
-    "IOC": {
+    "ioc": {
       "type": "parameter",
       "displayName": "Inject view",
       "datatype": "bool",
-      "description": "Inject a view into a command to call from the host application",
+      "description": "Inject a view into a command to call from the host application. Applies if the user interface is enabled",
       "defaultValue": "false",
-      "isEnabled": "WindowType != \"none\""
+      "isEnabled": "window != \"none\""
     },
     "NoWindow": {
       "type": "computed",
-      "value": "WindowType == \"none\""
+      "value": "window == \"none\""
     },
-    "ModalWindow": {
+    "Modal": {
       "type": "computed",
-      "value": "WindowType == \"modal\""
+      "value": "window == \"modal\""
     },
-    "ModelessWindow": {
+    "Modeless": {
       "type": "computed",
-      "value": "WindowType == \"modeless\""
+      "value": "window == \"modeless\""
     }
   },
   "sources": [
@@ -78,7 +78,7 @@
           ]
         },
         {
-          "condition": "!ModelessWindow",
+          "condition": "!Modeless",
           "exclude": [
             "Utils/WindowController.cs"
           ]
@@ -92,13 +92,13 @@
           ]
         },
         {
-          "condition": "IOC",
+          "condition": "ioc",
           "exclude": [
             "Commands/**"
           ]
         },
         {
-          "condition": "!IOC",
+          "condition": "!ioc",
           "exclude": [
             "CommandHandlers/**"
           ]

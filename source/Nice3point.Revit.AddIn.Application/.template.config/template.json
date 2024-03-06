@@ -24,78 +24,82 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
-    "ApplicationType": {
+    "addin": {
       "type": "parameter",
       "displayName": "Add-In type",
       "datatype": "choice",
       "description": "The type of add-in to be registered in the .addin manifest",
       "choices": [
         {
-          "choice": "Application",
+          "choice": "app",
+          "displayName": "Application",
           "description": "Registers the add-in in the manifest with the Application type"
         },
         {
-          "choice": "Command",
+          "choice": "command",
+          "displayName": "Command",
           "description": "Registers the add-in in the manifest with the Command type"
         }
       ],
-      "defaultValue": "Application"
+      "defaultValue": "app"
     },
-    "CommandStyle": {
-      "type": "computed",
-      "value": "(ApplicationType == \"Command\")"
-    },
-    "ApplicationStyle": {
-      "type": "computed",
-      "value": "(ApplicationType == \"Application\")"
-    },
-    "IocType": {
+    "ioc": {
       "type": "parameter",
       "displayName": "IoC",
       "datatype": "choice",
       "description": "Supports the dependency injection (DI) software design pattern which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies",
       "choices": [
         {
-          "choice": "Disabled",
+          "choice": "disabled",
+          "displayName": "Disabled",
           "description": "The add-in will not use IoC"
         },
         {
-          "choice": "Container",
+          "choice": "container",
           "displayName": "Service container",
           "description": "Use Microsoft.Extensions.DependencyInjection implementation"
         },
         {
-          "choice": "Hosting",
+          "choice": "host",
+          "displayName": "Hosting",
           "description": "Use Microsoft.Extensions.Hosting implementation"
         }
       ],
-      "defaultValue": "Disabled"
+      "defaultValue": "disabled"
     },
-    "Logger": {
+    "log": {
       "type": "parameter",
       "displayName": "Serilog support",
       "dataType": "bool",
       "description": "Logging support for the add-in",
       "defaultValue": "false"
     },
-    "ServicesContainer": {
+    "Command": {
       "type": "computed",
-      "value": "(IocType == \"Container\")"
+      "value": "addin == \"command\""
+    },
+    "Application": {
+      "type": "computed",
+      "value": "addin == \"app\""
+    },
+    "Container": {
+      "type": "computed",
+      "value": "ioc == \"container\""
     },
     "Hosting": {
       "type": "computed",
-      "value": "(IocType == \"Hosting\")"
+      "value": "ioc == \"host\""
     },
-    "IOC": {
+    "UseIoc": {
       "type": "computed",
-      "value": "(IocType != \"Disabled\")"
+      "value": "ioc != \"disabled\""
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(CommandStyle)",
+          "condition": "Command",
           "exclude": [
             "Application.cs",
             "Resources/Icons/RibbonIcon16.png",
@@ -103,13 +107,13 @@
           ]
         },
         {
-          "condition": "(!IOC)",
+          "condition": "!UseIoc",
           "exclude": [
             "Host.cs"
           ]
         },
         {
-          "condition": "(!Logger || !IOC)",
+          "condition": "!log || !UseIoc",
           "exclude": [
             "Config/LoggerConfigurator.cs"
           ]
@@ -119,17 +123,17 @@
   ],
   "primaryOutputs": [
     {
-      "condition": "(ApplicationStyle)",
+      "condition": "Application",
       "path": "Application.cs"
     },
     {
-      "condition": "(CommandStyle)",
+      "condition": "Command",
       "path": "Commands/StartupCommand.cs"
     }
   ],
   "postActions": [
     {
-      "condition": "(ApplicationStyle)",
+      "condition": "Application",
       "description": "Opens Application.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
@@ -139,7 +143,7 @@
       "continueOnError": true
     },
     {
-      "condition": "(CommandStyle)",
+      "condition": "Command",
       "description": "Opens Command.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",

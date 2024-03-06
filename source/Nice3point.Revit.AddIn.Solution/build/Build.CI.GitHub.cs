@@ -7,11 +7,11 @@ using Octokit;
 sealed partial class Build
 {
     Target PublishGitHub => _ => _
-#if (Installer && Bundle)
+#if (installer && bundle)
         .DependsOn(CreateInstaller, CreateBundle)
-#elseif (Installer)
+#elseif (installer)
         .DependsOn(CreateInstaller)
-#elseif (Bundle)
+#elseif (bundle)
         .DependsOn(CreateBundle)
 #else
         .DependsOn(Compile)

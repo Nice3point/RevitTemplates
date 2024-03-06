@@ -1,18 +1,18 @@
 ﻿using Autodesk.Revit.Attributes;
 using Nice3point.Revit.Toolkit.External;
-#if (NoWindow)
+#if NoWindow
 using Autodesk.Revit.UI;
 #endif
-#if (!NoWindow && !IOC)
+#if !NoWindow && !UseIoc
 using Nice3point.Revit.AddIn.ViewModels;
 #endif
-#if (!NoWindow)
+#if !NoWindow
 using Nice3point.Revit.AddIn.Views;
 #endif
-#if (ModelessWindow)
+#if Modeless
 using Nice3point.Revit.AddIn.Utils;
 #endif
-#if (Logger && CommandStyle)
+#if log && Command
 using Serilog.Events;
 #endif
 
@@ -27,26 +27,26 @@ public class StartupCommand : ExternalCommand
 {
     public override void Execute()
     {
-#if (Logger && CommandStyle && !IOC)
+#if log && Command && !UseIoc
         var logger = CreateLogger();
 #endif
-#if (ModelessWindow && IOC)
+#if Modeless && UseIoc
         if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
 
         var view = Host.GetService<Nice3point.Revit.AddInView>();
         WindowController.Show(view, UiApplication.MainWindowHandle);
-#elseif (ModalWindow && IOC)
+#elseif (Modal && UseIoc)
         var view = Host.GetService<Nice3point.Revit.AddInView>();
         view.ShowDialog();
-#elseif (NoWindow && IOC)
+#elseif (NoWindow && UseIoc)
         TaskDialog.Show(Document.Title, "Nice3point.Revit.AddIn");
-#elseif (ModelessWindow)
+#elseif (Modeless)
         if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
 
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         WindowController.Show(view, UiApplication.MainWindowHandle);
-#elseif (ModalWindow)
+#elseif (Modal)
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         view.ShowDialog();
@@ -54,7 +54,7 @@ public class StartupCommand : ExternalCommand
         TaskDialog.Show(Document.Title, "Nice3point.Revit.AddIn");
 #endif
     }
-#if (Logger && CommandStyle && !IOC)
+#if log && Command && !UseIoc
 
     private static ILogger CreateLogger()
     {

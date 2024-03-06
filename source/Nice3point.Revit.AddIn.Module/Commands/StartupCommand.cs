@@ -9,7 +9,7 @@ using Nice3point.Revit.AddIn.ViewModels;
 #if (!NoWindow)
 using Nice3point.Revit.AddIn.Views;
 #endif
-#if (ModelessWindow)
+#if (Modeless)
 using Nice3point.Revit.AddIn.Utils;
 #endif
 
@@ -24,13 +24,13 @@ public class StartupCommand : ExternalCommand
 {
     public override void Execute()
     {
-#if (ModelessWindow)
+#if (Modeless)
         if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
 
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         WindowController.Show(view, UiApplication.MainWindowHandle);
-#elseif (ModalWindow)
+#elseif (Modal)
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
         view.ShowDialog();

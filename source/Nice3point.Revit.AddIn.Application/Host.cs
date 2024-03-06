@@ -2,13 +2,13 @@
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
-#if (Logger && Hosting)
+#if (log && Hosting)
 using Microsoft.Extensions.Logging;
 #endif
-#if (ServicesContainer)
+#if (Container)
 using Microsoft.Extensions.DependencyInjection;
 #endif
-#if (Logger && IOC)
+#if (log && UseIoc)
 using Nice3point.Revit.AddIn.Config;
 #endif
 
@@ -19,7 +19,7 @@ namespace Nice3point.Revit.AddIn;
 /// </summary>
 public static class Host
 {
-#if (ServicesContainer)
+#if (Container)
     private static IServiceProvider _serviceProvider;
 #endif
 #if (Hosting)
@@ -31,9 +31,9 @@ public static class Host
     /// </summary>
     public static void Start()
     {
-#if (ServicesContainer)
+#if (Container)
         var services = new ServiceCollection();
-#if (Logger)
+#if (log)
 
         services.AddSerilogConfiguration();
 #endif
@@ -46,7 +46,7 @@ public static class Host
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location),
             DisableDefaults = true
         });
-#if (Logger)
+#if (log)
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilogConfiguration();
@@ -74,7 +74,7 @@ public static class Host
     /// <returns>A service object of type T or null if there is no such service.</returns>
     public static T GetService<T>() where T : class
     {
-#if (ServicesContainer)
+#if (Container)
         return _serviceProvider.GetService(typeof(T)) as T;
 #endif
 #if (Hosting)

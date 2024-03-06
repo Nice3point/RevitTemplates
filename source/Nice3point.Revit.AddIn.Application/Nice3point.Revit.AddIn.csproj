@@ -63,16 +63,16 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
-<!--#if (Logger && !Hosting)-->
+<!--#if (log && !Hosting)-->
         <PackageReference Include="Serilog" Version="3.*" />
 <!--#endif-->
-<!--#if (Logger)-->
+<!--#if (log)-->
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
 <!--#endif-->
-<!--#if (Logger && Hosting)-->
+<!--#if (log && Hosting)-->
         <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" />
 <!--#endif-->
-<!--#if (ServicesContainer)-->
+<!--#if (Container)-->
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
 <!--#endif-->
 <!--#if (Hosting)-->
@@ -84,12 +84,12 @@
         <Using Include="Nice3point.Revit.Extensions"/>
         <Using Include="Nice3point.Revit.Toolkit.Utils"/>
         <Using Include="JetBrains.Annotations"/>
-<!--#if (Logger)-->
+<!--#if (log)-->
         <Using Include="Serilog"/>
 <!--#endif-->
     </ItemGroup>
 
-<!--#if (ApplicationStyle)-->
+<!--#if (Application)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>

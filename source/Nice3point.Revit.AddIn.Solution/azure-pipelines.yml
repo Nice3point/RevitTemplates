@@ -16,11 +16,11 @@ stages:
         steps:
           - task: CmdLine@2
             inputs:
-#if (Bundle && Installer)
+#if (bundle && installer)
               script: './.nuke/build.cmd CreateBundle CreateInstaller'
-#elseif (Installer)
+#elseif (installer)
               script: './.nuke/build.cmd CreateInstaller'
-#elseif (Bundle)
+#elseif (bundle)
               script: './.nuke/build.cmd CreateBundle'
 #else
               script: './.nuke/build.cmd'

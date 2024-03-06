@@ -2,18 +2,18 @@
 
 sealed partial class Build
 {
-#if (Bundle)
+#if (bundle)
     readonly Regex YearRegex = YearRegexGenerator();
 #endif
-#if (Installer)
+#if (installer)
     readonly Regex ArgumentsRegex = ArgumentsRegexGenerator();
 #endif
-#if (Bundle)
+#if (bundle)
 
     [GeneratedRegex(@"\d{4}")]
     private static partial Regex YearRegexGenerator();
 #endif
-#if (Installer)
+#if (installer)
 
     [GeneratedRegex("'(.+?)'", RegexOptions.Compiled)]
     private static partial Regex ArgumentsRegexGenerator();

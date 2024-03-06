@@ -1,15 +1,15 @@
-#if (Hosting)
+#if Hosting
 using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 #endif
-#if (!NoWindow)
+#if !NoWindow
 using Microsoft.Extensions.DependencyInjection;
 #endif
 using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
-#if (Logger && IOC)
+#if log && UseIoc
 using Nice3point.Revit.AddIn.Config;
 #endif
 
@@ -20,10 +20,10 @@ namespace Nice3point.Revit.AddIn;
 /// </summary>
 public static class Host
 {
-#if (ServicesContainer)
+#if Container
     private static IServiceProvider _serviceProvider;
 #endif
-#if (Hosting)
+#if Hosting
     private static IHost _host;
 #endif
 
@@ -32,13 +32,13 @@ public static class Host
     /// </summary>
     public static void Start()
     {
-#if (ServicesContainer)
+#if Container
         var services = new ServiceCollection();
-#if (Logger)
+#if log
 
         services.AddSerilogConfiguration();
 #endif
-#if (!NoWindow)
+#if !NoWindow
 
         services.AddTransient<Nice3point.Revit.AddInViewModel>();
         services.AddTransient<Nice3point.Revit.AddInView>();
@@ -46,18 +46,18 @@ public static class Host
 
         _serviceProvider = services.BuildServiceProvider();
 #endif
-#if (Hosting)
+#if Hosting
         var builder = Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
         {
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location),
             DisableDefaults = true
         });
-#if (Logger)
+#if log
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilogConfiguration();
 #endif
-#if (!NoWindow)
+#if !NoWindow
 
         builder.Services.AddTransient<Nice3point.Revit.AddInViewModel>();
         builder.Services.AddTransient<Nice3point.Revit.AddInView>();
@@ -67,7 +67,7 @@ public static class Host
         _host.Start();
 #endif
     }
-#if (Hosting)
+#if Hosting
 
     /// <summary>
     ///     Stops the host.
@@ -85,10 +85,10 @@ public static class Host
     /// <returns>A service object of type T or null if there is no such service.</returns>
     public static T GetService<T>() where T : class
     {
-#if (ServicesContainer)
+#if Container
         return _serviceProvider.GetService(typeof(T)) as T;
 #endif
-#if (Hosting)
+#if Hosting
         return _host.Services.GetService(typeof(T)) as T;
 #endif
     }
