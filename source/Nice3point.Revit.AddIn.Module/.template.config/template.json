@@ -28,42 +28,79 @@
       "description": "The type of window to be used by the add-in",
       "choices": [
         {
-          "choice": "None",
+          "choice": "none",
+          "displayName": "None",
           "description": "The add-in will not use windows"
         },
         {
-          "choice": "Modal",
+          "choice": "modal",
+          "displayName": "Modal",
           "description": "A modal window that blocks Revit until the user closes the window"
         },
         {
-          "choice": "Modeless",
+          "choice": "modeless",
+          "displayName": "Modeless",
           "description": "A modeless window does not block any other window while it is visible"
         }
       ],
       "defaultValue": "Modal"
     },
+    "IOC": {
+      "type": "parameter",
+      "displayName": "Inject view",
+      "datatype": "bool",
+      "description": "Inject a view into a command to call from the host application",
+      "defaultValue": "false",
+      "isEnabled": "WindowType != \"none\""
+    },
     "NoWindow": {
       "type": "computed",
-      "value": "(WindowType == \"None\")"
+      "value": "WindowType == \"none\""
     },
     "ModalWindow": {
       "type": "computed",
-      "value": "(WindowType == \"Modal\")"
+      "value": "WindowType == \"modal\""
     },
     "ModelessWindow": {
       "type": "computed",
-      "value": "(WindowType == \"Modeless\")"
+      "value": "WindowType == \"modeless\""
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(NoWindow)",
+          "condition": "NoWindow",
           "exclude": [
             "Models/**",
             "Views/**",
             "ViewModels/**"
+          ]
+        },
+        {
+          "condition": "!ModelessWindow",
+          "exclude": [
+            "Utils/WindowController.cs"
+          ]
+        },
+        {
+          "condition": "NoWindow",
+          "exclude": [
+            "Core/RevitShell.cs",
+            "CommandHandlers/ShowWindowHandler.cs",
+            "Commands/StartupCommand.cs.cs"
+          ]
+        },
+        {
+          "condition": "IOC",
+          "exclude": [
+            "Commands/**"
+          ]
+        },
+        {
+          "condition": "!IOC",
+          "exclude": [
+            "CommandHandlers/**"
           ]
         }
       ]

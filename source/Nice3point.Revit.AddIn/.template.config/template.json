@@ -170,7 +170,7 @@
     },
     {
       "condition": "(CommandStyle)",
-      "path": "Commands/ApplicationCommand.cs"
+      "path": "Commands/StartupCommand.cs"
     }
   ],
   "postActions": [

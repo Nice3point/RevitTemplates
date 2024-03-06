@@ -63,6 +63,9 @@
 <!--#if (!NoWindow)-->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
 <!--#endif-->
+<!--#if (ModelessWindow && IOC)-->
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.*" />
+<!--#endif-->
     </ItemGroup>
 
     <ItemGroup>

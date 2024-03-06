@@ -8,7 +8,7 @@ namespace Nice3point.Revit.AddIn.Commands;
 /// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]
-public class ApplicationCommand : ExternalCommand
+public class StartupCommand : ExternalCommand
 {
     public override void Execute()
     {

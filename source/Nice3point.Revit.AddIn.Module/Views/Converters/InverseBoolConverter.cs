@@ -4,7 +4,7 @@ using System.Windows.Markup;
 
 namespace Nice3point.Revit.AddIn.Views.Converters;
 
-public class InverseBooleanConverter : MarkupExtension, IValueConverter
+public class InverseBoolConverter : MarkupExtension, IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
