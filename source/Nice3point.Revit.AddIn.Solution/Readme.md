@@ -67,7 +67,7 @@ To execute your NUKE build locally, you can follow these steps:
 
    This command will execute the NUKE build defined in your project.
 
-### Create new release on Github
+### Create new release on GitHub
 
 Publishing the release, generating the installer and bundle, is performed automatically on GitHub.
 
@@ -75,9 +75,9 @@ To execute your NUKE build on GitHub, you can follow these steps:
 
 1. Merge all your commits into the `main` / `master` branch.
 2. Navigate to the `Build/Build.Configuration.cs` file.
-3. Increase the value of the `Version` constant.
-4. Make a commit of this change.
-5. Push your changes to Github, everything will happen automatically and you can follow the progress in the Actions section of the repository page.
+3. Increase the `Version` value.
+4. Make a commit.
+5. Push your changes to GitHub, everything will happen automatically, and you can follow the progress in the Actions section of the repository page.
 
 ### Solution structure
 
