@@ -14,7 +14,7 @@ public class Application : ExternalApplication
 {
     public override void OnStartup()
     {
-#if (UseIoc)
+#if UseIoc
         Host.Start();
 #endif
 #if (log && !UseIoc)
@@ -26,9 +26,9 @@ public class Application : ExternalApplication
 
     public override void OnShutdown()
     {
-#if (Hosting)
+#if Hosting
         Host.Stop();
-#elseif (log)
+#elseif log
         Log.CloseAndFlush();
 #endif
     }

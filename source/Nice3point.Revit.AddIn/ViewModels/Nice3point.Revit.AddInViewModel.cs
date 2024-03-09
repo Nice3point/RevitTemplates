@@ -8,11 +8,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Nice3point.Revit.AddIn.ViewModels;
 
-#if (!log)
+#if !log
 public sealed class Nice3point.Revit.AddInViewModel : ObservableObject
-#elseif (Container)
+#elseif Container
 public sealed class Nice3point.Revit.AddInViewModel(ILogger logger) : ObservableObject
-#elseif (Hosting)
+#elseif Hosting
 public sealed class Nice3point.Revit.AddInViewModel(ILogger<Nice3point.Revit.AddInViewModel> logger) : ObservableObject
 #else
 public sealed class Nice3point.Revit.AddInViewModel : ObservableObject

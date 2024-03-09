@@ -18,9 +18,9 @@ stages:
             inputs:
 #if (bundle && installer)
               script: './.nuke/build.cmd CreateBundle CreateInstaller'
-#elseif (installer)
+#elseif installer
               script: './.nuke/build.cmd CreateInstaller'
-#elseif (bundle)
+#elseif bundle
               script: './.nuke/build.cmd CreateBundle'
 #else
               script: './.nuke/build.cmd'

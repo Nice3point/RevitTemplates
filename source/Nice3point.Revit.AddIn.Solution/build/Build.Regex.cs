@@ -2,13 +2,13 @@
 
 sealed partial class Build
 {
-#if (bundle)
+#if bundle
     readonly Regex YearRegex = YearRegexGenerator();
 #endif
-#if (installer)
+#if installer
     readonly Regex ArgumentsRegex = ArgumentsRegexGenerator();
 #endif
-#if (bundle)
+#if bundle
 
     [GeneratedRegex(@"\d{4}")]
     private static partial Regex YearRegexGenerator();

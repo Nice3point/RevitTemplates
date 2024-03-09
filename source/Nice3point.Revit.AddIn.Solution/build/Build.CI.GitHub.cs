@@ -9,9 +9,9 @@ sealed partial class Build
     Target PublishGitHub => _ => _
 #if (installer && bundle)
         .DependsOn(CreateInstaller, CreateBundle)
-#elseif (installer)
+#elseif installer
         .DependsOn(CreateInstaller)
-#elseif (bundle)
+#elseif bundle
         .DependsOn(CreateBundle)
 #else
         .DependsOn(Compile)

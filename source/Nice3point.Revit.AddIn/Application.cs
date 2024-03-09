@@ -1,6 +1,6 @@
 ﻿using Nice3point.Revit.Toolkit.External;
 using Nice3point.Revit.AddIn.Commands;
-#if log && !UseIoc
+#if (log && !UseIoc)
 using Serilog.Events;
 #endif
 
@@ -17,12 +17,12 @@ public class Application : ExternalApplication
 #if UseIoc
         Host.Start();
 #endif
-#if log && !UseIoc
+#if (log && !UseIoc)
         CreateLogger();
 #endif
         CreateRibbon();
     }
-#if Hosting || (!UseIoc && log)
+#if (Hosting || (!UseIoc && log))
 
     public override void OnShutdown()
     {
@@ -42,7 +42,7 @@ public class Application : ExternalApplication
         showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
         showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
-#if log && !UseIoc
+#if (log && !UseIoc)
 
     private static void CreateLogger()
     {
