@@ -13,7 +13,7 @@ public static class LoggerConfigurator
 {
 #if Container
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}]: {Message:lj}{NewLine}{Exception}";
-#elseif (Hosting)
+#elseif Hosting
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}";
 #endif
 
@@ -25,7 +25,7 @@ public static class LoggerConfigurator
 
         AppDomain.CurrentDomain.UnhandledException += OnOnUnhandledException;
     }
-#elseif (Hosting)
+#elseif Hosting
     public static void AddSerilogConfiguration(this ILoggingBuilder builder)
     {
         var logger = CreateDefaultLogger();

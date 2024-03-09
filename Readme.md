@@ -19,6 +19,7 @@ This repository contains a project templates for creating Revit Add-In
 - Support for Azure DevOps pipelines and GitHub Actions
 - Support for automatic publishing of releases to GitHub
 - Support for bundle to publish an application to the Autodesk Store
+- Support for Dependency Injection
 - Support for the MVVM pattern
 - Support for add-in logging
 

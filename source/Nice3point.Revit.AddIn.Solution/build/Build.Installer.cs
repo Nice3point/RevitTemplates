@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-#if (!NoPipeline)
+#if !NoPipeline
 using Nuke.Common.Git;
 #endif
 using Nuke.Common.Tooling;
