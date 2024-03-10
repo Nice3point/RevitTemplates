@@ -1,4 +1,4 @@
-#if !NoPipeline
+#if (!NoPipeline)
 using Nuke.Common.Git;
 #endif
 using Nuke.Common.ProjectModel;
@@ -6,17 +6,17 @@ using Nuke.Common.ProjectModel;
 sealed partial class Build : NukeBuild
 {
     string[] Configurations;
-#if bundle
+#if (bundle)
     Project[] Bundles;
 #endif
-#if installer
+#if (installer)
     Dictionary<Project, Project> InstallersMap;
 #endif
 
-#if GitHubPipeline
+#if (GitHubPipeline)
     [Secret] [Parameter] string GitHubToken;
 #endif
-#if !NoPipeline
+#if (!NoPipeline)
     [GitRepository] readonly GitRepository GitRepository;
 #endif
     [Solution(GenerateProjects = true)] Solution Solution;

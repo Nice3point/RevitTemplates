@@ -1,7 +1,7 @@
-﻿#if Container
+﻿#if (Container)
 using Microsoft.Extensions.DependencyInjection;
 #endif
-#if Hosting
+#if (Hosting)
 using Microsoft.Extensions.Logging;
 #endif
 using Serilog.Core;
@@ -11,13 +11,13 @@ namespace Nice3point.Revit.AddIn.Config;
 
 public static class LoggerConfigurator
 {
-#if Container
+#if (Container)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}]: {Message:lj}{NewLine}{Exception}";
-#elseif Hosting
+#elseif (Hosting)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}";
 #endif
 
-#if Container
+#if (Container)
     public static void AddSerilogConfiguration(this IServiceCollection services)
     {
         var logger = CreateDefaultLogger();
@@ -25,7 +25,7 @@ public static class LoggerConfigurator
 
         AppDomain.CurrentDomain.UnhandledException += OnOnUnhandledException;
     }
-#elseif Hosting
+#elseif (Hosting)
     public static void AddSerilogConfiguration(this ILoggingBuilder builder)
     {
         var logger = CreateDefaultLogger();
@@ -43,14 +43,14 @@ public static class LoggerConfigurator
             .CreateLogger();
     }
 
-#if Container
+#if (Container)
     private static void OnOnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;
         var logger = Host.GetService<ILogger>();
         logger.Fatal(exception, "Domain unhandled exception");
     }
-#elseif Hosting
+#elseif (Hosting)
     private static void OnOnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;

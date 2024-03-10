@@ -105,6 +105,7 @@
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
+<!--#endif-->
 
     <Target Name="CopyFiles" AfterTargets="CoreBuild">
         <ItemGroup>

@@ -4,7 +4,7 @@
 #if (bundle || installer || GitHubPipeline)
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
 #endif
-#if GitHubPipeline
+#if (GitHubPipeline)
     readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
 #endif
 
@@ -13,18 +13,18 @@
         Configurations =
         [
             "Release*",
-#if installer
+#if (installer)
             "Installer*"
 #endif
         ];
-#if bundle
+#if (bundle)
 
         Bundles =
         [
             Solution.Nice3point.Revit.AddIn
         ];
 #endif
-#if installer
+#if (installer)
 
         InstallersMap = new()
         {
