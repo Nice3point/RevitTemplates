@@ -1,7 +1,10 @@
-# 4.0.0
+# 4.0.0-preview.1.0
 
 - Revit 2025 support
-//TODO
+- Inversion of Control support
+- New templates for single dll applications and modular solutions
+- New samples https://github.com/Nice3point/RevitTemplates/tree/develop/samples
+- Wiki updated https://github.com/Nice3point/RevitTemplates/wiki/Templates
 
 # 3.2.2
 
