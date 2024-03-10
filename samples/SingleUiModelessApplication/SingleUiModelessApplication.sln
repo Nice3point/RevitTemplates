@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitAddIn", "RevitAddIn\RevitAddIn.csproj", "{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug R20|Any CPU = Debug R20|Any CPU
+		Debug R21|Any CPU = Debug R21|Any CPU
+		Debug R22|Any CPU = Debug R22|Any CPU
+		Debug R23|Any CPU = Debug R23|Any CPU
+		Debug R24|Any CPU = Debug R24|Any CPU
+		Debug R25|Any CPU = Debug R25|Any CPU
+		Release R20|Any CPU = Release R20|Any CPU
+		Release R21|Any CPU = Release R21|Any CPU
+		Release R22|Any CPU = Release R22|Any CPU
+		Release R23|Any CPU = Release R23|Any CPU
+		Release R24|Any CPU = Release R24|Any CPU
+		Release R25|Any CPU = Release R25|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R20|Any CPU.ActiveCfg = Debug R20|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R20|Any CPU.Build.0 = Debug R20|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R21|Any CPU.ActiveCfg = Debug R21|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R21|Any CPU.Build.0 = Debug R21|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R22|Any CPU.ActiveCfg = Debug R22|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R22|Any CPU.Build.0 = Debug R22|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R23|Any CPU.ActiveCfg = Debug R23|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R23|Any CPU.Build.0 = Debug R23|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R24|Any CPU.ActiveCfg = Debug R24|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R24|Any CPU.Build.0 = Debug R24|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R25|Any CPU.ActiveCfg = Debug R25|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Debug R25|Any CPU.Build.0 = Debug R25|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R20|Any CPU.ActiveCfg = Release R20|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R20|Any CPU.Build.0 = Release R20|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R21|Any CPU.ActiveCfg = Release R21|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R21|Any CPU.Build.0 = Release R21|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R22|Any CPU.ActiveCfg = Release R22|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R22|Any CPU.Build.0 = Release R22|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R23|Any CPU.ActiveCfg = Release R23|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R23|Any CPU.Build.0 = Release R23|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R24|Any CPU.ActiveCfg = Release R24|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R24|Any CPU.Build.0 = Release R24|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R25|Any CPU.ActiveCfg = Release R25|Any CPU
+		{CF93080C-CCF0-4AE8-B8A4-0A5C7D66E48A}.Release R25|Any CPU.Build.0 = Release R25|Any CPU
+	EndGlobalSection
+EndGlobal
