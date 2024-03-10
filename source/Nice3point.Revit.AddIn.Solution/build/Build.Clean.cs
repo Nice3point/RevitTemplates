@@ -7,13 +7,16 @@ sealed partial class Build
         .OnlyWhenStatic(() => IsLocalBuild)
         .Executes(() =>
         {
+            foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
+            {
+                CleanDirectory(project.Directory / "bin");
+                CleanDirectory(project.Directory / "obj");
+            }
+
             foreach (var configuration in GlobBuildConfigurations())
                 DotNetClean(settings => settings
                     .SetConfiguration(configuration)
                     .SetVerbosity(DotNetVerbosity.minimal));
-
-            foreach (var project in Solution.AllProjects.Where(project => project != Solution.Build))
-                CleanDirectory(project.Directory / "bin");
 #if (bundle || installer || GitHubPipeline)
 
             CleanDirectory(ArtifactsDirectory);
