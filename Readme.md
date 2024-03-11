@@ -32,5 +32,4 @@ This repository contains a project templates for creating Revit Add-In
 
 - To create a project use the IDE or run `dotnet new`
 - To create a release run `nuke`
-- Read changelog in [Discussions](https://github.com/Nice3point/RevitTemplates/discussions/categories/announcements)
 - For more help read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki)
