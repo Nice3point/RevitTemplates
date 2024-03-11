@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 #endif
 #if (!NoWindow)
 using Microsoft.Extensions.DependencyInjection;
-#endif
 using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
+#endif
 #if (log && UseIoc)
 using Nice3point.Revit.AddIn.Config;
 #endif
