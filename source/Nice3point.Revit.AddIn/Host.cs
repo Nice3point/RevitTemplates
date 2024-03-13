@@ -20,10 +20,10 @@ namespace Nice3point.Revit.AddIn;
 /// </summary>
 public static class Host
 {
-#if Container
+#if (Container)
     private static IServiceProvider _serviceProvider;
 #endif
-#if Hosting
+#if (Hosting)
     private static IHost _host;
 #endif
 
@@ -32,9 +32,9 @@ public static class Host
     /// </summary>
     public static void Start()
     {
-#if Container
+#if (Container)
         var services = new ServiceCollection();
-#if log
+#if (log)
 
         services.AddSerilogConfiguration();
 #endif
@@ -46,13 +46,13 @@ public static class Host
 
         _serviceProvider = services.BuildServiceProvider();
 #endif
-#if Hosting
-        var builder = Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+#if (Hosting)
+        var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location),
             DisableDefaults = true
         });
-#if log
+#if (log)
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilogConfiguration();
@@ -67,7 +67,7 @@ public static class Host
         _host.Start();
 #endif
     }
-#if Hosting
+#if (Hosting)
 
     /// <summary>
     ///     Stops the host.
@@ -85,10 +85,10 @@ public static class Host
     /// <returns>A service object of type T or null if there is no such service.</returns>
     public static T GetService<T>() where T : class
     {
-#if Container
+#if (Container)
         return _serviceProvider.GetService(typeof(T)) as T;
 #endif
-#if Hosting
+#if (Hosting)
         return _host.Services.GetService(typeof(T)) as T;
 #endif
     }

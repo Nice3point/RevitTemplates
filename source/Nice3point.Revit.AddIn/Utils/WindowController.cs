@@ -3,7 +3,7 @@
 namespace Nice3point.Revit.AddIn.Utils;
 
 /// <summary>
-///     Controller for non-modal windows
+///     Controller for modeless windows
 /// </summary>
 /// <remarks>
 ///     Manages window lifecycle, prevents reopening of an already opened window. Used for non-hosted environments

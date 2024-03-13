@@ -84,13 +84,13 @@
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
 <!--#endif-->
 <!--#if (log && Hosting)-->
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*" />
 <!--#endif-->
 <!--#if (Container)-->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.*"/>
 <!--#endif-->
 <!--#if (Hosting)-->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*"/>
 <!--#endif-->
     </ItemGroup>
 

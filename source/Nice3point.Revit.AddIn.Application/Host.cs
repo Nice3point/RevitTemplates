@@ -42,7 +42,7 @@ public static class Host
         _serviceProvider = services.BuildServiceProvider();
 #endif
 #if (Hosting)
-        var builder = Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+        var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location),
             DisableDefaults = true
