@@ -73,7 +73,7 @@ Just create a project, and it will already be ready to run in Revit.
     - Dependency Injection implementation using Hosting
     - Logging
     - **IOptions\<T\>** usages for serialization
-    - **IExternalEvents** usages for calling Revit API from async code or another thread
+    - **IExternalEvents** usages for calling Revit API from async code
 
 | Template                | Creation options                                  | Value                                  |
 |-------------------------|---------------------------------------------------|----------------------------------------|
