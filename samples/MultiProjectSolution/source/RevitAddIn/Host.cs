@@ -37,8 +37,8 @@ public static class Host
         builder.Services.AddSerializerOptions();
 
         //Services
-        builder.Services.AddTransient<ModalModule.CommandHandlers.ShowWindowHandler>();
-        builder.Services.AddTransient<ModelessModule.CommandHandlers.ShowWindowHandler>();
+        builder.Services.AddTransient<ModalModule.Commands.ShowWindowComponent>();
+        builder.Services.AddTransient<ModelessModule.Commands.ShowWindowComponent>();
         builder.Services.AddTransient<ModalModuleView>();
         builder.Services.AddTransient<ModalModuleViewModel>();
         builder.Services.AddTransient<ModelessModuleView>();

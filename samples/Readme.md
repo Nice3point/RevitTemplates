@@ -51,7 +51,7 @@ Just create a project, and it will already be ready to run in Revit.
 
 - **[Multi-project Application](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/ModularApplication)** -
   modular application, where each add-in is placed in a separate project, and orchestrated by main add-in that connects all modules to the Revit ribbon.
-  Including sample with **ExtensibleStorage** for a database.
+  Including sample with using **ExtensibleStorage** as a database.
 
 | Template                | Creation options | Value       |
 |-------------------------|------------------|-------------|
@@ -73,7 +73,7 @@ Just create a project, and it will already be ready to run in Revit.
     - Dependency Injection implementation using Hosting
     - Logging
     - **IOptions\<T\>** usages for serialization
-    - **IExternalEvents** usages for calling Revit API from async code or another thread
+    - **IExternalEvents** usages for calling Revit API from async code
 
 | Template                | Creation options                                  | Value                                  |
 |-------------------------|---------------------------------------------------|----------------------------------------|

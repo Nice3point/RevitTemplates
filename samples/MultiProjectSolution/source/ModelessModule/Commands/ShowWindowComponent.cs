@@ -3,12 +3,12 @@ using ModelessModule.Views;
 using ModelessModule.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ModelessModule.CommandHandlers;
+namespace ModelessModule.Commands;
 
 /// <summary>
 ///     Command entry point invoked from the Revit AddIn Application
 /// </summary>
-public class ShowWindowHandler(IServiceProvider serviceProvider)
+public class ShowWindowComponent(IServiceProvider serviceProvider)
 {
     public void Execute(ExternalCommand shell)
     {

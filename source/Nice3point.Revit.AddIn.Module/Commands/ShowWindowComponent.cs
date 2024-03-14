@@ -5,15 +5,15 @@ using Nice3point.Revit.AddIn.Utils;
 using Microsoft.Extensions.DependencyInjection;
 #endif
 
-namespace Nice3point.Revit.AddIn.CommandHandlers;
+namespace Nice3point.Revit.AddIn.Commands;
 
 /// <summary>
 ///     Command entry point invoked from the Revit AddIn Application
 /// </summary>
 #if (Modeless)
-public class ShowWindowHandler(IServiceProvider serviceProvider)
+public class ShowWindowComponent(IServiceProvider serviceProvider)
 #else
-public class ShowWindowHandler(Nice3point.Revit.AddInView view)
+public class ShowWindowComponent(Nice3point.Revit.AddInView view)
 #endif
 {
     public void Execute(ExternalCommand shell)

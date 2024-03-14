@@ -87,20 +87,19 @@
           "condition": "NoWindow",
           "exclude": [
             "Core/RevitShell.cs",
-            "CommandHandlers/ShowWindowHandler.cs",
-            "Commands/StartupCommand.cs"
+            "Commands/**"
           ]
         },
         {
           "condition": "ioc",
           "exclude": [
-            "Commands/**"
+            "Commands/StartupCommand.cs"
           ]
         },
         {
           "condition": "!ioc",
           "exclude": [
-            "CommandHandlers/**"
+            "Commands/ShowWindowComponent.cs"
           ]
         }
       ]

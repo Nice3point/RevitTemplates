@@ -1,3 +1,9 @@
+# 4.0.0-preview.2.0
+
+- Downgrade dependencies for Revit 2025 compability
+- Rename some files
+- Bug fixes
+
 # 4.0.0-preview.1.0
 
 - Revit 2025 support
