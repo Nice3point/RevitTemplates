@@ -6,6 +6,7 @@ sealed partial class Build
 {
     Target Pack => _ => _
         .DependsOn(Compile)
+        .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
         .Executes(() =>
         {
             ValidateRelease();

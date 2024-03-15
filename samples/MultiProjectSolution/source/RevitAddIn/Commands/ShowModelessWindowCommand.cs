@@ -1,5 +1,5 @@
 ﻿using Autodesk.Revit.Attributes;
-using ModelessModule.CommandHandlers;
+using ModelessModule.Commands;
 using Nice3point.Revit.Toolkit.External;
 
 namespace RevitAddIn.Commands;
@@ -13,6 +13,6 @@ public class ShowModelessWindowCommand : ExternalCommand
 {
     public override void Execute()
     {
-        Host.GetService<ShowWindowHandler>().Execute(this);
+        Host.GetService<ShowWindowComponent>().Execute(this);
     }
 }

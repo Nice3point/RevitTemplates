@@ -1,4 +1,4 @@
-# AllInOneApplication
+# MultiProjectSolution
 
 Autodesk Revit plugin project organised into multiple solution files that target versions 2020 - 2025.
 
