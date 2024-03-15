@@ -16,7 +16,7 @@ sealed partial class Build
                     .SetConfiguration(configuration)
                     .SetVersion(Version)
                     .SetOutputDirectory(ArtifactsDirectory)
-                    .SetVerbosity(DotNetVerbosity.Minimal)
+                    .SetVerbosity(DotNetVerbosity.minimal)
                     .SetPackageReleaseNotes(CreateNugetChangelog()));
         });
 
