@@ -1,3 +1,9 @@
+# 4.0.0-preview.3.0
+
+- New icons
+- Renamed some options
+- Added summary for logger
+
 # 4.0.0-preview.2.0
 
 - Downgrade dependencies for Revit 2025 compability
