@@ -7,9 +7,9 @@
 
 ## Create your Add-In for Revit on the .Net platform
 
-![](https://img.shields.io/nuget/v/Nice3point.Revit.Templates?style=for-the-badge)
-![](https://img.shields.io/nuget/dt/Nice3point.Revit.Templates?style=for-the-badge)
-![](https://img.shields.io/github/last-commit/Nice3point/RevitTemplate/develop?style=for-the-badge)
+[![Nuget](https://img.shields.io/nuget/v/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
+[![Downloads](https://img.shields.io/nuget/dt/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
+[![Last Commit](https://img.shields.io/github/last-commit/Nice3point/RevitTemplate/develop?style=for-the-badge)](https://github.com/Nice3point/RevitTemplate/commits/main)
 
 This repository contains a project templates for creating Revit Add-In
 
