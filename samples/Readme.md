@@ -79,5 +79,5 @@ Just create a project, and it will already be ready to run in Revit.
 |-------------------------|---------------------------------------------------|----------------------------------------|
 | Revit Solution          | Bundle support<br/>Installer support<br/>Pipeline | Enabled<br/>Enabled<br/>GitHub actions |
 | Revit AddIn Application | Serilog support<br/>AddIn type<br/>IoC            | Enabled<br/>Application<br/>Hosting    |
-| Revit AddIn Module      | Inject view<br/>User interface                    | Enabled<br/>Modal                      |
-| Revit AddIn Module      | Inject view<br/>User interface                    | Enabled<br/>Modeless                   |
+| Revit AddIn Module      | Inject dependencies<br/>User interface            | Enabled<br/>Modal                      |
+| Revit AddIn Module      | Inject dependencies<br/>User interface            | Enabled<br/>Modeless                   |
