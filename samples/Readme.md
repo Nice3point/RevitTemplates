@@ -16,7 +16,7 @@ Just create a project, and it will already be ready to run in Revit.
 
 - **[Single-project WPF Application (Modal)](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectWpfModalApplication)** -
   an add-in with a user interface that blocks Revit.
-  Suitable for those who are starting to learn WPF or already working with it.
+  Suitable for developers who are starting to learn WPF or already working with it.
   It contains all necessary dependencies and implements the MVVM pattern.
 
 | Templates   | Creation options              | Value                 |
@@ -25,7 +25,7 @@ Just create a project, and it will already be ready to run in Revit.
 
 - **[Single-project WPF Application (Modeless)](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectWpfModelessApplication)** -
   an add-in with a user interface that does not block Revit.
-  Suitable for those who want to implement a modeless window.
+  Suitable for developers who want to implement a modeless window.
   Contains all necessary dependencies, examples of using **IExternalEventHandler** (calling Revit API from another thread) and asynchronous calls.
   It implements the MVVM pattern.
 
@@ -36,7 +36,7 @@ Just create a project, and it will already be ready to run in Revit.
 ## Advanced
 
 - **[Single-project Application with Dependency Injection](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectDIApplication)** -
-  option for developers who need a simple implementation of Dependency injection using service containers with `Microsoft.Extensions.DependencyInjection` package/
+  option for developers who need a simple implementation of Dependency injection using service containers with `Microsoft.Extensions.DependencyInjection` package.
 
 | Template    | Creation options                      | Value                                       |
 |-------------|---------------------------------------|---------------------------------------------|
