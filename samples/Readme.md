@@ -1,3 +1,5 @@
+**Relevant for Beta version**: `dotnet new install Nice3point.Revit.Templates::4.0.0-preview.3.0`
+
 Add-in examples created with these templates are suitable for beginners and advanced users.
 You can create your own add-ins with different settings or completely empty.
 Templates will take care of project configuration and multi Revit version compability.
@@ -24,7 +26,7 @@ Just create a project, and it will already be ready to run in Revit.
 | Revit AddIn | AddIn type<br/>User interface | Application<br/>Modal |
 
 - **[Single-project WPF Application (Modeless)](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectWpfModelessApplication)** -
-  an add-in with a user interface that does not block Revit.
+  an add-in with a user interface that does not block Revit execution.
   Suitable for developers who want to implement a modeless window.
   Contains all necessary dependencies, examples of using **IExternalEventHandler** (calling Revit API from another thread) and asynchronous calls.
   It implements the MVVM pattern.
