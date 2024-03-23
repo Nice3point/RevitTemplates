@@ -1,3 +1,5 @@
+Relevant for Beta version: dotnet new install Nice3point.Revit.Templates::4.0.0-preview.3.0
+
 Add-in examples created with these templates are suitable for beginners and advanced users.
 You can create your own add-ins with different settings or completely empty.
 Templates will take care of project configuration and multi Revit version compability.

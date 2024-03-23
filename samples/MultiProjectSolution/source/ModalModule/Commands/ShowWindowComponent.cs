@@ -1,5 +1,4 @@
-﻿using Nice3point.Revit.Toolkit.External;
-using ModalModule.Views;
+﻿using ModalModule.Views;
 
 namespace ModalModule.Commands;
 
@@ -8,7 +7,7 @@ namespace ModalModule.Commands;
 /// </summary>
 public class ShowWindowComponent(ModalModuleView view)
 {
-    public void Execute(ExternalCommand shell)
+    public void Execute()
     {
         view.ShowDialog();
     }
