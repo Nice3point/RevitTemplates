@@ -6,6 +6,8 @@ Templates will take care of project configuration and multi Revit version compab
 
 Just create a project, and it will already be ready to run in Revit.
 
+Templates description: https://github.com/Nice3point/RevitTemplates/wiki/Templates
+
 ## Basic
 
 - **[Single-project Application](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectApplication)** — 
