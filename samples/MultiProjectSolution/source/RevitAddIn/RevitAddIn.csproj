@@ -75,9 +75,10 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*"/>
-        <PackageReference Include="System.Text.Json" Version="7.*"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*"/>
     </ItemGroup>
 
     <ItemGroup>

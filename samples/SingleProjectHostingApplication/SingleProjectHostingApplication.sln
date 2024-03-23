@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitAddIn", "RevitAddIn.csproj", "{9BC40E8B-C8EE-482F-A74F-14958535E1D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitAddIn", "RevitAddIn\RevitAddIn.csproj", "{9BC40E8B-C8EE-482F-A74F-14958535E1D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

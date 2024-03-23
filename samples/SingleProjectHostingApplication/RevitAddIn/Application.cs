@@ -24,8 +24,8 @@ public class Application : ExternalApplication
     {
         var panel = Application.CreatePanel("Commands", "RevitAddIn");
 
-        var showButton = panel.AddPushButton<StartupCommand>("Execute");
-        showButton.SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png");
-        showButton.SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
+        panel.AddPushButton<StartupCommand>("Execute")
+            .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
+            .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
     }
 }

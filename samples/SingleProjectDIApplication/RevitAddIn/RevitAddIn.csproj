@@ -75,6 +75,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
     </ItemGroup>
 
