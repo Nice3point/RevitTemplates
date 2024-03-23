@@ -70,12 +70,13 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
-        <!--#if (!NoWindow)-->
+<!--#if (!NoWindow)-->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
-        <!--#endif-->
-        <!--#if (Modeless && ioc)-->
+<!--#endif-->
+<!--#if (Modeless && ioc)-->
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.*"/>
-        <!--#endif-->
+<!--#endif-->
     </ItemGroup>
 
     <ItemGroup>
@@ -84,10 +85,10 @@
         <Using Include="JetBrains.Annotations"/>
     </ItemGroup>
 
-    <!--#if (!NoWindow)-->
+<!--#if (!NoWindow)-->
     <ItemGroup>
         <Folder Include="Models"/>
     </ItemGroup>
 
-    <!--#endif-->
+<!--#endif-->
 </Project>

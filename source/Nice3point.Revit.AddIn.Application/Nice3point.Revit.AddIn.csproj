@@ -81,13 +81,16 @@
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
 <!--#endif-->
 <!--#if (log && Hosting)-->
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*"/>
 <!--#endif-->
 <!--#if (Container)-->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.*"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
 <!--#endif-->
 <!--#if (Hosting)-->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*" Condition="$(Configuration.Contains('R25'))"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*"/>
 <!--#endif-->
     </ItemGroup>
 
