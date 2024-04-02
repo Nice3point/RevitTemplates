@@ -13,6 +13,7 @@ using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.Utils;
 #endif
 #if (log && Command)
+using Serilog;
 using Serilog.Events;
 #endif
 

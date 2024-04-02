@@ -16,7 +16,7 @@ frameworks, you can do so by visiting the following:
 * [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
 * [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet)
 
-After installing necessary frameworks, clone this repository to your local machine and navigate to the project directory.
+After installing the necessary frameworks, clone this repository to your local machine and navigate to the project directory.
 
 ### Building
 

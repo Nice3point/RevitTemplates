@@ -1,7 +1,7 @@
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
+using Visibility = System.Windows.Visibility;
 
 namespace Nice3point.Revit.AddIn.Views.Converters;
 

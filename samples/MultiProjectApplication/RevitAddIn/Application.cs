@@ -17,12 +17,12 @@ public class Application : ExternalApplication
     {
         var panel = Application.CreatePanel("Commands", "RevitAddIn");
 
-        var showButton = panel.AddPushButton<Module1.Commands.StartupCommand>("Execute");
-        showButton.SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png");
-        showButton.SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
+        panel.AddPushButton<Module1.Commands.StartupCommand>("Execute")
+            .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
+            .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
 
-        var showButton2 = panel.AddPushButton<Module2.Commands.StartupCommand>("Execute");
-        showButton2.SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png");
-        showButton2.SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
+        panel.AddPushButton<Module2.Commands.StartupCommand>("Execute")
+            .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
+            .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
     }
 }

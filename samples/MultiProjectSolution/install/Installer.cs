@@ -5,8 +5,8 @@ using WixSharp.CommonTasks;
 using WixSharp.Controls;
 using Assembly = System.Reflection.Assembly;
 
-const string outputName = "AllInOneApplication";
-const string projectName = "AllInOneApplication";
+const string outputName = "MultiProjectSolution";
+const string projectName = "MultiProjectSolution";
 
 var project = new Project
 {

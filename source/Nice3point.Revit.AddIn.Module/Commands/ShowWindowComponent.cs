@@ -1,7 +1,7 @@
-﻿using Nice3point.Revit.Toolkit.External;
-using Nice3point.Revit.AddIn.Views;
+﻿using Nice3point.Revit.AddIn.Views;
 #if (Modeless)
 using Nice3point.Revit.AddIn.Utils;
+using Nice3point.Revit.Toolkit;
 using Microsoft.Extensions.DependencyInjection;
 #endif
 
@@ -16,13 +16,13 @@ public class ShowWindowComponent(IServiceProvider serviceProvider)
 public class ShowWindowComponent(Nice3point.Revit.AddInView view)
 #endif
 {
-    public void Execute(ExternalCommand shell)
+    public void Execute()
     {
 #if (Modeless)
         if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
 
         var view = serviceProvider.GetService<Nice3point.Revit.AddInView>();
-        WindowController.Show(view, shell.UiApplication.MainWindowHandle);
+        WindowController.Show(view, Context.UiApplication.MainWindowHandle);
 #elseif (Modal)
         view.ShowDialog();
 #endif

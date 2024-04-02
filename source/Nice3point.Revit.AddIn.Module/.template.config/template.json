@@ -47,9 +47,9 @@
     },
     "ioc": {
       "type": "parameter",
-      "displayName": "Inject view",
+      "displayName": "Inject dependencies",
       "datatype": "bool",
-      "description": "Inject a view into a command to call from the host application. Applies if the user interface is enabled",
+      "description": "Inject dependencies into a command to call from the host application. Applies if the user interface is enabled",
       "defaultValue": "false",
       "isEnabled": "window != \"none\""
     },

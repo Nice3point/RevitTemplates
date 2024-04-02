@@ -1,7 +1,7 @@
-﻿using Nice3point.Revit.Toolkit.External;
-using ModelessModule.Views;
+﻿using ModelessModule.Views;
 using ModelessModule.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using Nice3point.Revit.Toolkit;
 
 namespace ModelessModule.Commands;
 
@@ -10,11 +10,11 @@ namespace ModelessModule.Commands;
 /// </summary>
 public class ShowWindowComponent(IServiceProvider serviceProvider)
 {
-    public void Execute(ExternalCommand shell)
+    public void Execute()
     {
         if (WindowController.Focus<ModelessModuleView>()) return;
 
         var view = serviceProvider.GetService<ModelessModuleView>();
-        WindowController.Show(view, shell.UiApplication.MainWindowHandle);
+        WindowController.Show(view, Context.UiApplication.MainWindowHandle);
     }
 }
