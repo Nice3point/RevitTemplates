@@ -28,7 +28,7 @@ public class Application : ExternalApplication
             .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
             .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
 
-        panel.AddPushButton<ShowModelessWindowCommand>("Show\nModelessWindow")
+        panel.AddPushButton<ShowModelessWindowCommand>("Show\nModeless window")
             .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
             .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
     }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 #if (Hosting)
 using Microsoft.Extensions.Logging;
 #endif
+using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 

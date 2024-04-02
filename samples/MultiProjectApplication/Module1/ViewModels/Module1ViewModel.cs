@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.DB;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Module3;
 using Module3.Enums;
@@ -21,9 +20,7 @@ public sealed partial class Module1ViewModel : ObservableObject
     {
         var connection = new DatabaseConnection(EntryKey.Data);
         connection.BeginTransaction();
-
         connection.Save("ProjectName", ProjectName);
-
         connection.Close();
     }
 }

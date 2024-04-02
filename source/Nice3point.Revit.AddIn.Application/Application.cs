@@ -1,6 +1,7 @@
 ﻿using Nice3point.Revit.Toolkit.External;
 using Nice3point.Revit.AddIn.Commands;
 #if (log && !UseIoc)
+using Serilog;
 using Serilog.Events;
 #endif
 
@@ -38,9 +39,9 @@ public class Application : ExternalApplication
     {
         var panel = Application.CreatePanel("Commands", "Nice3point.Revit.AddIn");
 
-        var showButton = panel.AddPushButton<StartupCommand>("Execute");
-        showButton.SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png");
-        showButton.SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
+        panel.AddPushButton<StartupCommand>("Execute")
+            .SetImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon16.png")
+            .SetLargeImage("/Nice3point.Revit.AddIn;component/Resources/Icons/RibbonIcon32.png");
     }
 #if (log && !UseIoc)
 

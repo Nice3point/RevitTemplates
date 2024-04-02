@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Visibility = System.Windows.Visibility;
 
 namespace RevitAddIn.Utils;
 
