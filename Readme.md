@@ -20,7 +20,7 @@ This repository contains a project templates for creating Revit Add-In
 - Support for Application and Command add-in types
 - Automatic GitHub releases
 - Creating a multi versions installer
-- Creating a bundle to publish an application into Autodesk Store, Forge
+- Creating a bundle to publish an application into Autodesk Store or Design Automation
 - Azure DevOps pipelines and GitHub Actions
 - Dependency Injection
 - Add-in logging
@@ -28,10 +28,9 @@ This repository contains a project templates for creating Revit Add-In
 ## Installation
 
 1. Install the latest [.Net SDK](https://dotnet.microsoft.com/download)
-2. Run `dotnet new -i Nice3point.Revit.Templates` to install the project templates
+2. Run `dotnet new install Nice3point.Revit.Templates` to install the project templates
 
 ## Usage
 
 - To create a project use the IDE or run `dotnet new`
-- To create a release run `nuke`
-- For more help, read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki)
+- For description, read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki)
