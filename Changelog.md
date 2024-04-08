@@ -1,3 +1,8 @@
+# 4.0.2
+
+- Integrate the latest Revit.Build.Tasks features
+- Cleanup csproj files
+
 # 4.0.1
 
 - Revit 2025 support
