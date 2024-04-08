@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Nice3point.Revit.Toolkit;
-
-namespace RevitAddIn.ViewModels;
+﻿namespace RevitAddIn.ViewModels;
 
 public sealed partial class RevitAddInViewModel : ObservableObject
 {

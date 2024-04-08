@@ -12,7 +12,7 @@ using Nice3point.Revit.AddIn.Views;
 #if (Modeless)
 using Nice3point.Revit.AddIn.Utils;
 #endif
-#if (log && Command)
+#if (log && Command && !UseIoc)
 using Serilog;
 using Serilog.Events;
 #endif

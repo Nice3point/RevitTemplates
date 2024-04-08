@@ -1,7 +1,5 @@
 ﻿using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using ModelessModule.Utils;
 using ModelessModule.Views;

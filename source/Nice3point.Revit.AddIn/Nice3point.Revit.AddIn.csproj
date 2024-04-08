@@ -36,7 +36,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>$(RevitVersion)</Version>
         <StartAction>Program</StartAction>
         <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
         <StartArguments>/language ENG</StartArguments>
@@ -71,19 +70,13 @@
 <!--#endif-->
     </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="Autodesk.Revit.DB"/>
-        <Using Include="Nice3point.Revit.Extensions"/>
-        <Using Include="JetBrains.Annotations"/>
-    </ItemGroup>
-
 <!--#if (Application)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
-<!--#endif-->
 
+<!--#endif-->
 <!--#if (!NoWindow)-->
     <ItemGroup>
         <Folder Include="Models"/>

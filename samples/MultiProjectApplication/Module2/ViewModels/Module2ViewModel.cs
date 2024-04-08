@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Nice3point.Revit.Toolkit;
-
-namespace Module2.ViewModels;
+﻿namespace Module2.ViewModels;
 
 public sealed partial class Module2ViewModel : ObservableObject
 {

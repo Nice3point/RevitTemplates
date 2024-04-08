@@ -47,12 +47,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Autodesk.Revit.DB"/>
-        <Using Include="Nice3point.Revit.Extensions"/>
-        <Using Include="JetBrains.Annotations"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <Folder Include="Models"/>
     </ItemGroup>
 

@@ -33,9 +33,6 @@
         <RevitVersion>2025</RevitVersion>
         <TargetFramework>net8.0-windows</TargetFramework>
     </PropertyGroup>
-    <PropertyGroup>
-        <Version>$(RevitVersion)</Version>
-    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
@@ -48,12 +45,6 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.*" Condition="$(RevitVersion) == '2025'"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Using Include="Autodesk.Revit.DB"/>
-        <Using Include="Nice3point.Revit.Extensions"/>
-        <Using Include="JetBrains.Annotations"/>
     </ItemGroup>
 
     <ItemGroup>

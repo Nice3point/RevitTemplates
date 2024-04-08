@@ -1,8 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Module3;
+﻿using Module3;
 using Module3.Enums;
-using Nice3point.Revit.Toolkit;
 
 namespace Module1.ViewModels;
 

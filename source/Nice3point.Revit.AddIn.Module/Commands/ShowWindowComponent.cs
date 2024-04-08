@@ -1,7 +1,6 @@
 ﻿using Nice3point.Revit.AddIn.Views;
 #if (Modeless)
 using Nice3point.Revit.AddIn.Utils;
-using Nice3point.Revit.Toolkit;
 using Microsoft.Extensions.DependencyInjection;
 #endif
 

@@ -1,7 +1,6 @@
 ﻿using ModelessModule.Views;
 using ModelessModule.Utils;
 using Microsoft.Extensions.DependencyInjection;
-using Nice3point.Revit.Toolkit;
 
 namespace ModelessModule.Commands;
 

@@ -1,7 +1,5 @@
 ﻿using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Nice3point.Revit.Toolkit.External.Handlers;
 using Nice3point.Revit.Toolkit.Options;
 using RevitAddIn.Utils;

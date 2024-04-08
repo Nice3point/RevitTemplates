@@ -36,7 +36,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>$(RevitVersion)</Version>
         <StartAction>Program</StartAction>
         <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
         <StartArguments>/language ENG</StartArguments>
@@ -53,12 +52,6 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Using Include="Autodesk.Revit.DB"/>
-        <Using Include="Nice3point.Revit.Extensions"/>
-        <Using Include="JetBrains.Annotations"/>
-    </ItemGroup>
-    
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>

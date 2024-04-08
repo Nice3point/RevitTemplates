@@ -16,7 +16,7 @@ using Nice3point.Revit.AddIn.Config;
 namespace Nice3point.Revit.AddIn;
 
 /// <summary>
-///     Provides a host for the application's services and manages their lifetimes.
+///     Provides a host for the application's services and manages their lifetimes
 /// </summary>
 public static class Host
 {
@@ -28,7 +28,7 @@ public static class Host
 #endif
 
     /// <summary>
-    ///     Starts the host and configures the application's services.
+    ///     Starts the host and configures the application's services
     /// </summary>
     public static void Start()
     {
@@ -70,7 +70,7 @@ public static class Host
 #if (Hosting)
 
     /// <summary>
-    ///     Stops the host.
+    ///     Stops the host
     /// </summary>
     public static void Stop()
     {
@@ -79,10 +79,10 @@ public static class Host
 #endif
 
     /// <summary>
-    ///     Gets a service of the specified type.
+    ///     Gets a service of the specified type
     /// </summary>
-    /// <typeparam name="T">The type of service object to get.</typeparam>
-    /// <returns>A service object of type T or null if there is no such service.</returns>
+    /// <typeparam name="T">The type of service object to get</typeparam>
+    /// <returns>A service object of type T or null if there is no such service</returns>
     public static T GetService<T>() where T : class
     {
 #if (Container)

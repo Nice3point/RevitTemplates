@@ -36,7 +36,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>$(RevitVersion)</Version>
         <StartAction>Program</StartAction>
         <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
         <StartArguments>/language ENG</StartArguments>
@@ -48,12 +47,6 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Using Include="Autodesk.Revit.DB"/>
-        <Using Include="Nice3point.Revit.Extensions"/>
-        <Using Include="JetBrains.Annotations"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-#if (log && Container)
+﻿#if (log && Container)
 using Serilog;
 #endif
 #if (log && Hosting)

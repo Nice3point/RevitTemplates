@@ -5,6 +5,20 @@ using Serilog.Events;
 
 namespace RevitAddIn.Config;
 
+/// <summary>
+///     Application logging configuration
+/// </summary>
+/// <example>
+/// <code lang="csharp">
+/// public class Class(ILogger&lt;Class&gt; logger)
+/// {
+///     private void Execute()
+///     {
+///         logger.LogInformation("Message");
+///     }
+/// }
+/// </code>
+/// </example>
 public static class LoggerConfigurator
 {
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}";

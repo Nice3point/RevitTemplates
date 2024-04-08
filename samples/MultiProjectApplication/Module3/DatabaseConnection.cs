@@ -1,7 +1,6 @@
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Module3.Enums;
 using Module3.Schemas;
-using Nice3point.Revit.Toolkit;
 
 namespace Module3;
 

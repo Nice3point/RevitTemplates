@@ -11,20 +11,26 @@ using Serilog.Events;
 namespace Nice3point.Revit.AddIn.Config;
 
 /// <summary>
-///     Application logging conguration
+///     Application logging configuration
 /// </summary>
 /// <example>
 /// <code lang="csharp">
 #if (Container)
-///     public class Class(ILogger logger)
+/// public class Class(ILogger logger)
+/// {
+///     private void Execute()
 ///     {
 ///         logger.Information("Message");
 ///     }
+/// }
 #elseif (Hosting)
-///     public class Class(ILogger&lt;Class&gt; logger)
+/// public class Class(ILogger&lt;Class&gt; logger)
+/// {
+///     private void Execute()
 ///     {
 ///         logger.LogInformation("Message");
 ///     }
+/// }
 #endif
 /// </code>
 /// </example>

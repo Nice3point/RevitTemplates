@@ -36,7 +36,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>$(RevitVersion)</Version>
         <StartAction>Program</StartAction>
         <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
         <StartArguments>/language ENG</StartArguments>
@@ -66,12 +65,6 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*" Condition="$(RevitVersion) == '2025'"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
 <!--#endif-->
-    </ItemGroup>
-
-    <ItemGroup>
-        <Using Include="Autodesk.Revit.DB"/>
-        <Using Include="Nice3point.Revit.Extensions"/>
-        <Using Include="JetBrains.Annotations"/>
     </ItemGroup>
 
 <!--#if (Application)-->
