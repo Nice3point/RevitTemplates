@@ -12,6 +12,7 @@ sealed partial class Build
         {
             ValidateRelease();
 
+            var readme = CreateNugetReadme();
             foreach (var configuration in GlobBuildConfigurations())
                 DotNetPack(settings => settings
                     .SetConfiguration(configuration)
@@ -19,6 +20,8 @@ sealed partial class Build
                     .SetOutputDirectory(ArtifactsDirectory)
                     .SetVerbosity(DotNetVerbosity.minimal)
                     .SetPackageReleaseNotes(CreateNugetChangelog()));
+
+            RestoreReadme(readme);
         });
 
     string CreateNugetChangelog()
@@ -49,5 +52,28 @@ sealed partial class Build
 
         Assert.NotEmpty(configurations, $"No solution configurations have been found. Pattern: {string.Join(" | ", Configurations)}");
         return configurations;
+    }
+
+    string CreateNugetReadme()
+    {
+        var readmePath = Solution.Directory / "Readme.md";
+        var readme = File.ReadAllText(readmePath);
+
+        var startSymbol = "<p";
+        var endSymbol = "</p>\r\n\r\n";
+        var logoStartIndex = readme.IndexOf(startSymbol, StringComparison.Ordinal);
+        var logoEndIndex = readme.IndexOf(endSymbol, StringComparison.Ordinal);
+
+        var nugetReadme = readme.Remove(logoStartIndex, logoEndIndex - logoStartIndex + endSymbol.Length);
+        File.WriteAllText(readmePath, nugetReadme);
+
+        return readme;
+    }
+
+    void RestoreReadme(string readme)
+    {
+        var readmePath = Solution.Directory / "Readme.md";
+
+        File.WriteAllText(readmePath, readme);
     }
 }
