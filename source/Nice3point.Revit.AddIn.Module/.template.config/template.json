@@ -6,7 +6,7 @@
   "identity": "Nice3point.Revit.AddIn.Module",
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
-  "description": "Template for creating an empty module for Revit add-in application",
+  "description": "Template for creating an empty module for multi-project Revit add-in",
   "classifications": [
     "Revit",
     "AddIn",
@@ -86,7 +86,6 @@
         {
           "condition": "NoWindow",
           "exclude": [
-            "Core/RevitShell.cs",
             "Commands/**"
           ]
         },
