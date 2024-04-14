@@ -57,12 +57,12 @@ To execute your NUKE build locally, you can follow these steps:
 
    Create installer:
    ```powershell
-   nuke CreateInstaller
+   nuke createinstaller
    ```
 
    Create installer and bundle:
    ```powershell
-   nuke CreateInstaller CreateBundle
+   nuke createinstaller createbundle
    ```
 
    This command will execute the NUKE build defined in your project.
@@ -93,7 +93,6 @@ To execute your NUKE build on GitHub, you can follow these steps:
 | Folder     | Description                                                                                                                                                                                         |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Commands   | External commands invoked from the Revit ribbon. Registered in the `Application` class                                                                                                              |
-| Core       | Provides main add-in logic                                                                                                                                                                          |
 | Models     | Classes that encapsulate the app's data, include data transfer objects (DTOs). More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm)                                      |
 | ViewModels | Classes that implement properties and commands to which the view can bind data. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm)                                     |
 | Views      | Classes that are responsible for defining the structure, layout and appearance of what the user sees on the screen. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm) |
