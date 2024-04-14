@@ -1,5 +1,11 @@
 # 4.0.3
 
+- Remove Core folder. It's seldom used, especially in small plugins, so it's removed by default. Thank you for your feedback
+- Update templates description
+- Disable dotnet clean logo for solution template
+
+# 4.0.2
+
 - Integrate the latest Revit.Build.Tasks features
 - Cleanup csproj files
 
