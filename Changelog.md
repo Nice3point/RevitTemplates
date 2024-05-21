@@ -1,3 +1,9 @@
+# 4.0.4
+
+- Removed template engine "isEnabled" property. Visual Studio does not support it compared to Jetbrains Rider. 
+    This property caused an exception to create a Module project without UI.
+    Thanks to @SergeyNefyodov for finding this bug
+
 # 4.0.3
 
 - Remove Core folder. It's seldom used, especially in small plugins, so it's removed by default. Thank you for your feedback
