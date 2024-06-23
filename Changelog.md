@@ -1,3 +1,9 @@
+# 4.0.5
+
+- Updated dependencies
+- Removed dependencies conditions with https://github.com/Nice3point/RevitToolkit/releases/tag/2025.0.1 latest changes integration
+- Updated samples .csproj
+
 # 4.0.4
 
 - Removed template engine "isEnabled" property. Visual Studio does not support it compared to Jetbrains Rider. 
