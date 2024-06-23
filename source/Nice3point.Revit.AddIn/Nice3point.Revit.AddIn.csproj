@@ -42,7 +42,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="1.*"/>
+        <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="2.*"/>
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
@@ -51,22 +51,19 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
 <!--#endif-->
 <!--#if (log && !Hosting)-->
-        <PackageReference Include="Serilog" Version="3.*"/>
+        <PackageReference Include="Serilog" Version="4.*"/>
 <!--#endif-->
 <!--#if (log)-->
-        <PackageReference Include="Serilog.Sinks.Debug" Version="2.*"/>
+        <PackageReference Include="Serilog.Sinks.Debug" Version="3.*"/>
 <!--#endif-->
 <!--#if (log && Hosting)-->
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*" Condition="$(RevitVersion) == '2025'"/>
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*"/>
 <!--#endif-->
 <!--#if (Container)-->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.*" Condition="$(RevitVersion) == '2025'"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*"/>
 <!--#endif-->
 <!--#if (Hosting)-->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*" Condition="$(RevitVersion) == '2025'"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*"/>
 <!--#endif-->
     </ItemGroup>
 
