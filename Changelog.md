@@ -1,3 +1,10 @@
+# 4.0.6
+
+- Conditions for generating the Solution readme. The documentation considers which options you have created the solution with
+- Replace GetService with GetRequiredService for DI templates
+- Rename some default files that use DI
+- Updated summary
+
 # 4.0.5
 
 - Updated dependencies
