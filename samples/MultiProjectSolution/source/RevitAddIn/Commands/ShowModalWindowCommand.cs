@@ -13,6 +13,6 @@ public class ShowModalWindowCommand : ExternalCommand
 {
     public override void Execute()
     {
-        Host.GetService<ShowWindowComponent>().Execute();
+        Host.GetService<ShowModalWindowService>().Execute();
     }
 }

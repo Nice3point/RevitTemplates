@@ -25,12 +25,12 @@ public static class Host
     }
 
     /// <summary>
-    ///     Gets a service of the specified type.
+    ///     Get service of type <typeparamref name="T"/>
     /// </summary>
-    /// <typeparam name="T">The type of service object to get.</typeparam>
-    /// <returns>A service object of type T or null if there is no such service.</returns>
+    /// <typeparam name="T">The type of service object to get</typeparam>
+    /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
     public static T GetService<T>() where T : class
     {
-        return _serviceProvider.GetService(typeof(T)) as T;
+        return _serviceProvider.GetRequiredService<T>();
     }
 }

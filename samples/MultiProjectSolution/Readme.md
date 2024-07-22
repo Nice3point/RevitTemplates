@@ -24,14 +24,16 @@ We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET sup
 from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
-2. Click on `File -> Open` and choose the solution file that you want to open.
-3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
+2. Click on `File -> Open` and choose the RevitLookup.sln file to open.
+3. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+4. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
 Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
 2. Click on `File -> Open -> Project/Solution` and locate your solution file to open.
-3. Upon loading the solution, build it via `Build -> Build Solution`.
+3. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+4. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
 ### MSI installer and bundle build on local machine
 

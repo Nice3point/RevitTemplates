@@ -1,7 +1,6 @@
 using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using RevitAddIn.Views;
 using RevitAddIn.ViewModels;
@@ -34,20 +33,20 @@ public static class Host
     }
 
     /// <summary>
-    ///     Stops the host
+    ///     Stops the host and handle <see cref="IHostedService"/> services
     /// </summary>
     public static void Stop()
     {
-        _host.StopAsync();
+        _host.StopAsync().GetAwaiter().GetResult();
     }
 
     /// <summary>
-    ///     Gets a service of the specified type
+    ///     Get service of type <typeparamref name="T"/>
     /// </summary>
     /// <typeparam name="T">The type of service object to get</typeparam>
-    /// <returns>A service object of type T or null if there is no such service</returns>
+    /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
     public static T GetService<T>() where T : class
     {
-        return _host.Services.GetService(typeof(T)) as T;
+        return _host.Services.GetRequiredService<T>();
     }
 }
