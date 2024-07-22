@@ -6,9 +6,7 @@ using Microsoft.Extensions.Hosting;
 #if (log && Hosting)
 using Microsoft.Extensions.Logging;
 #endif
-#if (Container)
 using Microsoft.Extensions.DependencyInjection;
-#endif
 #if (log && UseIoc)
 using Nice3point.Revit.AddIn.Config;
 #endif
@@ -60,26 +58,26 @@ public static class Host
 #if (Hosting)
 
     /// <summary>
-    ///     Stops the host
+    ///     Stops the host and handle <see cref="IHostedService"/> services
     /// </summary>
     public static void Stop()
     {
-        _host.StopAsync();
+        _host.StopAsync().GetAwaiter().GetResult();
     }
 #endif
 
     /// <summary>
-    ///     Gets a service of the specified type
+    ///     Get service of type <typeparamref name="T"/>
     /// </summary>
     /// <typeparam name="T">The type of service object to get</typeparam>
-    /// <returns>A service object of type T or null if there is no such service</returns>
+    /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
     public static T GetService<T>() where T : class
     {
 #if (Container)
-        return _serviceProvider.GetService(typeof(T)) as T;
+        return _serviceProvider.GetRequiredService<T>();
 #endif
 #if (Hosting)
-        return _host.Services.GetService(typeof(T)) as T;
+        return _host.Services.GetRequiredService<T>();
 #endif
     }
 }
