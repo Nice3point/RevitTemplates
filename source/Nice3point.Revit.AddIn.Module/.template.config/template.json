@@ -97,7 +97,7 @@
         {
           "condition": "!ioc",
           "exclude": [
-            "Commands/ShowWindowComponent.cs"
+            "Commands/StartupCommandService.cs"
           ]
         }
       ]
