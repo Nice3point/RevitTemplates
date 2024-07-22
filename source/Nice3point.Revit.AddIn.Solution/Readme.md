@@ -24,18 +24,31 @@ We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET sup
 from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
-2. Click on `File -> Open` and choose the solution file that you want to open.
-3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
+2. Click on `File -> Open` and choose the RevitLookup.sln file to open.
+3. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+4. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
 Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
 2. Click on `File -> Open -> Project/Solution` and locate your solution file to open.
-3. Upon loading the solution, build it via `Build -> Build Solution`.
+3. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+4. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
-### MSI installer and bundle build on local machine
+---#if (installer || bundle)
+---#if (installer && bundle)
+### MSI installer and bundle build on the local machine
 
 To build the project for all versions, create the installer and bundle, the project uses [NUKE](https://github.com/nuke-build/nuke)
+---#elseif (installer)
+### MSI installer build on the local machine
+
+To build the project for all versions, create the installer, the project uses [NUKE](https://github.com/nuke-build/nuke)
+---#elseif (bundle)
+### Autodesk bundle build on the local machine
+
+To build the project for all versions, create the bundle, the project uses [NUKE](https://github.com/nuke-build/nuke)
+---#endif
 
 To execute your NUKE build locally, you can follow these steps:
 
@@ -55,21 +68,40 @@ To execute your NUKE build locally, you can follow these steps:
    nuke
    ```
 
+---#if (installer)
    Create installer:
    ```powershell
    nuke createinstaller
    ```
 
+---#endif
+---#if (bundle && !installer)
+   Create bundle:
+   ```powershell
+   nuke createbundle
+   ```
+
+---#elseif (bundle && installer)
    Create installer and bundle:
    ```powershell
    nuke createinstaller createbundle
    ```
 
+---#endif
    This command will execute the NUKE build defined in your project.
 
+---#endif
+---#if (GitHubPipeline)
+---#if (bundle || installer)
 ### Create new release on GitHub
 
+---#if (bundle && installer)
 Publishing the release, generating the installer and bundle, is performed automatically on GitHub.
+---#elseif (bundle)
+Publishing the release, generating the bundle, is performed automatically on GitHub.
+---#elseif (installer)
+Publishing the release, generating the installer, is performed automatically on GitHub.
+---#endif
 
 To execute your NUKE build on GitHub, you can follow these steps:
 
@@ -79,12 +111,22 @@ To execute your NUKE build on GitHub, you can follow these steps:
 4. Make a commit.
 5. Push your changes to GitHub, everything will happen automatically, and you can follow the progress in the Actions section of the repository page.
 
+---#else
+### Compiling a solution on GitHub
+
+Pushing commits on GitHub will start a pipeline compiling the solution for all specified Revit versions. 
+That way, you can check if the plugin is compatible with different API versions without having to spend time building it locally.
+
+---#endif
+---#endif
 ### Solution structure
 
 | Folder  | Description                                                                |
 |---------|----------------------------------------------------------------------------|
 | build   | Nuke build system. Used to automate project builds                         |
+---#if (installer)
 | install | Add-in installer, called implicitly by the Nuke build                      |
+---#endif
 | source  | Project source code folder. Contains all solution projects                 |
 | output  | Folder of generated files by the build system, such as bundles, installers |
 
