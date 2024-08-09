@@ -1,16 +1,16 @@
 ﻿using Autodesk.Revit.Attributes;
-using Nice3point.Revit.Toolkit.External;
 using Module2.ViewModels;
 using Module2.Views;
+using Nice3point.Revit.Toolkit.External;
 
-namespace Module2.Commands;
+namespace RevitAddIn.Commands;
 
 /// <summary>
 ///     External command entry point invoked from the Revit interface
 /// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]
-public class StartupCommand : ExternalCommand
+public class Module2StartupCommand : ExternalCommand
 {
     public override void Execute()
     {

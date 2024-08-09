@@ -1,4 +1,5 @@
 ﻿using Nice3point.Revit.Toolkit.External;
+using RevitAddIn.Commands;
 
 namespace RevitAddIn;
 
@@ -17,11 +18,11 @@ public class Application : ExternalApplication
     {
         var panel = Application.CreatePanel("Commands", "RevitAddIn");
 
-        panel.AddPushButton<Module1.Commands.StartupCommand>("Execute")
+        panel.AddPushButton<Module1StartupCommand>("Execute")
             .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
             .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
 
-        panel.AddPushButton<Module2.Commands.StartupCommand>("Execute")
+        panel.AddPushButton<Module2StartupCommand>("Execute")
             .SetImage("/RevitAddIn;component/Resources/Icons/RibbonIcon16.png")
             .SetLargeImage("/RevitAddIn;component/Resources/Icons/RibbonIcon32.png");
     }

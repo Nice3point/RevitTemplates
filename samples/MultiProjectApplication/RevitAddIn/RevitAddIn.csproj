@@ -55,9 +55,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Module1\Module1.csproj" />
-      <ProjectReference Include="..\Module2\Module2.csproj" />
-      <ProjectReference Include="..\Module3\Module3.csproj" />
+        <ProjectReference Include="..\Module1\Module1.csproj"/>
+        <ProjectReference Include="..\Module2\Module2.csproj"/>
+        <ProjectReference Include="..\Module3\Module3.csproj"/>
     </ItemGroup>
 
 </Project>
