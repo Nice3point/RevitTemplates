@@ -9,9 +9,6 @@ using Nice3point.Revit.AddIn.ViewModels;
 #if (!NoWindow)
 using Nice3point.Revit.AddIn.Views;
 #endif
-#if (Modeless)
-using Nice3point.Revit.AddIn.Utils;
-#endif
 #if (log && Command && !UseIoc)
 using Serilog;
 using Serilog.Events;
@@ -32,21 +29,17 @@ public class StartupCommand : ExternalCommand
         var logger = CreateLogger();
 #endif
 #if (Modeless && UseIoc)
-        if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
-
         var view = Host.GetService<Nice3point.Revit.AddInView>();
-        WindowController.Show(view, UiApplication.MainWindowHandle);
+        view.Show(UiApplication.MainWindowHandle);
 #elseif (Modal && UseIoc)
         var view = Host.GetService<Nice3point.Revit.AddInView>();
         view.ShowDialog();
 #elseif (NoWindow && UseIoc)
         TaskDialog.Show(Document.Title, "Nice3point.Revit.AddIn");
 #elseif (Modeless)
-        if (WindowController.Focus<Nice3point.Revit.AddInView>()) return;
-
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
-        WindowController.Show(view, UiApplication.MainWindowHandle);
+        view.Show(UiApplication.MainWindowHandle);
 #elseif (Modal)
         var viewModel = new Nice3point.Revit.AddInViewModel();
         var view = new Nice3point.Revit.AddInView(viewModel);
