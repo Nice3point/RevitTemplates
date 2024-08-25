@@ -3,10 +3,9 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ModalModule.Commands;
 using ModalModule.ViewModels;
 using ModalModule.Views;
-using ModelessModule.Commands;
+using ModelessModule.Services;
 using ModelessModule.ViewModels;
 using ModelessModule.Views;
 using RevitAddIn.Config;
@@ -39,8 +38,7 @@ public static class Host
         builder.Services.AddSerializerOptions();
 
         //Services
-        builder.Services.AddTransient<ShowModalWindowService>();
-        builder.Services.AddTransient<ShowModelessWindowService>();
+        builder.Services.AddSingleton<ModelessController>();
         builder.Services.AddTransient<ModalModuleView>();
         builder.Services.AddTransient<ModalModuleViewModel>();
         builder.Services.AddTransient<ModelessModuleView>();

@@ -1,14 +1,13 @@
 ﻿using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Microsoft.Extensions.Logging;
-using ModelessModule.Utils;
-using ModelessModule.Views;
+using ModelessModule.Services;
 using Nice3point.Revit.Toolkit.External.Handlers;
 using Nice3point.Revit.Toolkit.Options;
 
 namespace ModelessModule.ViewModels;
 
-public sealed partial class ModelessModuleViewModel(ILogger<ModelessModuleViewModel> logger) : ObservableObject
+public sealed partial class ModelessModuleViewModel(ModelessController modelessController, ILogger<ModelessModuleViewModel> logger) : ObservableObject
 {
     private readonly ActionEventHandler _externalHandler = new();
     private readonly AsyncEventHandler _asyncExternalHandler = new();
@@ -43,14 +42,15 @@ public sealed partial class ModelessModuleViewModel(ILogger<ModelessModuleViewMo
         await _asyncExternalHandler.RaiseAsync(application =>
         {
             var selectionConfiguration = new SelectionConfiguration();
-            WindowController.Hide<ModelessModuleView>();
+            modelessController.Hide();
 
             var reference = application.ActiveUIDocument.Selection.PickObject(ObjectType.Element, selectionConfiguration.Filter);
             var element = reference.ElementId.ToElement(application.ActiveUIDocument.Document)!;
-            WindowController.Show<ModelessModuleView>();
+            modelessController.Show();
 
             Element = element.Name;
             Category = element.Category.Name;
+            
             logger.LogInformation("Selection successful");
         });
 

@@ -1,5 +1,5 @@
 ﻿using Autodesk.Revit.Attributes;
-using ModalModule.Commands;
+using ModalModule.Views;
 using Nice3point.Revit.Toolkit.External;
 
 namespace RevitAddIn.Commands;
@@ -13,6 +13,7 @@ public class ShowModalWindowCommand : ExternalCommand
 {
     public override void Execute()
     {
-        Host.GetService<ShowModalWindowService>().Execute();
+        var view = Host.GetService<ModalModuleView>();
+        view.ShowDialog();
     }
 }

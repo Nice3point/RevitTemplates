@@ -11,7 +11,7 @@ public sealed partial class ModalModuleViewModel(ILogger<ModalModuleViewModel> l
     [RelayCommand]
     private void SaveProjectName()
     {
-        var transaction = new Transaction(Context.Document);
+        using var transaction = new Transaction(Context.Document);
         transaction.Start("Save project name");
 
         Context.Document.ProjectInformation.Name = ProjectName;

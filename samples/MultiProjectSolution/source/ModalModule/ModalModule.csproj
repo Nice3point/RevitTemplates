@@ -39,8 +39,8 @@
         <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="2.*"/>
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="8.*"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.*"/>
         <PackageReference Include="System.Text.Json" Version="8.*" Condition="!$(DefineConstants.Contains('NETCOREAPP'))"/>
