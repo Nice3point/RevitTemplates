@@ -45,13 +45,6 @@
       ],
       "defaultValue": "modal"
     },
-    "ioc": {
-      "type": "parameter",
-      "displayName": "Inject dependencies",
-      "datatype": "bool",
-      "description": "Inject dependencies into a command to call from the host application. Applies if the user interface is enabled",
-      "defaultValue": "false"
-    },
     "NoWindow": {
       "type": "computed",
       "value": "window == \"none\""
@@ -74,30 +67,6 @@
             "Models/**",
             "Views/**",
             "ViewModels/**"
-          ]
-        },
-        {
-          "condition": "!Modeless",
-          "exclude": [
-            "Utils/WindowController.cs"
-          ]
-        },
-        {
-          "condition": "NoWindow",
-          "exclude": [
-            "Commands/**"
-          ]
-        },
-        {
-          "condition": "ioc",
-          "exclude": [
-            "Commands/StartupCommand.cs"
-          ]
-        },
-        {
-          "condition": "!ioc",
-          "exclude": [
-            "Commands/StartupCommandService.cs"
           ]
         }
       ]
