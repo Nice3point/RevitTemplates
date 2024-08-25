@@ -25,7 +25,7 @@
       "type": "parameter",
       "displayName": "User interface",
       "dataType": "bool",
-      "description": "Use WPF in this module",
+      "description": "Use WPF in the add-in",
       "defaultValue": "true"
     }
   },
