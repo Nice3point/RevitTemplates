@@ -1,3 +1,10 @@
+# 4.0.7
+
+- Removed commands from the Module template. 
+    Please keep the commands in the Primary project that contains External Application to avoid isolation issues.
+    Issue: https://github.com/Nice3point/RevitToolkit/issues/7
+- Removed WindowsController class to simplify templates
+
 # 4.0.6
 
 - Conditions for generating the Solution readme. The documentation considers which options you have created the solution with
