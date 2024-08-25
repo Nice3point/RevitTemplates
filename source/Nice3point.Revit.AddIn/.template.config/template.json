@@ -46,7 +46,7 @@
       "type": "parameter",
       "displayName": "User interface",
       "datatype": "choice",
-      "description": "The type of window to be used by the add-in",
+      "description": "User interaction with the add-in",
       "choices": [
         {
           "choice": "none",

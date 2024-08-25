@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-<!--#if (!NoWindow)-->
+<!--#if (ui)-->
         <UseWPF>true</UseWPF>
 <!--#endif-->
         <LangVersion>latest</LangVersion>
@@ -42,12 +42,12 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-<!--#if (!NoWindow)-->
+<!--#if (ui)-->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
 <!--#endif-->
     </ItemGroup>
 
-<!--#if (!NoWindow)-->
+<!--#if (ui)-->
     <ItemGroup>
         <Folder Include="Models"/>
     </ItemGroup>

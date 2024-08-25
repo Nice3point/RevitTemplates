@@ -21,48 +21,19 @@
   "preferNameDirectory": true,
   "placeholderFilename": "keep.folder",
   "symbols": {
-    "window": {
+    "ui": {
       "type": "parameter",
       "displayName": "User interface",
-      "datatype": "choice",
-      "description": "The type of window to be used by the add-in",
-      "choices": [
-        {
-          "choice": "none",
-          "displayName": "None",
-          "description": "The add-in will not use windows"
-        },
-        {
-          "choice": "modal",
-          "displayName": "Modal",
-          "description": "A modal window that blocks Revit until the user closes the window"
-        },
-        {
-          "choice": "modeless",
-          "displayName": "Modeless",
-          "description": "A modeless window does not block any other window while it is visible"
-        }
-      ],
-      "defaultValue": "modal"
-    },
-    "NoWindow": {
-      "type": "computed",
-      "value": "window == \"none\""
-    },
-    "Modal": {
-      "type": "computed",
-      "value": "window == \"modal\""
-    },
-    "Modeless": {
-      "type": "computed",
-      "value": "window == \"modeless\""
+      "dataType": "bool",
+      "description": "Use WPF in this module",
+      "defaultValue": "true"
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "NoWindow",
+          "condition": "!ui",
           "exclude": [
             "Models/**",
             "Views/**",
