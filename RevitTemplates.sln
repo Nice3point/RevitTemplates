@@ -12,7 +12,7 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\Build.csproj", "{114BF9D5-DD32-468D-9877-4CCB85204598}"
 EndProject
-Project("{DC6D3A3E-EB5D-4BAD-B47B-17B0A6593D49}") = "RevitTemplates", "RevitTemplates.csproj", "{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}"
+Project("{DC6D3A3E-EB5D-4BAD-B47B-17B0A6593D49}") = "RevitTemplates", "source\RevitTemplates.csproj", "{60315C2E-AD1E-45C3-BA42-673DF50DDAD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
