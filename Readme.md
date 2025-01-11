@@ -9,7 +9,7 @@
 
 [![Nuget](https://img.shields.io/nuget/vpre/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
 [![Downloads](https://img.shields.io/nuget/dt/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
-[![Last Commit](https://img.shields.io/github/last-commit/Nice3point/RevitTemplate/develop?style=for-the-badge)](https://github.com/Nice3point/RevitTemplate/commits/main)
+[![Last Commit](https://img.shields.io/github/last-commit/Nice3point/RevitTemplate/develop?style=for-the-badge)](https://github.com/Nice3point/RevitTemplate/commits/develop)
 
 This repository contains a project templates for creating Revit Add-In
 
