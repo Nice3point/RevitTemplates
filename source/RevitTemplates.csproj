@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputPath>output</OutputPath>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <NoDefaultExcludes>true</NoDefaultExcludes>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <IncludeContentInPack>true</IncludeContentInPack>
@@ -28,7 +27,7 @@
         <None Include="..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true"/>
         <None Include="..\License.md" PackagePath="" Pack="true"/>
         <None Include="..\Readme.md" PackagePath="" Pack="true"/>
-        <Content Include="**\*" Exclude="**\bin\**\*;**\obj\**\*"/>
+        <Content Include="**\*" Exclude="**\bin\**\*;**\obj\**\*;*.csproj"/>
         <Compile Remove="**\*"/>
     </ItemGroup>
 
