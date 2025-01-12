@@ -81,12 +81,6 @@
     {
       "modifiers": [
         {
-          "condition": "!GitHubPipeline",
-          "exclude": [
-            "Changelog.md"
-          ]
-        },
-        {
           "condition": "!AzurePipeline",
           "exclude": [
             "azure-pipelines.yml"
@@ -96,20 +90,23 @@
           "condition": "!GitHubPipeline",
           "exclude": [
             ".github/**",
-            "build/Build.CI.GitHub.cs"
+            "build/Build.Publish.Clean.cs",
+            "build/Build.Publish.GitHub.cs",
+            "build/Build.Changelog.cs",
+            "Changelog.md"
           ]
         },
         {
           "condition": "!installer",
           "exclude": [
             "install/**",
-            "build/Build.Installer.cs"
+            "build/Build.CreateInstaller.cs"
           ]
         },
         {
           "condition": "!bundle",
           "exclude": [
-            "build/Build.Bundle.cs"
+            "build/Build.CreateBundle.cs"
           ]
         },
         {

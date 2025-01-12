@@ -27,13 +27,13 @@ sealed partial class Build
                 Assert.NotEmpty(directories, "No files were found to create an installer");
 
                 var arguments = directories.Select(path => path.DoubleQuoteIfNeeded()).JoinSpace();
-                var process = ProcessTasks.StartProcess(exeFile, arguments, logInvocation: false, logger: InstallLogger);
+                var process = ProcessTasks.StartProcess(exeFile, arguments, logInvocation: false, logger: InstallerLogger);
                 process.AssertZeroExitCode();
             }
         });
 
     [SuppressMessage("ReSharper", "TemplateIsNotCompileTimeConstantProblem")]
-    void InstallLogger(OutputType outputType, string output)
+    void InstallerLogger(OutputType outputType, string output)
     {
         if (outputType == OutputType.Err)
         {

@@ -1,6 +1,7 @@
 ﻿sealed partial class Build
 {
-    const string Version = "1.0.0";
+    [Parameter] string ReleaseVersion = EnvironmentInfo.GetVariable("PUBLISH_VERSION");
+    
 #if (bundle || installer || GitHubPipeline)
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
 #endif

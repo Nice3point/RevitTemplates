@@ -17,10 +17,12 @@ sealed partial class Build
             }
 
             foreach (var configuration in GlobBuildConfigurations())
+            {
                 DotNetClean(settings => settings
                     .SetConfiguration(configuration)
                     .SetVerbosity(DotNetVerbosity.minimal)
                     .EnableNoLogo());
+            }
         });
 
     static void CleanDirectory(AbsolutePath path)
