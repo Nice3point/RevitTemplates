@@ -21,7 +21,7 @@ sealed partial class Build
                 Name = ReleaseVersion,
                 Body = changelog,
                 TargetCommitish = GitRepository.Commit,
-                Prerelease = ReleaseVersion.Contains("preview", StringComparison.OrdinalIgnoreCase)
+                Prerelease = ReleaseVersion.Contains('-')
             };
 
             var release = await GitHubTasks.GitHubClient.Repository.Release.Create(gitHubOwner, gitHubName, newRelease);
