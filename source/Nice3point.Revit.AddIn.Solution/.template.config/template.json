@@ -23,7 +23,8 @@
     "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
     "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC",
     "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD",
-    "EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE"
+    "EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE",
+    "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"
   ],
   "symbols": {
     "pipeline": {
@@ -75,13 +76,21 @@
     "GitHubPipeline": {
       "type": "computed",
       "value": "pipeline == \"GitHub\""
+    },
+    "HasArtifacts": {
+      "type": "computed",
+      "value": "bundle || installer"
+    },
+    "ReleasePipeline": {
+      "type": "computed",
+      "value": "GitHubPipeline || AzurePipeline"
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "!AzurePipeline",
+          "condition": "!AzurePipeline || !HasArtifacts",
           "exclude": [
             "azure-pipelines.yml"
           ]
@@ -90,6 +99,16 @@
           "condition": "!GitHubPipeline",
           "exclude": [
             ".github/**",
+            "build/Build.Publish.Clean.cs",
+            "build/Build.Publish.GitHub.cs",
+            "build/Build.Changelog.cs",
+            "Changelog.md"
+          ]
+        },
+        {
+          "condition": "GitHubPipeline && !HasArtifacts",
+          "exclude": [
+            ".github/workflows/PublishRelease.yml",
             "build/Build.Publish.Clean.cs",
             "build/Build.Publish.GitHub.cs",
             "build/Build.Changelog.cs",

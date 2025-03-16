@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  windows:
-    name: windows-2022
+  compile:
+    name: Compile
     runs-on: windows-2022
     steps:
       - name: Checkout
@@ -20,5 +20,5 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
-      - name: Run Nuke Build
+      - name: Compile solution
         run: ./.nuke/build.cmd

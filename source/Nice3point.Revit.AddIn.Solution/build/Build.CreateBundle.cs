@@ -1,57 +1,59 @@
-using Autodesk.PackageBuilder;
 using System.Xml.Linq;
-#if (!NoPipeline)
-using Nuke.Common.Git;
-#endif
+using Autodesk.PackageBuilder;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 
 sealed partial class Build
 {
+    /// <summary>
+    ///     Create the Autodesk .bundle package.
+    /// </summary>
     Target CreateBundle => _ => _
         .DependsOn(Compile)
-#if (!NoPipeline)
-        .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
-#endif
         .Executes(() =>
         {
             foreach (var project in Bundles)
             {
                 Log.Information("Project: {Name}", project.Name);
 
-                var directories = Directory.GetDirectories(project.Directory, "* Release *", SearchOption.AllDirectories);
-                Assert.NotEmpty(directories, "No files were found to create a bundle");
+                var targetDirectories = Directory.GetDirectories(project.Directory, "* Release *", SearchOption.AllDirectories);
+                Assert.NotEmpty(targetDirectories, "No files were found to create a bundle");
 
                 var bundleRoot = ArtifactsDirectory / project.Name;
                 var bundlePath = bundleRoot / $"{project.Name}.bundle";
                 var manifestPath = bundlePath / "PackageContents.xml";
                 var contentsDirectory = bundlePath / "Contents";
-                foreach (var path in directories)
+                foreach (var contentDirectory in targetDirectories)
                 {
-                    var version = YearRegex.Match(path).Value;
+                    var version = YearRegex.Match(contentDirectory).Value;
 
                     Log.Information("Bundle files for version {Version}:", version);
-                    CopyAssemblies(path, contentsDirectory / version);
+                    CopyAssemblies(contentDirectory, contentsDirectory / version);
                 }
 
-                GenerateManifest(project, directories, manifestPath);
+                GenerateManifest(project, targetDirectories, manifestPath);
                 CompressFolder(bundleRoot);
             }
         });
 
+    /// <summary>
+    ///     Generate the Autodesk manifest for the bundle.
+    /// </summary>
     void GenerateManifest(Project project, string[] directories, AbsolutePath manifestDirectory)
     {
         BuilderUtils.Build<PackageContentsBuilder>(builder =>
         {
-            var versions = directories.Select(path => YearRegex.Match(path).Value).Select(int.Parse);
             var company = GetConfigurationValue(project, config => config.Name == "VendorId");
             var email = GetConfigurationValue(project, config => config.Name == "VendorEmail");
+            var versions = directories
+                .Select(path => YearRegex.Match(path).Value)
+                .Select(int.Parse);
 
             builder.ApplicationPackage.Create()
                 .ProductType(ProductTypes.Application)
                 .AutodeskProduct(AutodeskProducts.Revit)
                 .Name(Solution.Name)
-                .AppVersion(Version);
+                .AppVersion(ReleaseVersionNumber);
 
             builder.CompanyDetails.Create(company)
                 .Email(email);
@@ -66,6 +68,9 @@ sealed partial class Build
         }, manifestDirectory);
     }
 
+    /// <summary>
+    ///     Read the configuration from the .addin file.
+    /// </summary>
     string GetConfigurationValue(Project project, Func<XElement, bool> filter)
     {
         var defaultValue = string.Empty;
@@ -85,6 +90,9 @@ sealed partial class Build
         return configElement.Value;
     }
 
+    /// <summary>
+    ///     Compress the bundle into a Zip archive.
+    /// </summary>
     static void CompressFolder(AbsolutePath bundleRoot)
     {
         var bundleName = bundleRoot.WithExtension(".zip");
@@ -94,10 +102,15 @@ sealed partial class Build
         Log.Information("Compressing into a Zip: {Name}", bundleName);
     }
 
+    /// <summary>
+    ///     Copy assemblies from the source to the target directory.
+    /// </summary>
     static void CopyAssemblies(string sourcePath, string targetPath)
     {
         foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+        {
             Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+        }
 
         foreach (var filePath in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
         {

@@ -1,9 +1,11 @@
-﻿using System.IO.Enumeration;
-using Nuke.Common.Tools.DotNet;
+﻿using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 sealed partial class Build
 {
+    /// <summary>
+    ///     Compile all solution configurations.
+    /// </summary>
     Target Compile => _ => _
         .DependsOn(Clean)
         .Executes(() =>
@@ -11,8 +13,11 @@ sealed partial class Build
             foreach (var configuration in GlobBuildConfigurations())
             {
                 DotNetBuild(settings => settings
+                    .SetProjectFile(Solution)
                     .SetConfiguration(configuration)
-                    .SetVersion(ReleaseVersion)
+#if (HasArtifacts)
+                    .SetVersion(ReleaseVersionNumber)
+#endif
                     .SetVerbosity(DotNetVerbosity.minimal));
             }
         });

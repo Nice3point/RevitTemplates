@@ -4,7 +4,10 @@ using Nuke.Common.Tools.GitHub;
 
 sealed partial class Build
 {
-    string CreateGithubChangelog()
+    /// <summary>
+    ///     Creates a Builder for creating a changelog for the current release.
+    /// </summary>
+    StringBuilder CreateChangelogBuilder()
     {
         Assert.True(File.Exists(ChangelogPath), $"Unable to locate the changelog file: {ChangelogPath}");
         Log.Information("Changelog: {Path}", ChangelogPath);
@@ -12,11 +15,13 @@ sealed partial class Build
         var changelog = BuildChangelog();
         Assert.True(changelog.Length > 0, $"No version entry exists in the changelog: {ReleaseVersion}");
 
-        WriteCompareUrl(changelog);
-        return changelog.ToString();
+        return changelog;
     }
 
-    void WriteCompareUrl(StringBuilder changelog)
+    /// <summary>
+    ///     Appends the GitHub compare URL to the changelog builder.
+    /// </summary>
+    void WriteGitHubCompareUrl(StringBuilder changelogBuilder)
     {
         var tags = GitTasks
             .Git("tag --list", logInvocation: false, logOutput: false)
@@ -24,11 +29,14 @@ sealed partial class Build
 
         if (tags.Length < 2) return;
 
-        if (changelog[^1] != '\r' || changelog[^1] != '\n') changelog.AppendLine(Environment.NewLine);
-        changelog.Append("Full changelog: ");
-        changelog.Append(GitRepository.GetGitHubCompareTagsUrl(tags[^1].Text, tags[^2].Text));
+        if (changelogBuilder[^1] != '\r' || changelogBuilder[^1] != '\n') changelogBuilder.AppendLine(Environment.NewLine);
+        changelogBuilder.Append("Full changelog: ");
+        changelogBuilder.Append(GitRepository.GetGitHubCompareTagsUrl(tags[^1].Text, tags[^2].Text));
     }
 
+    /// <summary>
+    ///     Builds the changelog content for the current release.
+    /// </summary>
     StringBuilder BuildChangelog()
     {
         const string separator = "# ";
@@ -55,6 +63,9 @@ sealed partial class Build
         return changelog;
     }
 
+    /// <summary>
+    ///     Trims empty lines from the changelog builder.
+    /// </summary>
     static void TrimEmptyLines(StringBuilder builder)
     {
         if (builder.Length == 0) return;

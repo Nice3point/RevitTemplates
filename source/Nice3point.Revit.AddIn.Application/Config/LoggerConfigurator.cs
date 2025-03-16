@@ -48,7 +48,7 @@ public static class LoggerConfigurator
         var logger = CreateDefaultLogger();
         services.AddSingleton<ILogger>(logger);
 
-        AppDomain.CurrentDomain.UnhandledException += OnOnUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
     }
 #elseif (Hosting)
     public static void AddSerilogConfiguration(this ILoggingBuilder builder)
@@ -56,7 +56,7 @@ public static class LoggerConfigurator
         var logger = CreateDefaultLogger();
         builder.AddSerilog(logger);
 
-        AppDomain.CurrentDomain.UnhandledException += OnOnUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
     }
 #endif
 
@@ -69,14 +69,14 @@ public static class LoggerConfigurator
     }
 
 #if (Container)
-    private static void OnOnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+    private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;
         var logger = Host.GetService<ILogger>();
         logger.Fatal(exception, "Domain unhandled exception");
     }
 #elseif (Hosting)
-    private static void OnOnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+    private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;
         var logger = Host.GetService<ILogger<AppDomain>>();

@@ -3,9 +3,15 @@
 sealed partial class Build
 {
 #if (bundle)
+    /// <summary>
+    ///     Regex for parsing the product version.
+    /// </summary>
     readonly Regex YearRegex = YearRegexGenerator();
 #endif
 #if (installer)
+    /// <summary>
+    ///     Regex for parsing Process arguments from the output.
+    /// </summary>
     readonly Regex ArgumentsRegex = ArgumentsRegexGenerator();
 #endif
 #if (bundle)

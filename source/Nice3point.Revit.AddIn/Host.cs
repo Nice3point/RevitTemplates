@@ -23,10 +23,10 @@ namespace Nice3point.Revit.AddIn;
 public static class Host
 {
 #if (Container)
-    private static IServiceProvider _serviceProvider;
+    private static IServiceProvider? _serviceProvider;
 #endif
 #if (Hosting)
-    private static IHost _host;
+    private static IHost? _host;
 #endif
 
     /// <summary>
@@ -76,7 +76,7 @@ public static class Host
     /// </summary>
     public static void Stop()
     {
-        _host.StopAsync().GetAwaiter().GetResult();
+        _host!.StopAsync().GetAwaiter().GetResult();
     }
 #endif
 
@@ -88,10 +88,10 @@ public static class Host
     public static T GetService<T>() where T : class
     {
 #if (Container)
-        return _serviceProvider.GetRequiredService<T>();
+        return _serviceProvider!.GetRequiredService<T>();
 #endif
 #if (Hosting)
-        return _host.Services.GetRequiredService<T>();
+        return _host!.Services.GetRequiredService<T>();
 #endif
     }
 }

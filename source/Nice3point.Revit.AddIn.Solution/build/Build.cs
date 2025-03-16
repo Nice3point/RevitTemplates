@@ -1,28 +1,17 @@
 using System.IO.Enumeration;
 using JetBrains.Annotations;
-#if (!NoPipeline)
-using Nuke.Common.Git;
-#endif
-using Nuke.Common.ProjectModel;
 
 [PublicAPI]
 sealed partial class Build : NukeBuild
 {
-    string[] Configurations;
-#if (bundle)
-    Project[] Bundles;
-#endif
-#if (installer)
-    Dictionary<Project, Project> InstallersMap;
-#endif
-
-#if (!NoPipeline)
-    [GitRepository] readonly GitRepository GitRepository;
-#endif
-    [Solution(GenerateProjects = true)] Solution Solution;
-
+    /// <summary>
+    ///     Pipeline entry point.
+    /// </summary>
     public static int Main() => Execute<Build>(build => build.Compile);
     
+    /// <summary>
+    ///     Extract solution configuration names from the solution file.
+    /// </summary>
     List<string> GlobBuildConfigurations()
     {
         var configurations = Solution.Configurations

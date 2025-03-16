@@ -1,31 +1,54 @@
 trigger:
-  branches:
+  tags:
     include:
-      - main
+      - '*'
 
-stages:
-  - stage: windows_2022
-    displayName: 'windows-2022'
-    dependsOn: [ ]
+pr: none
+
+parameters:
+  - name: version
+    displayName: "Release version"
+    type: string
+    default: ""
+
+jobs:
+  - job: PublishRelease
+    displayName: "Publish release"
     pool:
-      vmImage: 'windows-2022'
-    jobs:
-      - job: CreatePackage
-        displayName: 'CreatePackage'
-        dependsOn: [ ]
-        steps:
-          - task: CmdLine@2
-            inputs:
+      vmImage: "windows-2022"
+    steps:
+      - checkout: self
+        persistCredentials: true
+        fetchDepth: 0
+
+      - script: |
+          git tag ${{ parameters.version }}
+          git push origin ${{ parameters.version }}
+        displayName: "Create release tag"
+        condition: and(succeeded(), ne('${{ parameters.version }}', ''))
+
+      - task: Cache@2
+        displayName: "Cache packages"
+        inputs:
+          key: $(Agent.OS) | nuget-packages | global.json, **/*.csproj, **/Directory.Packages.props
+          restoreKeys: $(Agent.OS) | nuget-packages
+          path: ~/.nuget/packages
+
+      - script: |
+          set RELEASE_VERSION=${{ parameters.version }}
+          if "${{ parameters.version }}"=="" set RELEASE_VERSION=$(Build.SourceBranchName)
 #if (bundle && installer)
-              script: './.nuke/build.cmd CreateBundle CreateInstaller'
+          ./.nuke/build.cmd CreateBundle CreateInstaller --ReleaseVersion %RELEASE_VERSION%
 #elseif (installer)
-              script: './.nuke/build.cmd CreateInstaller'
+          ./.nuke/build.cmd CreateInstaller --ReleaseVersion %RELEASE_VERSION%
 #elseif (bundle)
-              script: './.nuke/build.cmd CreateBundle'
+          ./.nuke/build.cmd CreateBundle --ReleaseVersion %RELEASE_VERSION%
 #else
-              script: './.nuke/build.cmd'
+          ./.nuke/build.cmd --ReleaseVersion %RELEASE_VERSION%
 #endif
-          - task: PublishBuildArtifacts@1
-            inputs:
-              artifactName: Nice3point.Revit.AddIn
-              pathtoPublish: 'output'
+        displayName: "Publish release"
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          ArtifactName: Nice3point.Revit.AddIn
+          PathtoPublish: 'output'

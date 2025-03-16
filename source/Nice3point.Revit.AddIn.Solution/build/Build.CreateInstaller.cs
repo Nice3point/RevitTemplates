@@ -1,37 +1,47 @@
 using System.Diagnostics.CodeAnalysis;
-#if (!NoPipeline)
-using Nuke.Common.Git;
-#endif
+using Serilog.Events;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Tools.DotNet;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 sealed partial class Build
 {
+    /// <summary>
+    ///     Create the .msi installers.
+    /// </summary>
     Target CreateInstaller => _ => _
         .DependsOn(Compile)
-#if (!NoPipeline)
-        .OnlyWhenStatic(() => IsLocalBuild || GitRepository.IsOnMainOrMasterBranch())
-#endif
         .Executes(() =>
         {
-            foreach (var (installer, project) in InstallersMap)
+            const string configuration = "Release";
+            foreach (var (wixInstaller, wixTarget) in InstallersMap)
             {
-                Log.Information("Project: {Name}", project.Name);
+                Log.Information("Project: {Name}", wixTarget.Name);
+                
+                DotNetBuild(settings => settings
+                    .SetProjectFile(wixInstaller)
+                    .SetConfiguration(configuration)
+                    .SetVersion(ReleaseVersionNumber)
+                    .SetVerbosity(DotNetVerbosity.minimal));
 
-                var exePattern = $"*{installer.Name}.exe";
-                var exeFile = Directory.EnumerateFiles(installer.Directory, exePattern, SearchOption.AllDirectories)
+                var builderFile = Directory
+                    .EnumerateFiles(wixInstaller.Directory / "bin" / configuration,  $"{wixInstaller.Name}.exe")
                     .FirstOrDefault()
-                    .NotNull($"No installer file was found for the project: {installer.Name}");
+                    .NotNull($"No installer builder was found for the project: {wixInstaller.Name}");
 
-                var directories = Directory.GetDirectories(project.Directory, "* Release *", SearchOption.AllDirectories);
-                Assert.NotEmpty(directories, "No files were found to create an installer");
+                var targetDirectories = Directory.GetDirectories(wixTarget.Directory, $"* {configuration} *", SearchOption.AllDirectories);
+                Assert.NotEmpty(targetDirectories, "No content were found to create an installer");
 
-                var arguments = directories.Select(path => path.DoubleQuoteIfNeeded()).JoinSpace();
-                var process = ProcessTasks.StartProcess(exeFile, arguments, logInvocation: false, logger: InstallerLogger);
+                var arguments = targetDirectories.Select(path => path.DoubleQuoteIfNeeded()).JoinSpace();
+                var process = ProcessTasks.StartProcess(builderFile, arguments, logInvocation: false, logger: InstallerLogger);
                 process.AssertZeroExitCode();
             }
         });
 
+    /// <summary>
+    ///     Logs the output of the installer process.
+    /// </summary>
     [SuppressMessage("ReSharper", "TemplateIsNotCompileTimeConstantProblem")]
     void InstallerLogger(OutputType outputType, string output)
     {
@@ -42,9 +52,16 @@ sealed partial class Build
         }
 
         var arguments = ArgumentsRegex.Matches(output);
+        var logLevel = arguments.Count switch
+        {
+            0 => LogEventLevel.Debug,
+            > 0 when output.Contains("error", StringComparison.OrdinalIgnoreCase) => LogEventLevel.Error,
+            _ => LogEventLevel.Information
+        };
+
         if (arguments.Count == 0)
         {
-            Log.Debug(output);
+            Log.Write(logLevel, output);
             return;
         }
 
@@ -54,6 +71,6 @@ sealed partial class Build
             .ToArray();
 
         var messageTemplate = ArgumentsRegex.Replace(output, match => $"{{Property{match.Index}}}");
-        Log.Information(messageTemplate, properties);
+        Log.Write(logLevel, messageTemplate, properties);
     }
 }

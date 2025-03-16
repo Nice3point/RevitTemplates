@@ -1,3 +1,43 @@
+# 5.0.0-preview.1.250317
+
+## Solution template
+
+- The release publishing pipeline has been completely redesigned. Publishing is now based on tags instead of automatic push to `main` branch. This is aimed at better control to avoid unexpected situations. Also improved pre-release publishing, and releases from any branch, e.g. it is now possible to release an `Alpha` version from the `develop branch`. See [Wiki](https://github.com/Nice3point/RevitTemplates/wiki/Publishing-the-Release) for more details.
+- The installer now ignores all `.pdb` files.
+- Improved `Readme` file, added all detailed documentation about building and publishing the project. `Readme` file is dynamic and depends on the settings specified when creating Solution.
+- Code coverage with documentation.
+- Reworked `.yml` files.
+- Simplified some code.
+- Added support for .NET 9.
+- Added support for Revit 2026.
+- Removed support for Revit 2020. For support, add it manually by [guide](https://github.com/Nice3point/RevitTemplates/wiki/Managing-API-compatibility).
+
+### Solution migration from v4 to v5
+
+- Create a completely clean project with the same name based on v5 of the template.
+- Copy the `build` folder to your working project with replacement.
+- Copy the `install` folder to your working project with replacement.
+- Copy the `Readme.md` file into your working project with replacement.
+- Copy the `.yml` files into your working project with replacement.
+- Check the Git Diff, and perform a rollback for user-customized lines, changed Guids or names.
+
+## Addin templates
+
+- Enabled `Nullable` by default.
+- Added `IsRepackable` property, disabled by default. [Read more](https://github.com/Nice3point/RevitTemplates/wiki/Publishing-the-Release#dependency-conflicts).
+- Added `ManifestSettings` section to manifest for enabling dependency isolation, starting with Revit 2026 API.
+- Added more WPF converters.
+- Fixed typos.
+- Updated dependencies.
+- Added support for Revit 2026.
+- Removed support for Revit 2020.
+
+### Addin migration from v4 to v5
+
+- Replace the `PublishAddinFiles` property with `DeployRevitAddin` in the `.csproj` file.
+- Add the `EnableDynamicLoading` property and set it to `true` in the `.csproj` file.
+- Update `.addin` file and add the `ManifestSettings` section according to the Autodesk manual.
+
 # 4.0.7
 
 - Moved commands from the Module template. 

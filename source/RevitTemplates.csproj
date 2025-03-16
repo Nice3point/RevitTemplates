@@ -24,9 +24,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true"/>
-        <None Include="..\License.md" PackagePath="" Pack="true"/>
-        <None Include="..\Readme.md" PackagePath="" Pack="true"/>
+        <None Include="..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
+        <None Include="..\License.md" PackagePath="" Pack="true" Visible="false"/>
+        <None Include="..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
         <Content Include="**\*" Exclude="**\bin\**\*;**\obj\**\*;*.csproj"/>
         <Compile Remove="**\*"/>
     </ItemGroup>

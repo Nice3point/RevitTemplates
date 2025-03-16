@@ -5,7 +5,7 @@
     <AddIn Type="Application">
 #endif
         <Name>Nice3point.Revit.AddIn</Name>
-        <Assembly>Nice3point.Revit.AddIn/Nice3point.Revit.AddIn.dll</Assembly>
+        <Assembly>Nice3point.Revit.AddIn\Nice3point.Revit.AddIn.dll</Assembly>
         <AddInId>AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA</AddInId>
 #if (Command)
         <FullClassName>Nice3point.Revit.AddIn.Commands.StartupCommand</FullClassName>
@@ -17,4 +17,8 @@
         <VendorDescription></VendorDescription>
         <VendorEmail></VendorEmail>
     </AddIn>
+    <ManifestSettings>
+        <UseRevitContext>False</UseRevitContext>
+        <ContextName>Nice3point.Revit.AddIn</ContextName>
+    </ManifestSettings>
 </RevitAddIns>
