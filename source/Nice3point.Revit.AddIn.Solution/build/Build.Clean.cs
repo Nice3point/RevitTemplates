@@ -30,8 +30,8 @@ sealed partial class Build
             foreach (var configuration in GlobBuildConfigurations())
             {
                 DotNetClean(settings => settings
-                    .SetConfiguration(configuration)
                     .SetProject(Solution)
+                    .SetConfiguration(configuration)
                     .SetVerbosity(DotNetVerbosity.minimal)
                     .EnableNoLogo());
             }
