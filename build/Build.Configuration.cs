@@ -1,7 +1,12 @@
 ﻿sealed partial class Build
 {
-    [Parameter] [Required] string ReleaseVersion = EnvironmentInfo.GetVariable("PUBLISH_VERSION");
+    [Parameter] string ReleaseVersion;
 
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
-    readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
+    readonly AbsolutePath ChangelogPath = RootDirectory / "Changelog.md";
+    
+    protected override void OnBuildInitialized()
+    {
+        ReleaseVersion ??= GitRepository.Tags.SingleOrDefault();
+    }
 }

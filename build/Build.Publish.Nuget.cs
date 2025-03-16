@@ -1,12 +1,13 @@
 ﻿using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-sealed partial class Build
+partial class Build
 {
+    const string NugetSource = "https://api.nuget.org/v3/index.json";
     [Parameter] [Secret] string NugetApiKey = EnvironmentInfo.GetVariable("NUGET_API_KEY");
 
     Target PublishNuget => _ => _
-        .DependsOn(PublishGitHub)
+        .DependsOn(Pack, PublishGitHub)
         .Requires(() => NugetApiKey)
         .Executes(() =>
         {
@@ -14,8 +15,8 @@ sealed partial class Build
             {
                 DotNetNuGetPush(settings => settings
                     .SetTargetPath(package)
-                    .SetApiKey(NugetApiKey)
-                    .SetSource("https://api.nuget.org/v3/index.json"));
+                    .SetSource(NugetSource)
+                    .SetApiKey(NugetApiKey));
             }
         });
 }

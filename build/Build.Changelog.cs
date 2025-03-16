@@ -1,33 +1,51 @@
 ﻿using System.Text;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Common.Utilities;
 
 sealed partial class Build
 {
-    string CreateNugetChangelog()
+    StringBuilder CreateChangelogBuilder()
     {
-        Assert.True(File.Exists(ChangeLogPath), $"Unable to locate the changelog file: {ChangeLogPath}");
-        Log.Information("Changelog: {Path}", ChangeLogPath);
+        Assert.True(File.Exists(ChangelogPath), $"Unable to locate the changelog file: {ChangelogPath}");
+        Log.Information("Changelog: {Path}", ChangelogPath);
 
         var changelog = BuildChangelog();
         Assert.True(changelog.Length > 0, $"No version entry exists in the changelog: {ReleaseVersion}");
+        return changelog;
+    }
 
-        return EscapeMsBuild(changelog.ToString());
+    string CreateNugetChangelog()
+    {
+        var builder = CreateChangelogBuilder();
+
+        return builder.ToString()
+            .Split(Environment.NewLine)
+            .Where(line => !line.Contains("```"))
+            .Where(line => !line.Contains("!["))
+            .Select(line => line.Replace(";", "%3B")
+                .Replace("- ", "• ")
+                .Replace("**", string.Empty)
+                .Replace("#### ", string.Empty)
+                .Replace("### ", string.Empty)
+                .Replace("## ", string.Empty)
+                .Replace("# ", string.Empty)
+                .Replace("* ", "• ")
+                .Replace("+ ", "• ")
+                .Replace("`", string.Empty)
+                .Replace(",", "%2C"))
+            .JoinNewLine();
     }
 
     string CreateGithubChangelog()
     {
-        Assert.True(File.Exists(ChangeLogPath), $"Unable to locate the changelog file: {ChangeLogPath}");
-        Log.Information("Changelog: {Path}", ChangeLogPath);
+        var builder = CreateChangelogBuilder();
 
-        var changelog = BuildChangelog();
-        Assert.True(changelog.Length > 0, $"No version entry exists in the changelog: {ReleaseVersion}");
-
-        WriteCompareUrl(changelog);
-        return changelog.ToString();
+        WriteGitHubCompareUrl(builder);
+        return builder.ToString();
     }
 
-    void WriteCompareUrl(StringBuilder changelog)
+    void WriteGitHubCompareUrl(StringBuilder changelog)
     {
         var tags = GitTasks
             .Git("tag --list", logInvocation: false, logOutput: false)
@@ -46,7 +64,7 @@ sealed partial class Build
 
         var hasEntry = false;
         var changelog = new StringBuilder();
-        foreach (var line in File.ReadLines(ChangeLogPath))
+        foreach (var line in File.ReadLines(ChangelogPath))
         {
             if (hasEntry)
             {
@@ -79,12 +97,5 @@ sealed partial class Build
         {
             builder.Remove(0, 1);
         }
-    }
-
-    static string EscapeMsBuild(string value)
-    {
-        return value
-            .Replace(";", "%3B")
-            .Replace(",", "%2C");
     }
 }
