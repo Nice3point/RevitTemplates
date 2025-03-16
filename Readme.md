@@ -33,4 +33,4 @@ This repository contains a project templates for creating Revit Add-In.
 ## Usage
 
 - To create a project use the IDE or run `dotnet new`.
-- For description, read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
+- For more information, read [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
