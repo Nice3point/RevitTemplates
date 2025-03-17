@@ -1,8 +1,8 @@
-# 5.0.0-preview.1.250317
+# 5.0.0-preview.2.250317
 
 ## Solution template
 
-- The release publishing pipeline has been completely redesigned. Publishing is now based on tags instead of automatic push to `main` branch. This is aimed at better control to avoid unexpected situations. Also improved pre-release publishing, and releases from any branch, e.g. it is now possible to release an `Alpha` version from the `develop branch`. See [Wiki](https://github.com/Nice3point/RevitTemplates/wiki/Publishing-the-Release) for more details.
+- The release publishing pipeline has been completely redesigned. Publishing is now based on tags instead of automatic push to `main` branch. This is aimed at better control to avoid unexpected situations. Also improved pre-release publishing, and releases from any branch, e.g. it is now possible to release an `Alpha` version from the `develop` branch. See [Wiki](https://github.com/Nice3point/RevitTemplates/wiki/Publishing-the-Release) for more details.
 - The installer now ignores all `.pdb` files.
 - Improved `Readme` file, added all detailed documentation about building and publishing the project. `Readme` file is dynamic and depends on the settings specified when creating Solution.
 - Code coverage with documentation.
