@@ -11,13 +11,6 @@
         <Configurations>$(Configurations);Release R21;Release R22;Release R23;Release R24;Release R25;Release R26</Configurations>
     </PropertyGroup>
 
-    <!-- Build configuration -->
-    <!-- https://github.com/Nice3point/Revit.Build.Tasks -->
-    <PropertyGroup>
-        <DeployRevitAddin>true</DeployRevitAddin>
-        <IsRepackable Condition="'$(RevitVersion)' &lt; '2026'">false</IsRepackable>
-    </PropertyGroup>
-
     <!-- Revit configuration -->
     <PropertyGroup Condition="$(Configuration.Contains('R21'))">
         <RevitVersion>2021</RevitVersion>
@@ -49,6 +42,13 @@
         <StartAction>Program</StartAction>
         <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
         <StartArguments>/language ENG</StartArguments>
+    </PropertyGroup>
+
+    <!-- Build configuration -->
+    <!-- https://github.com/Nice3point/Revit.Build.Tasks -->
+    <PropertyGroup>
+        <IsRepackable>false</IsRepackable>
+        <DeployRevitAddin>true</DeployRevitAddin>
     </PropertyGroup>
 
     <ItemGroup>

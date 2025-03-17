@@ -8,7 +8,7 @@ sealed partial class Build : NukeBuild
     ///     Pipeline entry point.
     /// </summary>
     public static int Main() => Execute<Build>(build => build.Compile);
-    
+
     /// <summary>
     ///     Extract solution configuration names from the solution file.
     /// </summary>
