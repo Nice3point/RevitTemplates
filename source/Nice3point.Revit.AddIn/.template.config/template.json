@@ -150,9 +150,9 @@
           ]
         },
         {
-          "condition": "!Modeless",
+          "condition": "!Hosting",
           "exclude": [
-            "Utils/WindowController.cs"
+            "Config/Options/ApplicationOptions.cs"
           ]
         },
         {
@@ -164,7 +164,7 @@
         {
           "condition": "!log || !UseIoc",
           "exclude": [
-            "Config/LoggerConfigurator.cs"
+            "Config/Logging/LoggerConfiguration.cs"
           ]
         }
       ]

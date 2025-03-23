@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
+using Nice3point.Revit.AddIn.Config.Options;
 #endif
 #if (Hosting && log)
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,7 @@ using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
 #endif
 #if (log && UseIoc)
-using Nice3point.Revit.AddIn.Config;
+using Nice3point.Revit.AddIn.Config.Logging;
 #endif
 
 namespace Nice3point.Revit.AddIn;
@@ -38,10 +39,12 @@ public static class Host
         var services = new ServiceCollection();
 #if (log)
 
+        //Logging
         services.AddSerilogConfiguration();
 #endif
 #if (!NoWindow)
 
+        //MVVM
         services.AddTransient<Nice3point.Revit.AddInViewModel>();
         services.AddTransient<Nice3point.Revit.AddInView>();
 #endif
@@ -56,11 +59,16 @@ public static class Host
         });
 #if (log)
 
+        //Logging
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilogConfiguration();
 #endif
+
+        //Options
+        builder.Services.AddApplicationOptions();
 #if (!NoWindow)
 
+        //MVVM
         builder.Services.AddTransient<Nice3point.Revit.AddInViewModel>();
         builder.Services.AddTransient<Nice3point.Revit.AddInView>();
 #endif

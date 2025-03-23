@@ -113,9 +113,15 @@
           ]
         },
         {
+          "condition": "!Hosting",
+          "exclude": [
+            "Config/Options/ApplicationOptions.cs"
+          ]
+        },
+        {
           "condition": "!log || !UseIoc",
           "exclude": [
-            "Config/LoggerConfigurator.cs"
+            "Config/Logging/LoggerConfiguration.cs"
           ]
         }
       ]

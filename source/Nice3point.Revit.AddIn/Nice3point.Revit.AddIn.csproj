@@ -47,7 +47,11 @@
     <!-- Build configuration -->
     <!-- https://github.com/Nice3point/Revit.Build.Tasks -->
     <PropertyGroup>
+<!--#if (log || UseIoc)-->
+        <IsRepackable>true</IsRepackable>
+<!--#else-->
         <IsRepackable>false</IsRepackable>
+<!--#endif-->
         <DeployRevitAddin>true</DeployRevitAddin>
     </PropertyGroup>
 
@@ -81,6 +85,11 @@
 <!--#endif-->
 <!--#if (log && Hosting)-->
         <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0"/>
+<!--#endif-->
+<!--#if (log || UseIoc)-->
+
+        <!-- Build -->
+        <PackageReference Include="ILRepack" Version="2.0.41"/>
 <!--#endif-->
     </ItemGroup>
 
