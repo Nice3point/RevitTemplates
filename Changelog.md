@@ -1,4 +1,4 @@
-# 5.0.0-preview.2.250317
+# 5.0.0
 
 ## Solution template
 
@@ -14,14 +14,20 @@
 
 ### Solution migration from v4 to v5
 
-- Create a completely clean project with the same name based on v5 of the template.
-- Copy the `build` folder to your working project with replacement.
-- Copy the `install` folder to your working project with replacement.
-- Copy the `Readme.md` file into your working project with replacement.
-- Copy the `.yml` files into your working project with replacement.
-- Check the Git Diff, and perform a rollback for user-customized lines, changed Guids or names.
+1. Create a completely clean project with the same name based on v5 of the template.
+2. Copy the following folders and files to your working project with replacement:
+   - `build` folder.
+   - `install` folder.
+   - `Readme.md` file.
+   - `.yml` files.
+3. Review the Git Diff carefully:
+   - Keep your custom GUIDs and project names.
+   - Preserve any user-specific customizations.
+   - Roll back any changes to your business logic.
+4. Update your solution's dependencies to match v5 requirements.
+5. Test the build process to ensure everything compiles correctly.
 
-## Addin templates
+## Add-in templates
 
 - Enabled `Nullable` by default.
 - Added `IsRepackable` property, disabled by default. [Read more](https://github.com/Nice3point/RevitTemplates/wiki/Publishing-the-Release#dependency-conflicts).
@@ -32,11 +38,30 @@
 - Added support for Revit 2026.
 - Removed support for Revit 2020.
 
-### Addin migration from v4 to v5
+### Add-in migration from v4 to v5
 
-- Replace the `PublishAddinFiles` property with `DeployRevitAddin` in the `.csproj` file.
-- Add the `EnableDynamicLoading` property and set it to `true` in the `.csproj` file.
-- Update `.addin` file and add the `ManifestSettings` section according to the Autodesk manual.
+1. Update your `.csproj` file:
+   ```xml
+   <!-- Replace this line -->
+   <PublishAddinFiles>true</PublishAddinFiles>
+   
+   <!-- With these lines -->
+   <DeployRevitAddin>true</DeployRevitAddin>
+   <EnableDynamicLoading>true</EnableDynamicLoading>
+   ```
+
+2. Update your `.addin` file by adding the `ManifestSettings` to enable add-in isolation in the Revit 2026:
+   ```xml
+   <RevitAddIns>
+     <!-- ... existing settings ... -->
+      <ManifestSettings>
+          <UseRevitContext>False</UseRevitContext>
+          <ContextName>RevitAddIn</ContextName>
+      </ManifestSettings>
+   </RevitAddIns>
+   ```
+
+3. Review and update any nullable reference types in your code as they are now enabled by default.
 
 # 4.0.7
 
