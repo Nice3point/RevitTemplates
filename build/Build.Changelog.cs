@@ -48,7 +48,7 @@ sealed partial class Build
     void WriteGitHubCompareUrl(StringBuilder changelog)
     {
         var tags = GitTasks
-            .Git("tag --list", logInvocation: false, logOutput: false)
+            .Git("tag -l --sort=v:refname", logInvocation: false, logOutput: false)
             .ToArray();
 
         if (tags.Length < 2) return;
