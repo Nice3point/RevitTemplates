@@ -35,7 +35,7 @@ public sealed class StringVisibilityConverter : MarkupExtension, IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return Convert(value, targetType, parameter, culture);
+        throw new NotSupportedException();
     }
 
     public override object ProvideValue(IServiceProvider serviceProvider)

@@ -54,7 +54,7 @@ public static class Host
 #if (Hosting)
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
-            ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location),
+            ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });
 #if (log)

@@ -69,7 +69,7 @@ sealed partial class Build
     /// <remarks>
     ///     Can be used to compare versions or analyze changes between versions.
     /// </remarks>
-    string PreviousReleaseVersion => GitTasks.Git("tag --list", logInvocation: false, logOutput: false).ToArray() switch
+    string PreviousReleaseVersion => GitTasks.Git("tag -l --sort=v:refname", logInvocation: false, logOutput: false).ToArray() switch
     {
         var tags when tags.Length >= 2 => tags[^2].Text,
         var tags when tags.Length == 0 => throw new InvalidOperationException("The pipeline must be triggered by pushing a new tag"),

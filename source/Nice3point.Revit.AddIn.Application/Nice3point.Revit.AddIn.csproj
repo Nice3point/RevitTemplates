@@ -57,11 +57,11 @@
 
     <ItemGroup>
         <!-- Revit References -->
-        <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.0-preview.4.0"/>
-        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*-*"/>
-        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*-*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.1"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 <!--#if (!NoWindow)-->
 
         <!-- MVVM -->

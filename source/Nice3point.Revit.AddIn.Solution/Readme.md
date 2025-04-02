@@ -5,8 +5,7 @@ Autodesk Revit plugin project organized into multiple solution files that target
 ## Table of content
 
 <!-- TOC -->
-* [Technologies Used](#technologies-used)
-* [Getting Started](#getting-started)
+* [Prerequisites](#prerequisites)
 * [Solution Structure](#solution-structure)
 * [Project Structure](#project-structure)
 * [Building](#building)
@@ -18,14 +17,14 @@ Autodesk Revit plugin project organized into multiple solution files that target
   * [Building the Autodesk bundle on local machine](#building-the-autodesk-bundle-on-local-machine)
 ---#endif
 ---#if (ReleasePipeline && HasArtifacts)
-* [Publish a new Release](#publish-a-new-release)
-  * [Creating a new release from the IDE](#creating-a-new-release-from-the-ide)
-  * [Creating a new release from the Terminal](#creating-a-new-release-from-the-terminal)
+* [Publishing Releases](#publishing-releases)
+  * [Creating a new Release from the JetBrains Rider](#creating-a-new-release-from-the-jetbrains-rider)
+  * [Creating a new Release from the Terminal](#creating-a-new-release-from-the-terminal)
 ---#if (GitHubPipeline)
-  * [Creating a new release on GitHub](#creating-a-new-release-on-github)
+  * [Creating a new Release on GitHub](#creating-a-new-release-on-github)
 ---#endif
 ---#if (AzurePipeline)
-  * [Creating a new release on Azure DevOps](#creating-a-new-release-on-azure-devops)
+  * [Creating a new Release on Azure DevOps](#creating-a-new-release-on-azure-devops)
 ---#endif
 ---#endif
 ---#if (GitHubPipeline)
@@ -39,21 +38,16 @@ Autodesk Revit plugin project organized into multiple solution files that target
 * [Learn More](#learn-more)
 <!-- TOC -->
 
-## Technologies Used
+## Prerequisites
 
-* C# 13
-* .NET Framework 4.8
-* .NET 9
+Before you can build this project, you need to install .NET and IDE.
+If you haven't already installed these, you can do so by visiting the following:
 
-## Getting Started
+- [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
+- [.NET 9](https://dotnet.microsoft.com/en-us/download/dotnet)
+- [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
-Before you can build this project, you will need to install .NET, depending upon the solution file you are building. If you haven't already installed these
-frameworks, you can do so by visiting the following:
-
-* [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
-* [.NET 9](https://dotnet.microsoft.com/en-us/download/dotnet)
-
-After installing the necessary frameworks, clone this repository to your local machine and navigate to the project directory.
+After installation, clone this repository to your local machine and navigate to the project directory.
 
 ## Solution Structure
 
@@ -154,10 +148,10 @@ To execute your NUKE build locally, you can follow these steps:
 ---#endif
 ---#if (ReleasePipeline && HasArtifacts)
 
-## Publish a new Release
+## Publishing Releases
 
-Releases are managed by creating new Git tags.
-Tags act as unique identifiers for specific versions, with the ability to roll back to earlier versions.
+Releases are managed by creating new [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
+A tag in Git used to capture a snapshot of the project at a particular point in time, with the ability to roll back to a previous version.
 
 Tags must follow the format `version` or `version-stage.n.date` for pre-releases, where:
 
@@ -183,9 +177,22 @@ For example:
 | Beta    | 1.0.0-beta.2.20250101  |
 | Release | 1.0.0                  |
 
-### Creating a new release from the IDE
+### Updating the Changelog
 
-Publishing a release begins with the creation of a new tag:
+For releases, changelog for the release version is required.
+
+To update the changelog:
+
+1. Navigate to the solution root.
+2. Open the file **Changelog.md**.
+3. Add a section for your version. The version separator is the `#` symbol.
+4. Specify the release number e.g. `# 1.0.0` or `# 25.01.01 v1.0.0`, the format does not matter, the main thing is that it contains the version.
+5. In the lines below, write a changelog for your version, style to your taste.
+6. Commit your changes.
+
+### Creating a new Release from the JetBrains Rider
+
+JetBrains provides a handy UI for creating a tag, it can be created in a few steps:
 
 1. Open JetBrains Rider.
 2. Navigate to the **Git** tab.
@@ -199,9 +206,9 @@ Publishing a release begins with the creation of a new tag:
 
    ![image](https://github.com/user-attachments/assets/b2349264-dd76-4c21-b596-93110f1f16cb)
 
-   This process will trigger the Release workflow and create a new release on GitHub.
+   This process will trigger the Release workflow and create a new Release on GitHub.
 
-### Creating a new release from the Terminal
+### Creating a new Release from the Terminal
 
 Alternatively, you can create and push tags using the terminal:
 
@@ -216,9 +223,14 @@ Alternatively, you can create and push tags using the terminal:
    ```shell
    git push origin 'version'
    ```
+
+---#if (GitHubPipeline)
+> [!NOTE]  
+---#endif
+> The tag will reference your current commit, so verify you're on the correct branch and have fetched latest changes from remote first.
 ---#if (GitHubPipeline)
 
-### Creating a new release on GitHub
+### Creating a new Release on GitHub
 
 To create releases directly on GitHub:
 
@@ -229,23 +241,9 @@ To create releases directly on GitHub:
 
     ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 
-> Set write permissions in the repository settings, this is a prerequisite for publishing a release.
-
-![image](https://github.com/user-attachments/assets/2f1a37dc-d870-4d0d-949e-b5c8e2c34e57)
-
-> To create a release, changelog for the release version is required.
-
-To update the changelog:
-
-1. Navigate to the solution root.
-2. Open the file **Changelog.md**.
-3. Add a section for your version. The version separator is the `#` symbol.
-4. Specify the release number e.g. `# 1.0.0` or `# Release v1.0.0`, the format does not matter, the main thing is that it contains the version.
-5. In the lines below, write a changelog for your version, style to your taste. For example, you will find changelog for version 1.0.0, do the same.
-
 ---#endif
 ---#if (AzurePipeline)
-### Creating a new release on Azure DevOps
+### Creating a new Release on Azure DevOps
 
 To create releases directly on Azure:
 
@@ -256,20 +254,6 @@ To create releases directly on Azure:
 5. Specify the release version and click **Run**.
 
    ![image](https://github.com/user-attachments/assets/39d2b173-3092-48a5-a9eb-7c0981708b07)
-
-> Set write permissions in the repository settings, this is a prerequisite for publishing a release.
-
-![image](https://github.com/user-attachments/assets/378d357a-d99d-4094-a8ca-834babab5554)
-
-> To create a release, changelog for the release version is required.
-
-To update the changelog:
-
-1. Navigate to the solution root.
-2. Open the file **Changelog.md**.
-3. Add a section for your version. The version separator is the `#` symbol.
-4. Specify the release number e.g. `# 1.0.0` or `# Release v1.0.0`, the format does not matter, the main thing is that it contains the version.
-5. In the lines below, write a changelog for your version, style to your taste. For example, you will find changelog for version 1.0.0, do the same.
 
 ---#endif
 ---#endif
@@ -297,6 +281,9 @@ E.g., select the `Debug R26` configuration for the Revit 2026 API.
 The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`, `REVIT2026_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.
 
+---#if (GitHubPipeline)
+> [!NOTE]  
+---#endif
 > For generating directives, a third-party package is used.
 > You can find more detailed documentation about it here: [Revit.Build.Tasks](https://github.com/Nice3point/Revit.Build.Tasks)
 
@@ -349,6 +336,9 @@ EndGlobalSection
 
 For example `Debug R26` is the Debug configuration for Revit 2026 version.
 
+---#if (GitHubPipeline)
+> [!TIP]  
+---#endif
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
 
 ### Project configurations
@@ -368,6 +358,9 @@ Example:
 </PropertyGroup>
 ```
 
+---#if (GitHubPipeline)
+> [!IMPORTANT]  
+---#endif
 > Edit the `.csproj` file only manually, IDEs often break configurations.
 
 Then simply map the solution configuration to the project configuration:
@@ -389,6 +382,9 @@ Then specify the framework and Revit version for each configuration, update the 
 
 To support CI/CD pipelines and build a project for Revit versions not installed on your computer, use Nuget packages.
 
+---#if (GitHubPipeline)
+> [!NOTE]  
+---#endif
 > Revit API dependencies are available in the [Revit.API](https://github.com/Nice3point/RevitApi) repository.
 
 The Nuget package version must include wildcards `Version="$(RevitVersion).*"` to automatically include adding a specific package version, depending on the selected solution
@@ -403,4 +399,4 @@ configuration.
 
 ## Learn More
 
-* You can explore more in the [RevitTemplates wiki](https://github.com/Nice3point/RevitTemplates/wiki) page.
+* You can explore more in the [RevitTemplates Wiki](https://github.com/Nice3point/RevitTemplates/wiki) page.
