@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Nullable>enable</Nullable>
         <OutputType>Exe</OutputType>
         <LangVersion>latest</LangVersion>
         <PlatformTarget>x64</PlatformTarget>
@@ -9,8 +10,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="WixSharp.bin" Version="1.*"/>
-        <PackageReference Include="WixSharp.wix.bin" Version="3.*"/>
+        <PackageReference Include="WixSharp.bin" Version="1.26.0"/>
+        <PackageReference Include="WixSharp.wix.bin" Version="3.14.1"/>
     </ItemGroup>
 
 </Project>

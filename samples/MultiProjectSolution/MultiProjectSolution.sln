@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Build\Build.Configuration.cs = Build\Build.Configuration.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{2436175E-1BCC-4C56-991C-84695D3E10C7}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\Build.csproj", "{67EDBAB7-E0A8-46E7-B7F2-3F004B0B0FA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Installer", "install\Installer.csproj", "{AC520AB0-D2D3-403E-8B5B-8895ACBB8E89}"
@@ -32,7 +34,6 @@ Global
 		Release R23|Any CPU = Release R23|Any CPU
 		Release R24|Any CPU = Release R24|Any CPU
 		Release R25|Any CPU = Release R25|Any CPU
-		Installer|Any CPU = Installer|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{67EDBAB7-E0A8-46E7-B7F2-3F004B0B0FA4}.Debug R20|Any CPU.ActiveCfg = Debug|Any CPU
@@ -138,4 +139,8 @@ Global
 		{DDCE6DF1-727A-4C02-91FE-A8957980B2ED}.Release R24|Any CPU.Build.0 = Release R24|Any CPU
 		{DDCE6DF1-727A-4C02-91FE-A8957980B2ED}.Release R25|Any CPU.Build.0 = Release R25|Any CPU
 	EndGlobalSection
+    GlobalSection(NestedProjects) = preSolution
+        {67EDBAB7-E0A8-46E7-B7F2-3F004B0B0FA4} = {2436175E-1BCC-4C56-991C-84695D3E10C7}
+        {AC520AB0-D2D3-403E-8B5B-8895ACBB8E89} = {2436175E-1BCC-4C56-991C-84695D3E10C7}
+    EndGlobalSection
 EndGlobal

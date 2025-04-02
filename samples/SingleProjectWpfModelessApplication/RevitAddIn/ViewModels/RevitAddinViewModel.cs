@@ -13,9 +13,9 @@ public sealed partial class RevitAddInViewModel : ObservableObject
     private readonly AsyncEventHandler _asyncExternalHandler = new();
     private readonly AsyncEventHandler<ElementId> _asyncIdExternalHandler = new();
 
-    [ObservableProperty] private string _element;
-    [ObservableProperty] private string _category;
-    [ObservableProperty] private string _status;
+    [ObservableProperty] private string _element = string.Empty;
+    [ObservableProperty] private string _category = string.Empty;
+    [ObservableProperty] private string _status = string.Empty;
 
     [RelayCommand]
     private void ShowSummary()

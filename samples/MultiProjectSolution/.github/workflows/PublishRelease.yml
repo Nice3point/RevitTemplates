@@ -1,0 +1,41 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version"
+        required: true
+        type: string
+
+jobs:
+  release:
+    name: Publish release
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create release tag
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          set -e
+          git tag ${{ github.event.inputs.version }}
+          git push origin ${{ github.event.inputs.version }}
+
+      - name: Cache packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+
+      - name: Publish release
+        run: ./.nuke/build.cmd PublishGitHub --ReleaseVersion ${{ github.event.inputs.version || github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

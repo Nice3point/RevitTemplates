@@ -6,7 +6,7 @@ using RevitAddIn.Views;
 namespace RevitAddIn.Commands;
 
 /// <summary>
-///     External command entry point invoked from the Revit interface
+///     External command entry point
 /// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]

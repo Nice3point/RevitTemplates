@@ -78,16 +78,16 @@ public class DatabaseConnection
     {
         const string storageName = "RevitAddIn DataStorage";
 
-        var storage = Context.Document
+        var storage = Context.ActiveDocument!
             .EnumerateInstances<DataStorage>()
             .FirstOrDefault(storage => storage.Name == storageName);
 
         if (storage is not null) return storage;
 
-        using var transaction = new Transaction(Context.Document, "Create data storage");
+        using var transaction = new Transaction(Context.ActiveDocument, "Create data storage");
         transaction.Start();
 
-        storage = DataStorage.Create(Context.Document);
+        storage = DataStorage.Create(Context.ActiveDocument);
         storage.Name = storageName;
 
         transaction.Commit();

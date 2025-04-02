@@ -22,13 +22,14 @@ public static class WindowController
     {
         var type = typeof(T);
         foreach (var window in Windows)
-            if (window.GetType() == type)
-            {
-                if (window.WindowState == WindowState.Minimized) window.WindowState = WindowState.Normal;
-                if (window.Visibility != Visibility.Visible) window.Show();
-                window.Focus();
-                return true;
-            }
+        {
+            if (window.GetType() != type) continue;
+
+            if (window.WindowState == WindowState.Minimized) window.WindowState = WindowState.Normal;
+            if (window.Visibility != Visibility.Visible) window.Show();
+            window.Focus();
+            return true;
+        }
 
         return false;
     }
@@ -57,8 +58,12 @@ public static class WindowController
     {
         var type = typeof(T);
         foreach (var window in Windows)
+        {
             if (window.GetType() == type)
+            {
                 window.Show();
+            }
+        }
     }
 
     /// <summary>
@@ -69,8 +74,12 @@ public static class WindowController
     {
         var type = typeof(T);
         foreach (var window in Windows)
+        {
             if (window.GetType() == type)
+            {
                 window.Hide();
+            }
+        }
     }
 
     /// <summary>
@@ -84,7 +93,9 @@ public static class WindowController
         {
             var window = Windows[i];
             if (window.GetType() == type)
+            {
                 window.Close();
+            }
         }
     }
 

@@ -2,15 +2,18 @@
 
 public sealed partial class RevitAddInViewModel : ObservableObject
 {
-    [ObservableProperty] private string _projectName = Context.Document.ProjectInformation.Name;
+    [ObservableProperty] private string _projectName = Context.ActiveDocument?.ProjectInformation.Name;
 
     [RelayCommand]
     private void SaveProjectName()
     {
-        var transaction = new Transaction(Context.Document);
+        var activeDocument = Context.ActiveDocument;
+        if (activeDocument is null) return;
+        
+        var transaction = new Transaction(activeDocument);
         transaction.Start("Save project name");
 
-        Context.Document.ProjectInformation.Name = ProjectName;
+        activeDocument.ProjectInformation.Name = ProjectName;
         
         transaction.Commit();
     }
