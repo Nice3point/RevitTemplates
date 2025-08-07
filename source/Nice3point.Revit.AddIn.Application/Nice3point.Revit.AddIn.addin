@@ -11,7 +11,7 @@
         <FullClassName>Nice3point.Revit.AddIn.Commands.StartupCommand</FullClassName>
         <Text>Nice3point.Revit.AddIn</Text>
 #elseif (Application)
-        <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
+        <FullClassName>Nice3point.Revit.AddIn.App</FullClassName>
 #endif
         <VendorId>Development</VendorId>
         <VendorDescription></VendorDescription>

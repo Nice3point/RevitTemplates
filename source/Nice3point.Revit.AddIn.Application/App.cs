@@ -11,7 +11,7 @@ namespace Nice3point.Revit.AddIn;
 ///     Application entry point
 /// </summary>
 [UsedImplicitly]
-public class Application : ExternalApplication
+public class App : ExternalApplication
 {
     public override void OnStartup()
     {
