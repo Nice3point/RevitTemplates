@@ -58,7 +58,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 
         <!-- Build -->
-        <PackageReference Include="ILRepack" Version="2.0.41"/>
+        <PackageReference Include="ILRepack" Version="2.0.44"/>
     </ItemGroup>
 
     <ItemGroup>
