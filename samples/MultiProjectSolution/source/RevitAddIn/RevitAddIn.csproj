@@ -66,7 +66,7 @@
         <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0"/>
 
         <!-- Build -->
-        <PackageReference Include="ILRepack" Version="2.0.41"/>
+        <PackageReference Include="ILRepack" Version="2.0.44"/>
     </ItemGroup>
 
     <ItemGroup>
