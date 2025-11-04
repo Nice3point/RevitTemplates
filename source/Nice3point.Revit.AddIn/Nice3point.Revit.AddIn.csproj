@@ -75,7 +75,7 @@
 <!--#if (Hosting)-->
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10"/>
 <!--#endif-->
 <!--#if (log)-->
 
