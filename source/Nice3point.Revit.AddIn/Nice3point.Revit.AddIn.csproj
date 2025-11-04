@@ -89,7 +89,7 @@
 <!--#if (log || UseIoc)-->
 
         <!-- Build -->
-        <PackageReference Include="ILRepack" Version="2.0.41"/>
+        <PackageReference Include="ILRepack" Version="2.0.44"/>
 <!--#endif-->
     </ItemGroup>
     
