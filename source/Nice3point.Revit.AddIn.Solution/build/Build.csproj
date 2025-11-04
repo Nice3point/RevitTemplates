@@ -15,7 +15,7 @@
     <ItemGroup>
         <PackageReference Include="Nuke.Common" Version="9.0.4"/>
 <!--#if (bundle)-->
-        <PackageReference Include="Autodesk.PackageBuilder" Version="1.0.6"/>
+        <PackageReference Include="Autodesk.PackageBuilder" Version="2.0.2"/>
 <!--#endif-->
 </ItemGroup>
 
