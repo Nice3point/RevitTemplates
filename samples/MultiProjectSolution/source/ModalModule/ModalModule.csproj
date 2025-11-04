@@ -45,13 +45,13 @@
 
         <!-- MVVM -->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.10"/>
         
         <!-- Logging -->
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.10"/>
         
         <!-- Compability -->
-        <PackageReference Include="System.Text.Json" Version="9.0.3" Condition="!$(DefineConstants.Contains('NETCOREAPP'))"/>
+        <PackageReference Include="System.Text.Json" Version="9.0.10" Condition="!$(DefineConstants.Contains('NETCOREAPP'))"/>
 
         <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
