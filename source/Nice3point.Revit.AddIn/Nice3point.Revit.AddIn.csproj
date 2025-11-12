@@ -70,12 +70,12 @@
 <!--#if (Container)-->
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11"/>
 <!--#endif-->
 <!--#if (Hosting)-->
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.11"/>
 <!--#endif-->
 <!--#if (log)-->
 

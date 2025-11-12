@@ -62,7 +62,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.11"/>
 
         <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
