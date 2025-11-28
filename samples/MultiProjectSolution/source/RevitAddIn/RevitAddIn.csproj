@@ -63,7 +63,7 @@
 
         <!-- Logging -->
         <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0"/>
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0"/>
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0"/>
 
         <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
