@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 Nice3point
+Copyright (c) 2021 Nice3point
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
