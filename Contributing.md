@@ -14,8 +14,3 @@
 ## Naming of features and functionality
 
 The naming should be descriptive and direct, giving a clear idea of the functionality and usefulness in the future.
-
-## Prerequisites for Compiling RevitTemplates
-
-1. DotNet 8 SDK or newer
-2. Visual Studio 2022 / JetBrains Rider 2023.3 or newer
