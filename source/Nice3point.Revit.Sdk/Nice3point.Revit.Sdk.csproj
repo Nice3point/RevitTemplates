@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageType>MSBuildSdk</PackageType>
         <PackageId>Nice3point.Revit.Sdk</PackageId>
         <Authors>Nice3point</Authors>
         <Description>MSBuild tasks for Revit add-ins development</Description>
@@ -30,7 +31,7 @@
         <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
         <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
         <None Include="..\..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
-        <Content Include="targets\**\*" PackagePath="build\" Pack="true"/>
+        <Content Include="targets\**\*" PackagePath="Sdk\" Pack="true"/>
     </ItemGroup>
 
     <ItemGroup>
