@@ -1,0 +1,73 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!--
+    ============================================================
+                            Publish Addin
+    
+    Targets for publishing and cleaning up the add-in
+    ============================================================
+    -->
+
+    <PropertyGroup>
+        <DeployAddin Condition="'$(DeployAddin)' == ''">false</DeployAddin>
+        <PublishAddin Condition="'$(DeployAddin)' == 'true'">true</PublishAddin>
+        <PublishAddin Condition="'$(PublishAddin)' == ''">false</PublishAddin>
+        <AddinPublishDir Condition="'$(AddinPublishDir)' == ''">$(PublishDir)\$(Configuration).Revit.$(RevitVersion)</AddinPublishDir>
+        <AddinDeployDir Condition="'$(AddinDeployDir)' == ''">$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</AddinDeployDir>
+    </PropertyGroup>
+
+    <Target Name="PublishAddin"
+            AfterTargets="CoreBuild"
+            Condition="'$(PublishAddin)' == 'true' AND '$(RevitVersion)' != ''">
+
+        <ItemGroup>
+            <AddinRootFiles Include="$(ProjectDir)*.addin"/>
+            <AddinContentFiles Include="$(TargetDir)**\*" Exclude="$(PublishDir)**\*"/>
+            <_ResolvedFileToPublishAlways Include="@(Content)" PublishDirectory="%(Content.PublishDirectory)" Condition="'%(Content.CopyToPublishDirectory)' == 'Always'"/>
+            <_ResolvedFileToPublishPreserveNewest Include="@(Content)" PublishDirectory="%(Content.PublishDirectory)" Condition="'%(Content.CopyToPublishDirectory)' == 'PreserveNewest'"/>
+        </ItemGroup>
+
+        <Copy SourceFiles="@(AddinRootFiles)"
+              DestinationFolder="$(AddinPublishDir)"/>
+        <Copy SourceFiles="@(AddinContentFiles)"
+              DestinationFolder="$(AddinPublishDir)\$(AssemblyName)\%(RecursiveDir)"/>
+        <Copy SourceFiles="@(_ResolvedFileToPublishAlways)"
+              SkipUnchangedFiles="false"
+              DestinationFolder="$(AddinPublishDir)\$(AssemblyName)\%(_ResolvedFileToPublishAlways.PublishDirectory)\%(RecursiveDir)"/>
+        <Copy SourceFiles="@(_ResolvedFileToPublishPreserveNewest)"
+              SkipUnchangedFiles="true"
+              DestinationFolder="$(AddinPublishDir)\$(AssemblyName)\%(_ResolvedFileToPublishPreserveNewest.PublishDirectory)\%(RecursiveDir)"/>
+
+        <Message Text="$(AssemblyName) -> $(PublishDir)" Importance="high"/>
+    </Target>
+
+    <Target Name="DeployAddin"
+            AfterTargets="PublishAddin"
+            Condition="'$(DeployAddin)' == 'true'">
+
+        <ItemGroup>
+            <_AddinDeploySourceFiles Include="$(AddinPublishDir)\**\*"/>
+        </ItemGroup>
+
+        <Copy SourceFiles="@(_AddinDeploySourceFiles)"
+              DestinationFolder="$(AddinDeployDir)\%(RecursiveDir)"/>
+
+        <Message Text="$(AssemblyName) -> $(AddinDeployDir)" Importance="high"/>
+    </Target>
+
+    <Target Name="CleanAddin"
+            AfterTargets="Clean"
+            Condition="'$(DeployAddin)' == 'true'">
+
+        <RemoveDir Directories="$(AddinDeployDir)\$(AssemblyName)"/>
+        <Delete Files="$(AddinDeployDir)\$(AssemblyName).addin"/>
+    </Target>
+
+    <Target Name="CleanPublishDir"
+            AfterTargets="Clean"
+            Condition="'$(PublishAddin)' == 'true'">
+
+        <RemoveDir Directories="$(PublishDir)"/>
+    </Target>
+
+</Project>

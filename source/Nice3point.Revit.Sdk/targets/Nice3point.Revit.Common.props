@@ -1,0 +1,26 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!--
+    ============================================================
+                            Common
+    
+    Override Revit add-ins common properties
+    ============================================================
+    -->
+
+    <PropertyGroup>
+        <ImplicitRevitUsings>true</ImplicitRevitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' != 'Debug' AND $(Configuration.Contains('Debug'))">
+        <DebugSymbols>true</DebugSymbols>
+        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' != 'Release' AND $(Configuration.Contains('Release'))">
+        <Optimize>true</Optimize>
+        <DebugType>portable</DebugType>
+        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+    </PropertyGroup>
+
+</Project>

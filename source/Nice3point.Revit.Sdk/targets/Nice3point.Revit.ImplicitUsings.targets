@@ -1,0 +1,46 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!--
+    ============================================================
+                            Implicit usings
+    
+    Define implicit global usings
+    ============================================================
+    -->
+
+    <Target Name="GenerateRevitGlobalUsings"
+            AfterTargets="ResolveLockFileReferences"
+            Condition="'$(ImplicitRevitUsings)' == 'true' AND ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
+
+        <ItemGroup>
+            <_ImplicitRevitUsing Include="Autodesk.Revit.DB" RequiredReference="RevitAPI.dll"/>
+            <_ImplicitRevitUsing Include="JetBrains.Annotations" RequiredReference="JetBrains.Annotations.dll"/>
+            <_ImplicitRevitUsing Include="Nice3point.Revit.Toolkit" RequiredReference="Nice3point.Revit.Toolkit.dll"/>
+            <_ImplicitRevitUsing Include="Nice3point.Revit.Extensions" RequiredReference="Nice3point.Revit.Extensions.dll"/>
+            <_ImplicitRevitUsing Include="CommunityToolkit.Mvvm.Input" RequiredReference="CommunityToolkit.Mvvm.dll"/>
+            <_ImplicitRevitUsing Include="CommunityToolkit.Mvvm.ComponentModel" RequiredReference="CommunityToolkit.Mvvm.dll"/>
+        </ItemGroup>
+
+        <AddImplicitUsings
+                AdditionalUsings="@(_ImplicitRevitUsing)"
+                References="@(Reference)">
+            <Output TaskParameter="Usings"
+                    ItemName="_RevitGlobalUsings"/>
+        </AddImplicitUsings>
+
+        <ItemGroup>
+            <Using Include="@(_RevitGlobalUsings)" />
+        </ItemGroup>
+
+        <GenerateGlobalUsings Usings="@(Using)">
+            <Output TaskParameter="Lines" ItemName="_RevitGlobalUsingLines" />
+        </GenerateGlobalUsings>
+
+        <WriteLinesToFile
+                File="$(GeneratedGlobalUsingsFile)"
+                Lines="@(_RevitGlobalUsingLines)"
+                Overwrite="true"
+                WriteOnlyWhenDifferent="true" />
+    </Target>  
+    
+</Project>

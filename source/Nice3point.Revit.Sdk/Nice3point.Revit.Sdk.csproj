@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <NoWarn>$(NoWarn);NU5100</NoWarn>
+        <TargetFrameworks>net48;net8.0</TargetFrameworks>
+        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>Nice3point.Revit.Sdk</PackageId>
+        <Authors>Nice3point</Authors>
+        <Description>MSBuild tasks for Revit add-ins development</Description>
+        <PackageTags>autodesk;revit;addin;sdk</PackageTags>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/Nice3point/RevitSdk</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Nice3point/RevitSdk</PackageProjectUrl>
+        <PackageIcon>images\PackageIcon.png</PackageIcon>
+        <PackageLicenseFile>License.md</PackageLicenseFile>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <DevelopmentDependency>true</DevelopmentDependency>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
+        <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
+        <None Include="..\..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
+        <Content Include="targets\**\*" PackagePath="build\" Pack="true"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" PrivateAssets="all" ExcludeAssets="Runtime"/>
+        <PackageReference Include="Polyfill" Version="9.3.1" PrivateAssets="all"/>
+    </ItemGroup>
+
+</Project>

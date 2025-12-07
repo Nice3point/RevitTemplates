@@ -1,0 +1,25 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!--
+    ============================================================
+                            PatchManifest
+    
+    Patch the Revit .addin manifest, for backwards compatibility 
+    ============================================================
+    -->
+
+    <Target Name="PatchManifest"
+            AfterTargets="PublishAddin"
+            BeforeTargets="DeployAddinFiles">
+
+        <ItemGroup>
+            <_ManifestItem Include="$(PublishDir)*\*.addin"/>
+        </ItemGroup>
+
+        <PatchManifest
+                RevitVersion="$(RevitVersion)"
+                Manifests="@(_ManifestItem)">
+        </PatchManifest>
+    </Target>
+
+</Project>

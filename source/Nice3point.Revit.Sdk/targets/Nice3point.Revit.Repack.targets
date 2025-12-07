@@ -1,0 +1,60 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!--
+    ============================================================
+                         Repack Output files
+    
+    Targets for repacking the build output into a single assembly
+    ============================================================
+    -->
+
+    <Target Name="RepackAddinFiles"
+            AfterTargets="Build"
+            BeforeTargets="PublishAddin"
+            Condition="'$(IsRepackable)' == 'true'">
+
+        <ItemGroup>
+            <_ILRepackVersion Include="@(PackageVersion->WithMetadataValue('Identity', 'ILRepack'))"/>
+            <_ILRepackVersion Include="@(PackageReference->WithMetadataValue('Identity', 'ILRepack'))" Condition="'@(_ILRepackVersion)' == ''"/>
+        </ItemGroup>
+
+        <Error Condition="'@(_ILRepackVersion)' == ''"
+               Text="ILRepack is required but not installed..."/>
+
+        <ItemGroup>
+            <_ILRepackInputNamesExcludes Include="$(RepackBinariesExcludes.Split(';'))"/>
+            <_ILRepackInputAssembliesExcludes Include="$(OutputPath)%(_ILRepackInputNamesExcludes.Identity)"/>
+        </ItemGroup>
+
+        <ItemGroup>
+            <_ILRepackInputAssemblies Include="$(OutputPath)$(AssemblyName).dll"/>
+            <_ILRepackInputAssemblies Include="$(OutputPath)*.dll"
+                                     Exclude="@(_ILRepackInputAssembliesExcludes)"/>
+        </ItemGroup>
+
+        <PropertyGroup>
+            <_ILRepackOutputName>$(AssemblyName)</_ILRepackOutputName>
+            <_ILRepackOutput>/out:&quot;$(OutputPath)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
+            <_ILRepackInput>@(_ILRepackInputAssemblies -> '&quot;%(FullPath)&quot;', ' ')</_ILRepackInput>
+            <_ILRepackPath>&quot;$(NuGetPackageRoot)\ilrepack\%(_ILRepackVersion.Version)\tools\ILRepack.exe&quot;</_ILRepackPath>
+            <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity)&quot;', ' ')</_ILRepackLib>
+        </PropertyGroup>
+
+        <Message Text="Repacking $(MSBuildProjectDirectory)\$(OutputPath)$(AssemblyName).dll" Importance="high"/>
+
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+              Condition="$(Configuration.Contains('Debug'))"/>
+
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes /ndebug $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+              StandardOutputImportance="Low"
+              Condition="$(Configuration.Contains('Release'))"/>
+
+        <ItemGroup>
+            <_RepackedFiles Include="@(_ILRepackInputAssemblies -> '%(RootDir)%(Directory)%(Filename).dll')" Condition="%(Filename) != $(_ILRepackOutputName)"/>
+            <_RepackedFiles Include="@(_ILRepackInputAssemblies -> '%(RootDir)%(Directory)%(Filename).pdb')" Condition="%(Filename) != $(_ILRepackOutputName)"/>
+        </ItemGroup>
+
+        <Delete Files="@(_RepackedFiles)"/>
+    </Target>
+
+</Project>

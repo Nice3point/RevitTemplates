@@ -1,0 +1,19 @@
+<Project>
+
+    <ImportGroup>
+        <Import Project="Nice3point.Revit.Common.props" />
+    </ImportGroup>
+    
+    <PropertyGroup>
+        <BuildTasksDirectoryRoot>$(MSBuildThisFileDirectory)..\tasks\</BuildTasksDirectoryRoot>
+        <BuildTasksTFM Condition=" '$(MSBuildRuntimeType)' == 'Core'">net8.0</BuildTasksTFM>
+        <BuildTasksTFM Condition=" '$(BuildTasksTFM)' == ''">net48</BuildTasksTFM>
+        <BuildTasksDirectory>$(BuildTasksDirectoryRoot)$(BuildTasksTFM)\</BuildTasksDirectory>
+        <BuildTasksAssembly>$(BuildTasksDirectory)Nice3point.Revit.Sdk.dll</BuildTasksAssembly>
+    </PropertyGroup>
+
+    <UsingTask TaskName="$(MSBuildThisFileName).AddImplicitUsings" AssemblyFile="$(BuildTasksAssembly)"/>
+    <UsingTask TaskName="$(MSBuildThisFileName).GenerateCompatibleDefineConstants" AssemblyFile="$(BuildTasksAssembly)"/>
+    <UsingTask TaskName="$(MSBuildThisFileName).PatchManifest" AssemblyFile="$(BuildTasksAssembly)"/>
+
+</Project>

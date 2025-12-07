@@ -1,0 +1,12 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <ImportGroup>
+        <Import Project="Nice3point.Revit.Common.targets"/>
+        <Import Project="Nice3point.Revit.Repack.targets"/>
+        <Import Project="Nice3point.Revit.Publish.targets" />
+        <Import Project="Nice3point.Revit.PatchManifest.targets"/>
+        <Import Project="Nice3point.Revit.ImplicitUsings.targets" />
+        <Import Project="Nice3point.Revit.GenerateCompatibleDefineConstants.targets" />
+    </ImportGroup>
+
+</Project>

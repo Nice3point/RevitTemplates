@@ -1,0 +1,15 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!--
+    ============================================================
+                            Common
+    
+    Set default Revit add-ins properties
+    ============================================================
+    -->
+
+    <PropertyGroup>
+        <AppendTargetFrameworkToOutputPath Condition="'$(AppendTargetFrameworkToOutputPath) == '' AND '$(IsPackable)' == ''">false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+</Project>
