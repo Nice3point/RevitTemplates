@@ -15,7 +15,7 @@ using Status = ModularPipelines.Enums.Status;
 namespace Build.Modules;
 
 [SkipIfNoGitHubToken]
-[DependsOn<PackProjectsModule>]
+[DependsOn<PackTemplatesModule>]
 [DependsOn<CreateGitHubChangelogModule>]
 public sealed class PublishGithubModule(IOptions<PackOptions> packOptions) : Module<ReleaseAsset[]?>
 {

@@ -12,7 +12,7 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 [DependsOn<CleanProjectsModule>]
-public sealed class PackProjectsModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
+public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
@@ -21,17 +21,17 @@ public sealed class PackProjectsModule(IOptions<PackOptions> packOptions) : Modu
         var changelog = changelogModule is null ? null : await changelogModule;
         var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
 
-        return await context.DotNet().Pack(new DotNetPackOptions
-        {
-            ProjectSolution = Projects.Nice3point_Revit_Templates.FullName,
-            Configuration = Configuration.Release,
-            Verbosity = Verbosity.Minimal,
-            Properties = new List<KeyValue>
+            return await context.DotNet().Pack(new DotNetPackOptions
             {
-                ("Version", packOptions.Value.Version),
-                ("PackageReleaseNotes", changelog is null ? string.Empty : changelog.Value)
-            },
-            OutputDirectory = outputFolder
-        }, cancellationToken);
+                ProjectSolution = Projects.Nice3point_Revit_Sdk.FullName,
+                Configuration = Configuration.Release,
+                Verbosity = Verbosity.Minimal,
+                Properties = new List<KeyValue>
+                {
+                    ("Version", packOptions.Value.Version),
+                    ("PackageReleaseNotes", changelog is null ? string.Empty : changelog.Value)
+                },
+                OutputDirectory = outputFolder
+            }, cancellationToken);
     }
 }

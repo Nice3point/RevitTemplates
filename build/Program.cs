@@ -26,7 +26,8 @@ await PipelineHostBuilder.Create()
             collection.AddOptions<PackOptions>().Bind(context.Configuration.GetSection("Pack")).ValidateDataAnnotations();
 
             collection.AddModule<CleanProjectsModule>();
-            collection.AddModule<PackProjectsModule>();
+            collection.AddModule<PackSdkModule>();
+            collection.AddModule<PackTemplatesModule>();
         }
 
         if (args.Contains("publish"))
