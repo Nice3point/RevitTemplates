@@ -6,16 +6,9 @@
 #Project-specific folders
 *obj/
 *bin/
-*temp/
 
-#Deprecated Nuget folder
-/packages/
-
-#Nuke output folder
+#Build output folder
 /output/
-
-#Project-specific files
-*/build.schema.json
 
 #User-specific files
 *.user

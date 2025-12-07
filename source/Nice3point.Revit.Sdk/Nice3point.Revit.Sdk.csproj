@@ -11,7 +11,7 @@
         <PackageId>Nice3point.Revit.Sdk</PackageId>
         <Authors>Nice3point</Authors>
         <Description>MSBuild tasks for Revit add-ins development</Description>
-        <PackageTags>autodesk;revit;addin;sdk</PackageTags>
+        <PackageTags>autodesk;revit;addin;msbuild;sdk</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitSdk</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Nice3point/RevitSdk</PackageProjectUrl>
@@ -30,7 +30,7 @@
     <ItemGroup>
         <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
         <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
-        <None Include="..\..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
+        <None Include="..\..\docs\MsBuild-Sdk.md" PackagePath="Readme.md" Pack="true" Visible="false"/>
         <Content Include="targets\**\*" PackagePath="Sdk\" Pack="true"/>
     </ItemGroup>
 

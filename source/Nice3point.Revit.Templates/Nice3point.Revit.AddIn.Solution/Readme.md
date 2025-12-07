@@ -77,7 +77,7 @@ We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET sup
 from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
-2. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 4. `Debug` button will start Revit add-in in the debug mode.
 
@@ -86,7 +86,7 @@ from [here](https://www.jetbrains.com/rider/).
 Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
-2. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 ---#if (HasArtifacts)
 ---#if (installer && bundle)
@@ -276,7 +276,7 @@ To write code compatible with different Revit versions, use the directives **#if
 ```
 
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
-E.g., select the `Debug R26` configuration for the Revit 2026 API.
+E.g., select the `Debug.R26` configuration for the Revit 2026 API.
 
 The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`, `REVIT2026_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.

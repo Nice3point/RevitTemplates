@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <NoDefaultExcludes>true</NoDefaultExcludes>
+        <EnableDefaultItems>false</EnableDefaultItems>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <IncludeContentInPack>true</IncludeContentInPack>
         <ContentTargetFolders>content</ContentTargetFolders>
@@ -14,7 +15,7 @@
         <PackageId>Nice3point.Revit.Templates</PackageId>
         <Authors>Nice3point</Authors>
         <Description>Templates for Revit add-ins development</Description>
-        <PackageTags>revit;templates;addin</PackageTags>
+        <PackageTags>autodesk;revit;templates;addin</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>
@@ -24,11 +25,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
-        <None Include="..\License.md" PackagePath="" Pack="true" Visible="false"/>
-        <None Include="..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
+        <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
+        <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
+        <None Include="..\..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
         <Content Include="**\*" Exclude="**\bin\**\*;**\obj\**\*;*.csproj"/>
-        <Compile Remove="**\*"/>
     </ItemGroup>
 
 </Project>

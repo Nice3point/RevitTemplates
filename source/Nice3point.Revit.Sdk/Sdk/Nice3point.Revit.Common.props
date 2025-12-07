@@ -9,6 +9,9 @@
     -->
 
     <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>true</ImplicitUsings>
         <ImplicitRevitUsings>true</ImplicitRevitUsings>
     </PropertyGroup>
 
@@ -21,6 +24,33 @@
         <Optimize>true</Optimize>
         <DebugType>portable</DebugType>
         <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+    </PropertyGroup>
+
+    <!-- Revit configuration -->
+    <PropertyGroup>
+        <_RevitPredictedVersion>$([System.Text.RegularExpressions.Regex]::Match($(Configuration), '\d+$').Value)</_RevitPredictedVersion>
+        <RevitVersion Condition="'$(RevitConfiguration.Length)' == '4'">$(_RevitPredictedVersion)</RevitVersion>
+        <RevitVersion Condition="'$(RevitConfiguration.Length)' == '2'">20$(_RevitPredictedVersion)</RevitVersion>
+
+        <Error Condition="'@(RevitVersion)' == ''"
+               Text="Solution configuration does't contains target Revit version. Available formats: Release.R26, Release.R2026, etc."/>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework Condition="$(RevitVersion) &lt;= '2014'">net40</TargetFramework>
+        <TargetFramework Condition="$(RevitVersion) == '2015'">net45</TargetFramework>
+        <TargetFramework Condition="$(RevitVersion) &gt;= '2016'">net452</TargetFramework>
+        <TargetFramework Condition="$(RevitVersion) &gt;= '2018'">net46</TargetFramework>
+        <TargetFramework Condition="$(RevitVersion) &gt;= '2019'">net47</TargetFramework>
+        <TargetFramework Condition="$(RevitVersion) &gt;= '2021'">net48</TargetFramework>
+        <TargetFramework Condition="$(RevitVersion) &gt;= '2025'">net8.0-windows7.0</TargetFramework>
+    </PropertyGroup>
+
+    <!-- Launch configuration -->
+    <PropertyGroup Condition="'$(LaunchRevit)' == 'true'">
+        <StartAction>Program</StartAction>
+        <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
+        <StartArguments>/language ENG</StartArguments>
     </PropertyGroup>
 
 </Project>
