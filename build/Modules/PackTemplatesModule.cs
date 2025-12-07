@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Build.Options;
+﻿using Build.Options;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Attributes;
 using ModularPipelines.Context;
@@ -15,7 +14,7 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 [DependsOn<CleanProjectsModule>]
-public sealed partial class PackTemplatesModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
+public sealed class PackTemplatesModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
@@ -28,7 +27,7 @@ public sealed partial class PackTemplatesModule(IOptions<PackOptions> packOption
 
         try
         {
-            updatedFiles = await SetSdkVersion(packOptions.Value.Version);
+            updatedFiles = await SetSdkVersionAsync(packOptions.Value.Version, cancellationToken);
             return await context.DotNet().Pack(new DotNetPackOptions
             {
                 ProjectSolution = Projects.Nice3point_Revit_Templates.FullName,
@@ -54,7 +53,7 @@ public sealed partial class PackTemplatesModule(IOptions<PackOptions> packOption
         }
     }
 
-    private async Task<List<string>> SetSdkVersion(string version)
+    private static async Task<List<string>> SetSdkVersionAsync(string version, CancellationToken cancellationToken)
     {
         var modifiedFiles = new List<string>();
 
@@ -65,25 +64,20 @@ public sealed partial class PackTemplatesModule(IOptions<PackOptions> packOption
             .GetFiles(path => path.Extension == ".csproj")
             .ToArray();
 
-        var regex = SdkVersionRegex();
-        var replacement = $"""
-                           Project="Nice3point.Revit.Sdk/{version}"
-                           """;
-
         foreach (var file in templateProjectFiles)
         {
-            var content = await file.ReadAsync();
-            if (!regex.IsMatch(content)) continue;
-            
-            await file.WriteAsync(regex.Replace(content, replacement));
+            var content = await file.ReadAsync(cancellationToken);
+
+            await file.WriteAsync(content.Replace(
+                """
+                Project="Nice3point.Revit.Sdk"
+                """,
+                $"""
+                Project="Nice3point.Revit.Sdk/{version}"
+                """), cancellationToken);
             modifiedFiles.Add(file.Path);
         }
 
         return modifiedFiles;
     }
-
-    [GeneratedRegex("""
-                    Project="Nice3point\.Revit\.Sdk"
-                    """)]
-    private static partial Regex SdkVersionRegex();
 }
