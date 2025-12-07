@@ -6,13 +6,9 @@
 #Project-specific folders
 *obj/
 *bin/
-*temp/
 
-#Nuke output folder
+#Build output folder
 /output/
-
-#Project-specific files
-*/build.schema.json
 
 #User-specific files
 *.user
