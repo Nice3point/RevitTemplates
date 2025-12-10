@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
-using Nice3point.Revit.AddIn.Config.Options;
 #endif
 #if (Hosting && log)
 using Microsoft.Extensions.Logging;
@@ -12,8 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
 #endif
-#if (log && UseIoc)
-using Nice3point.Revit.AddIn.Config.Logging;
+#if (UseIoc)
+using Nice3point.Revit.AddIn.Configuration;
 #endif
 
 namespace Nice3point.Revit.AddIn;
@@ -40,7 +39,7 @@ public static class Host
 #if (log)
 
         //Logging
-        services.AddSerilogConfiguration();
+        services.AddSerilog();
 #endif
 #if (!NoWindow)
 
@@ -61,11 +60,11 @@ public static class Host
 
         //Logging
         builder.Logging.ClearProviders();
-        builder.Logging.AddSerilogConfiguration();
+        builder.Logging.AddSerilog();
 #endif
 
-        //Options
-        builder.Services.AddApplicationOptions();
+        //Configuration
+        builder.ConfigureHosting();
 #if (!NoWindow)
 
         //MVVM

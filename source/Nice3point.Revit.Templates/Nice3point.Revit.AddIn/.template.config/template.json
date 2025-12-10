@@ -152,7 +152,7 @@
         {
           "condition": "!Hosting",
           "exclude": [
-            "Config/Options/ApplicationOptions.cs"
+            "Configuration/HostingConfiguration.cs"
           ]
         },
         {
@@ -164,7 +164,7 @@
         {
           "condition": "!log || !UseIoc",
           "exclude": [
-            "Config/Logging/LoggerConfiguration.cs"
+            "Configuration/LoggerConfiguration.cs"
           ]
         }
       ]

@@ -8,10 +8,10 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Nice3point.Revit.AddIn.Config.Logging;
+namespace Nice3point.Revit.AddIn.Configuration;
 
 /// <summary>
-///     Application logging configuration
+///     Application logging configuration.
 /// </summary>
 /// <example>
 /// <code lang="csharp">
@@ -43,20 +43,26 @@ public static class LoggerConfiguration
 #endif
 
 #if (Container)
-    public static void AddSerilogConfiguration(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        var logger = CreateDefaultLogger();
-        services.AddSingleton<ILogger>(logger);
+        public void AddSerilog()
+        {
+            var logger = CreateDefaultLogger();
+            services.AddSingleton<ILogger>(logger);
 
-        AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+        }
     }
 #elseif (Hosting)
-    public static void AddSerilogConfiguration(this ILoggingBuilder builder)
+    extension(ILoggingBuilder builder)
     {
-        var logger = CreateDefaultLogger();
-        builder.AddSerilog(logger);
+        public void AddSerilog()
+        {
+            var logger = CreateDefaultLogger();
+            builder.AddSerilog(logger);
 
-        AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+        }
     }
 #endif
 

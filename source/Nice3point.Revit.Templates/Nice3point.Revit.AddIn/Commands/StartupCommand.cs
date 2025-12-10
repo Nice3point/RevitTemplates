@@ -17,7 +17,7 @@ using Serilog.Events;
 namespace Nice3point.Revit.AddIn.Commands;
 
 /// <summary>
-///     External command entry point
+///     External command entry point.
 /// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]
