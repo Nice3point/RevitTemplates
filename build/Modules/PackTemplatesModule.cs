@@ -70,10 +70,10 @@ public sealed class PackTemplatesModule(IOptions<PackOptions> packOptions) : Mod
 
             await file.WriteAsync(content.Replace(
                 """
-                Project="Nice3point.Revit.Sdk"
+                <Project Sdk="Nice3point.Revit.Sdk">
                 """,
                 $"""
-                Project="Nice3point.Revit.Sdk/{version}"
+                <Project Sdk="Nice3point.Revit.Sdk/{version}">
                 """), cancellationToken);
             modifiedFiles.Add(file.Path);
         }

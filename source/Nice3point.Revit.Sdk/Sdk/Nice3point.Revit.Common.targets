@@ -4,12 +4,17 @@
     ============================================================
                             Common
     
-    Set default Revit add-ins properties
+    Override Revit add-ins common properties
     ============================================================
     -->
 
-    <PropertyGroup>
-        <AppendTargetFrameworkToOutputPath Condition="'$(AppendTargetFrameworkToOutputPath) == '' AND '$(IsPackable)' == ''">false</AppendTargetFrameworkToOutputPath>
+    <PropertyGroup Condition="'$(IsPackable)' != 'true'">
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <DebugType Condition="$(Configuration.Contains('Release'))">none</DebugType>
     </PropertyGroup>
+
+    <Target Name="ValidateRevitVersion" BeforeTargets="BeforeBuild" Condition="'$(RevitVersion)' == '-1'">
+        <Error Text="Target Revit version cannot be resolved. The configuration must contain a version number, for example: Release.R2026 or Release.R26."/>
+    </Target>
 
 </Project>

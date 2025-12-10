@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Task = Microsoft.Build.Utilities.Task;
 
 namespace Nice3point.Revit.Sdk;
 
+[PublicAPI]
 public class GenerateCompatibleDefineConstants : Task
 {
     [Required] public required string Configuration { get; set; }

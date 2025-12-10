@@ -1,9 +1,11 @@
 using System.Xml.Linq;
+using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Task = Microsoft.Build.Utilities.Task;
 
 namespace Nice3point.Revit.Sdk;
 
+[PublicAPI]
 public class PatchManifest : Task
 {
     [Required] public required ITaskItem[] Manifests { get; set; }

@@ -4,7 +4,7 @@
     ============================================================
                             Common
     
-    Override Revit add-ins common properties
+    Set default Revit add-ins properties
     ============================================================
     -->
 
@@ -28,12 +28,10 @@
 
     <!-- Revit configuration -->
     <PropertyGroup>
-        <_RevitPredictedVersion>$([System.Text.RegularExpressions.Regex]::Match($(Configuration), '\d+$').Value)</_RevitPredictedVersion>
-        <RevitVersion Condition="'$(RevitConfiguration.Length)' == '4'">$(_RevitPredictedVersion)</RevitVersion>
-        <RevitVersion Condition="'$(RevitConfiguration.Length)' == '2'">20$(_RevitPredictedVersion)</RevitVersion>
-
-        <Error Condition="'@(RevitVersion)' == ''"
-               Text="Solution configuration does't contains target Revit version. Available formats: Release.R26, Release.R2026, etc."/>
+        <_RevitConfigurationVersion>$([System.Text.RegularExpressions.Regex]::Match($(Configuration), '(\d+)(?!.*\d)').Value)</_RevitConfigurationVersion>
+        <RevitVersion Condition="'$(_RevitConfigurationVersion.Length)' == '4'">$(_RevitConfigurationVersion)</RevitVersion>
+        <RevitVersion Condition="'$(_RevitConfigurationVersion.Length)' == '2'">20$(_RevitConfigurationVersion)</RevitVersion>
+        <RevitVersion Condition="'$(RevitVersion)' == ''">-1</RevitVersion>
     </PropertyGroup>
 
     <PropertyGroup>

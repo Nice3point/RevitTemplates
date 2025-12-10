@@ -12,7 +12,7 @@
         <DeployAddin Condition="'$(DeployAddin)' == ''">false</DeployAddin>
         <PublishAddin Condition="'$(DeployAddin)' == 'true'">true</PublishAddin>
         <PublishAddin Condition="'$(PublishAddin)' == ''">false</PublishAddin>
-        <AddinPublishDir Condition="'$(AddinPublishDir)' == ''">$(PublishDir)\$(Configuration).Revit.$(RevitVersion)</AddinPublishDir>
+        <AddinPublishDir Condition="'$(AddinPublishDir)' == ''">$(PublishDir)</AddinPublishDir>
         <AddinDeployDir Condition="'$(AddinDeployDir)' == ''">$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</AddinDeployDir>
     </PropertyGroup>
 

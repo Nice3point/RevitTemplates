@@ -10,8 +10,8 @@
         <PackageType>MSBuildSdk</PackageType>
         <PackageId>Nice3point.Revit.Sdk</PackageId>
         <Authors>Nice3point</Authors>
-        <Description>MSBuild tasks for Revit add-ins development</Description>
-        <PackageTags>autodesk;revit;addin;msbuild;sdk</PackageTags>
+        <Description>MSBuild SDK for Revit add-ins development</Description>
+        <PackageTags>autodesk;revit;msbuild;sdk</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitSdk</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Nice3point/RevitSdk</PackageProjectUrl>
@@ -31,12 +31,13 @@
         <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
         <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
         <None Include="..\..\docs\MsBuild-Sdk.md" PackagePath="Readme.md" Pack="true" Visible="false"/>
-        <Content Include="targets\**\*" PackagePath="Sdk\" Pack="true"/>
+        <Content Include="Sdk\**\*" PackagePath="Sdk\" Pack="true"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" PrivateAssets="all" ExcludeAssets="Runtime"/>
-        <PackageReference Include="Polyfill" Version="9.3.1" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" ExcludeAssets="Runtime"/>
+        <PackageReference Include="Polyfill" Version="9.3.1"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
     </ItemGroup>
 
 </Project>
