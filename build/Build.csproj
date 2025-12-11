@@ -13,7 +13,7 @@
         <PackageReference Include="ModularPipelines.GitHub" Version="2.48.30"/>
         <PackageReference Include="ModularPipelines.DotNet" Version="2.48.30"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
-        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
