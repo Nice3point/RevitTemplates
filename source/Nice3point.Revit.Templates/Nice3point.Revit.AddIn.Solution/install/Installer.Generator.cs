@@ -14,7 +14,7 @@ public static class Generator
     /// </summary>
     public static WixEntity[] GenerateWixEntities(IEnumerable<string> args)
     {
-        var versionRegex = new Regex(@"\d+");
+        var versionRegex = new Regex(@"(\d+)(?!.*\d)");
         var versionStorages = new Dictionary<string, List<WixEntity>>();
 
         var revitFeature = new Feature
@@ -26,8 +26,7 @@ public static class Generator
         
         foreach (var directory in args)
         {
-            var directoryInfo = new DirectoryInfo(directory);
-            var fileVersion = versionRegex.Match(directoryInfo.Name).Value;
+            var fileVersion = $"20{versionRegex.Match(directory).Value}";
             var feature = new Feature
             {
                 Name = fileVersion,

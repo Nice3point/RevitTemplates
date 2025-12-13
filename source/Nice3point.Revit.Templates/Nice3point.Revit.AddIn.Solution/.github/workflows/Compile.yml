@@ -1,4 +1,4 @@
-name: Compile
+name: Compile solution
 
 on:
   push:
@@ -7,20 +7,23 @@ on:
   pull_request:
 
 jobs:
-  compile:
-    name: Compile
+  windows:
+    name: windows-2025
     runs-on: windows-2025
     steps:
+
       - name: Checkout
         uses: actions/checkout@v6
 
       - name: Cache packages
         uses: actions/cache@v5
         with:
-          path: |
-            .nuke/temp
-            ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'Directory.Packages.props') }}
+          restore-keys: ${{ runner.os }}-nuget-
 
       - name: Compile solution
-        run: ./.nuke/build.cmd
+        run: dotnet run -c Release
+        working-directory: "build"
+        env:
+          DOTNET_ENVIRONMENT: ${{ github.ref_name == 'main' && 'Production' || 'Development' }}

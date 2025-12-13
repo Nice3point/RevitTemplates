@@ -95,39 +95,36 @@
           "condition": "!GitHubPipeline",
           "exclude": [
             ".github/**",
-            "build/Build.Publish.Clean.cs",
-            "build/Build.Publish.GitHub.cs",
-            "build/Build.Changelog.cs",
-            "Changelog.md"
+            "Changelog.md",
+            "build/Modules/GenerateChangelogModule.cs",
+            "build/Modules/GenerateGitHubChangelogModule.cs",
+            "build/Modules/PublishGithubModule.cs",
+            "build/Options/PublishOptions.cs"
           ]
         },
         {
           "condition": "GitHubPipeline && !HasArtifacts",
           "exclude": [
             ".github/workflows/PublishRelease.yml",
-            "build/Build.Publish.Clean.cs",
-            "build/Build.Publish.GitHub.cs",
-            "build/Build.Changelog.cs",
-            "Changelog.md"
+            "Changelog.md",
+            "build/Modules/GenerateChangelogModule.cs",
+            "build/Modules/GenerateGitHubChangelogModule.cs",
+            "build/Modules/PublishGithubModule.cs",
+            "build/Options/PublishOptions.cs"
           ]
         },
         {
           "condition": "!installer",
           "exclude": [
             "install/**",
-            "build/Build.CreateInstaller.cs"
+            "build/Modules/CreateInstallersModule.cs"
           ]
         },
         {
           "condition": "!bundle",
           "exclude": [
-            "build/Build.CreateBundle.cs"
-          ]
-        },
-        {
-          "condition": "!bundle && !installer",
-          "exclude": [
-            "build/Build.Regex.cs"
+            "build/Modules/CreateBundleModule.cs",
+            "build/Options/BuildOptions.cs"
           ]
         }
       ]
@@ -135,6 +132,52 @@
   ],
   "SpecialCustomOperations": {
     "Readme.md": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "if": [
+              "---#if"
+            ],
+            "else": [
+              "---#else"
+            ],
+            "elseif": [
+              "---#elseif"
+            ],
+            "endif": [
+              "---#endif"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    },
+    "*.slnx": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "if": [
+              "---#if"
+            ],
+            "else": [
+              "---#else"
+            ],
+            "elseif": [
+              "---#elseif"
+            ],
+            "endif": [
+              "---#endif"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    },
+    "*.json": {
       "operations": [
         {
           "type": "conditional",

@@ -15,9 +15,9 @@
         <File Path=".gitignore" />
         <File Path="Readme.md" />
         <File Path="build/appsettings.json" />
-#if (GitHubPipeline && HasArtifacts)
+---#if (GitHubPipeline && HasArtifacts)
         <File Path="Changelog.md" />
-#endif
+---#endif
     </Folder>
     <Folder Name="/Automation/">
         <Project Path="build/Build.csproj">
@@ -33,7 +33,7 @@
             <BuildType Solution="Release.R26|*" Project="Debug" />
             <Build Project="false" />
         </Project>
-#if (installer)
+---#if (installer)
         <Project Path="install\Installer.csproj">
             <BuildType Solution="Debug.R22|*" Project="Debug" />
             <BuildType Solution="Debug.R23|*" Project="Debug" />
@@ -47,6 +47,6 @@
             <BuildType Solution="Release.R26|*" Project="Debug" />
             <Build Project="false" />
         </Project>
-#endif
+---#endif
     </Folder>
 </Solution>
