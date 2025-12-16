@@ -43,7 +43,6 @@ public sealed class CompileProjectsModule : Module
         {
             ProjectSolution = Solutions.Nice3point.Revit.AddIn.FullName,
             Configuration = configuration,
-            Verbosity = Verbosity.Minimal,
             Properties =
             [
                 ("VersionPrefix", versioning.VersionPrefix),

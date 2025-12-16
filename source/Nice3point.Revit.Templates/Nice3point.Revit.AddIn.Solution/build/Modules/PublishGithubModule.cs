@@ -39,7 +39,7 @@ public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : M
 
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetFiles = outputFolder.ListFiles().ToArray();
-        targetFiles.Length.ShouldBePositive("No artifacts were found to create the Release");
+        targetFiles.ShouldNotBeEmpty("No artifacts were found to create the Release");
 
         var repositoryInfo = context.GitHub().RepositoryInfo;
         var newRelease = new NewRelease(versioning.Version)

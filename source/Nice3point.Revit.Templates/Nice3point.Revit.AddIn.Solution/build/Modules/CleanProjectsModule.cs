@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ModularPipelines.Context;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Modules;
+using Sourcy.DotNet;
 
 namespace Build.Modules;
 
@@ -21,7 +22,7 @@ public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : M
 #endif
         var buildOutputDirectories = rootDirectory
             .GetFolders(folder => folder.Name is "bin" or "obj")
-            .Where(folder => folder.Parent != Sourcy.DotNet.Projects.Build.Directory);
+            .Where(folder => folder.Parent != Projects.Build.Directory);
 
         foreach (var buildFolder in buildOutputDirectories)
         {

@@ -194,8 +194,8 @@
             "endif": [
               "---#endif"
             ],
-            "trim": "true",
-            "wholeLine": "true"
+            "trim": "false",
+            "wholeLine": "false"
           }
         }
       ]

@@ -19,7 +19,7 @@ public sealed class ResolveConfigurationsModule : Module<string[]>
             .Where(configuration => configuration.Contains("Release.R", StringComparison.OrdinalIgnoreCase))
             .ToArray();
 
-        configurations.Length.ShouldBePositive("No solution configurations have been found");
+        configurations.ShouldNotBeEmpty("No solution configurations have been found");
 
         return configurations;
     }
