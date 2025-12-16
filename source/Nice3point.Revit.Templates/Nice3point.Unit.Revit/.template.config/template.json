@@ -9,9 +9,9 @@
   "description": "Template for creating unit tests for Revit API",
   "classifications": [
     "Revit",
+    "API",
     "Unit",
     "Test",
-    "API",
     "TUnit"
   ],
   "tags": {
