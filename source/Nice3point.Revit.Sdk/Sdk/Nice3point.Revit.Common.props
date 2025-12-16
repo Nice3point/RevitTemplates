@@ -13,16 +13,19 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>true</ImplicitUsings>
         <ImplicitRevitUsings>true</ImplicitRevitUsings>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' != 'Debug' AND $(Configuration.Contains('Debug'))">
         <DebugSymbols>true</DebugSymbols>
+        <DebugType>portable</DebugType>
         <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' != 'Release' AND $(Configuration.Contains('Release'))">
         <Optimize>true</Optimize>
-        <DebugType>portable</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>none</DebugType>
         <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
     </PropertyGroup>
 

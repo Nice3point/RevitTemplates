@@ -8,11 +8,17 @@
     ============================================================
     -->
 
-    <PropertyGroup Condition="'$(IsPackable)' != 'true'">
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <DebugType Condition="$(Configuration.Contains('Release'))">none</DebugType>
+    <!-- Overrides for NuGet packages -->
+    <PropertyGroup Condition="'$(PackageType)' != '' OR '$(PackageId)' != '$(MSBuildProjectName)'">
+        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(IncludeSymbols)' == 'true'">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
+
+    <!-- Validations -->
     <Target Name="ValidateRevitVersion" BeforeTargets="BeforeBuild" Condition="'$(RevitVersion)' == '-1'">
         <Error Text="Target Revit version cannot be resolved. The configuration must contain a version number, for example: Release.R2026 or Release.R26."/>
     </Target>

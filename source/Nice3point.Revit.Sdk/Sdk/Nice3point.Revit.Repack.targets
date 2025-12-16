@@ -45,7 +45,7 @@
         <Exec Command="$(_ILRepackPath) /union /illink /parallel $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
               Condition="$(Configuration.Contains('Debug'))"/>
 
-        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes /ndebug $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
               StandardOutputImportance="Low"
               Condition="$(Configuration.Contains('Release'))"/>
 
