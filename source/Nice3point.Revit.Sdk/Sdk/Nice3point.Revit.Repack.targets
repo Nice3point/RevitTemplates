@@ -19,7 +19,7 @@
         </ItemGroup>
 
         <Error Condition="'@(_ILRepackVersion)' == ''"
-               Text="ILRepack is required but not installed..."/>
+               Text="ILRepack is required but not installed. Ensure that ILRepack PackageReference added in your project. If repacking is not needed, disable the IsRepackable property."/>
 
         <ItemGroup>
             <_ILRepackInputNamesExcludes Include="$(RepackBinariesExcludes.Split(';'))"/>
@@ -37,7 +37,7 @@
             <_ILRepackOutput>/out:&quot;$(OutputPath)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
             <_ILRepackInput>@(_ILRepackInputAssemblies -> '&quot;%(FullPath)&quot;', ' ')</_ILRepackInput>
             <_ILRepackPath>&quot;$(NuGetPackageRoot)\ilrepack\%(_ILRepackVersion.Version)\tools\ILRepack.exe&quot;</_ILRepackPath>
-            <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity)&quot;', ' ')</_ILRepackLib>
+            <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity) &quot;', ' ')</_ILRepackLib>
         </PropertyGroup>
 
         <Message Text="Repacking $(MSBuildProjectDirectory)\$(OutputPath)$(AssemblyName).dll" Importance="high"/>
