@@ -47,11 +47,4 @@
         <TargetFramework Condition="$(RevitVersion) &gt;= '2025'">net8.0-windows7.0</TargetFramework>
     </PropertyGroup>
 
-    <!-- Launch configuration -->
-    <PropertyGroup Condition="'$(LaunchRevit)' == 'true'">
-        <StartAction>Program</StartAction>
-        <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
-        <StartArguments>/language ENG</StartArguments>
-    </PropertyGroup>
-
 </Project>

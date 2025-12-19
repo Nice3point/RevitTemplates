@@ -18,6 +18,13 @@
         <DebugType>portable</DebugType>
     </PropertyGroup>
 
+    <!-- Launch configuration -->
+    <PropertyGroup Condition="'$(LaunchRevit)' == 'true'">
+        <StartAction Condition="'$(StartAction)' == ''">Program</StartAction>
+        <StartProgram Condition="'$(StartProgram)' == ''">C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
+        <StartArguments Condition="'$(StartArguments)' == ''">/language ENG</StartArguments>
+    </PropertyGroup>
+
     <!-- Validations -->
     <Target Name="ValidateRevitVersion" BeforeTargets="BeforeBuild" Condition="'$(RevitVersion)' == '-1'">
         <Error Text="Target Revit version cannot be resolved. The configuration must contain a version number, for example: Release.R2026 or Release.R26."/>
