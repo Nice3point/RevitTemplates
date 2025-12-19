@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/dotnetcli.host",
+  "symbolInfo": {
+    "addinUi": {
+      "longName": "ui",
+      "shortName": ""
+    }
+  },
+  "usageExamples": [
+    "dotnet new revit-addin-module",
+    "dotnet new revit-addin-module --ui"
+  ]
+}

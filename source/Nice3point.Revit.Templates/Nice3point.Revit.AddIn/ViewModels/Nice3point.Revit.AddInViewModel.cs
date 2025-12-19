@@ -1,17 +1,17 @@
-﻿#if (log && Container)
+﻿#if (addinLogging && diContainer)
 using Serilog;
 #endif
-#if (log && Hosting)
+#if (addinLogging && diHosting)
 using Microsoft.Extensions.Logging;
 #endif
 
 namespace Nice3point.Revit.AddIn.ViewModels;
 
-#if (!log)
+#if (!addinLogging)
 public sealed class Nice3point.Revit.AddInViewModel : ObservableObject
-#elseif (Container)
+#elseif (diContainer)
 public sealed class Nice3point.Revit.AddInViewModel(ILogger logger) : ObservableObject
-#elseif (Hosting)
+#elseif (diHosting)
 public sealed class Nice3point.Revit.AddInViewModel(ILogger<Nice3point.Revit.AddInViewModel> logger) : ObservableObject
 #else
 public sealed class Nice3point.Revit.AddInViewModel : ObservableObject

@@ -1,21 +1,20 @@
 ﻿<RevitAddIns>
-#if (Command)
+#if (isCommandAddin)
     <AddIn Type="Command">
-#elseif (Application)
+#elseif (isApplicationAddin)
     <AddIn Type="Application">
 #endif
         <Name>Nice3point.Revit.AddIn</Name>
         <Assembly>Nice3point.Revit.AddIn\Nice3point.Revit.AddIn.dll</Assembly>
         <AddInId>AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA</AddInId>
-#if (Command)
+#if (isCommandAddin)
         <FullClassName>Nice3point.Revit.AddIn.Commands.StartupCommand</FullClassName>
         <Text>Nice3point.Revit.AddIn</Text>
-#elseif (Application)
+#elseif (isApplicationAddin)
         <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
 #endif
         <VendorId>Development</VendorId>
         <VendorDescription></VendorDescription>
-        <VendorEmail></VendorEmail>
     </AddIn>
     <ManifestSettings>
         <UseRevitContext>False</UseRevitContext>

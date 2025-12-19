@@ -1,5 +1,5 @@
-﻿{
-  "$schema": "http://json.schemastore.org/template",
+{
+  "$schema": "https://json.schemastore.org/template",
   "author": "Nice3point",
   "name": "Revit Test (TUnit)",
   "shortName": "revit-tunit",
@@ -7,6 +7,8 @@
   "defaultName": "RevitTests",
   "sourceName": "Nice3point.Unit.Revit",
   "description": "Template for creating unit tests for Revit API",
+  "precedence": "6661",
+  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
     "API",
@@ -19,5 +21,6 @@
     "language": "C#",
     "platform": ".NET"
   },
-  "preferNameDirectory": true
+  "preferNameDirectory": true,
+  "placeholderFilename": "keep.folder"
 }

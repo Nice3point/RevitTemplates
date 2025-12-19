@@ -1,17 +1,17 @@
-#if (Hosting)
+#if (diHosting)
 using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
-#if (Hosting && log)
+#if (diHosting && addinLogging)
 using Microsoft.Extensions.Logging;
 #endif
 using Microsoft.Extensions.DependencyInjection;
-#if (!NoWindow)
+#if (hasUi)
 using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
 #endif
-#if (UseIoc)
+#if (useDi)
 using Nice3point.Revit.AddIn.Configuration;
 #endif
 
@@ -22,10 +22,10 @@ namespace Nice3point.Revit.AddIn;
 /// </summary>
 public static class Host
 {
-#if (Container)
+#if (diContainer)
     private static IServiceProvider? _serviceProvider;
 #endif
-#if (Hosting)
+#if (diHosting)
     private static IHost? _host;
 #endif
 
@@ -34,14 +34,14 @@ public static class Host
     /// </summary>
     public static void Start()
     {
-#if (Container)
+#if (diContainer)
         var services = new ServiceCollection();
-#if (log)
+#if (addinLogging)
 
         //Logging
         services.AddSerilog();
 #endif
-#if (!NoWindow)
+#if (hasUi)
 
         //MVVM
         services.AddTransient<Nice3point.Revit.AddInViewModel>();
@@ -50,13 +50,13 @@ public static class Host
 
         _serviceProvider = services.BuildServiceProvider();
 #endif
-#if (Hosting)
+#if (diHosting)
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });
-#if (log)
+#if (addinLogging)
 
         //Logging
         builder.Logging.ClearProviders();
@@ -65,7 +65,7 @@ public static class Host
 
         //Configuration
         builder.ConfigureHosting();
-#if (!NoWindow)
+#if (hasUi)
 
         //MVVM
         builder.Services.AddTransient<Nice3point.Revit.AddInViewModel>();
@@ -76,7 +76,7 @@ public static class Host
         _host.Start();
 #endif
     }
-#if (Hosting)
+#if (diHosting)
 
     /// <summary>
     ///     Stops the host and handle <see cref="IHostedService"/> services
@@ -94,10 +94,10 @@ public static class Host
     /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
     public static T GetService<T>() where T : class
     {
-#if (Container)
+#if (diContainer)
         return _serviceProvider!.GetRequiredService<T>();
 #endif
-#if (Hosting)
+#if (diHosting)
         return _host!.Services.GetRequiredService<T>();
 #endif
     }

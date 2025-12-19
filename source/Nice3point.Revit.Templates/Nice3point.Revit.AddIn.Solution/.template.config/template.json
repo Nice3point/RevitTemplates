@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json.schemastore.org/template",
+  "$schema": "https://json.schemastore.org/template",
   "author": "Nice3point",
   "name": "Revit AddIn Solution",
   "shortName": "revit-addin-sln",
@@ -7,6 +7,8 @@
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
   "description": "Template for creating a solution structure for Revit add-ins",
+  "precedence": "6666",
+  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
     "AddIn",
@@ -23,7 +25,7 @@
     "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"
   ],
   "symbols": {
-    "pipeline": {
+    "ciProvider": {
       "type": "parameter",
       "displayName": "Pipeline",
       "description": "Adds support for CI/CD pipeline to your project",
@@ -47,52 +49,52 @@
       ],
       "defaultValue": "GitHub"
     },
-    "installer": {
+    "includeInstaller": {
       "type": "parameter",
       "displayName": "Installer support",
-      "dataType": "bool",
+      "datatype": "bool",
       "description": "Creates a project installer",
       "defaultValue": "true"
     },
-    "bundle": {
+    "includeBundle": {
       "type": "parameter",
       "displayName": "Bundle support",
-      "dataType": "bool",
+      "datatype": "bool",
       "description": "Packs project files into a bundle. Used for uploading to Autodesk Store",
       "defaultValue": "false"
     },
-    "NoPipeline": {
+    "isCiDisabled": {
       "type": "computed",
-      "value": "pipeline == \"None\""
+      "value": "ciProvider == \"None\""
     },
-    "AzurePipeline": {
+    "isAzureCi": {
       "type": "computed",
-      "value": "pipeline == \"Azure\""
+      "value": "ciProvider == \"Azure\""
     },
-    "GitHubPipeline": {
+    "isGitHubCi": {
       "type": "computed",
-      "value": "pipeline == \"GitHub\""
+      "value": "ciProvider == \"GitHub\""
     },
-    "HasArtifacts": {
+    "hasArtifacts": {
       "type": "computed",
-      "value": "bundle || installer"
+      "value": "includeBundle || includeInstaller"
     },
-    "ReleasePipeline": {
+    "isReleaseCi": {
       "type": "computed",
-      "value": "GitHubPipeline || AzurePipeline"
+      "value": "isGitHubCi || isAzureCi"
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "!AzurePipeline || !HasArtifacts",
+          "condition": "!isAzureCi || !hasArtifacts",
           "exclude": [
             "azure-pipelines.yml"
           ]
         },
         {
-          "condition": "!GitHubPipeline",
+          "condition": "!isGitHubCi",
           "exclude": [
             ".github/**",
             "Changelog.md",
@@ -103,7 +105,7 @@
           ]
         },
         {
-          "condition": "GitHubPipeline && !HasArtifacts",
+          "condition": "isGitHubCi && !hasArtifacts",
           "exclude": [
             ".github/workflows/PublishRelease.yml",
             "Changelog.md",
@@ -114,17 +116,17 @@
           ]
         },
         {
-          "condition": "!installer",
+          "condition": "!includeInstaller",
           "exclude": [
             "install/**",
             "build/Modules/CreateInstallersModule.cs"
           ]
         },
         {
-          "condition": "!bundle",
+          "condition": "!includeBundle",
           "exclude": [
             "build/Modules/CreateBundleModule.cs",
-            "build/Options/BuildOptions.cs"
+            "build/Options/BundleOptions.cs"
           ]
         }
       ]

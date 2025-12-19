@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/dotnetcli.host",
+  "symbolInfo": {
+    "addinManifestType": {
+      "longName": "addin",
+      "shortName": ""
+    },
+    "addinUiMode": {
+      "longName": "ui",
+      "shortName": ""
+    },
+    "addinDiMode": {
+      "longName": "di",
+      "shortName": ""
+    },
+    "addinLogging": {
+      "longName": "log",
+      "shortName": ""
+    }
+  },
+  "usageExamples": [
+    "dotnet new revit-addin",
+    "dotnet new revit-addin --addin command --ui modal --di hosting --log"
+  ]
+}

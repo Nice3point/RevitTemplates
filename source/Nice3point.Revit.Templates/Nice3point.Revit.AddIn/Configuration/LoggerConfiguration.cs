@@ -1,7 +1,7 @@
-﻿#if (Container)
+﻿#if (diContainer)
 using Microsoft.Extensions.DependencyInjection;
 #endif
-#if (Hosting)
+#if (diHosting)
 using Microsoft.Extensions.Logging;
 #endif
 using Serilog;
@@ -15,7 +15,7 @@ namespace Nice3point.Revit.AddIn.Configuration;
 /// </summary>
 /// <example>
 /// <code lang="csharp">
-#if (Container)
+#if (diContainer)
 /// public class Class(ILogger logger)
 /// {
 ///     private void Execute()
@@ -23,7 +23,7 @@ namespace Nice3point.Revit.AddIn.Configuration;
 ///         logger.Information("Message");
 ///     }
 /// }
-#elseif (Hosting)
+#elseif (diHosting)
 /// public class Class(ILogger&lt;Class&gt; logger)
 /// {
 ///     private void Execute()
@@ -36,13 +36,13 @@ namespace Nice3point.Revit.AddIn.Configuration;
 /// </example>
 public static class LoggerConfiguration
 {
-#if (Container)
+#if (diContainer)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}]: {Message:lj}{NewLine}{Exception}";
-#elseif (Hosting)
+#elseif (diHosting)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}";
 #endif
 
-#if (Container)
+#if (diContainer)
     extension(IServiceCollection services)
     {
         public void AddSerilog()
@@ -53,7 +53,7 @@ public static class LoggerConfiguration
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
     }
-#elseif (Hosting)
+#elseif (diHosting)
     extension(ILoggingBuilder builder)
     {
         public void AddSerilog()
@@ -74,14 +74,14 @@ public static class LoggerConfiguration
             .CreateLogger();
     }
 
-#if (Container)
+#if (diContainer)
     private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;
         var logger = Host.GetService<ILogger>();
         logger.Fatal(exception, "Domain unhandled exception");
     }
-#elseif (Hosting)
+#elseif (diHosting)
     private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;

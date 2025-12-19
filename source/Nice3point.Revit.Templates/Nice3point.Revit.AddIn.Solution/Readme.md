@@ -9,25 +9,25 @@ Autodesk Revit plugin project organized into multiple solution files that target
 * [Solution Structure](#solution-structure)
 * [Project Structure](#project-structure)
 * [Building](#building)
----#if (installer && bundle)
+---#if (includeInstaller && includeBundle)
   * [Building the MSI installer and the Autodesk bundle on local machine](#building-the-msi-installer-and-the-autodesk-bundle-on-local-machine)
----#elseif (installer)
+---#elseif (includeInstaller)
   * [Building the MSI installer on local machine](#building-the-msi-installer-on-local-machine)
----#elseif (bundle)
+---#elseif (includeBundle)
   * [Building the Autodesk bundle on local machine](#building-the-autodesk-bundle-on-local-machine)
 ---#endif
----#if (ReleasePipeline && HasArtifacts)
+---#if (isReleaseCi && hasArtifacts)
 * [Publishing Releases](#publishing-releases)
   * [Creating a new Release from the JetBrains Rider](#creating-a-new-release-from-the-jetbrains-rider)
   * [Creating a new Release from the Terminal](#creating-a-new-release-from-the-terminal)
----#if (GitHubPipeline)
+---#if (isGitHubCi)
   * [Creating a new Release on GitHub](#creating-a-new-release-on-github)
 ---#endif
----#if (AzurePipeline)
+---#if (isAzureCi)
   * [Creating a new Release on Azure DevOps](#creating-a-new-release-on-azure-devops)
 ---#endif
 ---#endif
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 * [Compiling a solution on GitHub](#compiling-a-solution-on-github)
 ---#endif
 * [Conditional compilation for a specific Revit version](#conditional-compilation-for-a-specific-revit-version)
@@ -54,7 +54,7 @@ After installation, clone this repository to your local machine and navigate to 
 | Folder  | Description                                                                |
 |---------|----------------------------------------------------------------------------|
 | build   | Nuke build system. Used to automate project builds                         |
----#if (installer)
+---#if (includeInstaller)
 | install | Add-in installer, called implicitly by the Nuke build                      |
 ---#endif
 | source  | Project source code folder. Contains all solution projects                 |
@@ -88,18 +88,18 @@ Also, you can use Visual Studio. If you don't have Visual Studio installed, down
 1. Open Visual Studio
 2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
----#if (HasArtifacts)
----#if (installer && bundle)
+---#if (hasArtifacts)
+---#if (includeInstaller && includeBundle)
 
 ### Building the MSI installer and the Autodesk bundle on local machine
 
 To build the project for all versions, create the installer and bundle, this project uses [NUKE](https://github.com/nuke-build/nuke)
----#elseif (installer)
+---#elseif (includeInstaller)
 
 ### Building the MSI installer on local machine
 
 To build the project for all versions, create the installer, this project uses [NUKE](https://github.com/nuke-build/nuke)
----#elseif (bundle)
+---#elseif (includeBundle)
 
 ### Building the Autodesk bundle on local machine
 
@@ -124,20 +124,20 @@ To execute your NUKE build locally, you can follow these steps:
    nuke
    ```
 
----#if (installer)
+---#if (includeInstaller)
    Create installer:
    ```shell
    nuke createinstaller
    ```
 
 ---#endif
----#if (bundle && !installer)
+---#if (includeBundle && !includeInstaller)
    Create bundle:
    ```shell
    nuke createbundle
    ```
 
----#elseif (bundle && installer)
+---#elseif (includeBundle && includeInstaller)
    Create installer and bundle:
    ```shell
    nuke createinstaller createbundle
@@ -146,7 +146,7 @@ To execute your NUKE build locally, you can follow these steps:
 ---#endif
    This command will execute the NUKE build defined in your project.
 ---#endif
----#if (ReleasePipeline && HasArtifacts)
+---#if (isReleaseCi && hasArtifacts)
 
 ## Publishing Releases
 
@@ -224,11 +224,11 @@ Alternatively, you can create and push tags using the terminal:
    git push origin 'version'
    ```
 
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 > [!NOTE]  
 ---#endif
 > The tag will reference your current commit, so verify you're on the correct branch and have fetched latest changes from remote first.
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 
 ### Creating a new Release on GitHub
 
@@ -242,7 +242,7 @@ To create releases directly on GitHub:
     ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 
 ---#endif
----#if (AzurePipeline)
+---#if (isAzureCi)
 ### Creating a new Release on Azure DevOps
 
 To create releases directly on Azure:
@@ -257,7 +257,7 @@ To create releases directly on Azure:
 
 ---#endif
 ---#endif
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 
 ## Compiling a solution on GitHub
 
@@ -281,7 +281,7 @@ E.g., select the `Debug.R26` configuration for the Revit 2026 API.
 The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`, `REVIT2026_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.
 
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 > [!NOTE]  
 ---#endif
 > For generating directives, a third-party package is used.
@@ -336,7 +336,7 @@ EndGlobalSection
 
 For example `Debug R26` is the Debug configuration for Revit 2026 version.
 
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 > [!TIP]  
 ---#endif
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
@@ -358,7 +358,7 @@ Example:
 </PropertyGroup>
 ```
 
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 > [!IMPORTANT]  
 ---#endif
 > Edit the `.csproj` file only manually, IDEs often break configurations.
@@ -382,7 +382,7 @@ Then specify the framework and Revit version for each configuration, update the 
 
 To support CI/CD pipelines and build a project for Revit versions not installed on your computer, use Nuget packages.
 
----#if (GitHubPipeline)
+---#if (isGitHubCi)
 > [!NOTE]  
 ---#endif
 > Revit API dependencies are available in the [Revit.API](https://github.com/Nice3point/RevitApi) repository.

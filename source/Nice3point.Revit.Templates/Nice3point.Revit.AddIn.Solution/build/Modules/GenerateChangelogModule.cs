@@ -41,6 +41,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
         if (!versioning.IsPrerelease)
         {
             changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
+            return changelog.ToString();
         }
 
         return await GenerateReleaseNotesAsync(context, versioning);

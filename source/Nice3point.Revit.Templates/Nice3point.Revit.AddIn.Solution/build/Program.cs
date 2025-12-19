@@ -19,21 +19,21 @@ await PipelineHostBuilder.Create()
         collection.AddModule<ResolveVersioningModule>();
         collection.AddModule<CleanProjectsModule>();
         collection.AddModule<CompileProjectsModule>();
-#if (HasArtifacts)
+#if (hasArtifacts)
 
         if (args.Contains("pack"))
         {
             collection.AddOptions<BundleOptions>().Bind(context.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
 
-#if (bundle)
+#if (includeBundle)
             collection.AddModule<CreateBundleModule>();
 #endif
-#if (installer)
+#if (includeInstaller)
             collection.AddModule<CreateInstallersModule>();
 #endif
         }
 #endif
-#if (GitHubPipeline && HasArtifacts)
+#if (isGitHubCi && hasArtifacts)
 
         if (args.Contains("publish"))
         {

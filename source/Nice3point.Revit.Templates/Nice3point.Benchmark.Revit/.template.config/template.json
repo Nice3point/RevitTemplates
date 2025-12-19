@@ -1,5 +1,5 @@
-﻿{
-  "$schema": "http://json.schemastore.org/template",
+{
+  "$schema": "https://json.schemastore.org/template",
   "author": "Nice3point",
   "name": "Revit Benchmark",
   "shortName": "revit-benchmark",
@@ -7,6 +7,8 @@
   "defaultName": "RevitBenchmark",
   "sourceName": "Nice3point.Benchmark.Revit",
   "description": "Template for creating performance benchmarks for Revit API",
+  "precedence": "6662",
+  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
     "API",
@@ -18,5 +20,6 @@
     "language": "C#",
     "platform": ".NET"
   },
-  "preferNameDirectory": true
+  "preferNameDirectory": true,
+  "placeholderFilename": "keep.folder"
 }

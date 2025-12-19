@@ -33,7 +33,7 @@
             <BuildType Solution="Release.R26|*" Project="Debug" />
             <Build Project="false" />
         </Project>
----#if (installer)
+---#if (includeInstaller)
         <Project Path="install\Installer.csproj">
             <BuildType Solution="Debug.R22|*" Project="Debug" />
             <BuildType Solution="Debug.R23|*" Project="Debug" />

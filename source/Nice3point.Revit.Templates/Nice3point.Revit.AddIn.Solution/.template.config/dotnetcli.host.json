@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/dotnetcli.host",
+  "symbolInfo": {
+    "ciProvider": {
+      "longName": "pipeline",
+      "shortName": ""
+    },
+    "includeInstaller": {
+      "longName": "installer",
+      "shortName": ""
+    },
+    "includeBundle": {
+      "longName": "bundle",
+      "shortName": ""
+    }
+  },
+  "usageExamples": [
+    "dotnet new revit-addin-sln",
+    "dotnet new revit-addin-sln --pipeline github --installer --bundle"
+  ]
+}

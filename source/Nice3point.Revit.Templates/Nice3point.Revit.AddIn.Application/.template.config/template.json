@@ -1,5 +1,5 @@
-﻿{
-  "$schema": "http://json.schemastore.org/template",
+{
+  "$schema": "https://json.schemastore.org/template",
   "author": "Nice3point",
   "name": "Revit AddIn Application",
   "shortName": "revit-addin-app",
@@ -7,6 +7,8 @@
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
   "description": "Template for creating an empty application for multi-project Revit add-in",
+  "precedence": "6664",
+  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
     "AddIn",
@@ -24,14 +26,14 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
-    "addin": {
+    "addinManifestType": {
       "type": "parameter",
       "displayName": "Add-In type",
       "datatype": "choice",
       "description": "The type of add-in to be registered in the .addin manifest",
       "choices": [
         {
-          "choice": "app",
+          "choice": "application",
           "displayName": "Application",
           "description": "Registers the add-in in the manifest with the Application type"
         },
@@ -41,9 +43,9 @@
           "description": "Registers the add-in in the manifest with the Command type"
         }
       ],
-      "defaultValue": "app"
+      "defaultValue": "application"
     },
-    "ioc": {
+    "addinDiMode": {
       "type": "parameter",
       "displayName": "IoC",
       "datatype": "choice",
@@ -60,46 +62,46 @@
           "description": "Use Microsoft.Extensions.DependencyInjection implementation"
         },
         {
-          "choice": "host",
+          "choice": "hosting",
           "displayName": "Hosting",
           "description": "Use Microsoft.Extensions.Hosting implementation"
         }
       ],
       "defaultValue": "disabled"
     },
-    "log": {
+    "addinLogging": {
       "type": "parameter",
       "displayName": "Serilog support",
-      "dataType": "bool",
+      "datatype": "bool",
       "description": "Logging support for the add-in",
       "defaultValue": "false"
     },
-    "Command": {
+    "isCommandAddin": {
       "type": "computed",
-      "value": "addin == \"command\""
+      "value": "addinManifestType == \"command\""
     },
-    "Application": {
+    "isApplicationAddin": {
       "type": "computed",
-      "value": "addin == \"app\""
+      "value": "addinManifestType == \"application\""
     },
-    "Container": {
+    "diContainer": {
       "type": "computed",
-      "value": "ioc == \"container\""
+      "value": "addinDiMode == \"container\""
     },
-    "Hosting": {
+    "diHosting": {
       "type": "computed",
-      "value": "ioc == \"host\""
+      "value": "addinDiMode == \"hosting\""
     },
-    "UseIoc": {
+    "useDi": {
       "type": "computed",
-      "value": "ioc != \"disabled\""
+      "value": "addinDiMode != \"disabled\""
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "Command",
+          "condition": "isCommandAddin",
           "exclude": [
             "Application.cs",
             "Resources/Icons/RibbonIcon16.png",
@@ -107,19 +109,19 @@
           ]
         },
         {
-          "condition": "!UseIoc",
+          "condition": "!useDi",
           "exclude": [
             "Host.cs"
           ]
         },
         {
-          "condition": "!Hosting",
+          "condition": "!diHosting",
           "exclude": [
             "Configuration/HostingConfiguration.cs"
           ]
         },
         {
-          "condition": "!log || !UseIoc",
+          "condition": "!addinLogging || !useDi",
           "exclude": [
             "Configuration/LoggerConfiguration.cs"
           ]
@@ -129,17 +131,17 @@
   ],
   "primaryOutputs": [
     {
-      "condition": "Application",
+      "condition": "isApplicationAddin",
       "path": "Application.cs"
     },
     {
-      "condition": "Command",
+      "condition": "isCommandAddin",
       "path": "Commands/StartupCommand.cs"
     }
   ],
   "postActions": [
     {
-      "condition": "Application",
+      "condition": "isApplicationAddin",
       "description": "Opens Application.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
@@ -149,7 +151,7 @@
       "continueOnError": true
     },
     {
-      "condition": "Command",
+      "condition": "isCommandAddin",
       "description": "Opens Command.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
@@ -165,13 +167,13 @@
         {
           "type": "conditional",
           "configuration": {
-            "actionableIf": [
+            "if": [
               "#if"
             ],
-            "actionableElse": [
+            "else": [
               "#else"
             ],
-            "actionableElseif": [
+            "elseif": [
               "#elseif"
             ],
             "endif": [

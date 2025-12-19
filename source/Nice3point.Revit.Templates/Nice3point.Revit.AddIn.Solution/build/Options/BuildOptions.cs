@@ -17,7 +17,7 @@ public sealed record BuildOptions
     ///     1.0.0
     /// </example>
     public string? Version { get; init; }
-#if (HasArtifacts)
+#if (hasArtifacts)
 
     /// <summary>
     ///     Path to build output

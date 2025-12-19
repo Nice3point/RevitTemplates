@@ -1,5 +1,5 @@
-﻿{
-  "$schema": "http://json.schemastore.org/template",
+{
+  "$schema": "https://json.schemastore.org/template",
   "author": "Nice3point",
   "name": "Revit AddIn",
   "shortName": "revit-addin",
@@ -7,6 +7,8 @@
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
   "description": "Template for creating single-project Revit add-in",
+  "precedence": "6665",
+  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
     "AddIn",
@@ -23,14 +25,14 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
-    "addin": {
+    "addinManifestType": {
       "type": "parameter",
       "displayName": "Add-In type",
       "datatype": "choice",
       "description": "The type of add-in to be registered in the .addin manifest",
       "choices": [
         {
-          "choice": "app",
+          "choice": "application",
           "displayName": "Application",
           "description": "Registers the add-in in the manifest with the Application type"
         },
@@ -40,9 +42,9 @@
           "description": "Registers the add-in in the manifest with the Command type"
         }
       ],
-      "defaultValue": "app"
+      "defaultValue": "application"
     },
-    "window": {
+    "addinUiMode": {
       "type": "parameter",
       "displayName": "User interface",
       "datatype": "choice",
@@ -66,16 +68,16 @@
       ],
       "defaultValue": "modal"
     },
-    "ioc": {
+    "addinDiMode": {
       "type": "parameter",
-      "displayName": "IoC",
+      "displayName": "Dependency Injection",
       "datatype": "choice",
       "description": "Supports the dependency injection (DI) software design pattern which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies",
       "choices": [
         {
           "choice": "disabled",
           "displayName": "Disabled",
-          "description": "The add-in will not use IoC"
+          "description": "The add-in will not use DI"
         },
         {
           "choice": "container",
@@ -83,58 +85,58 @@
           "description": "Use Microsoft.Extensions.DependencyInjection implementation"
         },
         {
-          "choice": "host",
+          "choice": "hosting",
           "displayName": "Hosting",
           "description": "Use Microsoft.Extensions.Hosting implementation"
         }
       ],
       "defaultValue": "disabled"
     },
-    "log": {
+    "addinLogging": {
       "type": "parameter",
       "displayName": "Serilog support",
-      "dataType": "bool",
+      "datatype": "bool",
       "description": "Logging support for the add-in",
       "defaultValue": "false"
     },
-    "Command": {
+    "isCommandAddin": {
       "type": "computed",
-      "value": "addin == \"command\""
+      "value": "addinManifestType == \"command\""
     },
-    "Application": {
+    "isApplicationAddin": {
       "type": "computed",
-      "value": "addin == \"app\""
+      "value": "addinManifestType == \"application\""
     },
-    "NoWindow": {
+    "hasUi": {
       "type": "computed",
-      "value": "window == \"none\""
+      "value": "addinUiMode != \"none\""
     },
-    "Modal": {
+    "uiModal": {
       "type": "computed",
-      "value": "window == \"modal\""
+      "value": "addinUiMode == \"modal\""
     },
-    "Modeless": {
+    "uiModeless": {
       "type": "computed",
-      "value": "window == \"modeless\""
+      "value": "addinUiMode == \"modeless\""
     },
-    "Container": {
+    "diContainer": {
       "type": "computed",
-      "value": "ioc == \"container\""
+      "value": "addinDiMode == \"container\""
     },
-    "Hosting": {
+    "diHosting": {
       "type": "computed",
-      "value": "ioc == \"host\""
+      "value": "addinDiMode == \"hosting\""
     },
-    "UseIoc": {
+    "useDi": {
       "type": "computed",
-      "value": "ioc != \"disabled\""
+      "value": "addinDiMode != \"disabled\""
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "Command",
+          "condition": "isCommandAddin",
           "exclude": [
             "Application.cs",
             "Resources/Icons/RibbonIcon16.png",
@@ -142,7 +144,7 @@
           ]
         },
         {
-          "condition": "NoWindow",
+          "condition": "!hasUi",
           "exclude": [
             "Models/**",
             "Views/**",
@@ -150,19 +152,19 @@
           ]
         },
         {
-          "condition": "!Hosting",
+          "condition": "!diHosting",
           "exclude": [
             "Configuration/HostingConfiguration.cs"
           ]
         },
         {
-          "condition": "!UseIoc",
+          "condition": "!useDi",
           "exclude": [
             "Host.cs"
           ]
         },
         {
-          "condition": "!log || !UseIoc",
+          "condition": "!addinLogging || !useDi",
           "exclude": [
             "Configuration/LoggerConfiguration.cs"
           ]
@@ -172,17 +174,17 @@
   ],
   "primaryOutputs": [
     {
-      "condition": "Application",
+      "condition": "isApplicationAddin",
       "path": "Application.cs"
     },
     {
-      "condition": "Command",
+      "condition": "isCommandAddin",
       "path": "Commands/StartupCommand.cs"
     }
   ],
   "postActions": [
     {
-      "condition": "Application",
+      "condition": "isApplicationAddin",
       "description": "Opens Application.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
@@ -192,7 +194,7 @@
       "continueOnError": true
     },
     {
-      "condition": "Command",
+      "condition": "isCommandAddin",
       "description": "Opens Command.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
@@ -203,18 +205,18 @@
     }
   ],
   "SpecialCustomOperations": {
-    "**/*.addin": {
+    "*.addin": {
       "operations": [
         {
           "type": "conditional",
           "configuration": {
-            "actionableIf": [
+            "if": [
               "#if"
             ],
-            "actionableElse": [
+            "else": [
               "#else"
             ],
-            "actionableElseif": [
+            "elseif": [
               "#elseif"
             ],
             "endif": [

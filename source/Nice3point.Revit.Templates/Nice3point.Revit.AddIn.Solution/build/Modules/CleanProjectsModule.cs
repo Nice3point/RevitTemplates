@@ -17,7 +17,7 @@ public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : M
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var rootDirectory = context.Git().RootDirectory;
-#if (HasArtifacts)
+#if (hasArtifacts)
         var outputDirectory = rootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
 #endif
         var buildOutputDirectories = rootDirectory
@@ -28,7 +28,7 @@ public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : M
         {
             buildFolder.Clean();
         }
-#if (HasArtifacts)
+#if (hasArtifacts)
 
         if (outputDirectory.Exists)
         {
