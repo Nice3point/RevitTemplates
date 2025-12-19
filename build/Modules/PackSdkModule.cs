@@ -16,22 +16,22 @@ public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<Co
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelogModule = GetModuleIfRegistered<CreatePackageChangelogModule>();
+        var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
-        var changelog = changelogModule is null ? null : await changelogModule;
+        var changelogResult = changelogModule is null ? null : await changelogModule;
+        var changelog = changelogResult?.Value ?? string.Empty;
         var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
 
-            return await context.DotNet().Pack(new DotNetPackOptions
+        return await context.DotNet().Pack(new DotNetPackOptions
+        {
+            ProjectSolution = Projects.Nice3point_Revit_Sdk.FullName,
+            Configuration = Configuration.Release,
+            Properties = new List<KeyValue>
             {
-                ProjectSolution = Projects.Nice3point_Revit_Sdk.FullName,
-                Configuration = Configuration.Release,
-                Verbosity = Verbosity.Minimal,
-                Properties = new List<KeyValue>
-                {
-                    ("Version", packOptions.Value.Version),
-                    ("PackageReleaseNotes", changelog is null ? string.Empty : changelog.Value)
-                },
-                OutputDirectory = outputFolder
-            }, cancellationToken);
+                ("Version", packOptions.Value.Version),
+                ("PackageReleaseNotes", changelog)
+            },
+            OutputDirectory = outputFolder
+        }, cancellationToken);
     }
 }

@@ -9,9 +9,9 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
-public sealed class CreateChangelogModule(IOptions<PackOptions> packOptions) : Module<StringBuilder>
+public sealed class GenerateChangelogModule(IOptions<PackOptions> packOptions) : Module<string>
 {
-    protected override async Task<StringBuilder?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
+    protected override async Task<string?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var changelogFile = context.Git().RootDirectory.GetFile("Changelog.md");
         var version = packOptions.Value.Version;
@@ -19,7 +19,7 @@ public sealed class CreateChangelogModule(IOptions<PackOptions> packOptions) : M
         var changelog = await BuildChangelog(changelogFile, version);
         changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {version}");
 
-        return changelog;
+        return changelog.ToString();
     }
 
     private static async Task<StringBuilder> BuildChangelog(File changelogFile, string version)
@@ -53,14 +53,20 @@ public sealed class CreateChangelogModule(IOptions<PackOptions> packOptions) : M
     {
         if (changelog.Length == 0) return;
 
-        while (changelog[^1] == '\r' || changelog[^1] == '\n')
+        var start = 0;
+        var end = changelog.Length - 1;
+
+        while (start < changelog.Length && (changelog[start] == '\r' || changelog[start] == '\n')) start++;
+        while (end >= start && (changelog[end] == '\r' || changelog[end] == '\n')) end--;
+
+        if (end < changelog.Length - 1)
         {
-            changelog.Remove(changelog.Length - 1, 1);
+            changelog.Remove(end + 1, changelog.Length - (end + 1));
         }
 
-        while (changelog[0] == '\r' || changelog[0] == '\n')
+        if (start > 0)
         {
-            changelog.Remove(0, 1);
+            changelog.Remove(0, start);
         }
     }
 }

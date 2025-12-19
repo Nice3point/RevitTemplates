@@ -18,9 +18,10 @@ public sealed class PackTemplatesModule(IOptions<PackOptions> packOptions) : Mod
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelogModule = GetModuleIfRegistered<CreatePackageChangelogModule>();
+        var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
-        var changelog = changelogModule is null ? null : await changelogModule;
+        var changelogResult = changelogModule is null ? null : await changelogModule;
+        var changelog = changelogResult?.Value ?? string.Empty;
         var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
 
         List<string> updatedFiles = [];
@@ -32,11 +33,10 @@ public sealed class PackTemplatesModule(IOptions<PackOptions> packOptions) : Mod
             {
                 ProjectSolution = Projects.Nice3point_Revit_Templates.FullName,
                 Configuration = Configuration.Release,
-                Verbosity = Verbosity.Minimal,
                 Properties = new List<KeyValue>
                 {
                     ("Version", packOptions.Value.Version),
-                    ("PackageReleaseNotes", changelog is null ? string.Empty : changelog.Value)
+                    ("PackageReleaseNotes", changelog)
                 },
                 OutputDirectory = outputFolder
             }, cancellationToken);
@@ -73,8 +73,8 @@ public sealed class PackTemplatesModule(IOptions<PackOptions> packOptions) : Mod
                 <Project Sdk="Nice3point.Revit.Sdk">
                 """,
                 $"""
-                <Project Sdk="Nice3point.Revit.Sdk/{version}">
-                """), cancellationToken);
+                 <Project Sdk="Nice3point.Revit.Sdk/{version}">
+                 """), cancellationToken);
             modifiedFiles.Add(file.Path);
         }
 

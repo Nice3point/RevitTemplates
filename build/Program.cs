@@ -2,7 +2,6 @@
 using Build.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using ModularPipelines.Extensions;
 using ModularPipelines.Host;
 
@@ -32,16 +31,11 @@ await PipelineHostBuilder.Create()
 
         if (args.Contains("publish"))
         {
-            if (!context.HostingEnvironment.IsProduction())
-            {
-                throw new InvalidOperationException("Publish can only be run in production");
-            }
-
             collection.AddOptions<NuGetOptions>().Bind(context.Configuration.GetSection("NuGet")).ValidateDataAnnotations();
 
-            collection.AddModule<CreateChangelogModule>();
-            collection.AddModule<CreatePackageChangelogModule>();
-            collection.AddModule<CreateGitHubChangelogModule>();
+            collection.AddModule<GenerateChangelogModule>();
+            collection.AddModule<GenerateNugetChangelogModule>();
+            collection.AddModule<GenerateGitHubChangelogModule>();
             collection.AddModule<PublishNugetModule>();
             collection.AddModule<PublishGithubModule>();
         }

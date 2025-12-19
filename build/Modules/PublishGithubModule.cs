@@ -16,12 +16,12 @@ namespace Build.Modules;
 
 [SkipIfNoGitHubToken]
 [DependsOn<PackTemplatesModule>]
-[DependsOn<CreateGitHubChangelogModule>]
+[DependsOn<GenerateGitHubChangelogModule>]
 public sealed class PublishGithubModule(IOptions<PackOptions> packOptions) : Module<ReleaseAsset[]?>
 {
     protected override async Task<ReleaseAsset[]?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelog = await GetModule<CreateGitHubChangelogModule>();
+        var changelog = await GetModule<GenerateGitHubChangelogModule>();
         var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
         var targetFiles = outputFolder.ListFiles().ToArray();
         targetFiles.ShouldNotBeEmpty("No artifacts were found to create the Release");

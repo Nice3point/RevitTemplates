@@ -4,14 +4,15 @@ using ModularPipelines.Attributes;
 
 namespace Build.Modules;
 
-[DependsOn<CreateChangelogModule>]
-public sealed class CreatePackageChangelogModule : Module<string>
+[DependsOn<GenerateChangelogModule>]
+public sealed class GenerateNugetChangelogModule : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelogModule = await GetModule<CreateChangelogModule>();
+        var changelogResult = await GetModule<GenerateChangelogModule>();
+        var changelog = changelogResult.Value!;
 
-        var formattedChangelog = changelogModule.Value!.ToString()
+        var formattedChangelog = changelog
             .Split(Environment.NewLine)
             .Where(line => !line.Contains("```"))
             .Where(line => !line.Contains("!["))
