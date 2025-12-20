@@ -15,7 +15,7 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitSdk</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Nice3point/RevitSdk</PackageProjectUrl>
-        <PackageIcon>images\PackageIcon.png</PackageIcon>
+        <PackageIcon>images/PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
     </PropertyGroup>
@@ -28,7 +28,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
+        <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images/" Pack="true" Visible="false"/>
         <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
         <None Include="..\..\docs\MsBuild-Sdk.md" PackagePath="Readme.md" Pack="true" Visible="false"/>
         <Content Include="Sdk\**\*" PackagePath="Sdk\" Pack="true"/>
