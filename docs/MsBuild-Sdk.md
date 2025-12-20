@@ -13,6 +13,7 @@ MSBuild Sdk for developing and publishing the plugin for multiple Revit versions
 * [Assembly repacking](#assembly-repacking)
 * [Manifest patching](#manifest-patching)
 * [Implicit global usings](#implicit-global-usings)
+* [Launch configuration](#launch-configuration)
 * [Configuration](#configuration)
 <!-- TOC -->
 
@@ -77,6 +78,20 @@ Copying files helps attach the debugger to the add-in when Revit starts. This ma
 ```xml
 <PropertyGroup>
     <DeployAddin>true</DeployAddin>
+</PropertyGroup>
+```
+
+When `DeployAddin` is enabled, `PublishAddin` is enabled implicitly.
+
+You can override target folders:
+
+```xml
+<PropertyGroup>
+    <!-- Default: $(PublishDir) -->
+    <AddinPublishDir>$(OutputPath)\publish</AddinPublishDir>
+
+    <!-- Default: %AppData%\Autodesk\Revit\Addins\$(RevitVersion) -->
+    <AddinDeployDir>$(ProgramData)\Autodesk\Revit\Addins\$(RevitVersion)</AddinDeployDir>
 </PropertyGroup>
 ```
 
@@ -205,7 +220,7 @@ For example, if the manifest includes nodes or properties, which is only support
 </RevitAddIns>
 ```
 
-Target is triggered automatically if the `PublishAddin` property is enabled.
+Target is triggered automatically when the `PublishAddin` target runs.
 
 ### Implicit global usings
 
@@ -230,13 +245,32 @@ To disable implicit usings, set the `ImplicitRevitUsings` property:
 </PropertyGroup>
 ```
 
+### Launch configuration
+
+To configure a default debug profile that launches the target Revit version, enable the `LaunchRevit` property:
+
+```xml
+<PropertyGroup>
+    <LaunchRevit>true</LaunchRevit>
+</PropertyGroup>
+```
+
+This sets additional properties (only when values are not already specified):
+
+- `StartAction=Program`
+- `StartProgram=C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe`
+- `StartArguments=/language ENG`
+
 ### Configuration
 
-This package overrides some properties for the optimal add-in development:
+This Sdk overrides some Microsoft Sdk properties for the optimal add-in development:
 
-| Property                          | Default value | Description                                                                                 |
-|-----------------------------------|---------------|---------------------------------------------------------------------------------------------|
-| AppendTargetFrameworkToOutputPath | false         | Prevents the TFM from being appended to the output path. Required to publish an application |
+| Property                          | Default value | Description                                                                              |
+|-----------------------------------|---------------|------------------------------------------------------------------------------------------|
+| AppendTargetFrameworkToOutputPath | false*        | Prevents the TFM from being appended to the output path. Required for add-in publishing. |
+| ImplicitRevitUsings               | true          | Enables generation of Revit-related implicit global usings (see section above).          |
+
+\* When packing/publishing a NuGet package, the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
 
 These properties are automatically applied to the `.csproj` file, but can be overriden:
 
