@@ -47,14 +47,14 @@
     },
     "addinDiMode": {
       "type": "parameter",
-      "displayName": "IoC",
+      "displayName": "Dependency Injection",
       "datatype": "choice",
       "description": "Supports the dependency injection (DI) software design pattern which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies",
       "choices": [
         {
           "choice": "disabled",
           "displayName": "Disabled",
-          "description": "The add-in will not use IoC"
+          "description": "The add-in will not use DI"
         },
         {
           "choice": "container",

@@ -11,7 +11,7 @@
 
     <!-- Compability -->
     <PropertyGroup>
-<!--#if (log || UseIoc)-->
+<!--#if (addinLogging || useDi)-->
         <IsRepackable>true</IsRepackable>
 <!--#else-->
         <IsRepackable>false</IsRepackable>
@@ -24,38 +24,33 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-<!--#if (!NoWindow)-->
-
-        <!-- MVVM -->
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
-<!--#endif-->
-<!--#if (Container)-->
+<!--#if (diContainer)-->
 
         <!-- IOC -->
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1"/>
 <!--#endif-->
-<!--#if (Hosting)-->
+<!--#if (diHosting)-->
 
         <!-- IOC -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1"/>
 <!--#endif-->
-<!--#if (log)-->
+<!--#if (addinLogging)-->
 
         <!-- Logging -->
         <PackageReference Include="Serilog" Version="4.3.0"/>
         <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0"/>
 <!--#endif-->
-<!--#if (log && Hosting)-->
+<!--#if (addinLogging && diHosting)-->
         <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0"/>
 <!--#endif-->
-<!--#if (log || UseIoc)-->
+<!--#if (addinLogging || useDi)-->
 
         <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
 <!--#endif-->
     </ItemGroup>
 
-<!--#if (Application)-->
+<!--#if (isApplicationAddin)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
