@@ -10,10 +10,10 @@
 
     <Target Name="PatchManifest"
             AfterTargets="PublishAddin"
-            BeforeTargets="DeployAddinFiles">
+            BeforeTargets="DeployAddin">
 
         <ItemGroup>
-            <_ManifestItem Include="$(PublishDir)*\*.addin"/>
+            <_ManifestItem Include="$(AddinPublishDir)\*.addin"/>
         </ItemGroup>
 
         <PatchManifest
