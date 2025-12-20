@@ -7,12 +7,10 @@
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
   "description": "Template for creating single-project Revit add-in",
-  "precedence": "6665",
-  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
-    "AddIn",
-    "Library"
+    "Desktop",
+    "AddIn"
   ],
   "tags": {
     "type": "project",

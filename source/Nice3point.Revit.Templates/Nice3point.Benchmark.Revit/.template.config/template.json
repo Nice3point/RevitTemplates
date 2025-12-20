@@ -7,13 +7,12 @@
   "defaultName": "RevitBenchmark",
   "sourceName": "Nice3point.Benchmark.Revit",
   "description": "Template for creating performance benchmarks for Revit API",
-  "precedence": "6662",
-  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
+    "Desktop",
     "API",
     "Benchmark",
-    "Library"
+    "BenchmarkDotNet"
   ],
   "tags": {
     "type": "project",

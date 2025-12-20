@@ -7,12 +7,10 @@
   "defaultName": "RevitTests",
   "sourceName": "Nice3point.Unit.Revit",
   "description": "Template for creating unit tests for Revit API",
-  "precedence": "6661",
-  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
+    "Desktop",
     "API",
-    "Unit",
     "Test",
     "TUnit"
   ],

@@ -7,15 +7,15 @@
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn",
   "description": "Template for creating a solution structure for Revit add-ins",
-  "precedence": "6666",
-  "groupIdentity": "Nice3point.Revit",
   "classifications": [
     "Revit",
+    "Desktop",
     "AddIn",
     "Solution"
   ],
   "tags": {
     "type": "solution",
+    "editorTreatAs": "solution",
     "language": "C#",
     "platform": ".NET"
   },
