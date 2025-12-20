@@ -19,13 +19,13 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>
-        <PackageIcon>images\PackageIcon.png</PackageIcon>
+        <PackageIcon>images/PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images\" Pack="true" Visible="false"/>
+        <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images/" Pack="true" Visible="false"/>
         <None Include="..\..\License.md" PackagePath="" Pack="true" Visible="false"/>
         <None Include="..\..\Readme.md" PackagePath="" Pack="true" Visible="false"/>
         <Content Include="**\*" Exclude="**\bin\**\*;**\obj\**\*;*.csproj"/>
