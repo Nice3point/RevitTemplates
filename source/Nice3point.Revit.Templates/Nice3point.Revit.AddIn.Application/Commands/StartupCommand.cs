@@ -12,5 +12,8 @@ public class StartupCommand : ExternalCommand
 {
     public override void Execute()
     {
+#if (useDi && isCommandAddin)
+        Host.Start();
+#endif
     }
 }
