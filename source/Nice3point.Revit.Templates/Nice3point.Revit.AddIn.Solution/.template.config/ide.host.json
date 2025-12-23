@@ -1,3 +1,18 @@
 {
-  "$schema": "https://json.schemastore.org/ide.host"
+  "$schema": "https://json.schemastore.org/ide.host.json",
+  "order": 0,
+  "symbolInfo": [
+    {
+      "id": "ciProvider",
+      "persistenceScope": "shared"
+    },
+    {
+      "id": "includeInstaller",
+      "persistenceScope": "shared"
+    },
+    {
+      "id": "includeBundle",
+      "persistenceScope": "shared"
+    }
+  ]
 }

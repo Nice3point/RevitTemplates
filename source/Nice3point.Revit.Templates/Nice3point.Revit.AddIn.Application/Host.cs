@@ -3,11 +3,11 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
-#if (addinLogging && diHosting)
+#if (diHosting && addinLogging)
 using Microsoft.Extensions.Logging;
 #endif
 using Microsoft.Extensions.DependencyInjection;
-#if (useDi)
+#if (diHosting || addinLogging)
 using Nice3point.Revit.AddIn.Configuration;
 #endif
 

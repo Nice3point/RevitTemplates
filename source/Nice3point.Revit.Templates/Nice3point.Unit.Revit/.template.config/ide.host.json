@@ -1,3 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/ide.host"
+  "$schema": "https://json.schemastore.org/ide.host.json",
+  "order": 5
 }

@@ -8,13 +8,16 @@ namespace Nice3point.Revit.AddIn.Configuration;
 /// </summary>
 public static class HostingConfiguration
 {
-    /// <summary>
-    ///     Configures the application hosting environment settings.
-    /// </summary>
-    public static TBuilder ConfigureHosting<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    extension<TBuilder>(TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
+        /// <summary>
+        ///     Configures the application hosting environment settings.
+        /// </summary>
+        public TBuilder ConfigureHosting()
+        {
+            builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);
 
-        return builder;
+            return builder;
+        }
     }
 }

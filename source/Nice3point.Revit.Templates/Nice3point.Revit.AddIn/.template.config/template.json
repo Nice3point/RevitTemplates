@@ -118,17 +118,21 @@
     {
       "modifiers": [
         {
+          "condition": "!isApplicationAddin",
+          "exclude": [
+            "Resources/Icons/**"
+          ]
+        },
+        {
           "condition": "isCommandAddin",
           "exclude": [
-            "Application.cs",
-            "Resources/Icons/**"
+            "Application.cs"
           ]
         },
         {
           "condition": "isDbApplicationAddin",
           "exclude": [
-            "Commands/**",
-            "Resources/Icons/**"
+            "Commands/**"
           ]
         },
         {

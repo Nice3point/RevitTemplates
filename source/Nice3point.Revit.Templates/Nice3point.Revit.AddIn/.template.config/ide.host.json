@@ -1,3 +1,22 @@
 {
-  "$schema": "https://json.schemastore.org/ide.host"
+  "$schema": "https://json.schemastore.org/ide.host.json",
+  "order": 1,
+  "symbolInfo": [
+    {
+      "id": "addinManifestType",
+      "persistenceScope": "shared"
+    },
+    {
+      "id": "addinUiWpf",
+      "persistenceScope": "shared"
+    },
+    {
+      "id": "addinDiMode",
+      "persistenceScope": "shared"
+    },
+    {
+      "id": "addinLogging",
+      "persistenceScope": "shared"
+    }
+  ]
 }

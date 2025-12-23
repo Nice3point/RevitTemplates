@@ -1,5 +1,7 @@
 #if (diHosting)
+#if (useUi)
 using System.IO;
+#endif
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
@@ -11,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
 #endif
-#if (useDi)
+#if (diHosting || addinLogging)
 using Nice3point.Revit.AddIn.Configuration;
 #endif
 
