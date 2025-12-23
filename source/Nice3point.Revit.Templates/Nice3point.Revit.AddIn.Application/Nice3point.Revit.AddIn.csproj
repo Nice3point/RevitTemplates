@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Nice3point.Revit.Sdk">
 
     <PropertyGroup>
-<!--#if (isUiAddin)-->
+<!--#if (!isDbApplicationAddin)-->
         <UseWPF>true</UseWPF>
 <!--#endif-->
         <DeployAddin>true</DeployAddin>
@@ -25,7 +25,7 @@
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-<!--#if (isUiAddin)-->
+<!--#if (!isDbApplicationAddin)-->
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 <!--#endif-->
 <!--#if (diContainer)-->
@@ -54,7 +54,7 @@
 <!--#endif-->
     </ItemGroup>
 
-<!--#if (isUiAddin)-->
+<!--#if (!isDbApplicationAddin)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>

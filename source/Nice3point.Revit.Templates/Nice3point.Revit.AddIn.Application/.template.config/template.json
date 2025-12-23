@@ -91,10 +91,6 @@
       "type": "computed",
       "value": "addinManifestType == \"dbApplication\""
     },
-    "isUiAddin": {
-      "type": "computed",
-      "value": "addinManifestType != \"dbApplication\""
-    },
     "diContainer": {
       "type": "computed",
       "value": "addinDiMode == \"container\""
@@ -115,16 +111,14 @@
           "condition": "isCommandAddin",
           "exclude": [
             "Application.cs",
-            "Resources/Icons/RibbonIcon16.png",
-            "Resources/Icons/RibbonIcon32.png"
+            "Resources/Icons/**"
           ]
         },
         {
           "condition": "isDbApplicationAddin",
           "exclude": [
             "Commands/**",
-            "Resources/Icons/RibbonIcon16.png",
-            "Resources/Icons/RibbonIcon32.png"
+            "Resources/Icons/**"
           ]
         },
         {

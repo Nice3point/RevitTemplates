@@ -97,10 +97,6 @@
       "type": "computed",
       "value": "addinManifestType == \"dbApplication\""
     },
-    "isUiAddin": {
-      "type": "computed",
-      "value": "addinManifestType != \"dbApplication\""
-    },
     "diContainer": {
       "type": "computed",
       "value": "addinDiMode == \"container\""
@@ -108,6 +104,10 @@
     "diHosting": {
       "type": "computed",
       "value": "addinDiMode == \"hosting\""
+    },
+    "useUi": {
+      "type": "computed",
+      "value": "addinUiWpf && addinManifestType != \"dbApplication\""
     },
     "useDi": {
       "type": "computed",
@@ -121,20 +121,18 @@
           "condition": "isCommandAddin",
           "exclude": [
             "Application.cs",
-            "Resources/Icons/RibbonIcon16.png",
-            "Resources/Icons/RibbonIcon32.png"
+            "Resources/Icons/**"
           ]
         },
         {
           "condition": "isDbApplicationAddin",
           "exclude": [
             "Commands/**",
-            "Resources/Icons/RibbonIcon16.png",
-            "Resources/Icons/RibbonIcon32.png"
+            "Resources/Icons/**"
           ]
         },
         {
-          "condition": "!addinUiWpf",
+          "condition": "!useUi",
           "exclude": [
             "Models/**",
             "Views/**",
