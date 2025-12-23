@@ -59,7 +59,7 @@
 <!--#endif-->
     </ItemGroup>
     
-<!--#if (!isDbApplicationAddin)-->
+<!--#if (isApplicationAddin)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
