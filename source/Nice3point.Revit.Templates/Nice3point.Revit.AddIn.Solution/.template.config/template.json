@@ -28,7 +28,7 @@
     "ciProvider": {
       "type": "parameter",
       "displayName": "Pipeline",
-      "description": "Adds support for CI/CD pipeline to your project",
+      "description": "Automated CI/CD pipeline configuration",
       "datatype": "choice",
       "choices": [
         {
@@ -53,14 +53,14 @@
       "type": "parameter",
       "displayName": "Installer support",
       "datatype": "bool",
-      "description": "Creates a project installer",
+      "description": "Windows Installer (MSI) project configuration",
       "defaultValue": "true"
     },
     "includeBundle": {
       "type": "parameter",
       "displayName": "Bundle support",
       "datatype": "bool",
-      "description": "Packs project files into a bundle. Used for uploading to Autodesk Store",
+      "description": "Autodesk App Store deployment bundle structure",
       "defaultValue": "false"
     },
     "isCiDisabled": {

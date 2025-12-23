@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 #endif
 using Microsoft.Extensions.DependencyInjection;
-#if (hasUi)
+#if (addinUiWpf)
 using Nice3point.Revit.AddIn.Views;
 using Nice3point.Revit.AddIn.ViewModels;
 #endif
@@ -41,7 +41,7 @@ public static class Host
         //Logging
         services.AddSerilog();
 #endif
-#if (hasUi)
+#if (addinUiWpf)
 
         //MVVM
         services.AddTransient<Nice3point.Revit.AddInViewModel>();
@@ -65,7 +65,7 @@ public static class Host
 
         //Configuration
         builder.ConfigureHosting();
-#if (hasUi)
+#if (addinUiWpf)
 
         //MVVM
         builder.Services.AddTransient<Nice3point.Revit.AddInViewModel>();

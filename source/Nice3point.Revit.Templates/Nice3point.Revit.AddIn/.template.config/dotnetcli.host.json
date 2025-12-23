@@ -5,8 +5,8 @@
       "longName": "addin",
       "shortName": ""
     },
-    "addinUiMode": {
-      "longName": "ui",
+    "addinUiWpf": {
+      "longName": "wpf",
       "shortName": ""
     },
     "addinDiMode": {
@@ -14,12 +14,12 @@
       "shortName": ""
     },
     "addinLogging": {
-      "longName": "log",
+      "longName": "logger",
       "shortName": ""
     }
   },
   "usageExamples": [
     "dotnet new revit-addin",
-    "dotnet new revit-addin --addin command --ui modal --di hosting --log"
+    "dotnet new revit-addin --addin command --wpf --di hosting --logger"
   ]
 }

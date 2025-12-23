@@ -10,12 +10,12 @@
       "shortName": ""
     },
     "addinLogging": {
-      "longName": "log",
+      "longName": "logger",
       "shortName": ""
     }
   },
   "usageExamples": [
     "dotnet new revit-addin-app",
-    "dotnet new revit-addin-app --addin command --di hosting --log"
+    "dotnet new revit-addin-app --addin command --di hosting --logger"
   ]
 }

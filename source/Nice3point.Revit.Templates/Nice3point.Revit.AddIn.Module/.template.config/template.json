@@ -21,11 +21,11 @@
   "preferNameDirectory": true,
   "placeholderFilename": "keep.folder",
   "symbols": {
-    "addinUi": {
+    "addinUiWpf": {
       "type": "parameter",
-      "displayName": "User interface",
+      "displayName": "WPF support",
       "datatype": "bool",
-      "description": "Use WPF in the add-in",
+      "description": "MVVM architecture and WPF UI components",
       "defaultValue": "true"
     }
   },
@@ -33,7 +33,7 @@
     {
       "modifiers": [
         {
-          "condition": "!addinUi",
+          "condition": "!addinUiWpf",
           "exclude": [
             "Models/**",
             "Views/**",

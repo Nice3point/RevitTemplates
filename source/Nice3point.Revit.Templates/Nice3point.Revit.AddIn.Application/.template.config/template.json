@@ -28,7 +28,7 @@
       "type": "parameter",
       "displayName": "Add-In type",
       "datatype": "choice",
-      "description": "The type of add-in to be registered in the .addin manifest",
+      "description": "Manifest registration type determining the add-in entry point",
       "choices": [
         {
           "choice": "application",
@@ -47,7 +47,7 @@
       "type": "parameter",
       "displayName": "Dependency Injection",
       "datatype": "choice",
-      "description": "Supports the dependency injection (DI) software design pattern which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies",
+      "description": "Sets the Dependency Injection implementation for object lifetime management",
       "choices": [
         {
           "choice": "disabled",
@@ -71,7 +71,7 @@
       "type": "parameter",
       "displayName": "Serilog support",
       "datatype": "bool",
-      "description": "Logging support for the add-in",
+      "description": "Serilog infrastructure for structured diagnostic logging",
       "defaultValue": "false"
     },
     "isCommandAddin": {

@@ -27,7 +27,7 @@
       "type": "parameter",
       "displayName": "Add-In type",
       "datatype": "choice",
-      "description": "The type of add-in to be registered in the .addin manifest",
+      "description": "Manifest registration type determining the add-in entry point",
       "choices": [
         {
           "choice": "application",
@@ -42,35 +42,18 @@
       ],
       "defaultValue": "application"
     },
-    "addinUiMode": {
+    "addinUiWpf": {
       "type": "parameter",
-      "displayName": "User interface",
-      "datatype": "choice",
-      "description": "User interaction with the add-in",
-      "choices": [
-        {
-          "choice": "none",
-          "displayName": "None",
-          "description": "The add-in will not use windows"
-        },
-        {
-          "choice": "modal",
-          "displayName": "Modal",
-          "description": "A modal window that blocks Revit until the user closes the window"
-        },
-        {
-          "choice": "modeless",
-          "displayName": "Modeless",
-          "description": "A modeless window does not block any other window while it is visible"
-        }
-      ],
-      "defaultValue": "modal"
+      "displayName": "WPF support",
+      "datatype": "bool",
+      "description": "MVVM architecture and WPF UI components",
+      "defaultValue": "true"
     },
     "addinDiMode": {
       "type": "parameter",
       "displayName": "Dependency Injection",
       "datatype": "choice",
-      "description": "Supports the dependency injection (DI) software design pattern which is a technique for achieving Inversion of Control (IoC) between classes and their dependencies",
+      "description": "Dependency Injection implementation for object lifetime management",
       "choices": [
         {
           "choice": "disabled",
@@ -94,7 +77,7 @@
       "type": "parameter",
       "displayName": "Serilog support",
       "datatype": "bool",
-      "description": "Logging support for the add-in",
+      "description": "Serilog infrastructure for structured diagnostic logging",
       "defaultValue": "false"
     },
     "isCommandAddin": {
@@ -104,18 +87,6 @@
     "isApplicationAddin": {
       "type": "computed",
       "value": "addinManifestType == \"application\""
-    },
-    "hasUi": {
-      "type": "computed",
-      "value": "addinUiMode != \"none\""
-    },
-    "uiModal": {
-      "type": "computed",
-      "value": "addinUiMode == \"modal\""
-    },
-    "uiModeless": {
-      "type": "computed",
-      "value": "addinUiMode == \"modeless\""
     },
     "diContainer": {
       "type": "computed",
@@ -142,7 +113,7 @@
           ]
         },
         {
-          "condition": "!hasUi",
+          "condition": "!addinUiWpf",
           "exclude": [
             "Models/**",
             "Views/**",

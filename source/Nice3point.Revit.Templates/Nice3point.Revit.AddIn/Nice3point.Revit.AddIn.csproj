@@ -24,7 +24,7 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-<!--#if (hasUi)-->
+<!--#if (addinUiWpf)-->
 
         <!-- MVVM -->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
@@ -62,7 +62,7 @@
     </ItemGroup>
 
 <!--#endif-->
-<!--#if (hasUi)-->
+<!--#if (addinUiWpf)-->
     <ItemGroup>
         <Folder Include="Models"/>
     </ItemGroup>
