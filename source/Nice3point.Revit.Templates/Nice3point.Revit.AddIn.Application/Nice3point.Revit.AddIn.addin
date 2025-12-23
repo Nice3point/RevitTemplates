@@ -3,6 +3,8 @@
     <AddIn Type="Command">
 #elseif (isApplicationAddin)
     <AddIn Type="Application">
+#elseif (isDbApplicationAddin)
+    <AddIn Type="DBApplication">
 #endif
         <Name>Nice3point.Revit.AddIn</Name>
         <Assembly>Nice3point.Revit.AddIn\Nice3point.Revit.AddIn.dll</Assembly>
@@ -10,7 +12,7 @@
 #if (isCommandAddin)
         <FullClassName>Nice3point.Revit.AddIn.Commands.StartupCommand</FullClassName>
         <Text>Nice3point.Revit.AddIn</Text>
-#elseif (isApplicationAddin)
+#elseif (isApplicationAddin || isDbApplicationAddin)
         <FullClassName>Nice3point.Revit.AddIn.Application</FullClassName>
 #endif
         <VendorId>Development</VendorId>

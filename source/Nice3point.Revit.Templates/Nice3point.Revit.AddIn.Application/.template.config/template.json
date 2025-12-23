@@ -36,6 +36,11 @@
           "description": "Registers the add-in in the manifest with the Application type"
         },
         {
+          "choice": "dbApplication",
+          "displayName": "DB Application",
+          "description": "Registers the add-in in the manifest with the DB Application type"
+        },
+        {
           "choice": "command",
           "displayName": "Command",
           "description": "Registers the add-in in the manifest with the Command type"
@@ -82,6 +87,14 @@
       "type": "computed",
       "value": "addinManifestType == \"application\""
     },
+    "isDbApplicationAddin": {
+      "type": "computed",
+      "value": "addinManifestType == \"dbApplication\""
+    },
+    "isUiAddin": {
+      "type": "computed",
+      "value": "addinManifestType != \"dbApplication\""
+    },
     "diContainer": {
       "type": "computed",
       "value": "addinDiMode == \"container\""
@@ -102,6 +115,14 @@
           "condition": "isCommandAddin",
           "exclude": [
             "Application.cs",
+            "Resources/Icons/RibbonIcon16.png",
+            "Resources/Icons/RibbonIcon32.png"
+          ]
+        },
+        {
+          "condition": "isDbApplicationAddin",
+          "exclude": [
+            "Commands/**",
             "Resources/Icons/RibbonIcon16.png",
             "Resources/Icons/RibbonIcon32.png"
           ]
@@ -129,7 +150,7 @@
   ],
   "primaryOutputs": [
     {
-      "condition": "isApplicationAddin",
+      "condition": "isApplicationAddin || isDbApplicationAddin",
       "path": "Application.cs"
     },
     {
@@ -139,7 +160,7 @@
   ],
   "postActions": [
     {
-      "condition": "isApplicationAddin",
+      "condition": "isApplicationAddin || isDbApplicationAddin",
       "description": "Opens Application.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",

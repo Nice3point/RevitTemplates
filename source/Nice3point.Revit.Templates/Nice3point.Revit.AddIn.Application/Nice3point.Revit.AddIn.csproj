@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Nice3point.Revit.Sdk">
 
     <PropertyGroup>
+<!--#if (isUiAddin)-->
         <UseWPF>true</UseWPF>
+<!--#endif-->
         <DeployAddin>true</DeployAddin>
         <LaunchRevit>true</LaunchRevit>
         <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -23,7 +25,9 @@
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+<!--#if (isUiAddin)-->
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
+<!--#endif-->
 <!--#if (diContainer)-->
 
         <!-- IOC -->
@@ -50,7 +54,7 @@
 <!--#endif-->
     </ItemGroup>
 
-<!--#if (isApplicationAddin)-->
+<!--#if (isUiAddin)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
