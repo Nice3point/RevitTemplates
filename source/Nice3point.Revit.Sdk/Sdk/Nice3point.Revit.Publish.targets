@@ -38,7 +38,7 @@
               SkipUnchangedFiles="true"
               DestinationFolder="$(AddinPublishDir)\$(AssemblyName)\%(_ResolvedFileToPublishPreserveNewest.PublishDirectory)\%(RecursiveDir)"/>
 
-        <Message Text="$(AssemblyName) -> $(AddinPublishDir)" Importance="high"/>
+        <Message Text="$(AssemblyName) -> $(MSBuildProjectDirectory)\$(AddinPublishDir)" Importance="high"/>
     </Target>
 
     <Target Name="DeployAddin"
