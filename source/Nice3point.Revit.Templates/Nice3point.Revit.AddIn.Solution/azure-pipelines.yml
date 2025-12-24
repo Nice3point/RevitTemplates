@@ -15,7 +15,7 @@ jobs:
   - job: PublishRelease
     displayName: "Publish release"
     pool:
-      vmImage: "windows-2022"
+      vmImage: "windows-2025"
     steps:
       - checkout: self
         persistCredentials: true
@@ -30,23 +30,15 @@ jobs:
       - task: Cache@2
         displayName: "Cache packages"
         inputs:
-          key: $(Agent.OS) | nuget-packages | global.json, **/*.csproj, **/Directory.Packages.props
+          key: $(Agent.OS) | nuget-packages | global.json, **/*.csproj, **/Directory.Build.props, **/Directory.Packages.props
           restoreKeys: $(Agent.OS) | nuget-packages
           path: ~/.nuget/packages
 
-      - script: |
-          set RELEASE_VERSION=${{ parameters.version }}
-          if "${{ parameters.version }}"=="" set RELEASE_VERSION=$(Build.SourceBranchName)
-#if (bundle && installer)
-          ./.nuke/build.cmd CreateBundle CreateInstaller --ReleaseVersion %RELEASE_VERSION%
-#elseif (installer)
-          ./.nuke/build.cmd CreateInstaller --ReleaseVersion %RELEASE_VERSION%
-#elseif (bundle)
-          ./.nuke/build.cmd CreateBundle --ReleaseVersion %RELEASE_VERSION%
-#else
-          ./.nuke/build.cmd --ReleaseVersion %RELEASE_VERSION%
-#endif
+      - script: dotnet run -c Release -- pack
         displayName: "Publish release"
+        workingDirectory: "build"
+        env:
+          DOTNET_ENVIRONMENT: $[ if(startsWith(variables['Build.SourceBranch'], 'refs/tags/'), 'Production', 'Development' ) ]
 
       - task: PublishBuildArtifacts@1
         inputs:
