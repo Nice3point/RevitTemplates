@@ -22,7 +22,8 @@
   "placeholderFilename": "keep.folder",
   "guids": [
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
-    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"
+    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
+    "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"
   ],
   "symbols": {
     "ciProvider": {
@@ -162,16 +163,16 @@
           "type": "conditional",
           "configuration": {
             "if": [
-              "---#if"
+              "#if"
             ],
             "else": [
-              "---#else"
+              "#else"
             ],
             "elseif": [
-              "---#elseif"
+              "#elseif"
             ],
             "endif": [
-              "---#endif"
+              "#endif"
             ],
             "trim": "true",
             "wholeLine": "true"
@@ -185,16 +186,16 @@
           "type": "conditional",
           "configuration": {
             "if": [
-              "---#if"
+              "#if"
             ],
             "else": [
-              "---#else"
+              "#else"
             ],
             "elseif": [
-              "---#elseif"
+              "#elseif"
             ],
             "endif": [
-              "---#endif"
+              "#endif"
             ],
             "trim": "false",
             "wholeLine": "false"
