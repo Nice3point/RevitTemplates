@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json.schemastore.org/template",
+  "author": "Nice3point",
+  "name": "Revit Test Class (TUnit)",
+  "shortName": "revit-tunit-class",
+  "identity": "Nice3point.TUnit.Revit.Class",
+  "defaultName": "RevitTests",
+  "sourceName": "RevitTests",
+  "description": "Template for creating unit test class for Revit API",
+  "classifications": [
+    "Revit",
+    "Desktop",
+    "API",
+    "Test",
+    "TUnit",
+    "Class"
+  ],
+  "tags": {
+    "type": "item",
+    "language": "C#",
+    "platform": ".NET"
+  },
+  "symbols": {
+    "DefaultNamespace": {
+      "type": "bind",
+      "binding": "msbuild:RootNamespace",
+      "replaces": "Tests"
+    },
+    "ImplicitUsings": {
+      "type": "bind",
+      "binding": "msbuild:ImplicitUsings",
+      "datatype": "string",
+      "defaultValue": "disable"
+    },
+    "evaluatedLangVersion": {
+      "type": "bind",
+      "binding": "msbuild:LangVersion",
+      "dataType": "string"
+    },
+    "latestLangVersion": {
+      "type": "generated",
+      "generator": "constant",
+      "parameters": {
+        "value": "latest"
+      }
+    },
+    "langVersion": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "evaluatedLangVersion",
+        "fallbackVariableName": "latestLangVersion"
+      }
+    },
+    "csharp9orOlder": {
+      "type": "generated",
+      "generator": "regexMatch",
+      "datatype": "bool",
+      "parameters": {
+        "pattern": "^(ISO-1|ISO-2|[1-7]|[8-9]|[8-9]\\.0|7\\.[0-3])$",
+        "source": "langVersion"
+      }
+    },
+    "csharp10orLater": {
+      "type": "computed",
+      "value": "!csharp9orOlder"
+    },
+    "csharpFeature_FileScopedNamespaces": {
+      "type": "computed",
+      "value": "csharp10orLater == \"true\""
+    }
+  }
+}
