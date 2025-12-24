@@ -12,7 +12,11 @@ namespace Build.Modules;
 ///     Clean projects and artifact directories.
 /// </summary>
 [SkipIfContinuousIntegrationBuild]
+#if (hasArtifacts)
 public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : Module
+#else
+public sealed class CleanProjectsModule() : Module
+#endif
 {
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {

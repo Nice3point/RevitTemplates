@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿#if (hasArtifacts)
+using System.ComponentModel.DataAnnotations;
 
+#endif
 namespace Build.Options;
 
 /// <summary>
