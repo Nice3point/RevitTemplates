@@ -176,7 +176,7 @@
   ],
   "postActions": [
     {
-      "condition": "isApplicationAddin || isDbApplicationAddin",
+      "condition": "(isApplicationAddin || isDbApplicationAddin) && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\"",
       "description": "Opens Application.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
@@ -186,7 +186,7 @@
       "continueOnError": true
     },
     {
-      "condition": "isCommandAddin",
+      "condition": "isCommandAddin && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\"",
       "description": "Opens Command.cs in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
