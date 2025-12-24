@@ -15,7 +15,7 @@
         <File Path=".gitignore" />
         <File Path="Readme.md" />
         <File Path="build/appsettings.json" />
----#if (GitHubPipeline && HasArtifacts)
+---#if (isGitHubCi && hasArtifacts)
         <File Path="Changelog.md" />
 ---#endif
     </Folder>
