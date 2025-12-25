@@ -325,16 +325,16 @@ Example:
 
 ```text
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug R24|Any CPU = Debug R24|Any CPU
-    Debug R25|Any CPU = Debug R25|Any CPU
-    Debug R26|Any CPU = Debug R26|Any CPU
-    Release R24|Any CPU = Release R24|Any CPU
-    Release R25|Any CPU = Release R25|Any CPU
-    Release R26|Any CPU = Release R26|Any CPU
+    Debug.R24|Any CPU = Debug.R24|Any CPU
+    Debug.R25|Any CPU = Debug.R25|Any CPU
+    Debug.R26|Any CPU = Debug.R26|Any CPU
+    Release.R24|Any CPU = Release.R24|Any CPU
+    Release.R25|Any CPU = Release.R25|Any CPU
+    Release.R26|Any CPU = Release.R26|Any CPU
 EndGlobalSection
 ```
 
-For example `Debug R26` is the Debug configuration for Revit 2026 version.
+For example `Debug.R26` is the Debug configuration for Revit 2026 version.
 
 ---#if (isGitHubCi)
 > [!TIP]  
@@ -353,8 +353,8 @@ Example:
 
 ```xml
 <PropertyGroup>
-    <Configurations>Debug R24;Debug R25;Debug R26</Configurations>
-    <Configurations>$(Configurations);Release R24;Release R25;Release R26</Configurations>
+    <Configurations>Debug.R24;Debug.R25;Debug.R26</Configurations>
+    <Configurations>$(Configurations);Release.R24;Release.R25;Release.R26</Configurations>
 </PropertyGroup>
 ```
 
