@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Task = Microsoft.Build.Utilities.Task;
@@ -65,18 +66,20 @@ public class GenerateCompatibleDefineConstants : Task
     private static bool TryGetRevitVersion(string configuration, out int version)
     {
         version = 0;
+        var match = Regex.Match(configuration, @"(\d+)(?!.*\d)");
+        if (!match.Success) return false;
 
-        if (configuration.Length >= 4)
+        if (match.Value.Length == 4)
         {
-            if (int.TryParse(configuration.AsSpan()[(configuration.Length - 4)..], out version))
+            if (int.TryParse(match.Value, out version))
             {
                 return true;
             }
         }
 
-        if (configuration.Length >= 2)
+        if (match.Value.Length == 2)
         {
-            if (int.TryParse(configuration.AsSpan()[^2..], out version))
+            if (int.TryParse(match.Value, out version))
             {
                 version += 2000;
                 return true;
