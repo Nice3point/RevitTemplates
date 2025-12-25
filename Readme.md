@@ -11,7 +11,7 @@
 [![Downloads](https://img.shields.io/nuget/dt/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
 [![Last Commit](https://img.shields.io/github/last-commit/Nice3point/RevitTemplates/develop?style=for-the-badge)](https://github.com/Nice3point/RevitTemplates/commits/develop)
 
-This repository contains a collection of project templates for creating Revit Add-Ins. The templates are designed to simplify the development process, providing a ready-to-use structure and automation tools.
+This repository contains a collection of project templates for creating Revit Add-Ins.
 
 ## Template Features
 
