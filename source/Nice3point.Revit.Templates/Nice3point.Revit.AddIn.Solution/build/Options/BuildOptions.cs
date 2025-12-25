@@ -11,8 +11,12 @@ namespace Build.Options;
 public sealed record BuildOptions
 {
     /// <summary>
-    ///     Application version
+    ///     Application version.
     /// </summary>
+    /// <remarks>
+    ///     This will override the version determined by GitVersion.Tool. <br/>
+    ///     Specifying a fixed version is recommended only for local builds and testing.
+    /// </remarks>
     /// <example>
     ///     1.0.0-alpha.1.250101 <br/>
     ///     1.0.0-beta.2.250101 <br/>

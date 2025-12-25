@@ -7,7 +7,7 @@
 public sealed record PublishOptions
 {
     /// <summary>
-    ///     Path to the changelog file
+    ///     Path to the changelog file.
     /// </summary>
     public string? ChangelogFile { get; init; }
 }
