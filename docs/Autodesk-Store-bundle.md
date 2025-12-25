@@ -1,4 +1,4 @@
-To publish your application to the Autodesk Store, you need to prepare a bundle according to a certain [standard](https://damassets.autodesk.net/content/dam/autodesk/www/developer-network/app-store/revit/pdf/3%20Autodesk%20Exchange%20Publish%20Revit%20Apps%20-%20Preparing%20Apps%20for%20the%20Store_Guidelines.pdf).
+To publish your application to the Autodesk Store, you need to prepare a [bundle](https://www.autodesk.com/autodesk-university/class/AppBundle-Cross-Distribution-Autodesk-Products-App-Store-and-Forge-2020) according to a certain standard.
 The template will create it for you, and pack it into a Zip, you just have to upload it to the Store.
 
 ## Build system setup
