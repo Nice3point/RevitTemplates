@@ -27,6 +27,7 @@ public sealed class CreateInstallersModule : Module<CommandResult>
 
         var wixTarget = new File(Projects.Nice3point.Revit.AddIn.FullName);
         var wixInstaller = new File(Projects.Installer.FullName);
+        var wixToolFolder = await InstallWixAsync(context, cancellationToken);
 
         await context.DotNet().Build(new DotNetBuildOptions
         {
@@ -40,8 +41,7 @@ public sealed class CreateInstallersModule : Module<CommandResult>
 
         var builderFile = wixInstaller.Folder!
             .GetFolder("bin")
-            .GetFolder(Configuration.Release)
-            .GetFile($"{wixInstaller.NameWithoutExtension}.exe");
+            .FindFile(file => file.NameWithoutExtension == wixInstaller.NameWithoutExtension && file.Extension == ".exe");
 
         builderFile.ShouldNotBeNull($"No installer builder was found for the project: {wixInstaller.NameWithoutExtension}");
 
@@ -57,7 +57,25 @@ public sealed class CreateInstallersModule : Module<CommandResult>
         {
             Arguments = targetDirectories,
             WorkingDirectory = context.Git().RootDirectory,
-            CommandLogging = CommandLogging.Default & ~CommandLogging.Input
+            CommandLogging = CommandLogging.Default & ~CommandLogging.Input,
+            EnvironmentVariables = new Dictionary<string, string?>
+            {
+                { "PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}" }
+            }
         }, cancellationToken);
+    }
+
+    /// <summary>
+    ///     Installs the WiX toolset required for building installers.
+    /// </summary>
+    private static async Task<Folder> InstallWixAsync(IPipelineContext context, CancellationToken cancellationToken)
+    {
+        var wixToolFolder = context.FileSystem.CreateTemporaryFolder();
+        await context.DotNet().Tool.Install(new DotNetToolInstallOptions("wix")
+        {
+            ToolPath = wixToolFolder.Path
+        }, cancellationToken);
+
+        return wixToolFolder;
     }
 }

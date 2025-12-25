@@ -3,6 +3,7 @@ using ModularPipelines.Context;
 using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
 using ModularPipelines.Enums;
+using ModularPipelines.FileSystem;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Models;
 using ModularPipelines.Modules;
@@ -40,8 +41,7 @@ public sealed class CreateInstallersModule : Module<CommandResult>
 
         var builderFile = wixInstaller.Folder!
             .GetFolder("bin")
-            .GetFolder(Configuration.Release)
-            .GetFile($"{wixInstaller.NameWithoutExtension}.exe");
+            .FindFile(file => file.NameWithoutExtension == wixInstaller.NameWithoutExtension && file.Extension == ".exe");
 
         builderFile.ShouldNotBeNull($"No installer builder was found for the project: {wixInstaller.NameWithoutExtension}");
 
