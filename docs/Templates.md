@@ -37,7 +37,7 @@ Option for developers who want to create a distributed scalable application.
 
 This template creates a main empty application containing only the entry point file and `.addin` manifest.
 
-Optionally, you can enable dependency injection support, where this application becomes a dependency provider for other modules.
+Optionally, you can enable dependency injection and support, where this application becomes a dependency provider for other modules.
 
 > [!NOTE]  
 > Project based on this template should be used to combine all modules and connect them to the Revit ribbon, and it should not contain business logic if you plan to create a modular application.
@@ -50,8 +50,6 @@ Suitable for modular add-ins.
 Option for developers who want to create a distributed scalable application.
 
 This template creates an empty module with or without user interface, containing files and dependencies necessary to implement the business logic.
-
-The `Inject dependecies` option instead of creating an IExternalCommand will create a class that receives all dependencies from the `Revit AddIn Application`. Suitable for IoC use cases.
 
 After creating a project based on this template, you have to add a `reference` to this project from [Revit AddIn Application](#revit-addin-application)
 
@@ -67,9 +65,9 @@ Suitable for enterprise development and developers who need a ready-made project
 
 This template contains:
 
-- `Nuke` build system
+- `ModularPipelines` build system
 - Installer project, that generates an .msi package
-- Auxiliary files such as `.gitignore`, `Changelog.mb` which are usually created in each solution. `Readme.md` contains documentation and instructions for building the project.
+- Auxiliary files such as `.gitignore`, `Changelog.md` which are usually created in each solution. `Readme.md` contains documentation and instructions for building the project.
 - CI\CD setup
 - JetBrains Rider `Run configurations`
 
@@ -80,19 +78,19 @@ This template contains:
 > The solution template should be used before the project templates (if you need it).
 And you have to create all plugins in produced solution, in the `source` folder.
 
-### Nuke
+### ModularPipelines
 
-Nuke is used to build a project for various configurations. In this case, for all specified Revit versions. It also allows you to automate other secondary processes, create an
-installer, post news on Twitter after build, order pizza, etc.
+ModularPipelines is used to build a project for various configurations. In this case, for all specified Revit versions. It also allows you to automate other secondary processes, create an
+installer, generate a changelog, etc.
 
-More details about Nuke [here](https://github.com/nuke-build/nuke).
+More details about ModularPipelines [here](https://github.com/thomhurst/ModularPipelines).
 
 > [!NOTE]  
-> You don't need to use Nuke to debug the project, it is only necessary for the release.
+> You don't need to use the build system to debug the project, it is only necessary for the publishing release.
 
 ### Installer
 
-WixSharp was chosen as the installer, it is, like Nuke, based on a console application, this helps to make the creation of the installer automated and connect it to Nuke.
+WixSharp was chosen as the installer, it is based on a console application, this helps to make the creation of the installer automated and connect it to the build system.
 
 More details about WixSharp [here](https://github.com/oleg-shilo/wixsharp).
 

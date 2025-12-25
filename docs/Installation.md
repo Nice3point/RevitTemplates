@@ -15,15 +15,3 @@ dotnet new install Nice3point.Revit.Templates
 ```
 
 After installation, templates will be displayed in your IDE.
-
-# Install Nuke Global Tool
-
-For enterprise development, you might need an additional tool.
-If you need to create an installer for the add-in on your local computer, enter the following command:
-
-```shell
-dotnet tool install Nuke.GlobalTool --global
-```
-
-> [!NOTE]  
-> If you plan to build only on the GitHub or any other remote server, you do not need this command.

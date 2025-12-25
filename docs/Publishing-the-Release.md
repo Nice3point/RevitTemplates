@@ -21,6 +21,9 @@ The templates contain customized workflows for some popular pipelines.
 Releases are managed by creating new [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
 A tag in Git used to capture a snapshot of the project at a particular point in time, with the ability to roll back to a previous version.
 
+The build system uses [GitVersion.Tool](https://gitversion.net/docs/) to automatically determine the Release version based on the Git history and tags. 
+If a tag is present on the current commit, the version will match the tag. If no tag is specified, the tool automatically generates a pre-release version based on the branch name and commit history.
+
 Tags must follow the format `version` or `version-stage.n.date` for pre-releases, where:
 
 - **version** specifies the version of the release:
@@ -155,7 +158,7 @@ To enable it, modify the `.addin` manifest:
 
 > [!NOTE]  
 > Adding `ManifestSettings` to the manifest for Revit earlier than 2026, will cause a crash.
-> [Revit.Build.Tasks](https://github.com/Nice3point/Revit.Build.Tasks) provides a fix for this issue during project building.
+> Revit MSBuild SDK provides a fix for this issue during project building.
 
 ### Dependency repacking
 
@@ -173,6 +176,6 @@ For C++ dependencies or dependencies that cause issues, add to the `RepackBinari
 ```
 
 > [!NOTE]  
-> For repacking, third-party packages are used.
+> For repacking, Revit MSBuild SDK is used.
 > You can find more detailed documentation about it here
-> [Revit.Build.Tasks](https://github.com/Nice3point/Revit.Build.Tasks) and here [ILRepack](https://www.nuget.org/packages/ILRepack).
+> [Revit MSBuild SDK](MsBuild-Sdk.md) and here [ILRepack](https://www.nuget.org/packages/ILRepack).

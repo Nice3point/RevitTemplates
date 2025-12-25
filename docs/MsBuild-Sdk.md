@@ -1,6 +1,6 @@
-# Revit MsBuild Sdk
+# Revit MSBuild SDK
 
-MSBuild Sdk for developing and publishing the plugin for multiple Revit versions.
+MSBuild SDK for developing and publishing the plugin for multiple Revit versions.
 
 ## Table of contents
 
@@ -25,11 +25,11 @@ This ensures compatibility across multiple Revit versions without code duplicati
 The `OR_GREATER` symbols are cumulative and provide a cleaner way to handle version-specific API changes.
 Each symbol indicates compatibility with the specified version and all newer versions.
 
-| Current configuration | Project configurations               | Generated define constants                                                  |
-|-----------------------|:-------------------------------------|-----------------------------------------------------------------------------|
-| Debug R20             | Debug R20, Release R21, Release 2022 | REVIT2020, REVIT2020_OR_GREATER                                             |
-| Release R21           | Debug R20, Release R21, Release 2022 | REVIT2021, REVIT2020_OR_GREATER, REVIT2021_OR_GREATER                       |
-| Release 2022          | Debug R20, Release R21, Release 2022 | REVIT2022, REVIT2020_OR_GREATER, REVIT2021_OR_GREATER, REVIT2022_OR_GREATER |
+| Current configuration | Project configurations                 | Generated define constants                                                  |
+|-----------------------|:---------------------------------------|-----------------------------------------------------------------------------|
+| Debug.R20             | Debug.R20, Debug.R21, Debug.R22        | REVIT2020, REVIT2020_OR_GREATER                                             |
+| Release.R21           | Release.R20, Release.R21, Release.R22  | REVIT2021, REVIT2020_OR_GREATER, REVIT2021_OR_GREATER                       |
+| Release.2022          | Debug.2020, Release.2021, Release.2022 | REVIT2022, REVIT2020_OR_GREATER, REVIT2021_OR_GREATER, REVIT2022_OR_GREATER |
 
 Usage:
 
@@ -49,7 +49,8 @@ To support removed APIs in newer versions of Revit, you can invert the constant:
 #endif
 ```
 
-Constants are generated from the names of project configurations. If your project configurations do not contain metadata about the version, you can specify it explicitly:
+Constants are generated from the names of project configurations.
+Supported formats: `Release.R25`, `Release.2025`, `2025 Release`. Two or four digits. If your project configurations do not contain metadata about the version, you can specify it explicitly:
 
 ```xml
 <PropertyGroup>
@@ -166,7 +167,7 @@ Result:
 Assembly repacking is used to merge multiple assemblies into a single Dll, primarily to avoid dependency conflicts between different add-ins.
 
 If you need to repack assemblies into a single Dll, enable the `IsRepackable` property.
-[ILRepack](https://www.nuget.org/packages/ILRepack/) package is required.
+[ILRepack](https://www.nuget.org/packages/ILRepack/) package is required in your project.
 
 ```xml
 <PropertyGroup>
@@ -193,7 +194,8 @@ For .NET Core applications, it is recommended to disable this feature and use **
 
 By default, enabled target is used to modify the Revit `.addin` manifest to ensure backward compatibility between different Revit versions.
 
-For example, if the manifest includes nodes or properties, which is only supported in newest Revit version, it will be removed for older versions:
+For example, if the manifest includes nodes or properties, which is only supported in newest Revit version, it will be removed for older versions. 
+Currently, the SDK removes the `ManifestSettings` node for Revit versions older than 2026.
 
 **Original `.addin` manifest:**
 
@@ -245,6 +247,14 @@ To disable implicit usings, set the `ImplicitRevitUsings` property:
 </PropertyGroup>
 ```
 
+Alternatively, you can disable individual usings:
+
+```xml
+<ItemGroup>
+    <Using Remove="Autodesk.Revit.DB"/>
+</ItemGroup>
+```
+
 ### Launch configuration
 
 To configure a default debug profile that launches the target Revit version, enable the `LaunchRevit` property:
@@ -267,15 +277,34 @@ This Sdk overrides some Microsoft Sdk properties for the optimal add-in developm
 
 | Property                          | Default value | Description                                                                              |
 |-----------------------------------|---------------|------------------------------------------------------------------------------------------|
-| AppendTargetFrameworkToOutputPath | false*        | Prevents the TFM from being appended to the output path. Required for add-in publishing. |
+| TargetFramework                   | *             | Automatically sets the TargetFramework based on the `RevitVersion` property.             |
+| LangVersion                       | latest        | Sets the C# language version to the latest installed version.                            |
+| Nullable                          | enable        | Enables C# nullable reference types.                                                     |
+| ImplicitUsings                    | true          | Enables implicit usings for the project.                                                 |
 | ImplicitRevitUsings               | true          | Enables generation of Revit-related implicit global usings (see section above).          |
+| AppendTargetFrameworkToOutputPath | false**       | Prevents the TFM from being appended to the output path. Required for add-in publishing. |
+| Optimize                          | *             | Enabled for Release configurations.                                                      |
+| DebugSymbols                      | *             | Enabled for Debug configurations.                                                        |
+| DebugType                         | *             | `portable` for Debug, `none` for Release configurations.                                 |
 
-\* When packing/publishing a NuGet package, the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
+\* **TargetFramework default values:**
+
+| RevitVersion | TargetFramework     |
+|--------------|---------------------|
+| 2014         | net40               |
+| 2015         | net45               |
+| 2016-2017    | net452              |
+| 2018         | net46               |
+| 2019-2020    | net47               |
+| 2021-2024    | net48               |
+| 2025-2026+   | net8.0-windows7.0   |
+
+\** When packing/publishing a NuGet package (if `PackageType` or `PackageId` is specified), the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
 
 These properties are automatically applied to the `.csproj` file, but can be overriden:
 
 ```xml
 <PropertyGroup>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ImplicitRevitUsings>false</ImplicitRevitUsings>
 </PropertyGroup>
 ```

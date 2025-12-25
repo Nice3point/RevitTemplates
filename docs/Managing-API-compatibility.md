@@ -20,14 +20,14 @@ To write code compatible with different Revit versions, use the directives **#if
 ```
 
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
-E.g., select the `Debug R26` configuration for the Revit 2026 API.
+E.g., select the `Debug.R26` configuration for the Revit 2026 API.
 
-The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`, `REVIT2026_OR_GREATER`. 
+The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`. 
 Create conditions, experiment to achieve the desired result.
 
 > [!NOTE]
-> For generating directives, a third-party package is used.
-> You can find more detailed documentation about it here: [Revit.Build.Tasks](https://github.com/Nice3point/Revit.Build.Tasks)
+> For generating directives, a Revit MSBuild SDK is used.
+> You can find more detailed documentation about it here: [Revit MSBuild SDK](MsBuild-Sdk.md)
 
 ### Examples
 
@@ -69,16 +69,16 @@ Example:
 
 ```text
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug R24|Any CPU = Debug R24|Any CPU
-    Debug R25|Any CPU = Debug R25|Any CPU
-    Debug R26|Any CPU = Debug R26|Any CPU
-    Release R24|Any CPU = Release R24|Any CPU
-    Release R25|Any CPU = Release R25|Any CPU
-    Release R26|Any CPU = Release R26|Any CPU
+    Debug.R24|Any CPU = Debug.R24|Any CPU
+    Debug.R25|Any CPU = Debug.R25|Any CPU
+    Debug.R26|Any CPU = Debug.R26|Any CPU
+    Release.R24|Any CPU = Release.R24|Any CPU
+    Release.R25|Any CPU = Release.R25|Any CPU
+    Release.R26|Any CPU = Release.R26|Any CPU
 EndGlobalSection
 ```
 
-For example `Debug R26` is the Debug configuration for Revit 2026 version.
+For example `Debug.R26` is the Debug configuration for Revit 2026 version.
 
 > [!TIP]  
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
@@ -95,26 +95,21 @@ Example:
 
 ```xml
 <PropertyGroup>
-    <Configurations>Debug R24;Debug R25;Debug R26</Configurations>
-    <Configurations>$(Configurations);Release R24;Release R25;Release R26</Configurations>
+    <Configurations>Debug.R24;Debug.R25;Debug.R26</Configurations>
+    <Configurations>$(Configurations);Release.R24;Release.R25;Release.R26</Configurations>
 </PropertyGroup>
 ```
 
 > [!IMPORTANT]  
 > Edit the `.csproj` file only manually, IDEs often break configurations.
 
-Then simply map the solution configuration to the project configuration:
+Revit MSBuild SDK automatically sets the required `TargetFramework` based on the `RevitVersion`, extracted from the solution configuration name. 
 
-![image](https://github.com/user-attachments/assets/9f357ded-d38c-4f0a-a21f-152de75f4abc)
-
-Solution and project configuration names may differ, this example uses the same naming style to avoid confusion.
-
-Then specify the framework and Revit version for each configuration, update the `.csproj` file with the following:
+If you need to add support for an unreleased or unsupported version of Revit that the SDK doesn't yet know about, you can add a conditional block to specify the `TargetFramework` manually:
 
 ```xml
-<PropertyGroup Condition="$(Configuration.Contains('R26'))">
-    <RevitVersion>2026</RevitVersion>
-    <TargetFramework>net8.0-windows</TargetFramework>
+<PropertyGroup>
+    <TargetFramework Condition="$(RevitVersion) == '2025'">net8.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 
@@ -130,7 +125,7 @@ configuration.
 
 ```xml
 <ItemGroup>
-    <PackageReference Include="Nice3point.Revit.RevitAPI" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.RevitAPIUI" Version="$(RevitVersion).*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 </ItemGroup>
 ```

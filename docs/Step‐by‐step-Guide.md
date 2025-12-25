@@ -41,7 +41,7 @@ To create a new project, click **New Solution** in Rider or **Create a new Proje
 
 ### Project Wizard Options:
 
-1. Select the desired [template](https://github.com/Nice3point/RevitTemplates/wiki/Templates), such as Revit Addin for a single-project add-in.
+1. Select the desired [template](Templates.md), such as Revit Addin for a single-project add-in.
 2. Name your project and choose the directory.
 3. Choose additional settings, such as whether to include WPF. If unsure, stick with the default settings.
 
@@ -52,7 +52,7 @@ Your project is now ready to launch.
 ### Configuring the Solution:
 
 1. Choose the appropriate solution configuration to compile for a specific Revit version.
-2. **Debug R25** compiles the solution for Revit 2025. The last two digits indicate the Revit [version](https://github.com/Nice3point/RevitTemplates/wiki/Managing-API-compatibility).
+2. **Debug.R25** compiles the solution for Revit 2025. The last two digits indicate the Revit [version](Managing-API-compatibility.md).
 3. **Run configurations** determine which application starts when debugging. Select your main application.
 4. Start debugging by clicking the appropriate button. Revit will launch automatically.
 
@@ -73,11 +73,11 @@ Debugging is pretty simple, without any additional setup. To debug:
 For larger projects, a single-project solution may not be sufficient. 
 Splitting your plugin into multiple modules is a best practice when managing unrelated processes.
 
-To add another project to your solution, we will [use](https://github.com/Nice3point/RevitTemplates/wiki/Templates) the **Revit AddIn Module** and **Revit AddIn Application** templates.
+To add another project to your solution, we will [use](Templates.md) the **Revit AddIn Module** and **Revit AddIn Application** templates.
 
 ### Create a New Project:
 
-1. Select the [template](https://github.com/Nice3point/RevitTemplates/wiki/Templates), in this case, **Revit AddIn Application**, which has fewer settings and files than `Revit AddIn`.
+1. Select the [template](Templates.md), in this case, **Revit AddIn Application**, which has fewer settings and files than `Revit AddIn`.
 2. Name the project and choose its directory.
 3. Choose additional settings, such as adding DependencyInjection support. Use the defaults if you're unsure.
 
@@ -91,7 +91,7 @@ Right-click on your solution and select **Add → New Project**:
 ![image](https://github.com/user-attachments/assets/c19045bc-4afa-43ef-aad5-beb27ab4d2cb)
 
 Configure the new module:
-1. Choose the **Revit AddIn Module** [template](https://github.com/Nice3point/RevitTemplates/wiki/Templates).
+1. Choose the **Revit AddIn Module** [template](Templates.md).
 2. Name the module and select its directory.
 3. Configure additional settings, like whether to include WPF.
 
@@ -112,7 +112,7 @@ You can now add an **ExternalCommand** to execute code from this module, which y
 For enterprise-level development, you might need a more structured solution, including a build system and an installer.
 
 ### Create a New Solution:
-1. Select the solution [template](https://github.com/Nice3point/RevitTemplates/wiki/Templates), in this case **Revit Addin Solution**.
+1. Select the solution [template](Templates.md), in this case **Revit Addin Solution**.
 2. Name the solution and choose the directory.
 3. Configure additional settings, such as whether to include an installer. Defaults are fine if you’re unsure.
 
@@ -120,7 +120,7 @@ For enterprise-level development, you might need a more structured solution, inc
 
 ### Solution Setup:
 
-Your solution will include a pre-built folder structure, the **Nuke** build system, and a **Readme** file with user instructions.
+Your solution will include a pre-built folder structure, the **ModularPipelines** build system, and a **Readme** file with user instructions.
 
 Follow the steps from previous sections to add projects to this solution:
 
@@ -129,26 +129,27 @@ Follow the steps from previous sections to add projects to this solution:
 ### Customizing the Build System:
 
 Let's customize the build system:
-1. In **Solution Items** you will find frequently used solution files, you can add your own there, but right now we need **Build.Configuration.cs**.
-2. Update the **InstallersMap** property if your project name differs from the solution name. This will define a mapping between used installer project and the project containing the installation files.
-3. Update the **Bundles** property if your project name differs from the solution name. This will define projects packed in the Autodesk Bundle.
+1. In the **build** project, you will find frequently used configuration files, right now we need **appsettings.json**.
+2. Update the **BundleOptions** section if you plan to publish your application to the Autodesk Store.
+3. The build system automatically finds all projects in the **source** folder, so no additional mapping is required.
 
 ![image](https://github.com/user-attachments/assets/80bc14c9-d10a-4d4a-8360-70f3d5aff242)
 
 ### Building the Installer:
 
-To create an installer on your local machine, first install the **Nuke** global tool: 
-```shell
-dotnet tool install Nuke.GlobalTool --global
-```
+The build system is based on a console application and does not require the installation of additional tools. You just need to have the .NET SDK installed on your computer.
 
 ![image](https://github.com/user-attachments/assets/12e25bf2-dfe4-4d84-9108-cc9a7e33322d)
 
 ### Running the Build:
 
 1. Open the **Readme.md** file in your solution for instructions on building the installer, including publishing to GitHub.
-2. Open a terminal.
-3. Run the `nuke createinstaller` command. Alternatively, you can use the **Run configurations** in Rider to start the build process without using the terminal.
+2. Open a terminal and navigate to the solution root.
+3. Run the following command:
+   ```shell
+   dotnet run --project build/Build.csproj
+   ```
+   Alternatively, you can use the **Run configurations** in Rider to start the build process without using the terminal.
 
 ![image](https://github.com/user-attachments/assets/dbce742c-f363-4955-8190-d36d92b19a7f)
 
@@ -171,7 +172,8 @@ There are several ways to create a Release, the easiest for beginner developers 
 
    ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 
-For the more advanced, or developers who want more control over releases, go to the [publishing](https://github.com/Nice3point/RevitTemplates/wiki/Publishing-the-Release) page.
+For the more advanced, or developers who want more control over releases, go to the [publishing](Publishing-the-Release.md) page.
+The build system automatically determines the Release version using Git tags. If no tag is specified, it will automatically create a pre-release version.
 
 > [!IMPORTANT]  
 > To create a release, changelog for the release version is required. 

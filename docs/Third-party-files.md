@@ -56,11 +56,11 @@ Remember to use [wildcards](https://docs.microsoft.com/en-us/visualstudio/msbuil
 Publishing is used to create a package of files used by the installers, as well as for local debugging of your add-in.
 
 > [!NOTE]  
-> For publishing, a third-party package is used.
-> You can find more detailed documentation about it here: [Revit.Build.Tasks](https://github.com/Nice3point/Revit.Build.Tasks)
+> For publishing, a Revit MSBuild SDK is used.
+> You can find more detailed documentation about it here: [Revit MSBuild SDK](MsBuild-Sdk.md)
 
 Publishing files disabled by default.
-To enable it, set `<PublishRevitAddin>true</PublishRevitAddin>` or `<DeployRevitAddin>true</DeployRevitAddin>`.
+To enable it, set `<PublishAddin>true</PublishAddin>` or `<DeployAddin>true</DeployAddin>`.
 
 > [!IMPORTANT]  
 > Publishing should only be enabled in the main project containing the `.addin` file.
