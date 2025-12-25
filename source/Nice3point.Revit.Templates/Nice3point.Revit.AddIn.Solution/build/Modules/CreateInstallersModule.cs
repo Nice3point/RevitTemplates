@@ -71,9 +71,21 @@ public sealed class CreateInstallersModule : Module<CommandResult>
     private static async Task<Folder> InstallWixAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var wixToolFolder = context.FileSystem.CreateTemporaryFolder();
+#if (_needToUpdatePipelineVersion)
         await context.DotNet().Tool.Install(new DotNetToolInstallOptions("wix")
         {
             ToolPath = wixToolFolder.Path
+        }, cancellationToken);
+#endif
+        await context.Command.ExecuteCommandLineTool(new CommandLineToolOptions("dotnet")
+        {
+            Arguments =
+            [
+                "tool",
+                "install",
+                "--tool-path", wixToolFolder.Path,
+                "wix"
+            ]
         }, cancellationToken);
 
         return wixToolFolder;

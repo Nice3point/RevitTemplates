@@ -23,8 +23,10 @@ await PipelineHostBuilder.Create()
 
         if (args.Contains("pack"))
         {
+#if (includeBundle)
             collection.AddOptions<BundleOptions>().Bind(context.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
 
+#endif
 #if (includeBundle)
             collection.AddModule<CreateBundleModule>();
 #endif
