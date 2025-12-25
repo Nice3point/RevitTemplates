@@ -28,7 +28,7 @@ This repository contains a collection of project templates for creating Revit Ad
 
 ## Installation
 
-1. Install the latest .NET SDK (https://dotnet.microsoft.com/download).
+1. Install the latest [.NET SDK](https://dotnet.microsoft.com/download).
 2. Run the following command to install the templates:
    ```shell
    dotnet new install Nice3point.Revit.Templates
@@ -39,4 +39,4 @@ This repository contains a collection of project templates for creating Revit Ad
 - IDE: select one of the Revit templates from the New Project dialog in JetBrains Rider or Visual Studio.
 - CLI: run `dotnet new revit-addin` or other available [templates](docs/Templates.md).
 
-For more information, read our [Step-by-step Guide](docs/Step‐by‐step-Guide.md) and check Wiki (https://github.com/Nice3point/RevitTemplates/wiki).
+For more information, read [Step-by-step Guide](docs/Step‐by‐step-Guide.md) and check [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
