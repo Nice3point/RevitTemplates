@@ -11,11 +11,13 @@ namespace Build.Modules;
 
 public sealed class ResolveVersioningModule(IOptions<PackOptions> packOptions) : Module<ResolveVersioningResult>
 {
-    protected override async Task<ResolveVersioningResult?> ExecuteAsync(IPipelineContext context,
-        CancellationToken cancellationToken)
+    protected override async Task<ResolveVersioningResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var version = packOptions.Value.Version;
-        version.ShouldNotBeNullOrWhiteSpace();
+        if (context.Environment.EnvironmentName == "Production")
+        {
+            version.ShouldNotBeNullOrWhiteSpace();
+        }
 
         return await CreateFromVersionStringAsync(context, version);
     }

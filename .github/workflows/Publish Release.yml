@@ -26,6 +26,6 @@ jobs:
         working-directory: "build"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DOTNET_ENVIRONMENT: "Production"
+          DOTNET_ENVIRONMENT: ${{ (github.ref_name == 'main' || github.ref_type == 'tag') && 'Production' || 'Development' }}
           Publish__Version: ${{ github.ref_name }}
           NuGet__ApiKey: ${{ secrets.NUGET_API_KEY }}
