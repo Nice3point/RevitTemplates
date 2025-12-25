@@ -1,10 +1,11 @@
 ﻿#if (addinLogging && diContainer)
 using Serilog;
+
 #endif
 #if (addinLogging && diHosting)
 using Microsoft.Extensions.Logging;
-#endif
 
+#endif
 namespace Nice3point.Revit.AddIn.ViewModels;
 
 #if (!addinLogging)
