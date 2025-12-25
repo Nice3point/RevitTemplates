@@ -24,6 +24,11 @@ A tag in Git used to capture a snapshot of the project at a particular point in 
 The build system uses [GitVersion.Tool](https://gitversion.net/docs/) to automatically determine the Release version based on the Git history and tags. 
 If a tag is present on the current commit, the version will match the tag. If no tag is specified, the tool automatically generates a pre-release version based on the branch name and commit history.
 
+You can also specify a fixed version by setting the `Version` property in the `build/appsettings.json` file. This will override the version determined by GitVersion.Tool.
+
+> [!TIP]
+> Specifying a fixed version is recommended only for local builds and testing. For production releases, it is better to use Git tags.
+
 Tags must follow the format `version` or `version-stage.n.date` for pre-releases, where:
 
 - **version** specifies the version of the release:
