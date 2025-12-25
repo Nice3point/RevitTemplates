@@ -3,7 +3,6 @@ using ModularPipelines.Context;
 using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
 using ModularPipelines.Enums;
-using ModularPipelines.FileSystem;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Models;
 using ModularPipelines.Modules;
@@ -26,8 +25,9 @@ public sealed class CreateInstallersModule : Module<CommandResult>
         var versioningResult = await GetModule<ResolveVersioningModule>();
         var versioning = versioningResult.Value!;
 
-        var wixTarget = new File(Projects.RevitAddIn.FullName);
+        var wixTarget = new File(Projects.Nice3point.Revit.AddIn.FullName);
         var wixInstaller = new File(Projects.Installer.FullName);
+        var wixToolFolder = await InstallWixAsync(context, cancellationToken);
 
         await context.DotNet().Build(new DotNetBuildOptions
         {
@@ -57,7 +57,25 @@ public sealed class CreateInstallersModule : Module<CommandResult>
         {
             Arguments = targetDirectories,
             WorkingDirectory = context.Git().RootDirectory,
-            CommandLogging = CommandLogging.Default & ~CommandLogging.Input
+            CommandLogging = CommandLogging.Default & ~CommandLogging.Input,
+            EnvironmentVariables = new Dictionary<string, string?>
+            {
+                { "PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}" }
+            }
         }, cancellationToken);
+    }
+
+    /// <summary>
+    ///     Installs the WiX toolset required for building installers.
+    /// </summary>
+    private static async Task<Folder> InstallWixAsync(IPipelineContext context, CancellationToken cancellationToken)
+    {
+        var wixToolFolder = context.FileSystem.CreateTemporaryFolder();
+        await context.DotNet().Tool.Install(new DotNetToolInstallOptions("wix")
+        {
+            ToolPath = wixToolFolder.Path
+        }, cancellationToken);
+
+        return wixToolFolder;
     }
 }

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using WixSharp;
 
 namespace Installer;
 
-public static class Generator
+public static partial class Generator
 {
     /// <summary>
     ///     Generates Wix entities, features and directories for the installer.
     /// </summary>
     public static WixEntity[] GenerateWixEntities(IEnumerable<string> args)
     {
-        var versionRegex = new Regex(@"\d+");
         var versionStorages = new Dictionary<string, List<WixEntity>>();
-
         var revitFeature = new Feature
         {
             Name = "Revit Add-in",
@@ -27,7 +22,11 @@ public static class Generator
         foreach (var directory in args)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            var fileVersion = versionRegex.Match(directoryInfo.Name).Value;
+            if (!TryParseVersion(directoryInfo.FullName, out var fileVersion))
+            {
+                throw new Exception($"Could not parse version from directory name: {directoryInfo.FullName}");
+            }
+
             var feature = new Feature
             {
                 Name = fileVersion,
@@ -37,7 +36,7 @@ public static class Generator
 
             revitFeature.Add(feature);
 
-            var files = new Files(feature, $@"{directory}\*.*", FilterEntities);
+            var files = new Files(feature, $@"{directory}\*.*");
             if (versionStorages.TryGetValue(fileVersion, out var storage))
             {
                 storage.Add(files);
@@ -57,11 +56,25 @@ public static class Generator
     }
 
     /// <summary>
-    ///     Filter installer files and exclude from output. 
+    ///     Parse a version string from the given input.
     /// </summary>
-    private static bool FilterEntities(string file)
+    private static bool TryParseVersion(string input, [NotNullWhen(true)] out string? version)
     {
-        return !file.EndsWith(".pdb");
+        version = null;
+        var match = VersionRegex().Match(input);
+        if (!match.Success) return false;
+
+        switch (match.Value.Length)
+        {
+            case 4:
+                version = match.Value;
+                return true;
+            case 2:
+                version = $"20{match.Value}";
+                return true;
+            default:
+                return false;
+        }
     }
 
     /// <summary>
@@ -70,11 +83,17 @@ public static class Generator
     private static void LogFeatureFiles(string directory, string fileVersion)
     {
         var assemblies = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
-        Console.WriteLine($"Installer files for version '{fileVersion}':");
+        Console.WriteLine($"Installer files for version {fileVersion}:");
 
-        foreach (var assembly in assemblies.Where(FilterEntities))
+        foreach (var assembly in assemblies)
         {
-            Console.WriteLine($"'{assembly}'");
+            Console.WriteLine($"- {assembly}");
         }
     }
+
+    /// <summary>
+    ///     A regular expression to match the last sequence of numeric characters in a string.
+    /// </summary>
+    [GeneratedRegex(@"(\d+)(?!.*\d)")]
+    private static partial Regex VersionRegex();
 }

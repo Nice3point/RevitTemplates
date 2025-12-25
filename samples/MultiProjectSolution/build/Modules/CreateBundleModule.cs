@@ -104,6 +104,9 @@ public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOpt
         }, manifestDirectory);
     }
 
+    /// <summary>
+    ///     A regular expression to match the last sequence of numeric characters in a string.
+    /// </summary>
     [GeneratedRegex(@"(\d+)(?!.*\d)")]
     private static partial Regex VersionRegex();
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Installer;
+﻿using Installer;
 using WixSharp;
 using WixSharp.CommonTasks;
 using WixSharp.Controls;
@@ -34,7 +33,7 @@ BuildMultiUserUserMsi();
 
 void BuildSingleUserMsi()
 {
-    project.InstallScope = InstallScope.perUser;
+    project.Scope = InstallScope.perUser;
     project.OutFileName = $"{outputName}-{project.Version}-SingleUser";
     project.Dirs =
     [
@@ -45,7 +44,7 @@ void BuildSingleUserMsi()
 
 void BuildMultiUserUserMsi()
 {
-    project.InstallScope = InstallScope.perMachine;
+    project.Scope = InstallScope.perMachine;
     project.OutFileName = $"{outputName}-{project.Version}-MultiUser";
     project.Dirs =
     [
