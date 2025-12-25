@@ -52,7 +52,7 @@
         <Copy SourceFiles="@(_AddinDeploySourceFiles)"
               DestinationFolder="$(AddinDeployDir)\%(RecursiveDir)"/>
 
-        <Message Text="$(AssemblyName) -> $(AddinDeployDir)" Importance="high"/>
+        <Message Text="$(AssemblyName) -> $(AddinDeployDir)\" Importance="high"/>
     </Target>
 
     <Target Name="CleanAddin"
