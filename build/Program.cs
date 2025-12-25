@@ -14,6 +14,8 @@ await PipelineHostBuilder.Create()
     })
     .ConfigureServices((context, collection) =>
     {
+        collection.AddModule<ResolveVersioningModule>();
+        
         if (args.Length == 0)
         {
             collection.AddModule<CompileProjectsModule>();
