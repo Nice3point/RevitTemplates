@@ -1,4 +1,4 @@
-name: Publish Release
+name: Publish release
 
 on:
   push:
@@ -12,10 +12,11 @@ on:
         type: string
 
 jobs:
-  release:
-    name: Publish release
+  windows:
+    name: windows-2025
     runs-on: windows-2025
     steps:
+
       - name: Checkout
         uses: actions/checkout@v6
         with:
@@ -33,9 +34,12 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'Directory.Packages.props') }}
+          restore-keys: ${{ runner.os }}-nuget-
 
-      - name: Publish release
-        run: ./.nuke/build.cmd PublishGitHub --ReleaseVersion ${{ github.event.inputs.version || github.ref_name }}
+      - name: Publish packages
+        run: dotnet run -c Release -- pack publish
+        working-directory: "build"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOTNET_ENVIRONMENT: ${{ (github.ref_name == 'main' || github.ref_type == 'tag') && 'Production' || 'Development' }}

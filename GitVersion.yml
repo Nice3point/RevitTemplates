@@ -1,0 +1,3 @@
+mode: ContinuousDeployment
+strategies:
+  - Mainline

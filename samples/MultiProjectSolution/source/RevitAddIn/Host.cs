@@ -17,7 +17,7 @@ namespace RevitAddIn;
 /// </summary>
 public static class Host
 {
-    private static IHost _host;
+    private static IHost? _host;
 
     /// <summary>
     ///     Starts the host and configures the application's services
@@ -53,7 +53,7 @@ public static class Host
     /// </summary>
     public static void Stop()
     {
-        _host.StopAsync().GetAwaiter().GetResult();
+        _host?.StopAsync().GetAwaiter().GetResult();
     }
 
     /// <summary>
@@ -63,6 +63,6 @@ public static class Host
     /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
     public static T GetService<T>() where T : class
     {
-        return _host.Services.GetRequiredService<T>();
+        return _host!.Services.GetRequiredService<T>();
     }
 }

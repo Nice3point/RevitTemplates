@@ -6,6 +6,9 @@
         <FullClassName>RevitAddIn.Application</FullClassName>
         <VendorId>Development</VendorId>
         <VendorDescription></VendorDescription>
-        <VendorEmail></VendorEmail>
     </AddIn>
+    <ManifestSettings>
+        <UseRevitContext>False</UseRevitContext>
+        <ContextName>RevitAddIn</ContextName>
+    </ManifestSettings>
 </RevitAddIns>

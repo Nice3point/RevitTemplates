@@ -1,6 +1,6 @@
 # MultiProjectSolution
 
-Autodesk Revit plugin project organized into multiple solution files that target versions 2021 - 2026.
+Autodesk Revit plugin project organized into multiple solution files that target versions 2022 - 2026.
 
 ## Table of content
 
@@ -29,7 +29,7 @@ Before you can build this project, you need to install .NET and IDE.
 If you haven't already installed these, you can do so by visiting the following:
 
 - [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
-- [.NET 9](https://dotnet.microsoft.com/en-us/download/dotnet)
+- [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet)
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
 After installation, clone this repository to your local machine and navigate to the project directory.
@@ -38,8 +38,8 @@ After installation, clone this repository to your local machine and navigate to 
 
 | Folder  | Description                                                                |
 |---------|----------------------------------------------------------------------------|
-| build   | Nuke build system. Used to automate project builds                         |
-| install | Add-in installer, called implicitly by the Nuke build                      |
+| build   | ModularPipelines build system. Used to automate project builds         |
+| install | Add-in installer, called implicitly by the ModularPipelines build          |
 | source  | Project source code folder. Contains all solution projects                 |
 | output  | Folder of generated files by the build system, such as bundles, installers |
 
@@ -60,7 +60,7 @@ We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET sup
 from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
-2. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 4. `Debug` button will start Revit add-in in the debug mode.
 
@@ -69,42 +69,29 @@ from [here](https://www.jetbrains.com/rider/).
 Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
-2. In the `Solutions Configuration` drop-down menu, select `Release R25` or `Debug R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
 ### Building the MSI installer and the Autodesk bundle on local machine
 
-To build the project for all versions, create the installer and bundle, this project uses [NUKE](https://github.com/nuke-build/nuke)
+To build the project for all versions, create the installer and bundle, this project uses [ModularPipelines](https://github.com/thomhurst/ModularPipelines)
 
-To execute your NUKE build locally, you can follow these steps:
+To execute your ModularPipelines build locally, you can follow these steps:
 
-1. **Install NUKE as a global tool**. First, make sure you have NUKE installed as a global tool. You can install it using dotnet CLI:
-
-    ```shell
-    dotnet tool install Nuke.GlobalTool --global
-    ```
-
-   You only need to do this once on your machine.
-
-2. **Navigate to your project directory**. Open a terminal / command prompt and navigate to your project's root directory.
-3. **Run the build**. Once you have navigated to your project's root directory, you can run the NUKE build by calling:
+1. **Navigate to your project directory**. Open a terminal / command prompt and navigate to your project's root directory.
+2. **Run the build**. Once you have navigated to your project's root directory, you can run the ModularPipelines build by calling:
 
    Compile:
    ```shell
-   nuke
-   ```
-
-   Create installer:
-   ```shell
-   nuke createinstaller
+   dotnet run --project build/Build.csproj
    ```
 
    Create installer and bundle:
    ```shell
-   nuke createinstaller createbundle
+   dotnet run --project build/Build.csproj -- pack
    ```
 
-   This command will execute the NUKE build defined in your project.
+   This command will execute the ModularPipelines build defined in your project.
 
 ## Publishing Releases
 
@@ -213,7 +200,7 @@ To write code compatible with different Revit versions, use the directives **#if
 ```
 
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
-E.g., select the `Debug R26` configuration for the Revit 2026 API.
+E.g., select the `Debug.R26` configuration for the Revit 2026 API.
 
 The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`, `REVIT2026_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.
@@ -260,16 +247,16 @@ Example:
 
 ```text
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug R24|Any CPU = Debug R24|Any CPU
-    Debug R25|Any CPU = Debug R25|Any CPU
-    Debug R26|Any CPU = Debug R26|Any CPU
-    Release R24|Any CPU = Release R24|Any CPU
-    Release R25|Any CPU = Release R25|Any CPU
-    Release R26|Any CPU = Release R26|Any CPU
+    Debug.R24|Any CPU = Debug.R24|Any CPU
+    Debug.R25|Any CPU = Debug.R25|Any CPU
+    Debug.R26|Any CPU = Debug.R26|Any CPU
+    Release.R24|Any CPU = Release.R24|Any CPU
+    Release.R25|Any CPU = Release.R25|Any CPU
+    Release.R26|Any CPU = Release.R26|Any CPU
 EndGlobalSection
 ```
 
-For example `Debug R26` is the Debug configuration for Revit 2026 version.
+For example `Debug.R26` is the Debug configuration for Revit 2026 version.
 
 > [!TIP]
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
@@ -286,8 +273,8 @@ Example:
 
 ```xml
 <PropertyGroup>
-    <Configurations>Debug R24;Debug R25;Debug R26</Configurations>
-    <Configurations>$(Configurations);Release R24;Release R25;Release R26</Configurations>
+    <Configurations>Debug.R24;Debug.R25;Debug.R26</Configurations>
+    <Configurations>$(Configurations);Release.R24;Release.R25;Release.R26</Configurations>
 </PropertyGroup>
 ```
 
@@ -300,12 +287,13 @@ Then simply map the solution configuration to the project configuration:
 
 Solution and project configuration names may differ, this example uses the same naming style to avoid confusion.
 
-Then specify the framework and Revit version for each configuration, update the `.csproj` file with the following:
+Revit MSBuild SDK automatically sets the required `TargetFramework` based on the `RevitVersion`, extracted from the solution configuration name. 
+
+If you need to add support for an unreleased or unsupported version of Revit that the SDK doesn't yet know about, you can add a conditional block to specify the `TargetFramework` manually:
 
 ```xml
-<PropertyGroup Condition="$(Configuration.Contains('R26'))">
-    <RevitVersion>2026</RevitVersion>
-    <TargetFramework>net8.0-windows</TargetFramework>
+<PropertyGroup>
+    <TargetFramework Condition="$(RevitVersion) >= '2025'">net8.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 
@@ -321,8 +309,8 @@ configuration.
 
 ```xml
 <ItemGroup>
-    <PackageReference Include="Nice3point.Revit.RevitAPI" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.RevitAPIUI" Version="$(RevitVersion).*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 </ItemGroup>
 ```
 

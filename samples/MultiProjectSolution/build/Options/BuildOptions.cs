@@ -1,0 +1,29 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Build.Options;
+
+/// <summary>
+///     Build configuration options.
+/// </summary>
+[Serializable]
+public sealed record BuildOptions
+{
+    /// <summary>
+    ///     Application version.
+    /// </summary>
+    /// <remarks>
+    ///     This will override the version determined by GitVersion.Tool. <br/>
+    ///     Specifying a fixed version is recommended only for local builds and testing.
+    /// </remarks>
+    /// <example>
+    ///     1.0.0-alpha.1.250101 <br/>
+    ///     1.0.0-beta.2.250101 <br/>
+    ///     1.0.0
+    /// </example>
+    public string? Version { get; init; }
+    
+    /// <summary>
+    ///     Path to build output
+    /// </summary>
+    [Required] public string OutputDirectory { get; init; } = null!;
+}

@@ -1,43 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Nice3point.Revit.Sdk/6.0.0-beta.2">
 
     <PropertyGroup>
         <UseWPF>true</UseWPF>
-        <LangVersion>latest</LangVersion>
-        <PlatformTarget>x64</PlatformTarget>
-        <ImplicitUsings>true</ImplicitUsings>
-        <Configurations>Debug R20;Debug R21;Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
-        <Configurations>$(Configurations);Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
-    </PropertyGroup>
-
-    <!-- Revit configuration -->
-    <PropertyGroup Condition="$(Configuration.Contains('R20'))">
-        <RevitVersion>2020</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R21'))">
-        <RevitVersion>2021</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R22'))">
-        <RevitVersion>2022</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R23'))">
-        <RevitVersion>2023</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R24'))">
-        <RevitVersion>2024</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R25'))">
-        <RevitVersion>2025</RevitVersion>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <Configurations>Debug.R21;Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26</Configurations>
+        <Configurations>$(Configurations);Release.R21;Release.R22;Release.R23;Release.R24;Release.R25;Release.R26</Configurations>
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Revit References -->
-        <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.1"/>
+        <!-- Revit Platform -->
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
@@ -46,12 +16,12 @@
         <!-- MVVM -->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.1"/>
-        
+
         <!-- Logging -->
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1"/>
-        
+
         <!-- Compability -->
-        <PackageReference Include="System.Text.Json" Version="10.0.1" Condition="!$(DefineConstants.Contains('NETCOREAPP'))"/>
+        <PackageReference Include="System.Text.Json" Version="10.0.1"/>
 
         <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>

@@ -1,5 +1,0 @@
-{
-  "$schema": "./build.schema.json",
-  "Solution": "MultiProjectSolution.sln",
-  "Verbosity": "Normal"
-}

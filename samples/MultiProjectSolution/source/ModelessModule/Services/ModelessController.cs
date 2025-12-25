@@ -5,7 +5,7 @@ namespace ModelessModule.Services;
 
 public sealed class ModelessController
 {
-    private Window _window;
+    private Window? _window;
 
     /// <summary>
     ///     Attempts to set focus to this element
@@ -13,6 +13,7 @@ public sealed class ModelessController
     /// <returns>True if the window instance has already been created</returns>
     public bool Focus()
     {
+        if (_window is null) return false;
         if (_window.WindowState == WindowState.Minimized) _window.WindowState = WindowState.Normal;
         if (_window.Visibility != Visibility.Visible) _window.Show();
         return _window.Focus();

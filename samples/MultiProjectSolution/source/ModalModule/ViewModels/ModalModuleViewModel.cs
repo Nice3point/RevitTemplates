@@ -6,7 +6,7 @@ namespace ModalModule.ViewModels;
 
 public sealed partial class ModalModuleViewModel(ILogger<ModalModuleViewModel> logger, IOptions<JsonSerializerOptions> serializerOptions) : ObservableObject
 {
-    [ObservableProperty] private string _projectName = Context.ActiveDocument?.ProjectInformation.Name;
+    [ObservableProperty] private string? _projectName = Context.ActiveDocument?.ProjectInformation.Name;
 
     [RelayCommand]
     private void SaveProjectName()
