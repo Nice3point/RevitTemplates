@@ -89,6 +89,11 @@
     {
       "modifiers": [
         {
+          "exclude": [
+            "Nice3point.Revit.AddIn.slnx"
+          ]
+        },
+        {
           "condition": "!isAzureCi || !hasArtifacts",
           "exclude": [
             "azure-pipelines.yml"
@@ -131,6 +136,23 @@
           ]
         }
       ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "Readme.md"
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\"",
+      "description": "Opens Readme.md in the editor",
+      "manualInstructions": [],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "0"
+      },
+      "continueOnError": true
     }
   ],
   "SpecialCustomOperations": {
