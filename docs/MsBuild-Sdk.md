@@ -297,17 +297,28 @@ This Sdk overrides some Microsoft Sdk properties for the optimal add-in developm
 
 | Property                          | Default value | Description                                                                              |
 |-----------------------------------|---------------|------------------------------------------------------------------------------------------|
-| TargetFramework                   | *             | Automatically sets the TargetFramework based on the `RevitVersion` property.             |
+| TargetFramework                   | _dynamic_     | Automatically sets the TargetFramework based on the `RevitVersion` property.             |
 | LangVersion                       | latest        | Sets the C# language version to the latest installed version.                            |
 | Nullable                          | enable        | Enables C# nullable reference types.                                                     |
 | ImplicitUsings                    | true          | Enables implicit usings for the project.                                                 |
 | ImplicitRevitUsings               | true          | Enables generation of Revit-related implicit global usings (see section above).          |
 | AppendTargetFrameworkToOutputPath | false**       | Prevents the TFM from being appended to the output path. Required for add-in publishing. |
-| Optimize                          | *             | Enabled for Release configurations.                                                      |
-| DebugSymbols                      | *             | Enabled for Debug configurations.                                                        |
-| DebugType                         | *             | `portable` for Debug, `none` for Release configurations.                                 |
+| Optimize                          | _dynamic_     | Enabled for Release configurations.                                                      |
+| DebugSymbols                      | _dynamic_     | Enabled for Debug configurations.                                                        |
+| DebugType                         | _dynamic_     | `portable` for Debug, `none` for Release configurations.                                 |
 
-\* **TargetFramework default values:**
+These properties are automatically applied to the `.csproj` file, but can be overriden:
+
+```xml
+<PropertyGroup>
+    <ImplicitRevitUsings>false</ImplicitRevitUsings>
+    <TargetFramework Condition="$(RevitVersion) == '2025'">net8.0</TargetFramework>
+</PropertyGroup>
+```
+
+\** When packing/publishing a NuGet package (if `PackageType` or `PackageId` is specified), the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
+
+**TargetFramework default values:**
 
 | RevitVersion | TargetFramework     |
 |--------------|---------------------|
@@ -318,13 +329,3 @@ This Sdk overrides some Microsoft Sdk properties for the optimal add-in developm
 | 2019-2020    | net47               |
 | 2021-2024    | net48               |
 | 2025-2026+   | net8.0-windows7.0   |
-
-\** When packing/publishing a NuGet package (if `PackageType` or `PackageId` is specified), the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
-
-These properties are automatically applied to the `.csproj` file, but can be overriden:
-
-```xml
-<PropertyGroup>
-    <ImplicitRevitUsings>false</ImplicitRevitUsings>
-</PropertyGroup>
-```
