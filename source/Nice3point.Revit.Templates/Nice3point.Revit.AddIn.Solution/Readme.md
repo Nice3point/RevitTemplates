@@ -47,8 +47,6 @@ If you haven't already installed these, you can do so by visiting the following:
 - [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet)
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
-After installation, clone this repository to your local machine and navigate to the project directory.
-
 ## Solution Structure
 
 | Folder  | Description                                                                |

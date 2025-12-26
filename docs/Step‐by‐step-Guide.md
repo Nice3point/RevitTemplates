@@ -143,9 +143,17 @@ The build system is based on a console application and does not require the inst
 
 ### Running the Build:
 
-1. Open the **Readme.md** file in your solution for instructions on building the installer, including publishing to GitHub.
-2. Open a terminal and navigate to the solution root.
-3. Run the following command:
+Before running the build system, you must initialize a Git repository and make the first commit. This is required for **GitVersion.Tool** to automatically determine the version and search for files.
+
+1. Open a terminal and navigate to the solution root.
+2. Initialize Git and make the first commit:
+   ```shell
+   git init
+   git add .
+   git commit -m "Initial commit"
+   ```
+3. Open the **Readme.md** file in your solution for instructions on building the installer, including publishing to GitHub.
+4. Run the following command:
    ```shell
    dotnet run --project build/Build.csproj
    ```
