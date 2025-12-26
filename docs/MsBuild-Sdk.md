@@ -5,17 +5,45 @@ MSBuild SDK for developing and publishing the plugin for multiple Revit versions
 ## Table of contents
 
 <!-- TOC -->
-* [Preprocessor symbols](#preprocessor-symbols)
-* [Publishing](#publishing)
-  * [Local deployment](#local-deployment)
-  * [Publishing for distribution](#publishing-for-distribution)
-  * [Publish extra content](#publish-extra-content)
-* [Assembly repacking](#assembly-repacking)
-* [Manifest patching](#manifest-patching)
-* [Implicit global usings](#implicit-global-usings)
-* [Launch configuration](#launch-configuration)
-* [Configuration](#configuration)
+* [Features](#features)
+* [Installation](#installation)
+  * [Preprocessor symbols](#preprocessor-symbols)
+  * [Publishing](#publishing)
+    * [Local deployment](#local-deployment)
+    * [Publishing for distribution](#publishing-for-distribution)
+    * [Publish extra content](#publish-extra-content)
+  * [Assembly repacking](#assembly-repacking)
+  * [Manifest patching](#manifest-patching)
+  * [Implicit global usings](#implicit-global-usings)
+  * [Launch configuration](#launch-configuration)
+  * [Configuration](#configuration)
 <!-- TOC -->
+
+## Features
+
+- Add-ins development for multiple Revit API versions from a single codebase.
+- Automatic Frameworks configuration. No need to manually set .NET versions for each Revit API version, the SDK does it for you.
+- Easy Testing automatically copies your plugin to Revit folders for quick testing.
+- Manifest patching automatically fixes .addin files to support breaking changes between Revit versions.
+- Clean Project Files removes all the messy boilerplates from your .csproj configuration.
+
+## Installation
+
+To use this SDK, you need to specify it in the `Sdk` attribute of the `<Project>` element in your `.csproj` file. You can also specify a version to ensure build reproducibility:
+
+```xml
+<Project Sdk="Nice3point.Revit.Sdk/6.0.0">
+    <!-- Project content -->
+</Project>
+```
+
+If the version is not specified, the latest version installed on your machine or defined in `global.json` will be used:
+
+```xml
+<Project Sdk="Nice3point.Revit.Sdk">
+    <!-- Project content -->
+</Project>
+```
 
 ### Preprocessor symbols
 
