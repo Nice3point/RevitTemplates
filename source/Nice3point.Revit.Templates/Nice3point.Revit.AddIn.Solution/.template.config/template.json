@@ -94,6 +94,12 @@
           ]
         },
         {
+          "condition": "!hasArtifacts",
+          "exclude": [
+            ".run/Pack.run.xml"
+          ]
+        },
+        {
           "condition": "!isAzureCi || !hasArtifacts",
           "exclude": [
             "azure-pipelines.yml"
