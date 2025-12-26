@@ -1,6 +1,6 @@
 # Revit MSBuild SDK
 
-MSBuild SDK for developing and publishing the plugin for multiple Revit versions.
+MSBuild SDK for developing and publishing the add-ins for multiple Revit versions.
 
 ## Table of contents
 
@@ -23,7 +23,7 @@ MSBuild SDK for developing and publishing the plugin for multiple Revit versions
 
 - Add-ins development for multiple Revit API versions from a single codebase.
 - Automatic Frameworks configuration. No need to manually set .NET versions for each Revit API version, the SDK does it for you.
-- Easy Testing automatically copies your plugin to Revit folders for quick testing.
+- Easy Testing automatically copies your add-in to Revit folders for quick testing.
 - Manifest patching automatically fixes .addin files to support breaking changes between Revit versions.
 - Clean Project Files removes all the messy boilerplates from your .csproj configuration.
 
@@ -137,7 +137,7 @@ _Default: Disabled_
 
 #### Publish extra content
 
-By default, all project files and dependencies required for the plugin to run, including the `.addin` manifest, are copied.
+By default, all project files and dependencies required for the add-in to run, including the `.addin` manifest, are copied.
 If you need to include additional files, such as configuration or family files, include them in the `Content` item.
 
 ```xml
@@ -150,7 +150,7 @@ If you need to include additional files, such as configuration or family files, 
 
 To enable copying Content files, set `CopyToPublishDirectory="Always"` or `CopyToPublishDirectory="PreserveNewest"`
 
-The `PublishDirectory` property specifies which subfolder of the plugin the file should be copied to.
+The `PublishDirectory` property specifies which subfolder of the add-in the file should be copied to.
 If it is not specified, the files will be copied to the root folder.
 
 ```xml
