@@ -7,16 +7,16 @@ MSBuild SDK for developing and publishing the add-ins for multiple Revit version
 <!-- TOC -->
 * [Features](#features)
 * [Installation](#installation)
-  * [Preprocessor symbols](#preprocessor-symbols)
-  * [Publishing](#publishing)
-    * [Local deployment](#local-deployment)
-    * [Publishing for distribution](#publishing-for-distribution)
-    * [Publish extra content](#publish-extra-content)
-  * [Assembly repacking](#assembly-repacking)
-  * [Manifest patching](#manifest-patching)
-  * [Implicit global usings](#implicit-global-usings)
-  * [Launch configuration](#launch-configuration)
-  * [Configuration](#configuration)
+* [Preprocessor symbols](#preprocessor-symbols)
+* [Publishing](#publishing)
+  * [Local deployment](#local-deployment)
+  * [Publishing for distribution](#publishing-for-distribution)
+  * [Publish extra content](#publish-extra-content)
+* [Assembly repacking](#assembly-repacking)
+* [Manifest patching](#manifest-patching)
+* [Implicit global usings](#implicit-global-usings)
+* [Launch configuration](#launch-configuration)
+* [Configuration](#configuration)
 <!-- TOC -->
 
 ## Features
@@ -37,7 +37,7 @@ To use this SDK, you need to specify it in the `Sdk` attribute of the `<Project>
 </Project>
 ```
 
-### Preprocessor symbols
+## Preprocessor symbols
 
 Preprocessor symbols (`#define` constants) are used in conditional compilation to enable or exclude code based on the target Revit version.
 This ensures compatibility across multiple Revit versions without code duplication.
@@ -86,11 +86,11 @@ Preprocessor symbols generating is enabled by default, to disable implicit defin
 </PropertyGroup>
 ```
 
-### Publishing
+## Publishing
 
 Depending on your workflow, you can either deploy the files locally for immediate testing and debugging or publish them into a folder for further distribution.
 
-#### Local deployment
+### Local deployment
 
 To copy Revit add-in files to the `%AppData%\Autodesk\Revit\Addins` folder after building a project, you can enable the `DeployAddin` property.
 
@@ -122,7 +122,7 @@ Should only be enabled in projects containing the Revit manifest file (`.addin`)
 
 `Clean solution` or `Clean project` commands will delete the deployed files.
 
-#### Publishing for distribution
+### Publishing for distribution
 
 If your goal is to generate an installer or a bundle, enable the `PublishAddin` property.
 This configuration publishes the compiled files into the `bin\publish` folder.
@@ -135,7 +135,7 @@ This configuration publishes the compiled files into the `bin\publish` folder.
 
 _Default: Disabled_
 
-#### Publish extra content
+### Publish extra content
 
 By default, all project files and dependencies required for the add-in to run, including the `.addin` manifest, are copied.
 If you need to include additional files, such as configuration or family files, include them in the `Content` item.
@@ -182,7 +182,7 @@ Result:
    ┗📜Readme.md
 ```
 
-### Assembly repacking
+## Assembly repacking
 
 Assembly repacking is used to merge multiple assemblies into a single Dll, primarily to avoid dependency conflicts between different add-ins.
 
@@ -210,7 +210,7 @@ All binaries are repacked into the **bin** directory after the build.
 
 For .NET Core applications, it is recommended to disable this feature and use **Dependency Isolation**, which is available starting from Revit 2026.
 
-### Manifest patching
+## Manifest patching
 
 By default, enabled target is used to modify the Revit `.addin` manifest to ensure backward compatibility between different Revit versions.
 
@@ -244,7 +244,7 @@ Currently, the SDK removes the `ManifestSettings` node for Revit versions older 
 
 Target is triggered automatically when the `PublishAddin` target runs.
 
-### Implicit global usings
+## Implicit global usings
 
 By default, included a target for generating implicit global Usings depending on the project references. Helps to reduce the frequent use of `using` in a project.
 
@@ -275,7 +275,7 @@ Alternatively, you can disable individual usings:
 </ItemGroup>
 ```
 
-### Launch configuration
+## Launch configuration
 
 To configure a default debug profile that launches the target Revit version, enable the `LaunchRevit` property:
 
@@ -291,7 +291,7 @@ This sets additional properties (only when values are not already specified):
 - `StartProgram=C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe`
 - `StartArguments=/language ENG`
 
-### Configuration
+## Configuration
 
 This Sdk overrides some Microsoft Sdk properties for the optimal add-in development:
 
