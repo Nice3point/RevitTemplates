@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using Autodesk.PackageBuilder;
 using Build.Options;
 using Microsoft.Extensions.Options;
@@ -52,9 +53,12 @@ public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOpt
     {
         foreach (var targetDirectory in targetDirectories)
         {
-            var version = $"20{VersionRegex().Match(targetDirectory.Path).Value}";
-            var versionFolder = contentFolder.CreateFolder(version);
+            if (!TryParseVersion(targetDirectory.Path, out var version))
+            {
+                throw new Exception($"Could not parse version from directory name: {targetDirectory.Path}");
+            }
 
+            var versionFolder = contentFolder.CreateFolder(version);
             foreach (var filePath in targetDirectory.GetFiles(file => file.Exists))
             {
                 var relativePath = Path.GetRelativePath(targetDirectory.Path, filePath.Path);
@@ -88,7 +92,10 @@ public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOpt
 
             foreach (var targetDirectory in targetDirectories)
             {
-                var version = $"20{VersionRegex().Match(targetDirectory.Path).Value}";
+                if (!TryParseVersion(targetDirectory.Path, out var version))
+                {
+                    throw new Exception($"Could not parse version from directory name: {targetDirectory.Path}");
+                }
 
                 var addinManifests = targetDirectory.GetFiles(file => file.Extension == ".addin");
                 foreach (var addinManifest in addinManifests)
@@ -103,7 +110,32 @@ public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOpt
             }
         }, manifestDirectory);
     }
+    
+    /// <summary>
+    ///     Parse a version string from the given input.
+    /// </summary>
+    private static bool TryParseVersion(string input, [NotNullWhen(true)] out string? version)
+    {
+        version = null;
+        var match = VersionRegex().Match(input);
+        if (!match.Success) return false;
 
+        switch (match.Value.Length)
+        {
+            case 4:
+                version = match.Value;
+                return true;
+            case 2:
+                version = $"20{match.Value}";
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    ///     A regular expression to match the last sequence of numeric characters in a string.
+    /// </summary>
     [GeneratedRegex(@"(\d+)(?!.*\d)")]
     private static partial Regex VersionRegex();
 }
