@@ -29,18 +29,10 @@ MSBuild SDK for developing and publishing the plugin for multiple Revit versions
 
 ## Installation
 
-To use this SDK, you need to specify it in the `Sdk` attribute of the `<Project>` element in your `.csproj` file. You can also specify a version to ensure build reproducibility:
+To use this SDK, you need to specify it in the `Sdk` attribute of the `<Project>` element in your `.csproj` file:
 
 ```xml
 <Project Sdk="Nice3point.Revit.Sdk/6.0.0">
-    <!-- Project content -->
-</Project>
-```
-
-If the version is not specified, the latest version installed on your machine or defined in `global.json` will be used:
-
-```xml
-<Project Sdk="Nice3point.Revit.Sdk">
     <!-- Project content -->
 </Project>
 ```
