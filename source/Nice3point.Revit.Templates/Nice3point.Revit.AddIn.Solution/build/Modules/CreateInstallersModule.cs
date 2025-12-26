@@ -3,6 +3,7 @@ using ModularPipelines.Context;
 using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
 using ModularPipelines.Enums;
+using ModularPipelines.FileSystem;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Models;
 using ModularPipelines.Modules;
