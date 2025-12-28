@@ -16,6 +16,7 @@ public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<Co
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
+        return await NothingAsync();
         var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
         var changelogResult = changelogModule is null ? null : await changelogModule;
