@@ -17,8 +17,8 @@ await PipelineHostBuilder.Create()
 
         collection.AddModule<ResolveConfigurationsModule>();
         collection.AddModule<ResolveVersioningModule>();
-        collection.AddModule<CleanProjectsModule>();
-        collection.AddModule<CompileProjectsModule>();
+        collection.AddModule<CleanProjectModule>();
+        collection.AddModule<CompileProjectModule>();
 #if (hasArtifacts)
 
         if (args.Contains("pack"))
@@ -31,7 +31,7 @@ await PipelineHostBuilder.Create()
             collection.AddModule<CreateBundleModule>();
 #endif
 #if (includeInstaller)
-            collection.AddModule<CreateInstallersModule>();
+            collection.AddModule<CreateInstallerModule>();
 #endif
         }
 #endif

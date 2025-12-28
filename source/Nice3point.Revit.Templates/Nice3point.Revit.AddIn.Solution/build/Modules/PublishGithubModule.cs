@@ -22,11 +22,11 @@ namespace Build.Modules;
 [SkipIfNoGitHubToken]
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<GenerateGitHubChangelogModule>]
-#if (bundle)
+#if (includeBundle)
 [DependsOn<CreateBundleModule>]
 #endif
-#if (installer)
-[DependsOn<CreateInstallersModule>]
+#if (includeInstaller)
+[DependsOn<CreateInstallerModule>]
 #endif
 public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module<ReleaseAsset[]?>
 {

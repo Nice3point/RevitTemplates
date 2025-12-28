@@ -13,7 +13,7 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
-[DependsOn<CleanProjectsModule>]
+[DependsOn<CleanProjectModule>]
 public sealed class PackTemplatesModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)

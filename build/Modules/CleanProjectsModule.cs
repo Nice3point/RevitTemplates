@@ -9,7 +9,7 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 [SkipIfContinuousIntegrationBuild]
-public sealed class CleanProjectsModule(IOptions<PackOptions> packOptions) : Module
+public sealed class CleanProjectModule(IOptions<PackOptions> packOptions) : Module
 {
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {

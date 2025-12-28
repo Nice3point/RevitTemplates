@@ -53,7 +53,7 @@ public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions)
             Version = gitVersioning.SemVer!,
             VersionPrefix = gitVersioning.MajorMinorPatch!,
             VersionSuffix = gitVersioning.PreReleaseTag,
-            IsPrerelease = gitVersioning.PreReleaseNumber > 0,
+            IsPrerelease = !string.IsNullOrEmpty(gitVersioning.PreReleaseLabel),
             PreviousVersion = await FetchPreviousVersionAsync(context)
         };
     }

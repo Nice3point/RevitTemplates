@@ -38,15 +38,14 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
         }
 
         var changelog = await ParseChangelog(changelogFile, versioning.Version);
-        if (!versioning.IsPrerelease)
+        if (changelog.Length == 0)
         {
-            changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
-            return changelog.ToString();
+            context.Logger.LogWarning("No version entry exists in the changelog: {Version}", versioning.Version);
+            return await GenerateReleaseNotesAsync(context, versioning);
         }
 
-        return await GenerateReleaseNotesAsync(context, versioning);
+        return changelog.ToString();
     }
-
 
     /// <summary>
     ///     Parse the changelog file to extract the entries for a specific version.
@@ -109,10 +108,13 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
     {
         var repositoryId = long.Parse(context.GitHub().EnvironmentVariables.RepositoryId!);
 
+        var previousVersion = versioning.PreviousVersion;
+        var isHashedVersion = previousVersion.Length >= 40 && previousVersion.All(c => char.IsDigit(c) || c is >= 'a' and <= 'f');
+
         var releaseNotes = await context.GitHub().Client.Repository.Release.GenerateReleaseNotes(repositoryId,
             new GenerateReleaseNotesRequest(versioning.Version)
             {
-                PreviousTagName = versioning.PreviousVersion
+                PreviousTagName = isHashedVersion ? null : previousVersion
             });
 
         return releaseNotes.Body;

@@ -131,7 +131,7 @@
           "condition": "!includeInstaller",
           "exclude": [
             "install/**",
-            "build/Modules/CreateInstallersModule.cs"
+            "build/Modules/CreateInstallerModule.cs"
           ]
         },
         {

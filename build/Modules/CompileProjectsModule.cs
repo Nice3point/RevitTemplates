@@ -9,7 +9,7 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 [DependsOn<ResolveVersioningModule>]
-public sealed class CompileProjectsModule : Module<CommandResult>
+public sealed class CompileProjectModule : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {

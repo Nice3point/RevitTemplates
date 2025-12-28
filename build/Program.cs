@@ -18,7 +18,7 @@ await PipelineHostBuilder.Create()
         
         if (args.Length == 0)
         {
-            collection.AddModule<CompileProjectsModule>();
+            collection.AddModule<CompileProjectModule>();
             return;
         }
 
@@ -26,7 +26,7 @@ await PipelineHostBuilder.Create()
         {
             collection.AddOptions<PackOptions>().Bind(context.Configuration.GetSection("Pack")).ValidateDataAnnotations();
 
-            collection.AddModule<CleanProjectsModule>();
+            collection.AddModule<CleanProjectModule>();
             collection.AddModule<PackSdkModule>();
             collection.AddModule<PackTemplatesModule>();
         }
