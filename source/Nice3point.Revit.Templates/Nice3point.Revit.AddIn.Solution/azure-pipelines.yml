@@ -22,6 +22,7 @@ jobs:
         fetchDepth: 0
 
       - script: |
+          set -e
           git tag ${{ parameters.version }}
           git push origin ${{ parameters.version }}
         displayName: "Create release tag"
@@ -38,7 +39,8 @@ jobs:
         displayName: "Publish release"
         workingDirectory: "build"
         env:
-          DOTNET_ENVIRONMENT: $[ if(startsWith(variables['Build.SourceBranch'], 'refs/tags/'), 'Production', 'Development' ) ]
+          DOTNET_ENVIRONMENT: $[ if(or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/tags/')), 'Production', 'Development' ) ]
+          Build__Version: ${{ parameters.version }}
 
       - task: PublishBuildArtifacts@1
         inputs:
