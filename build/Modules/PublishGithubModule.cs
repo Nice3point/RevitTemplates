@@ -16,6 +16,7 @@ namespace Build.Modules;
 
 [SkipIfNoGitHubToken]
 [DependsOn<PackTemplatesModule>]
+[DependsOn<PackSdkModule>]
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<GenerateGitHubChangelogModule>]
 public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module<ReleaseAsset[]?>
