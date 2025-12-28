@@ -15,12 +15,12 @@ This repository contains a collection of project templates for creating Revit Ad
 
 ## Template Features
 
-- Multi-version support for Revit 2021-2026 versions
-- MVVM pattern implementation with WPF support
+- Multi-target Revit API version support
+- WPF support with MVVM architecture
 - Dependency Injection support
 - Integrated Serilog support for structured logging
 - Custom MSBuild SDK for simplified development
-- Assembly isolation support for Revit 2026 and higher
+- Assembly isolation support for .NET Core builds
 - Modern build system for building, testing and packaging
 - Automatic versioning for releases
 - Ready-to-use installer and Autodesk Store bundle projects
