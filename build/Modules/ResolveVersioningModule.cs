@@ -19,7 +19,7 @@ public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions)
             version.ShouldNotBeNullOrWhiteSpace();
         }
 
-        return await CreateFromVersionStringAsync(context, version);
+        return await CreateFromVersionStringAsync(context, version!);
     }
 
     private static async Task<ResolveVersioningResult> CreateFromVersionStringAsync(IPipelineContext context, string version)

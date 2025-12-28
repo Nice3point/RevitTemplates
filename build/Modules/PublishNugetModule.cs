@@ -13,13 +13,13 @@ using Shouldly;
 namespace Build.Modules;
 
 [DependsOn<PackTemplatesModule>]
+[DependsOn<PublishGithubModule>]
 public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOptions<NuGetOptions> nuGetOptions) : Module<CommandResult[]?>
 {
     protected override async Task<CommandResult[]?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
-        var targetPackages = outputFolder.GetFiles(file => file.Extension == ".nupkg" &&
-                                                           !file.Name.Contains("sdk", StringComparison.OrdinalIgnoreCase)).ToArray();
+        var targetPackages = outputFolder.GetFiles(file => file.Extension == ".nupkg").ToArray();
         targetPackages.ShouldNotBeEmpty("No NuGet packages were found to publish");
 
         return await targetPackages

@@ -20,14 +20,14 @@ public sealed class RestoreTemplatesReadmeModule : Module
 
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var nugetReadmeModule = await GetModule<UpdateTemplatesReadmeModule>();
-        if (!nugetReadmeModule.HasValue)
+        var nugetReadmeResult = await GetModule<UpdateTemplatesReadmeModule>();
+        if (!nugetReadmeResult.HasValue)
         {
             return await NothingAsync();
         }
         
         var readmePath = context.Git().RootDirectory.GetFile("Readme.md");
-        await readmePath.WriteAsync(nugetReadmeModule.Value!, cancellationToken);
+        await readmePath.WriteAsync(nugetReadmeResult.Value!, cancellationToken);
         return await NothingAsync();
     }
 }

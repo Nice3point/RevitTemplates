@@ -1,6 +1,5 @@
 ﻿using System.Text;
-using Build.Options;
-using Microsoft.Extensions.Options;
+using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Modules;
@@ -9,15 +8,18 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
-public sealed class GenerateChangelogModule(IOptions<BuildOptions> buildOptions) : Module<string>
+[DependsOn<ResolveVersioningModule>]
+public sealed class GenerateChangelogModule : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
+        var versioningResult = await GetModule<ResolveVersioningModule>();
+        var versioning = versioningResult.Value!;
+        
         var changelogFile = context.Git().RootDirectory.GetFile("Changelog.md");
-        var version = buildOptions.Value.Version;
 
-        var changelog = await BuildChangelog(changelogFile, version);
-        changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {version}");
+        var changelog = await BuildChangelog(changelogFile, versioning.Version);
+        changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
 
         return changelog.ToString();
     }

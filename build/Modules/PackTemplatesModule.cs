@@ -14,12 +14,15 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 [DependsOn<CleanProjectModule>]
+[DependsOn<ResolveVersioningModule>]
 public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
+        var versioningResult = await GetModule<ResolveVersioningModule>();
         var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
+        var versioning = versioningResult.Value!;
         var changelogResult = changelogModule is null ? null : await changelogModule;
         var changelog = changelogResult?.Value ?? string.Empty;
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
@@ -28,14 +31,15 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
 
         try
         {
-            updatedFiles = await SetSdkVersionAsync(buildOptions.Value.Version, cancellationToken);
+            updatedFiles = await SetSdkVersionAsync(versioning.Version, cancellationToken);
             return await context.DotNet().Pack(new DotNetPackOptions
             {
                 ProjectSolution = Projects.Nice3point_Revit_Templates.FullName,
                 Configuration = Configuration.Release,
                 Properties = new List<KeyValue>
                 {
-                    ("Version", buildOptions.Value.Version),
+                    ("VersionPrefix", versioning.VersionPrefix),
+                    ("VersionSuffix", versioning.VersionSuffix!),
                     ("PackageReleaseNotes", changelog)
                 },
                 OutputDirectory = outputFolder
