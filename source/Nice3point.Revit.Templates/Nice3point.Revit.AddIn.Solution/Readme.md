@@ -144,7 +144,7 @@ Releases are managed by creating new [Git tags](https://git-scm.com/book/en/v2/G
 A tag in Git used to capture a snapshot of the project at a particular point in time, with the ability to roll back to a previous version.
 
 The build system uses [GitVersion.Tool](https://gitversion.net/docs/) to automatically determine the Release version based on the Git history and tags. 
-If a tag is present on the current commit, the version will match the tag. If no tag is specified, the tool automatically generates a pre-release version based on the branch name and commit history.
+If a tag is present on the current commit, the version will match the tag. If no tag is specified, the tool automatically generates a release version based on the branch name and commit history.
 
 You can also specify a fixed version by setting the `Version` property in the `build/appsettings.json` file. This will override the version determined by GitVersion.Tool.
 
@@ -153,7 +153,7 @@ You can also specify a fixed version by setting the `Version` property in the `b
 ---#endif
 > Specifying a fixed version is recommended only for local builds and testing. For production releases, it is better to use Git tags.
 
-Tags must follow the format `version` or `version-stage.n.date` for pre-releases, where:
+Tags can follow the format `version` or `version-stage.n.date` for pre-releases, where:
 
 - **version** specifies the version of the release:
     - `1.0.0`
@@ -179,9 +179,10 @@ For example:
 
 ### Updating the Changelog
 
-For releases, changelog for the release version is required.
+Updating the changelog is optional. If you provide a changelog, the build system will use it for the release notes. 
+If no entry is found for the current version, GitHub will automatically generate release notes based on your pull requests and commits.
 
-To update the changelog:
+To update the changelog manually:
 
 1. Navigate to the solution root.
 2. Open the file **Changelog.md**.
@@ -237,7 +238,8 @@ To create releases directly on GitHub:
 1. Navigate to the **Actions** section on the repository page.
 2. Select **Publish Release** workflow.
 3. Click **Run workflow** button.
-4. Specify the release version and click **Run**.
+4. (Optional) Specify the release version. If not specified, the system will automatically determine the version based on your Git history.
+5. Click **Run**.
 
     ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 
@@ -251,7 +253,8 @@ To create releases directly on Azure:
 2. Click **New pipeline** button and select the source repository.
 3. Save your pipeline.
 4. Click **Run pipeline** button.
-5. Specify the release version and click **Run**.
+5. (Optional) Specify the release version. If not specified, the system will automatically determine the version based on your Git history.
+6. Click **Run**.
 
    ![image](https://github.com/user-attachments/assets/39d2b173-3092-48a5-a9eb-7c0981708b07)
 
