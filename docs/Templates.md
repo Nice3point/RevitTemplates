@@ -11,6 +11,8 @@ More information about dotnet templates: https://github.com/dotnet/templating/wi
 * [Revit AddIn Application](#revit-addin-application) - template for creating an empty application for multi-project add-in.
 * [Revit AddIn Module](#revit-addin-module) - template for creating an empty module for multi-project add-in.
 * [Revit AddIn Solution](#revit-addin-solution) - template for creating a solution structure for Revit add-ins.
+* [Revit Benchmark](#revit-benchmark) - template for creating performance benchmarks for Revit API.
+* [Revit Test](#revit-test) - template for creating unit tests for Revit API.
 <!-- TOC -->
 
 If you are not sure what options to choose when creating a project, keep everything by default, templates uses optimal and frequently used settings. 
@@ -95,3 +97,21 @@ WixSharp was chosen as the installer, it is based on a console application, this
 More details about WixSharp [here](https://github.com/oleg-shilo/wixsharp).
 
 ![image](https://github.com/user-attachments/assets/10835ebb-a08d-434a-ba9e-a7abbd3b61f8)
+
+# Revit Benchmark
+
+Suitable for performance testing and measuring the execution time of your code directly in the Revit environment. 
+
+This template is based on the [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) library, which is the industry standard for benchmarking .NET code.
+
+The template is pre-configured to run benchmarks in the Revit thread and reflect real-world API usage. 
+It supports multiple Revit versions, and you can compare the performance of different versions of Revit API in one benchmark.
+
+# Revit Test
+
+Suitable for unit testing and writing automated tests for your Revit add-ins.
+
+This template is based on the [TUnit](https://github.com/thomhurst/TUnit) library, a modern, fast and flexible testing framework for .NET.
+
+Tests are configured to run inside the Revit process, providing full access to the Revit API. The template supports multiple Revit and .Net versions by default.
+Minimal TUnit configuration, and you can write and set up your own tests as you wish.
