@@ -6,6 +6,9 @@ using ModularPipelines.Modules;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Restore the template Readme.md file after packaging.
+/// </summary>
 [DependsOn<PackTemplatesModule>]
 [DependsOn<UpdateTemplatesReadmeModule>]
 public sealed class RestoreTemplatesReadmeModule : Module

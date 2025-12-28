@@ -1,5 +1,6 @@
 ﻿using Build.Options;
 using EnumerableAsyncProcessor.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Attributes;
 using ModularPipelines.Context;
@@ -14,6 +15,9 @@ using Status = ModularPipelines.Enums.Status;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Publish the templates to GitHub.
+/// </summary>
 [SkipIfNoGitHubToken]
 [DependsOn<PackTemplatesModule>]
 [DependsOn<PackSdkModule>]
@@ -23,8 +27,8 @@ public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : M
 {
     protected override async Task<ReleaseAsset[]?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelogResult = await GetModule<GenerateGitHubChangelogModule>();
         var versioningResult = await GetModule<ResolveVersioningModule>();
+        var changelogResult = await GetModule<GenerateGitHubChangelogModule>();
         
         var versioning = versioningResult.Value!;
         var changelog = changelogResult.Value!;
@@ -51,9 +55,12 @@ public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : M
                     FileName = file.Name,
                     RawData = file.GetStream()
                 };
+
+                context.Logger.LogInformation("Uploading asset: {Asset}", asset.FileName);
+
                 return await context.GitHub().Client.Repository.Release.UploadAsset(release, asset, cancellationToken);
             }, cancellationToken)
-            .ProcessOneAtATime();
+            .ProcessInParallel();
     }
 
     protected override async Task OnAfterExecute(IPipelineContext context)

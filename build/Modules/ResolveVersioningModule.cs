@@ -9,6 +9,9 @@ using Shouldly;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Resolve semantic versions for compiling and publishing the templates.
+/// </summary>
 public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions) : Module<ResolveVersioningResult>
 {
     protected override async Task<ResolveVersioningResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
@@ -22,6 +25,9 @@ public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions)
         return await CreateFromVersionStringAsync(context, version!);
     }
 
+    /// <summary>
+    ///     Resolve versions using the specified version string.
+    /// </summary>
     private static async Task<ResolveVersioningResult> CreateFromVersionStringAsync(IPipelineContext context, string version)
     {
         var versionParts = version.Split('-');
@@ -36,6 +42,9 @@ public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions)
         };
     }
 
+    /// <summary>
+    ///     Retrieves the previous version from the git history.
+    /// </summary>
     private static async Task<string> FetchPreviousVersionAsync(IPipelineContext context)
     {
         var describeResult = await context.Git().Commands.Describe(new GitDescribeOptions

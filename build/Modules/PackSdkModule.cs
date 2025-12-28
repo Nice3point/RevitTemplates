@@ -11,6 +11,9 @@ using Sourcy.DotNet;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Pack the SDK NuGet package.
+/// </summary>
 [DependsOn<CleanProjectModule>]
 [DependsOn<ResolveVersioningModule>]
 public sealed class PackSdkModule(IOptions<BuildOptions> buildOptions) : Module<CommandResult>

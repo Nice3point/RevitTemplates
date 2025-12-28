@@ -12,6 +12,9 @@ using Shouldly;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Publish the NuGet packages to NuGet.org.
+/// </summary>
 [DependsOn<PackTemplatesModule>]
 [DependsOn<PublishGithubModule>]
 public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOptions<NuGetOptions> nuGetOptions) : Module<CommandResult[]?>
@@ -30,6 +33,6 @@ public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOpt
                     Source = nuGetOptions.Value.Source
                 }, cancellationToken),
                 cancellationToken)
-            .ProcessOneAtATime();
+            .ProcessInParallel();
     }
 }

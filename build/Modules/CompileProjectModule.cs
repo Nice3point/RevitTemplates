@@ -8,6 +8,9 @@ using Sourcy.DotNet;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Compile the templates.
+/// </summary>
 [DependsOn<ResolveVersioningModule>]
 public sealed class CompileProjectModule : Module<CommandResult>
 {

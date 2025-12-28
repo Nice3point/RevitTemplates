@@ -8,6 +8,9 @@ using Sourcy.DotNet;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Clean projects and artifact directories.
+/// </summary>
 [SkipIfContinuousIntegrationBuild]
 public sealed class CleanProjectModule(IOptions<BuildOptions> buildOptions) : Module
 {

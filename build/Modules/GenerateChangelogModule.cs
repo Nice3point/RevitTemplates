@@ -8,6 +8,9 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Generate the changelog for publishing the templates.
+/// </summary>
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateChangelogModule : Module<string>
 {
@@ -18,13 +21,16 @@ public sealed class GenerateChangelogModule : Module<string>
         
         var changelogFile = context.Git().RootDirectory.GetFile("Changelog.md");
 
-        var changelog = await BuildChangelog(changelogFile, versioning.Version);
+        var changelog = await ParseChangelog(changelogFile, versioning.Version);
         changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
 
         return changelog.ToString();
     }
 
-    private static async Task<StringBuilder> BuildChangelog(File changelogFile, string version)
+    /// <summary>
+    ///     Parse the changelog file to extract the entries for a specific version.
+    /// </summary>
+    private static async Task<StringBuilder> ParseChangelog(File changelogFile, string version)
     {
         const string separator = "# ";
 
@@ -51,6 +57,9 @@ public sealed class GenerateChangelogModule : Module<string>
         return changelog;
     }
 
+    /// <summary>
+    ///     Remove empty lines from the beginning and end of the changelog builder.
+    /// </summary>
     private static void TrimEmptyLines(StringBuilder changelog)
     {
         if (changelog.Length == 0) return;

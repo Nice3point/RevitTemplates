@@ -13,6 +13,9 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Pack the templates NuGet package.
+/// </summary>
 [DependsOn<CleanProjectModule>]
 [DependsOn<ResolveVersioningModule>]
 public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : Module<CommandResult>
@@ -57,6 +60,9 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
         }
     }
 
+    /// <summary>
+    ///     Set the SDK version in the template project files.
+    /// </summary>
     private static async Task<List<string>> SetSdkVersionAsync(string version, CancellationToken cancellationToken)
     {
         var modifiedFiles = new List<string>();

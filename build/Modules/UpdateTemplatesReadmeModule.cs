@@ -4,6 +4,9 @@ using ModularPipelines.Modules;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Update the template Readme.md file for packaging.
+/// </summary>
 public sealed class UpdateTemplatesReadmeModule : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)

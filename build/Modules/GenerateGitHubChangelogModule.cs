@@ -5,6 +5,9 @@ using ModularPipelines.Modules;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Generate and format the changelog for publishing on the GitHub.
+/// </summary>
 [DependsOn<GenerateChangelogModule>]
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateGitHubChangelogModule : Module<string>
@@ -19,6 +22,9 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
         return AppendGitHubCompareUrl(context, changelog, versioning);
     }
 
+    /// <summary>
+    ///     Append a GitHub compare URL to the changelog if it is not already included.
+    /// </summary>
     private static string AppendGitHubCompareUrl(IPipelineContext context, string changelog, ResolveVersioningResult versioning)
     {
         if (changelog.Contains("Full changelog", StringComparison.OrdinalIgnoreCase)) return changelog;
