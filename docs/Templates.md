@@ -28,7 +28,7 @@ Just create a project, and it will already be ready to run in Revit.
 - The template provides the ability to create add-ins with or without a user interface, and more experienced developers can enable dependency injection and logging.
 - Choose whatever features you want, it's all optional.
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/5a5a98c6-725a-48a5-ac5e-3aec889b47cb)
+![image](https://github.com/user-attachments/assets/7d2ea9c6-33e0-4b3f-b4eb-a195bb79ae21)
 
 # Revit AddIn Application
 
@@ -42,7 +42,7 @@ Optionally, you can enable dependency injection and support, where this applicat
 > [!NOTE]  
 > Project based on this template should be used to combine all modules and connect them to the Revit ribbon, and it should not contain business logic if you plan to create a modular application.
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/f44ccf0c-0a5e-4d47-874b-94ca0d5b0a85)
+![image](https://github.com/user-attachments/assets/8780b0e0-22ce-40b7-b970-fa3acd3f723e)
 
 # Revit AddIn Module
 
@@ -56,7 +56,7 @@ After creating a project based on this template, you have to add a `reference` t
 > [!TIP]  
 > Creating a project without UI based on this template will create a completely empty project, great for writing util libraries for your add-in.
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/28f8e900-34e2-431a-8054-c29f1e901f78)
+![image](https://github.com/user-attachments/assets/abedaa19-5e66-41f2-bedb-f43c5dac1d06)
 
 # Revit AddIn Solution
 
@@ -94,4 +94,4 @@ WixSharp was chosen as the installer, it is based on a console application, this
 
 More details about WixSharp [here](https://github.com/oleg-shilo/wixsharp).
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/51e8ca10-68fd-48a5-8bef-63bb7b49d142)
+![image](https://github.com/user-attachments/assets/10835ebb-a08d-434a-ba9e-a7abbd3b61f8)
