@@ -29,7 +29,7 @@ If you’re using Visual Studio, don’t worry — the steps are nearly identica
 To install templates, simply run the following command in your terminal:
 `dotnet new install Nice3point.Revit.Templates`
 
-![image](https://github.com/user-attachments/assets/1a8edc40-26bc-43a4-a8b8-d3bb5ec3c87d)
+![image](https://github.com/user-attachments/assets/ed0db873-6edc-4fcf-8e00-90e5c7759cd4)
 
 The templates will be installed, and you're ready to use.
 
