@@ -15,9 +15,14 @@ await PipelineHostBuilder.Create()
     .ConfigureServices((context, collection) =>
     {
         collection.AddOptions<BuildOptions>().Bind(context.Configuration.GetSection("Build")).ValidateDataAnnotations();
-        
+
         collection.AddModule<ResolveVersioningModule>();
-        collection.AddModule<CompileProjectModule>();
+
+        if (args.Length == 0)
+        {
+            collection.AddModule<CompileProjectModule>();
+            return;
+        }
 
         if (args.Contains("pack"))
         {
