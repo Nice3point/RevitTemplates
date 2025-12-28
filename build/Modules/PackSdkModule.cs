@@ -12,16 +12,15 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 [DependsOn<CleanProjectModule>]
-public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
+public sealed class PackSdkModule(IOptions<BuildOptions> buildOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        return await NothingAsync();
         var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
         var changelogResult = changelogModule is null ? null : await changelogModule;
         var changelog = changelogResult?.Value ?? string.Empty;
-        var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
+        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
 
         return await context.DotNet().Pack(new DotNetPackOptions
         {
@@ -29,7 +28,7 @@ public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<Co
             Configuration = Configuration.Release,
             Properties = new List<KeyValue>
             {
-                ("Version", packOptions.Value.Version),
+                ("Version", buildOptions.Value.Version),
                 ("PackageReleaseNotes", changelog)
             },
             OutputDirectory = outputFolder

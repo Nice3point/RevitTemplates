@@ -14,18 +14,13 @@ await PipelineHostBuilder.Create()
     })
     .ConfigureServices((context, collection) =>
     {
-        collection.AddModule<ResolveVersioningModule>();
+        collection.AddOptions<BuildOptions>().Bind(context.Configuration.GetSection("Build")).ValidateDataAnnotations();
         
-        if (args.Length == 0)
-        {
-            collection.AddModule<CompileProjectModule>();
-            return;
-        }
+        collection.AddModule<ResolveVersioningModule>();
+        collection.AddModule<CompileProjectModule>();
 
         if (args.Contains("pack"))
         {
-            collection.AddOptions<PackOptions>().Bind(context.Configuration.GetSection("Pack")).ValidateDataAnnotations();
-
             collection.AddModule<CleanProjectModule>();
             collection.AddModule<PackSdkModule>();
             collection.AddModule<PackTemplatesModule>();

@@ -9,12 +9,12 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
-public sealed class GenerateChangelogModule(IOptions<PackOptions> packOptions) : Module<string>
+public sealed class GenerateChangelogModule(IOptions<BuildOptions> buildOptions) : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var changelogFile = context.Git().RootDirectory.GetFile("Changelog.md");
-        var version = packOptions.Value.Version;
+        var version = buildOptions.Value.Version;
 
         var changelog = await BuildChangelog(changelogFile, version);
         changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {version}");

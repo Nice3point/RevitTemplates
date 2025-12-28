@@ -9,12 +9,12 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 [SkipIfContinuousIntegrationBuild]
-public sealed class CleanProjectModule(IOptions<PackOptions> packOptions) : Module
+public sealed class CleanProjectModule(IOptions<BuildOptions> buildOptions) : Module
 {
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var rootDirectory = context.Git().RootDirectory;
-        var outputDirectory = rootDirectory.GetFolder(packOptions.Value.OutputDirectory);
+        var outputDirectory = rootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var buildOutputDirectories = rootDirectory
             .GetFolders(folder => folder.Name is "bin" or "obj")
             .Where(folder => folder.Parent != Projects.build__Build.Directory);

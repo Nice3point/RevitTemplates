@@ -9,11 +9,11 @@ using Shouldly;
 
 namespace Build.Modules;
 
-public sealed class ResolveVersioningModule(IOptions<PackOptions> packOptions) : Module<ResolveVersioningResult>
+public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions) : Module<ResolveVersioningResult>
 {
     protected override async Task<ResolveVersioningResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var version = packOptions.Value.Version;
+        var version = buildOptions.Value.Version;
         if (context.Environment.EnvironmentName == "Production")
         {
             version.ShouldNotBeNullOrWhiteSpace();
