@@ -29,6 +29,8 @@ await PipelineHostBuilder.Create()
             collection.AddModule<CleanProjectModule>();
             collection.AddModule<PackSdkModule>();
             collection.AddModule<PackTemplatesModule>();
+            collection.AddModule<UpdateTemplatesReadmeModule>();
+            collection.AddModule<RestoreTemplatesReadmeModule>();
         }
 
         if (args.Contains("publish"))
