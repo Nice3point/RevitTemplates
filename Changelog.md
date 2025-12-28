@@ -1,3 +1,57 @@
+# 6.0.0
+
+## Global changes
+
+- New `Nice3point.Revit.Sdk` for project configuration and development.
+- New templates: `Revit Benchmark` and `Revit Test (TUnit)`.
+- Replaced `Nuke` with `ModularPipelines` build system. Nuke abandoned: https://github.com/nuke-build/nuke/discussions/1564#discussioncomment-15001502
+- Support for Revit 2026.
+- Integrated `GitVersion.Tool` for automatic release versioning based on Git history.
+- Integrated automatic changelog generation via GitHub API.
+
+## Solution template
+
+- Migrated to `ModularPipelines`.
+- Support for WIX4 and .NET Core installer project.
+- Updated GitHub Actions and Azure DevOps pipelines to support new versioning and publishing logic.
+- Removed `Nuke` related files and configurations.
+- Support for .NET 10.
+
+## Add-in templates
+
+- Switched to `Nice3point.Revit.Sdk`. Boilerplate code in `.csproj` has been significantly reduced.
+- New `ManifestSettings` to `.addin` files for dependency isolation in Revit 2026.
+- Improved Dependency Injection support.
+- C#14 extensions support.
+- New `LaunchRevit` property for easier debugging.
+- New `DeployAddin` property (renamed from `DeployRevitAddin`).
+
+### Migration from v5 to v6
+
+#### Solution migration
+
+1. Delete `.nuke` folder and `build` folder.
+2. Delete `installer` folder.
+3. Create a temporary project using version 6.0.0 and copy the new `build`, `installer` folders to your solution.
+4. Update `global.json` to use .NET 10.
+5. Replace your `.github/workflows` or `azure-pipelines.yml` with the new versions from the template.
+
+#### Project migration
+
+1. Update the `Sdk` attribute in your `.csproj` file to `Nice3point.Revit.Sdk/6.0.0`.
+2. Remove redundant properties from `.csproj`: `RevitVersion`, `TargetFramework`, `RuntimeIdentifier`, `StartProgram`, `StartArguments`.
+3. Remove conditional `PropertyGroup` containing `RevitVersion` and `TargetFramework`.
+4. Remove `Nice3point.Revit.Build.Tasks` PackageReference.
+5. Rename `DeployRevitAddin` to `DeployAddin`.
+6. Rename configurations from `Debug R25` to `Debug.R25` (replace space with dot). Names with spaces are not supported by BenchmarkDotNet and Unit test in JetBrains Rider.
+7. Add `ManifestSettings` to your `.addin` file:
+   ```xml
+   <ManifestSettings>
+       <UseRevitContext>False</UseRevitContext>
+       <ContextName>YourAddInName</ContextName>
+   </ManifestSettings>
+   ```
+
 # 5.0.0
 
 ## Solution template
