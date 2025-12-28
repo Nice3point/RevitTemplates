@@ -3,7 +3,6 @@
     <PropertyGroup>
         <NoWarn>$(NoWarn);NU5100</NoWarn>
         <TargetFrameworks>net48;net8.0</TargetFrameworks>
-        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -23,6 +22,7 @@
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <DevelopmentDependency>true</DevelopmentDependency>
+        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     </PropertyGroup>
