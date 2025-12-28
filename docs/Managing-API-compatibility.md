@@ -103,7 +103,7 @@ Example:
 > [!IMPORTANT]  
 > Edit the `.csproj` file only manually, IDEs often break configurations.
 
-Revit MSBuild SDK automatically sets the required `TargetFramework` based on the `RevitVersion`, extracted from the solution configuration name. 
+Revit [MSBuild SDK](https://www.nuget.org/packages/Nice3point.Revit.Sdk) automatically sets the required `TargetFramework` based on the `RevitVersion`, extracted from the solution configuration name. 
 
 If you need to add support for an unreleased or unsupported version of Revit that the SDK doesn't yet know about, you can add a conditional block to specify the `TargetFramework` manually:
 

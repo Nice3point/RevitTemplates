@@ -66,7 +66,7 @@ Suitable for enterprise development and developers who need a ready-made project
 This template contains:
 
 - `ModularPipelines` build system
-- Installer project, that generates an .msi package
+- Installer project, that generates an **.msi** package
 - Auxiliary files such as `.gitignore`, `Changelog.md` which are usually created in each solution. `Readme.md` contains documentation and instructions for building the project.
 - CI\CD setup
 - JetBrains Rider `Run configurations`
@@ -76,17 +76,17 @@ This template contains:
 
 > [!TIP]  
 > The solution template should be used before the project templates (if you need it).
-And you have to create all plugins in produced solution, in the `source` folder.
+> And you have to create all plugins in the produced solution, in the `source` folder.
 
 ### ModularPipelines
 
-ModularPipelines is used to build a project for various configurations. In this case, for all specified Revit versions. It also allows you to automate other secondary processes, create an
-installer, generate a changelog, etc.
+ModularPipelines is used to build a project for various configurations. In this case, for all specified Revit versions. 
+It also allows you to automate other secondary processes, create an installer, generate a changelog, etc.
 
 More details about ModularPipelines [here](https://github.com/thomhurst/ModularPipelines).
 
 > [!NOTE]  
-> You don't need to use the build system to debug the project, it is only necessary for the publishing release.
+> You don't need to use the build system for the add-ins directly, it's only needs for publishing Releases.
 
 ### Installer
 

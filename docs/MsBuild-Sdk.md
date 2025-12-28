@@ -285,11 +285,14 @@ To configure a default debug profile that launches the target Revit version, ena
 </PropertyGroup>
 ```
 
-This sets additional properties (only when values are not already specified):
+If you want to run Revit in a different language or installed in a different directory, also override some properties.:
 
-- `StartAction=Program`
-- `StartProgram=C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe`
-- `StartArguments=/language ENG`
+```xml
+<PropertyGroup>
+    <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
+    <StartArguments>/language ENG</StartArguments>
+</PropertyGroup>
+```
 
 ## Configuration
 
