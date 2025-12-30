@@ -29,6 +29,7 @@ await PipelineHostBuilder.Create()
             collection.AddModule<CleanProjectModule>();
             collection.AddModule<PackSdkModule>();
             collection.AddModule<PackTemplatesModule>();
+            collection.AddModule<GenerateChangelogModule>();
             collection.AddModule<UpdateTemplatesReadmeModule>();
             collection.AddModule<RestoreTemplatesReadmeModule>();
         }
@@ -37,7 +38,6 @@ await PipelineHostBuilder.Create()
         {
             collection.AddOptions<NuGetOptions>().Bind(context.Configuration.GetSection("NuGet")).ValidateDataAnnotations();
 
-            collection.AddModule<GenerateChangelogModule>();
             collection.AddModule<GenerateNugetChangelogModule>();
             collection.AddModule<GenerateGitHubChangelogModule>();
             collection.AddModule<PublishNugetModule>();

@@ -18,16 +18,16 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<CleanProjectModule>]
 [DependsOn<ResolveVersioningModule>]
+[DependsOn<GenerateNugetChangelogModule>]
 public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await GetModule<ResolveVersioningModule>();
-        var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
+        var changelogResult = await GetModule<GenerateNugetChangelogModule>();
 
         var versioning = versioningResult.Value!;
-        var changelogResult = changelogModule is null ? null : await changelogModule;
-        var changelog = changelogResult?.Value ?? string.Empty;
+        var changelog = changelogResult.Value ?? string.Empty;
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
 
         List<string> updatedFiles = [];
