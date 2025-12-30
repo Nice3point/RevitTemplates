@@ -148,11 +148,6 @@ If a tag is present on the current commit, the version will match the tag. If no
 
 You can also specify a fixed version by setting the `Version` property in the `build/appsettings.json` file. This will override the version determined by GitVersion.Tool.
 
----#if (isGitHubCi)
-> [!TIP]
----#endif
-> Specifying a fixed version is recommended only for local builds and testing. For production releases, it is better to use Git tags.
-
 Tags can follow the format `version` or `version-stage.n.date` for pre-releases, where:
 
 - **version** specifies the version of the release:
