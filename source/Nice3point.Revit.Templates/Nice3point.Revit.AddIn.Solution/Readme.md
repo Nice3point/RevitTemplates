@@ -51,7 +51,7 @@ If you haven't already installed these, you can do so by visiting the following:
 
 | Folder  | Description                                                                |
 |---------|----------------------------------------------------------------------------|
-| build   | ModularPipelines build system. Used to automate project builds         |
+| build   | ModularPipelines build system. Used to automate project builds             |
 ---#if (includeInstaller)
 | install | Add-in installer, called implicitly by the ModularPipelines build          |
 ---#endif
@@ -397,4 +397,4 @@ configuration.
 
 ## Learn More
 
-* You can explore more in the [RevitTemplates Wiki](https://github.com/Nice3point/RevitTemplates/wiki) page.
+* You can explore more on the [RevitTemplates Wiki](https://github.com/Nice3point/RevitTemplates/wiki) page.
