@@ -17,15 +17,15 @@ await PipelineHostBuilder.Create()
 
         collection.AddModule<ResolveConfigurationsModule>();
         collection.AddModule<ResolveVersioningModule>();
-        collection.AddModule<CleanProjectsModule>();
-        collection.AddModule<CompileProjectsModule>();
+        collection.AddModule<CleanProjectModule>();
+        collection.AddModule<CompileProjectModule>();
         
         if (args.Contains("pack"))
         {
             collection.AddOptions<BundleOptions>().Bind(context.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
 
             collection.AddModule<CreateBundleModule>();
-            collection.AddModule<CreateInstallersModule>();
+            collection.AddModule<CreateInstallerModule>();
         }
 
         if (args.Contains("publish"))

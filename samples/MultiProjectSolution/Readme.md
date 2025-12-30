@@ -81,12 +81,12 @@ To execute your ModularPipelines build locally, you can follow these steps:
 
    Compile:
    ```shell
-   dotnet run --project build/Build.csproj
+   dotnet run build/Build.csproj
    ```
 
    Create installer and bundle:
    ```shell
-   dotnet run --project build/Build.csproj -- pack
+   dotnet run build/Build.csproj -- pack
    ```
 
    This command will execute the ModularPipelines build defined in your project.
@@ -96,7 +96,7 @@ To execute your ModularPipelines build locally, you can follow these steps:
 Releases are managed by creating new [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
 A tag in Git used to capture a snapshot of the project at a particular point in time, with the ability to roll back to a previous version.
 
-Tags must follow the format `version` or `version-stage.n.date` for pre-releases, where:
+Tags can follow the format `version` or `version-stage.n.date` for pre-releases, where:
 
 - **version** specifies the version of the release:
     - `1.0.0`
@@ -122,9 +122,9 @@ For example:
 
 ### Updating the Changelog
 
-For releases, changelog for the release version is required.
+Updating the changelog is optional. If you provide a changelog, the build system will use it for the release notes. If no entry is found for the current version, GitHub will automatically generate release notes based on your pull requests and commits.
 
-To update the changelog:
+To update the changelog manually:
 
 1. Navigate to the solution root.
 2. Open the file **Changelog.md**.
@@ -177,7 +177,8 @@ To create releases directly on GitHub:
 1. Navigate to the **Actions** section on the repository page.
 2. Select **Publish Release** workflow.
 3. Click **Run workflow** button.
-4. Specify the release version and click **Run**.
+4. (Optional) Specify the release version. If not specified, the system will automatically determine the version based on your Git history.
+5. Click **Run**.
 
    ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 

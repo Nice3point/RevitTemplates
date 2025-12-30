@@ -7,7 +7,7 @@ The template will create it for you, and pack it into a Zip, you just have to up
 - Open **build/appsettings.json** file
 - Update **BundleOptions** section: **VendorName**, **VendorEmail**, **VendorUrl**.
 
-    ![image](https://github.com/user-attachments/assets/4f9f9484-9831-42d6-ae85-8ced75472e1a)
+    ![image](https://github.com/user-attachments/assets/b04df3a4-6fbd-4db9-85ea-1b494b7ea327)
 
 > [!NOTE]
 > For creating a bundle, a third-party package is used.

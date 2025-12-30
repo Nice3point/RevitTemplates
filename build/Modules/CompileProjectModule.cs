@@ -8,8 +8,11 @@ using Sourcy.DotNet;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Compile the templates.
+/// </summary>
 [DependsOn<ResolveVersioningModule>]
-public sealed class CompileProjectsModule : Module<CommandResult>
+public sealed class CompileProjectModule : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {

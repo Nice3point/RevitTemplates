@@ -11,6 +11,8 @@ More information about dotnet templates: https://github.com/dotnet/templating/wi
 * [Revit AddIn Application](#revit-addin-application) - template for creating an empty application for multi-project add-in.
 * [Revit AddIn Module](#revit-addin-module) - template for creating an empty module for multi-project add-in.
 * [Revit AddIn Solution](#revit-addin-solution) - template for creating a solution structure for Revit add-ins.
+* [Revit Benchmark](#revit-benchmark) - template for creating performance benchmarks for Revit API.
+* [Revit Test](#revit-test) - template for creating unit tests for Revit API.
 <!-- TOC -->
 
 If you are not sure what options to choose when creating a project, keep everything by default, templates uses optimal and frequently used settings. 
@@ -28,7 +30,7 @@ Just create a project, and it will already be ready to run in Revit.
 - The template provides the ability to create add-ins with or without a user interface, and more experienced developers can enable dependency injection and logging.
 - Choose whatever features you want, it's all optional.
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/5a5a98c6-725a-48a5-ac5e-3aec889b47cb)
+![image](https://github.com/user-attachments/assets/7d2ea9c6-33e0-4b3f-b4eb-a195bb79ae21)
 
 # Revit AddIn Application
 
@@ -42,7 +44,7 @@ Optionally, you can enable dependency injection and support, where this applicat
 > [!NOTE]  
 > Project based on this template should be used to combine all modules and connect them to the Revit ribbon, and it should not contain business logic if you plan to create a modular application.
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/f44ccf0c-0a5e-4d47-874b-94ca0d5b0a85)
+![image](https://github.com/user-attachments/assets/8780b0e0-22ce-40b7-b970-fa3acd3f723e)
 
 # Revit AddIn Module
 
@@ -56,7 +58,7 @@ After creating a project based on this template, you have to add a `reference` t
 > [!TIP]  
 > Creating a project without UI based on this template will create a completely empty project, great for writing util libraries for your add-in.
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/28f8e900-34e2-431a-8054-c29f1e901f78)
+![image](https://github.com/user-attachments/assets/abedaa19-5e66-41f2-bedb-f43c5dac1d06)
 
 # Revit AddIn Solution
 
@@ -66,7 +68,7 @@ Suitable for enterprise development and developers who need a ready-made project
 This template contains:
 
 - `ModularPipelines` build system
-- Installer project, that generates an .msi package
+- Installer project, that generates an **.msi** package
 - Auxiliary files such as `.gitignore`, `Changelog.md` which are usually created in each solution. `Readme.md` contains documentation and instructions for building the project.
 - CI\CD setup
 - JetBrains Rider `Run configurations`
@@ -76,17 +78,17 @@ This template contains:
 
 > [!TIP]  
 > The solution template should be used before the project templates (if you need it).
-And you have to create all plugins in produced solution, in the `source` folder.
+> And you have to create all plugins in the produced solution, in the `source` folder.
 
 ### ModularPipelines
 
-ModularPipelines is used to build a project for various configurations. In this case, for all specified Revit versions. It also allows you to automate other secondary processes, create an
-installer, generate a changelog, etc.
+ModularPipelines is used to build a project for various configurations. In this case, for all specified Revit versions. 
+It also allows you to automate other secondary processes, create an installer, generate a changelog, etc.
 
 More details about ModularPipelines [here](https://github.com/thomhurst/ModularPipelines).
 
 > [!NOTE]  
-> You don't need to use the build system to debug the project, it is only necessary for the publishing release.
+> You don't need to use the build system for the add-ins directly, it's only needs for publishing Releases.
 
 ### Installer
 
@@ -94,4 +96,22 @@ WixSharp was chosen as the installer, it is based on a console application, this
 
 More details about WixSharp [here](https://github.com/oleg-shilo/wixsharp).
 
-![image](https://github.com/Nice3point/RevitTemplates/assets/20504884/51e8ca10-68fd-48a5-8bef-63bb7b49d142)
+![image](https://github.com/user-attachments/assets/10835ebb-a08d-434a-ba9e-a7abbd3b61f8)
+
+# Revit Benchmark
+
+Suitable for performance testing and measuring the execution time of your code directly in the Revit environment. 
+
+This template is based on the [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) library, which is the industry standard for benchmarking .NET code.
+
+The template is pre-configured to run benchmarks in the Revit thread and reflect real-world API usage. 
+It supports multiple Revit versions, and you can compare the performance of different versions of Revit API in one benchmark.
+
+# Revit Test
+
+Suitable for unit testing and writing automated tests for your Revit add-ins.
+
+This template is based on the [TUnit](https://github.com/thomhurst/TUnit) library, a modern, fast and flexible testing framework for .NET.
+
+Tests are configured to run inside the Revit process, providing full access to the Revit API. The template supports multiple Revit and .Net versions by default.
+Minimal TUnit configuration, and you can write and set up your own tests as you wish.

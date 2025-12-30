@@ -19,7 +19,7 @@ namespace Build.Modules;
 ///     Create the Autodesk .bundle package.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
-[DependsOn<CompileProjectsModule>]
+[DependsOn<CompileProjectModule>]
 public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)

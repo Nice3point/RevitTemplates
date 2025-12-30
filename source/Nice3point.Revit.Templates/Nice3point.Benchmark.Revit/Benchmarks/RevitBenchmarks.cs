@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Nice3point.BenchmarkDotNet.Revit;
 
-namespace Nice3point.BenchmarkDotNet.Revit.Benchmarks;
+namespace Nice3point.Benchmark.Revit.Benchmarks;
 
 [MemoryDiagnoser]
 public class RevitBenchmarks : RevitApiBenchmark

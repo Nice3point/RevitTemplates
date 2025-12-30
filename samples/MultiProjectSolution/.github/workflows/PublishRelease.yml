@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version"
-        required: true
+        description: "Release version (optional)"
+        required: false
         type: string
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Create release tag
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version != ''
         shell: bash
         run: |
           set -e
@@ -43,3 +43,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOTNET_ENVIRONMENT: ${{ (github.ref_name == 'main' || github.ref_type == 'tag') && 'Production' || 'Development' }}
+          Build__Version: ${{ inputs.version || (github.ref_type == 'tag' && github.ref_name || '') }}

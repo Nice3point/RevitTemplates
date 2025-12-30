@@ -13,7 +13,6 @@ public sealed record BuildOptions
     /// </summary>
     /// <remarks>
     ///     This will override the version determined by GitVersion.Tool. <br/>
-    ///     Specifying a fixed version is recommended only for local builds and testing.
     /// </remarks>
     /// <example>
     ///     1.0.0-alpha.1.250101 <br/>

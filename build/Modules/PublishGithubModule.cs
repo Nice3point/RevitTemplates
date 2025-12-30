@@ -1,5 +1,6 @@
 ﻿using Build.Options;
 using EnumerableAsyncProcessor.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Attributes;
 using ModularPipelines.Context;
@@ -14,25 +15,34 @@ using Status = ModularPipelines.Enums.Status;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Publish the templates to GitHub.
+/// </summary>
 [SkipIfNoGitHubToken]
 [DependsOn<PackTemplatesModule>]
+[DependsOn<PackSdkModule>]
+[DependsOn<ResolveVersioningModule>]
 [DependsOn<GenerateGitHubChangelogModule>]
-public sealed class PublishGithubModule(IOptions<PackOptions> packOptions) : Module<ReleaseAsset[]?>
+public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module<ReleaseAsset[]?>
 {
     protected override async Task<ReleaseAsset[]?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelog = await GetModule<GenerateGitHubChangelogModule>();
-        var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
+        var versioningResult = await GetModule<ResolveVersioningModule>();
+        var changelogResult = await GetModule<GenerateGitHubChangelogModule>();
+        
+        var versioning = versioningResult.Value!;
+        var changelog = changelogResult.Value!;
+        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetFiles = outputFolder.ListFiles().ToArray();
         targetFiles.ShouldNotBeEmpty("No artifacts were found to create the Release");
 
         var repositoryInfo = context.GitHub().RepositoryInfo;
-        var newRelease = new NewRelease(packOptions.Value.Version)
+        var newRelease = new NewRelease(versioning.Version)
         {
-            Name = packOptions.Value.Version,
-            Body = changelog.Value,
+            Name = versioning.Version,
+            Body = changelog,
             TargetCommitish = context.Git().Information.LastCommitSha,
-            Prerelease = packOptions.Value.Version.Contains('-')
+            Prerelease = versioning.IsPrerelease
         };
 
         var release = await context.GitHub().Client.Repository.Release.Create(repositoryInfo.Owner, repositoryInfo.RepositoryName, newRelease);
@@ -45,19 +55,25 @@ public sealed class PublishGithubModule(IOptions<PackOptions> packOptions) : Mod
                     FileName = file.Name,
                     RawData = file.GetStream()
                 };
+
+                context.Logger.LogInformation("Uploading asset: {Asset}", asset.FileName);
+
                 return await context.GitHub().Client.Repository.Release.UploadAsset(release, asset, cancellationToken);
             }, cancellationToken)
-            .ProcessOneAtATime();
+            .ProcessInParallel();
     }
 
     protected override async Task OnAfterExecute(IPipelineContext context)
     {
         if (Status == Status.Failed)
         {
+            var versioningResult = await GetModule<ResolveVersioningModule>();
+            var versioning = versioningResult.Value!;
+            
             await context.Git().Commands.Push(new GitPushOptions
             {
                 Delete = true,
-                Arguments = ["origin", packOptions.Value.Version]
+                Arguments = ["origin", versioning.Version]
             });
         }
     }

@@ -14,29 +14,31 @@ await PipelineHostBuilder.Create()
     })
     .ConfigureServices((context, collection) =>
     {
+        collection.AddOptions<BuildOptions>().Bind(context.Configuration.GetSection("Build")).ValidateDataAnnotations();
+
         collection.AddModule<ResolveVersioningModule>();
-        
+
         if (args.Length == 0)
         {
-            collection.AddModule<CompileProjectsModule>();
+            collection.AddModule<CompileProjectModule>();
             return;
         }
 
         if (args.Contains("pack"))
         {
-            collection.AddOptions<PackOptions>().Bind(context.Configuration.GetSection("Pack")).ValidateDataAnnotations();
-
-            collection.AddModule<CleanProjectsModule>();
+            collection.AddModule<CleanProjectModule>();
             collection.AddModule<PackSdkModule>();
             collection.AddModule<PackTemplatesModule>();
+            collection.AddModule<GenerateChangelogModule>();
+            collection.AddModule<GenerateNugetChangelogModule>();
+            collection.AddModule<UpdateTemplatesReadmeModule>();
+            collection.AddModule<RestoreTemplatesReadmeModule>();
         }
 
         if (args.Contains("publish"))
         {
             collection.AddOptions<NuGetOptions>().Bind(context.Configuration.GetSection("NuGet")).ValidateDataAnnotations();
 
-            collection.AddModule<GenerateChangelogModule>();
-            collection.AddModule<GenerateNugetChangelogModule>();
             collection.AddModule<GenerateGitHubChangelogModule>();
             collection.AddModule<PublishNugetModule>();
             collection.AddModule<PublishGithubModule>();

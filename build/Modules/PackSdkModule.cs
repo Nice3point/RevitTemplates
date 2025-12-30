@@ -11,16 +11,22 @@ using Sourcy.DotNet;
 
 namespace Build.Modules;
 
-[DependsOn<CleanProjectsModule>]
-public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<CommandResult>
+/// <summary>
+///     Pack the SDK NuGet package.
+/// </summary>
+[DependsOn<CleanProjectModule>]
+[DependsOn<ResolveVersioningModule>]
+[DependsOn<GenerateNugetChangelogModule>]
+public sealed class PackSdkModule(IOptions<BuildOptions> buildOptions) : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var changelogModule = GetModuleIfRegistered<GenerateNugetChangelogModule>();
+        var versioningResult = await GetModule<ResolveVersioningModule>();
+        var changelogResult = await GetModule<GenerateNugetChangelogModule>();
 
-        var changelogResult = changelogModule is null ? null : await changelogModule;
-        var changelog = changelogResult?.Value ?? string.Empty;
-        var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
+        var versioning = versioningResult.Value!;
+        var changelog = changelogResult.Value ?? string.Empty;
+        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
 
         return await context.DotNet().Pack(new DotNetPackOptions
         {
@@ -28,7 +34,8 @@ public sealed class PackSdkModule(IOptions<PackOptions> packOptions) : Module<Co
             Configuration = Configuration.Release,
             Properties = new List<KeyValue>
             {
-                ("Version", packOptions.Value.Version),
+                ("VersionPrefix", versioning.VersionPrefix),
+                ("VersionSuffix", versioning.VersionSuffix!),
                 ("PackageReleaseNotes", changelog)
             },
             OutputDirectory = outputFolder

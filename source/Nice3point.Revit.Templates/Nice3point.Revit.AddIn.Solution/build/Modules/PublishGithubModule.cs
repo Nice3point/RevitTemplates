@@ -22,11 +22,11 @@ namespace Build.Modules;
 [SkipIfNoGitHubToken]
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<GenerateGitHubChangelogModule>]
-#if (bundle)
+#if (includeBundle)
 [DependsOn<CreateBundleModule>]
 #endif
-#if (installer)
-[DependsOn<CreateInstallersModule>]
+#if (includeInstaller)
+[DependsOn<CreateInstallerModule>]
 #endif
 public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module<ReleaseAsset[]?>
 {
@@ -72,11 +72,13 @@ public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : M
     {
         if (Status == Status.Failed)
         {
-            var buildVersioning = await GetModule<ResolveVersioningModule>();
+            var versioningResult = await GetModule<ResolveVersioningModule>();
+            var versioning = versioningResult.Value!;
+            
             await context.Git().Commands.Push(new GitPushOptions
             {
                 Delete = true,
-                Arguments = ["origin", buildVersioning.Value!.Version]
+                Arguments = ["origin", versioning.Version]
             });
         }
     }

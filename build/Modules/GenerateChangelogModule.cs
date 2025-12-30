@@ -1,6 +1,5 @@
 ﻿using System.Text;
-using Build.Options;
-using Microsoft.Extensions.Options;
+using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Modules;
@@ -9,20 +8,29 @@ using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
 
-public sealed class GenerateChangelogModule(IOptions<PackOptions> packOptions) : Module<string>
+/// <summary>
+///     Generate the changelog for publishing the templates.
+/// </summary>
+[DependsOn<ResolveVersioningModule>]
+public sealed class GenerateChangelogModule : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
+        var versioningResult = await GetModule<ResolveVersioningModule>();
+        var versioning = versioningResult.Value!;
+        
         var changelogFile = context.Git().RootDirectory.GetFile("Changelog.md");
-        var version = packOptions.Value.Version;
 
-        var changelog = await BuildChangelog(changelogFile, version);
-        changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {version}");
+        var changelog = await ParseChangelog(changelogFile, versioning.Version);
+        changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
 
         return changelog.ToString();
     }
 
-    private static async Task<StringBuilder> BuildChangelog(File changelogFile, string version)
+    /// <summary>
+    ///     Parse the changelog file to extract the entries for a specific version.
+    /// </summary>
+    private static async Task<StringBuilder> ParseChangelog(File changelogFile, string version)
     {
         const string separator = "# ";
 
@@ -49,6 +57,9 @@ public sealed class GenerateChangelogModule(IOptions<PackOptions> packOptions) :
         return changelog;
     }
 
+    /// <summary>
+    ///     Remove empty lines from the beginning and end of the changelog builder.
+    /// </summary>
     private static void TrimEmptyLines(StringBuilder changelog)
     {
         if (changelog.Length == 0) return;

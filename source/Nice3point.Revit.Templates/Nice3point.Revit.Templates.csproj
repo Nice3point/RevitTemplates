@@ -2,11 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
-        <NoDefaultExcludes>true</NoDefaultExcludes>
-        <EnableDefaultItems>false</EnableDefaultItems>
-        <IncludeBuildOutput>false</IncludeBuildOutput>
-        <IncludeContentInPack>true</IncludeContentInPack>
-        <ContentTargetFolders>content</ContentTargetFolders>
         <NoWarn>$(NoWarn);NU5128;NU5110;NU5111</NoWarn>
     </PropertyGroup>
 
@@ -22,6 +17,18 @@
         <PackageIcon>images/PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <NoDefaultExcludes>true</NoDefaultExcludes>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <IncludeContentInPack>true</IncludeContentInPack>
+        <ContentTargetFolders>content</ContentTargetFolders>
+        <DevelopmentDependency>true</DevelopmentDependency>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     </PropertyGroup>
 
     <ItemGroup>

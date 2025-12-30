@@ -3,8 +3,8 @@
 namespace Build.Options;
 
 [Serializable]
-public sealed record PackOptions
+public sealed record BuildOptions
 {
-    [Required] public string Version { get; init; } = "1.0.0";
+    public string? Version { get; init; }
     [Required] public string OutputDirectory { get; init; } = null!;
 }

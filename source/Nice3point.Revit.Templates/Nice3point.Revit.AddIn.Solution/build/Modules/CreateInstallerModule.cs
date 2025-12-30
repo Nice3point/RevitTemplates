@@ -18,8 +18,8 @@ namespace Build.Modules;
 ///     Create the .msi installer.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
-[DependsOn<CompileProjectsModule>]
-public sealed class CreateInstallersModule : Module<CommandResult>
+[DependsOn<CompileProjectModule>]
+public sealed class CreateInstallerModule : Module<CommandResult>
 {
     protected override async Task<CommandResult?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {

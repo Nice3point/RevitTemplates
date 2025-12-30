@@ -12,12 +12,16 @@ using Shouldly;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Publish the NuGet packages to NuGet.org.
+/// </summary>
 [DependsOn<PackTemplatesModule>]
-public sealed class PublishNugetModule(IOptions<PackOptions> packOptions, IOptions<NuGetOptions> nuGetOptions) : Module<CommandResult[]?>
+[DependsOn<PublishGithubModule>]
+public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOptions<NuGetOptions> nuGetOptions) : Module<CommandResult[]?>
 {
     protected override async Task<CommandResult[]?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
-        var outputFolder = context.Git().RootDirectory.GetFolder(packOptions.Value.OutputDirectory);
+        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetPackages = outputFolder.GetFiles(file => file.Extension == ".nupkg").ToArray();
         targetPackages.ShouldNotBeEmpty("No NuGet packages were found to publish");
 
@@ -29,6 +33,6 @@ public sealed class PublishNugetModule(IOptions<PackOptions> packOptions, IOptio
                     Source = nuGetOptions.Value.Source
                 }, cancellationToken),
                 cancellationToken)
-            .ProcessOneAtATime();
+            .ProcessInParallel();
     }
 }

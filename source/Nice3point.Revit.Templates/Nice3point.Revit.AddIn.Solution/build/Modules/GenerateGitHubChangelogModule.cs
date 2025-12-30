@@ -32,6 +32,6 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
         var repositoryInfo = context.GitHub().RepositoryInfo;
         var url = $"https://github.com/{repositoryInfo.Identifier}/compare/{versioning.PreviousVersion}...{versioning.Version}";
 
-        return $"{changelog}{Environment.NewLine}Full changelog: {url}";
+        return $"{changelog}{Environment.NewLine}{Environment.NewLine}**Full changelog**: {url}";
     }
 }

@@ -1,10 +1,12 @@
 # Revit MSBuild SDK
 
-MSBuild SDK for developing and publishing the plugin for multiple Revit versions.
+MSBuild SDK for developing and publishing the add-ins for multiple Revit versions.
 
 ## Table of contents
 
 <!-- TOC -->
+* [Features](#features)
+* [Installation](#installation)
 * [Preprocessor symbols](#preprocessor-symbols)
 * [Publishing](#publishing)
   * [Local deployment](#local-deployment)
@@ -17,7 +19,25 @@ MSBuild SDK for developing and publishing the plugin for multiple Revit versions
 * [Configuration](#configuration)
 <!-- TOC -->
 
-### Preprocessor symbols
+## Features
+
+- Add-ins development for multiple Revit API versions from a single codebase.
+- Automatic Frameworks configuration. No need to manually set .NET versions for each Revit API version, the SDK does it for you.
+- Easy Testing automatically copies your add-in to Revit folders for quick testing.
+- Manifest patching automatically fixes .addin files to support breaking changes between Revit versions.
+- Clean Project Files removes all the messy boilerplates from your .csproj configuration.
+
+## Installation
+
+To use this SDK, you need to specify it in the `Sdk` attribute of the `<Project>` element in your `.csproj` file:
+
+```xml
+<Project Sdk="Nice3point.Revit.Sdk/<version>">
+    <!-- Project content -->
+</Project>
+```
+
+## Preprocessor symbols
 
 Preprocessor symbols (`#define` constants) are used in conditional compilation to enable or exclude code based on the target Revit version.
 This ensures compatibility across multiple Revit versions without code duplication.
@@ -66,11 +86,11 @@ Preprocessor symbols generating is enabled by default, to disable implicit defin
 </PropertyGroup>
 ```
 
-### Publishing
+## Publishing
 
 Depending on your workflow, you can either deploy the files locally for immediate testing and debugging or publish them into a folder for further distribution.
 
-#### Local deployment
+### Local deployment
 
 To copy Revit add-in files to the `%AppData%\Autodesk\Revit\Addins` folder after building a project, you can enable the `DeployAddin` property.
 
@@ -102,7 +122,7 @@ Should only be enabled in projects containing the Revit manifest file (`.addin`)
 
 `Clean solution` or `Clean project` commands will delete the deployed files.
 
-#### Publishing for distribution
+### Publishing for distribution
 
 If your goal is to generate an installer or a bundle, enable the `PublishAddin` property.
 This configuration publishes the compiled files into the `bin\publish` folder.
@@ -115,9 +135,9 @@ This configuration publishes the compiled files into the `bin\publish` folder.
 
 _Default: Disabled_
 
-#### Publish extra content
+### Publish extra content
 
-By default, all project files and dependencies required for the plugin to run, including the `.addin` manifest, are copied.
+By default, all project files and dependencies required for the add-in to run, including the `.addin` manifest, are copied.
 If you need to include additional files, such as configuration or family files, include them in the `Content` item.
 
 ```xml
@@ -130,7 +150,7 @@ If you need to include additional files, such as configuration or family files, 
 
 To enable copying Content files, set `CopyToPublishDirectory="Always"` or `CopyToPublishDirectory="PreserveNewest"`
 
-The `PublishDirectory` property specifies which subfolder of the plugin the file should be copied to.
+The `PublishDirectory` property specifies which subfolder of the add-in the file should be copied to.
 If it is not specified, the files will be copied to the root folder.
 
 ```xml
@@ -162,7 +182,7 @@ Result:
    ┗📜Readme.md
 ```
 
-### Assembly repacking
+## Assembly repacking
 
 Assembly repacking is used to merge multiple assemblies into a single Dll, primarily to avoid dependency conflicts between different add-ins.
 
@@ -190,7 +210,7 @@ All binaries are repacked into the **bin** directory after the build.
 
 For .NET Core applications, it is recommended to disable this feature and use **Dependency Isolation**, which is available starting from Revit 2026.
 
-### Manifest patching
+## Manifest patching
 
 By default, enabled target is used to modify the Revit `.addin` manifest to ensure backward compatibility between different Revit versions.
 
@@ -224,7 +244,7 @@ Currently, the SDK removes the `ManifestSettings` node for Revit versions older 
 
 Target is triggered automatically when the `PublishAddin` target runs.
 
-### Implicit global usings
+## Implicit global usings
 
 By default, included a target for generating implicit global Usings depending on the project references. Helps to reduce the frequent use of `using` in a project.
 
@@ -255,7 +275,7 @@ Alternatively, you can disable individual usings:
 </ItemGroup>
 ```
 
-### Launch configuration
+## Launch configuration
 
 To configure a default debug profile that launches the target Revit version, enable the `LaunchRevit` property:
 
@@ -265,29 +285,43 @@ To configure a default debug profile that launches the target Revit version, ena
 </PropertyGroup>
 ```
 
-This sets additional properties (only when values are not already specified):
+If you want to run Revit in a different language or installed in a different directory, also override some properties.:
 
-- `StartAction=Program`
-- `StartProgram=C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe`
-- `StartArguments=/language ENG`
+```xml
+<PropertyGroup>
+    <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
+    <StartArguments>/language ENG</StartArguments>
+</PropertyGroup>
+```
 
-### Configuration
+## Configuration
 
 This Sdk overrides some Microsoft Sdk properties for the optimal add-in development:
 
 | Property                          | Default value | Description                                                                              |
 |-----------------------------------|---------------|------------------------------------------------------------------------------------------|
-| TargetFramework                   | *             | Automatically sets the TargetFramework based on the `RevitVersion` property.             |
+| TargetFramework                   | _dynamic_     | Automatically sets the TargetFramework based on the `RevitVersion` property.             |
 | LangVersion                       | latest        | Sets the C# language version to the latest installed version.                            |
 | Nullable                          | enable        | Enables C# nullable reference types.                                                     |
 | ImplicitUsings                    | true          | Enables implicit usings for the project.                                                 |
 | ImplicitRevitUsings               | true          | Enables generation of Revit-related implicit global usings (see section above).          |
 | AppendTargetFrameworkToOutputPath | false**       | Prevents the TFM from being appended to the output path. Required for add-in publishing. |
-| Optimize                          | *             | Enabled for Release configurations.                                                      |
-| DebugSymbols                      | *             | Enabled for Debug configurations.                                                        |
-| DebugType                         | *             | `portable` for Debug, `none` for Release configurations.                                 |
+| Optimize                          | _dynamic_     | Enabled for Release configurations.                                                      |
+| DebugSymbols                      | _dynamic_     | Enabled for Debug configurations.                                                        |
+| DebugType                         | _dynamic_     | `portable` for Debug, `none` for Release configurations.                                 |
 
-\* **TargetFramework default values:**
+These properties are automatically applied to the `.csproj` file, but can be overriden:
+
+```xml
+<PropertyGroup>
+    <ImplicitRevitUsings>false</ImplicitRevitUsings>
+    <TargetFramework Condition="$(RevitVersion) == '2025'">net8.0</TargetFramework>
+</PropertyGroup>
+```
+
+\** When packing/publishing a NuGet package (if `PackageType` or `PackageId` is specified), the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
+
+**TargetFramework default values:**
 
 | RevitVersion | TargetFramework     |
 |--------------|---------------------|
@@ -298,13 +332,3 @@ This Sdk overrides some Microsoft Sdk properties for the optimal add-in developm
 | 2019-2020    | net47               |
 | 2021-2024    | net48               |
 | 2025-2026+   | net8.0-windows7.0   |
-
-\** When packing/publishing a NuGet package (if `PackageType` or `PackageId` is specified), the SDK forces `AppendTargetFrameworkToOutputPath=true` to keep outputs separated by TFM.
-
-These properties are automatically applied to the `.csproj` file, but can be overriden:
-
-```xml
-<PropertyGroup>
-    <ImplicitRevitUsings>false</ImplicitRevitUsings>
-</PropertyGroup>
-```

@@ -12,14 +12,18 @@ namespace Build.Modules;
 ///     Clean projects and artifact directories.
 /// </summary>
 [SkipIfContinuousIntegrationBuild]
-public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : Module
+#if (hasArtifacts)
+public sealed class CleanProjectModule(IOptions<BuildOptions> buildOptions) : Module
+#else
+public sealed class CleanProjectModule() : Module
+#endif
 {
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
         var rootDirectory = context.Git().RootDirectory;
-
+#if (hasArtifacts)
         var outputDirectory = rootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
-
+#endif
         var buildOutputDirectories = rootDirectory
             .GetFolders(folder => folder.Name is "bin" or "obj")
             .Where(folder => folder.Parent != Projects.Build.Directory);
@@ -28,11 +32,13 @@ public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : M
         {
             buildFolder.Clean();
         }
+#if (hasArtifacts)
 
         if (outputDirectory.Exists)
         {
             outputDirectory.Clean();
         }
+#endif
 
         return await NothingAsync();
     }

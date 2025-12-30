@@ -1,4 +1,4 @@
-﻿using ModularPipelines.Attributes;
+using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
@@ -13,7 +13,7 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<ResolveConfigurationsModule>]
-public sealed class CompileProjectsModule : Module
+public sealed class CompileProjectModule : Module
 {
     protected override async Task<IDictionary<string, object>?> ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
     {
@@ -41,7 +41,7 @@ public sealed class CompileProjectsModule : Module
     {
         return await context.DotNet().Build(new DotNetBuildOptions
         {
-            ProjectSolution = Solutions.Nice3point.Revit.AddIn.FullName,
+            ProjectSolution = Solutions.MultiProjectSolution.FullName,
             Configuration = configuration,
             Properties =
             [
