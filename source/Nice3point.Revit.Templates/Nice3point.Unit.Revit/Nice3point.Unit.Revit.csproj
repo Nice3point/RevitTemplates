@@ -8,7 +8,8 @@
     <ItemGroup>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.TUnit.Revit" Version="$(RevitVersion).*"/>
-        <PackageReference Include="TUnit" Version="1.6.28"/>
+        <PackageReference Include="TUnit" Version="1.7.7"/>
+        <PackageReference Include="Polyfill" Version="9.5.0"/>
     </ItemGroup>
 
 </Project>
