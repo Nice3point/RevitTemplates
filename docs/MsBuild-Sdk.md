@@ -32,7 +32,7 @@ MSBuild SDK for developing and publishing the add-ins for multiple Revit version
 To use this SDK, you need to specify it in the `Sdk` attribute of the `<Project>` element in your `.csproj` file:
 
 ```xml
-<Project Sdk="Nice3point.Revit.Sdk/6.0.0">
+<Project Sdk="Nice3point.Revit.Sdk/<version>">
     <!-- Project content -->
 </Project>
 ```

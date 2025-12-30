@@ -53,7 +53,7 @@ public static class Host
         builder.Logging.AddSerilog();
 #endif
 
-        //Options
+        //Configuration
         builder.ConfigureHosting();
 
         _host = builder.Build();

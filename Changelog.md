@@ -1,4 +1,4 @@
-# 6.0.0-preview.1.20251228
+# 6.0.0
 
 ## Global changes
 
@@ -17,6 +17,14 @@
 - Removed `Nuke` related files and configurations.
 - Support for .NET 10.
 
+> [!NOTE]
+> The solution .slnx format is broken in Rider and VS and temporary disabled until it will be fixed.
+> Use .sln instead and convert to .slnx using or .NET CLI after creating the project.
+
+> [!NOTE]
+> The Rider `Create .git repository` option is broken and overrides .gitignore files.
+> Uncheck this option and initialize git after creating the project.
+
 ## Add-in templates
 
 - Switched to `Nice3point.Revit.Sdk`. Boilerplate code in `.csproj` has been significantly reduced.
@@ -25,6 +33,35 @@
 - C#14 extensions support.
 - New `LaunchRevit` property for easier debugging.
 - New `DeployAddin` property (renamed from `DeployRevitAddin`).
+
+## MSBuild SDK for Revit Add-ins
+
+- New `Nice3point.Revit.Sdk` with pre-configured MSBuild targets and props.
+
+An updated .csproj looks like this:
+
+```msbuild
+<Project Sdk="Nice3point.Revit.Sdk/6.0.0">
+
+    <PropertyGroup>
+        <DeployAddin>true</DeployAddin>
+        <LaunchRevit>true</LaunchRevit>
+        <IsRepackable>false</IsRepackable>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <Configurations>Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26</Configurations>
+        <Configurations>$(Configurations);Release.R22;Release.R23;Release.R24;Release.R25;Release.R26</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+    </ItemGroup>
+
+</Project>
+```
+
+No complex settings, frameworks and versions configuration, SDK takes care of it.
 
 ### Migration from v5 to v6
 
