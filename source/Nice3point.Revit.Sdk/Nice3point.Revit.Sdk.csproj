@@ -12,8 +12,8 @@
         <Description>MSBuild SDK for Revit add-ins development</Description>
         <PackageTags>autodesk;revit;msbuild;sdk</PackageTags>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/Nice3point/RevitSdk</RepositoryUrl>
-        <PackageProjectUrl>https://github.com/Nice3point/RevitSdk</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Nice3point/RevitTemplates</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Nice3point/RevitTemplates</PackageProjectUrl>
         <PackageIcon>images/PackageIcon.png</PackageIcon>
         <PackageLicenseFile>License.md</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
