@@ -4,7 +4,7 @@
 
 - New `Nice3point.Revit.Sdk` for project configuration and development.
 - New templates: `Revit Benchmark` and `Revit Test (TUnit)`.
-- Replaced `Nuke` with `ModularPipelines` build system. Nuke abandoned: https://github.com/nuke-build/nuke/discussions/1564#discussioncomment-15001502
+- Replaced `Nuke` with `ModularPipelines` build system. Nuke is no longer maintained: https://github.com/nuke-build/nuke/discussions/1564#discussioncomment-15001502
 - Support for Revit 2026.
 - Integrated `GitVersion.Tool` for automatic release versioning based on Git history.
 - Integrated automatic changelog generation via GitHub API.
@@ -28,9 +28,8 @@
 ## Add-in templates
 
 - Switched to `Nice3point.Revit.Sdk`. Boilerplate code in `.csproj` has been significantly reduced.
-- New `ManifestSettings` to `.addin` files for dependency isolation in Revit 2026.
 - Improved Dependency Injection support.
-- C#14 extensions support.
+- C# 14 features support.
 - New `LaunchRevit` property for easier debugging.
 - New `DeployAddin` property (renamed from `DeployRevitAddin`).
 
@@ -81,13 +80,6 @@ No complex settings, frameworks and versions configuration, SDK takes care of it
 4. Remove `Nice3point.Revit.Build.Tasks` PackageReference.
 5. Rename `DeployRevitAddin` to `DeployAddin`.
 6. Rename configurations from `Debug R25` to `Debug.R25` (replace space with dot). Names with spaces are not supported by BenchmarkDotNet and Unit test in JetBrains Rider.
-7. Add `ManifestSettings` to your `.addin` file:
-   ```xml
-   <ManifestSettings>
-       <UseRevitContext>False</UseRevitContext>
-       <ContextName>YourAddInName</ContextName>
-   </ManifestSettings>
-   ```
 
 # 5.0.0
 
