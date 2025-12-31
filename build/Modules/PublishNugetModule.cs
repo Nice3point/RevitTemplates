@@ -33,6 +33,6 @@ public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOpt
                     Source = nuGetOptions.Value.Source
                 }, cancellationToken),
                 cancellationToken)
-            .ProcessInParallel();
+            .ProcessOneAtATime();
     }
 }
