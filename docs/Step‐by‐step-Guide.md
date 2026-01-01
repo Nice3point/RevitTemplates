@@ -149,7 +149,7 @@ Before running the build system, you must initialize a Git repository and make t
 3. Open the **Readme.md** file in your solution for instructions on building the installer, including publishing to GitHub.
 4. Run the following command:
    ```shell
-   dotnet run build/Build.csproj
+   cd build; dotnet run
    ```
    or alternatively, you can use the **Run configurations** in Rider to start the build process without using the terminal.
 
@@ -157,7 +157,7 @@ Before running the build system, you must initialize a Git repository and make t
 
 The build system is based on a console application and does not require the installation of additional tools. You just need to have the .NET SDK installed on your computer.
 
-![image](https://github.com/user-attachments/assets/d78f0d27-0406-4784-9403-b066f67f3852)
+![image](https://github.com/user-attachments/assets/77a3a965-68cf-437b-9cad-9e8e03a6b14c)
 
 After a successful build, navigate to the solution folder:
 

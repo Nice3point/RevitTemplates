@@ -111,26 +111,19 @@ To execute your ModularPipelines build locally, you can follow these steps:
 
    Compile:
    ```shell
-   dotnet run build/Build.csproj
+   cd build; dotnet run
    ```
 
----#if (includeInstaller)
-   Create installer:
-   ```shell
-   dotnet run build/Build.csproj -- pack
-   ```
-
----#endif
----#if (includeBundle && !includeInstaller)
-   Create bundle:
-   ```shell
-   dotnet run build/Build.csproj -- pack
-   ```
-
----#elseif (includeBundle && includeInstaller)
+---#if (includeInstaller && includeBundle)
    Create installer and bundle:
+---#elseif (includeInstaller)
+   Create installer:
+---#elseif (includeBundle)
+   Create bundle:
+---#endif
+---#if (includeInstaller || includeBundle)
    ```shell
-   dotnet run build/Build.csproj -- pack
+   cd build; dotnet run -- pack
    ```
 
 ---#endif
