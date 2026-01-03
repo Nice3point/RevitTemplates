@@ -36,7 +36,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" ExcludeAssets="Runtime"/>
-        <PackageReference Include="Polyfill" Version="9.5.0"/>
+        <PackageReference Include="Polyfill" Version="9.6.0"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
     </ItemGroup>
 
