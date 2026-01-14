@@ -21,7 +21,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2"/>
 
         <!-- Logging -->
         <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0"/>

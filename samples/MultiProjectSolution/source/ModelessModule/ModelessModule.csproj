@@ -17,8 +17,8 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2"/>
     </ItemGroup>
 
     <ItemGroup>

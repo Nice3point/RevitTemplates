@@ -17,7 +17,7 @@
         <PackageReference Include="ModularPipelines.DotNet" Version="2.48.30"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
         <PackageReference Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52"/>
-        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.2"/>
         <PackageReference Include="Autodesk.PackageBuilder" Version="2.0.2"/>
     </ItemGroup>
 
