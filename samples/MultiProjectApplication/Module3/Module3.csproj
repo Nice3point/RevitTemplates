@@ -1,4 +1,4 @@
-﻿<Project Sdk="Nice3point.Revit.Sdk/6.0.2">
+﻿<Project Sdk="Nice3point.Revit.Sdk/6.1.0">
 
     <PropertyGroup>
         <Configurations>Debug.R21;Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26</Configurations>
