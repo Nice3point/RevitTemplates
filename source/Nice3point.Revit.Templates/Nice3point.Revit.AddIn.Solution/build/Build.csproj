@@ -11,11 +11,11 @@
     <ItemGroup>
         <PackageReference Include="Sourcy.DotNet" Version="1.1.1"/>
         <PackageReference Include="Shouldly" Version="4.3.0"/>
-        <PackageReference Include="ModularPipelines" Version="3.1.6"/>
-        <PackageReference Include="ModularPipelines.Git" Version="3.1.6"/>
-        <PackageReference Include="ModularPipelines.DotNet" Version="3.1.6"/>
+        <PackageReference Include="ModularPipelines" Version="3.1.90"/>
+        <PackageReference Include="ModularPipelines.Git" Version="3.1.90"/>
+        <PackageReference Include="ModularPipelines.DotNet" Version="3.1.90"/>
 <!--#if (isGitHubCi)-->
-        <PackageReference Include="ModularPipelines.GitHub" Version="3.1.6"/>
+        <PackageReference Include="ModularPipelines.GitHub" Version="3.1.90"/>
 <!--#endif-->
         <PackageReference Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52"/>
 <!--#if (includeBundle)-->
