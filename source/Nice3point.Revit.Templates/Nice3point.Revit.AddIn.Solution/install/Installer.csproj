@@ -9,8 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="WixSharp.Core" Version="2.12.2"/>
-        <PackageReference Include="WixSharp.Msi.Core" Version="2.12.2"/>
+        <PackageReference Include="WixSharp.Core" Version="2.12.3"/>
+        <PackageReference Include="WixSharp.Msi.Core" Version="2.12.3"/>
     </ItemGroup>
 
 </Project>
