@@ -28,12 +28,12 @@
 <!--#if (diContainer)-->
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5"/>
 <!--#endif-->
 <!--#if (diHosting)-->
 
         <!-- IOC -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5"/>
 <!--#endif-->
 <!--#if (addinLogging)-->
 
