@@ -18,7 +18,7 @@
 <!--#if (addinUiWpf)-->
 
         <!-- MVVM -->
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
 <!--#endif-->
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" PrivateAssets="all"/>
     </ItemGroup>
