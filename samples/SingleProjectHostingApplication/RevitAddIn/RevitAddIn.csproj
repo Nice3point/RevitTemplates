@@ -21,7 +21,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 
         <!-- MVVM -->
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
 
         <!-- IOC -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2"/>
