@@ -6,24 +6,28 @@ namespace Nice3point.Unit.Revit._1;
 
 public sealed class RevitTests : RevitApiTest
 {
-    private static Document _documentFile = null!;
+    private static Document _document = null!;
 
-    [Before(Class)]
+    [Before(Test)]
     [HookExecutor<RevitThreadExecutor>]
-    public static void Setup()
+    public void SeedModel()
     {
-        _documentFile = Application.OpenDocumentFile("");
+        _document = Application.NewProjectDocument(UnitSystem.Metric);
+
+        using var transaction = new Transaction(_document, "Seed model");
+        transaction.Start();
+
+        transaction.Commit();
     }
 
-    [After(Class)]
+    [After(Test)]
     [HookExecutor<RevitThreadExecutor>]
-    public static void Cleanup()
+    public void CloseModel()
     {
-        _documentFile.Close(false);
+        _document.Close(false);
     }
 
     [Test]
-    [TestExecutor<RevitThreadExecutor>]
     public async Task RevitTest()
     {
         // Arrange
