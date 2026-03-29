@@ -15,25 +15,44 @@ public class AddImplicitUsings : Task
     {
         try
         {
-            var usings = new List<string>();
+            var implicitUsings = new List<string>();
             foreach (var additionalUsing in AdditionalUsings)
             {
-                var requiredPackage = additionalUsing.GetMetadata("RequiredReference");
-                if (string.IsNullOrEmpty(requiredPackage))
+                var requiredReferencesMetadata = additionalUsing.GetMetadata("RequiredReference");
+                if (string.IsNullOrEmpty(requiredReferencesMetadata))
                 {
-                    usings.Add(additionalUsing.ItemSpec);
+                    implicitUsings.Add(additionalUsing.ItemSpec);
+                }
+                else if (requiredReferencesMetadata.Contains(';'))
+                {
+                    var hasRequiredReferences = true;
+                    var requiredReferences = requiredReferencesMetadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var requiredReference in requiredReferences)
+                    {
+                        var reference = References.FirstOrDefault(refItem => refItem.ItemSpec.EndsWith(requiredReference));
+                        if (reference is null)
+                        {
+                            hasRequiredReferences = false;
+                            break;
+                        }
+                    }
+
+                    if (hasRequiredReferences)
+                    {
+                        implicitUsings.Add(additionalUsing.ItemSpec);
+                    }
                 }
                 else
                 {
-                    var existedPackage = References.FirstOrDefault(item => item.ItemSpec.EndsWith(requiredPackage));
-                    if (existedPackage is not null)
+                    var reference = References.FirstOrDefault(refItem => refItem.ItemSpec.EndsWith(requiredReferencesMetadata));
+                    if (reference is not null)
                     {
-                        usings.Add(additionalUsing.ItemSpec);
+                        implicitUsings.Add(additionalUsing.ItemSpec);
                     }
                 }
             }
 
-            Usings = usings.ToArray();
+            Usings = implicitUsings.ToArray();
             return true;
         }
         catch (Exception exception)
