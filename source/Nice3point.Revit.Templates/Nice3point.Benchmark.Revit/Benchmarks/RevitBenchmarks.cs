@@ -3,17 +3,21 @@ using Nice3point.BenchmarkDotNet.Revit;
 
 namespace Nice3point.Benchmark.Revit._1.Benchmarks;
 
-[MemoryDiagnoser]
 public class RevitBenchmarks : RevitApiBenchmark
 {
-    private Document _documentFile = null!;
+    private Document? _document;
 
-    protected sealed override void OnSetup()
+    protected sealed override void OnGlobalSetup()
     {
-        _documentFile = Application.OpenDocumentFile("");
+        _document = Application.NewProjectDocument(UnitSystem.Metric);
+        
+        using var transaction = new Transaction(_document, "Seed model");
+        transaction.Start();
+        
+        transaction.Commit();
     }
     
-    protected sealed override void OnCleanup()
+    protected sealed override void OnGlobalCleanup()
     {
         _documentFile.Close(false);
     }

@@ -3,8 +3,6 @@ using Nice3point.BenchmarkDotNet.Revit;
 
 namespace RevitAddIn.Benchmark.Benchmarks;
 
-[PublicAPI]
-[MemoryDiagnoser]
 public class VolumeCalculationBenchmarks : RevitApiBenchmark
 {
     private Document? _document;
