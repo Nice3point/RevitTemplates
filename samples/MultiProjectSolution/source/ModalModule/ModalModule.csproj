@@ -7,24 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Revit Platform -->
-        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-
-        <!-- MVVM -->
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.5"/>
-
-        <!-- Logging -->
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.5"/>
-
-        <!-- Compability -->
         <PackageReference Include="System.Text.Json" Version="10.0.5"/>
-
-        <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="9.23.0" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>

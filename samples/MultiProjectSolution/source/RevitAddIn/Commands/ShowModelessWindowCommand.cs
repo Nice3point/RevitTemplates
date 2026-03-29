@@ -1,6 +1,8 @@
-using System.Windows;
 using Autodesk.Revit.Attributes;
+using CommunityToolkit.Mvvm.Messaging;
+using ModelessModule.Messages;
 using ModelessModule.Views;
+using Nice3point.Revit.Extensions.UI;
 using Nice3point.Revit.Toolkit.External;
 
 namespace RevitAddIn.Commands;
@@ -14,18 +16,14 @@ public class ShowModelessWindowCommand : ExternalCommand
 {
     public override void Execute()
     {
-        var view = Host.GetService<ModelessModuleView>();
-
-        if (view.WindowState == WindowState.Minimized)
+        var messenger = Host.GetService<IMessenger>();
+        var focusRequest = messenger.Send<FocusRequestMessage>();
+        if (focusRequest is { HasReceivedResponse: true, Response: true })
         {
-            view.WindowState = WindowState.Normal;
+            return;
         }
 
-        if (!view.IsVisible)
-        {
-            view.Show(Context.UiApplication.MainWindowHandle);
-        }
-
-        view.Focus();
+        var view = Host.CreateScope<ModelessModuleView>();
+        view.Show(Application.MainWindowHandle);
     }
 }

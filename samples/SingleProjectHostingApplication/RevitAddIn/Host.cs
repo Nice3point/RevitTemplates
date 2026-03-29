@@ -12,12 +12,12 @@ namespace RevitAddIn;
 /// </summary>
 public static class Host
 {
-    private static IHost _host;
+    private static IHost? _host;
 
     /// <summary>
     ///     Starts the host and configures the application's services
     /// </summary>
-    public static void Start()
+    public static async Task StartAsync()
     {
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
@@ -29,15 +29,17 @@ public static class Host
         builder.Services.AddTransient<RevitAddInView>();
 
         _host = builder.Build();
-        _host.Start();
+        await _host.StartAsync();
     }
 
     /// <summary>
     ///     Stops the host and handle <see cref="IHostedService"/> services
     /// </summary>
-    public static void Stop()
+    public static async Task StopAsync()
     {
-        _host.StopAsync().GetAwaiter().GetResult();
+        if (_host is null) return;
+
+        await _host.StopAsync();
     }
 
     /// <summary>

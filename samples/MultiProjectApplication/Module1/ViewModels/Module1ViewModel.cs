@@ -5,13 +5,14 @@ namespace Module1.ViewModels;
 
 public sealed partial class Module1ViewModel : ObservableObject
 {
-    [ObservableProperty] private string _projectName;
-
     public Module1ViewModel()
     {
         ProjectName = new DatabaseConnection(EntryKey.Data).Load<string>("ProjectName");
     }
 
+    [ObservableProperty]
+    public partial string ProjectName { get; set; }
+    
     [RelayCommand]
     private void SaveProjectName()
     {

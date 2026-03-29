@@ -7,10 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.BenchmarkDotNet.Revit" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.BenchmarkDotNet.Revit" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
+        <PackageReference Include="Polyfill" Version="9.23.0" PrivateAssets="all"/>
     </ItemGroup>
 
 </Project>

@@ -6,12 +6,13 @@ namespace ModalModule.ViewModels;
 
 public sealed partial class ModalModuleViewModel(ILogger<ModalModuleViewModel> logger, IOptions<JsonSerializerOptions> serializerOptions) : ObservableObject
 {
-    [ObservableProperty] private string? _projectName = Context.ActiveDocument?.ProjectInformation.Name;
+    [ObservableProperty]
+    public partial string? ProjectName { get; set; } = RevitContext.ActiveDocument?.ProjectInformation.Name;
 
     [RelayCommand]
     private void SaveProjectName()
     {
-        var activeDocument = Context.ActiveDocument;
+        var activeDocument = RevitContext.ActiveDocument;
         if (activeDocument is null) return;
 
         using var transaction = new Transaction(activeDocument);

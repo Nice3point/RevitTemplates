@@ -14,44 +14,29 @@ public class VolumeCalculationBenchmarks : RevitApiBenchmark
     public int ElementSizeIndex { get; set; }
     private Element GeometryElement => _geometryElements[ElementSizeIndex];
 
-    protected sealed override void OnSetup()
+    protected sealed override void OnGlobalSetup()
     {
-        var samplesPath = $@"C:\Program Files\Autodesk\Revit {Application.VersionNumber}\Samples";
-        var rvtFile = Directory.EnumerateFiles(samplesPath, "*.rvt")
-            .OrderBy(file => new FileInfo(file).Length)
-            .FirstOrDefault();
+        _document = Application.NewProjectDocument(UnitSystem.Metric);
 
-        if (rvtFile is null) throw new InvalidOperationException("No .rvt files found in samples folder");
+        using var transaction = new Transaction(_document, "Seed model");
+        transaction.Start();
+        
+        var level = Level.Create(_document, 1);
+        var smallestWall = Wall.Create(_document, Line.CreateBound(new XYZ(0, 0, 0), new XYZ(1, 0, 0)), level.Id, false);
+        var largestWall = Wall.Create(_document, Line.CreateBound(new XYZ(0, 1, 0), new XYZ(1000, 1, 0)), level.Id, false);
+        largestWall.FindParameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)!.Set(1000);
 
-        _document = Application.OpenDocumentFile(rvtFile);
-
-        var elementsWithSolids = new FilteredElementCollector(_document)
-            .WhereElementIsNotElementType()
-            .Where(element =>
-            {
-                var geometry = element.get_Geometry(new Options());
-                return geometry is not null && geometry.OfType<Solid>().Any(solid => solid.Volume > 0);
-            })
-            .ToArray();
-
-        var largestElement = elementsWithSolids
-            .OrderByDescending(GetDiagonal)
-            .First();
-
-        var smallestElement = elementsWithSolids
-            .Where(element => GetDiagonal(element) > 1e-1)
-            .OrderBy(GetDiagonal)
-            .First();
-
-        _geometryElements = [smallestElement, largestElement];
+        transaction.Commit();
+        
+        _geometryElements = [smallestWall, largestWall];
     }
 
-    protected sealed override void OnCleanup()
+    protected sealed override void OnGlobalCleanup()
     {
         _document?.Close(false);
     }
 
-    [Benchmark(Baseline = true)]
+    [Benchmark]
     public double Coarse_SolidsOnly_Foreach()
     {
         var totalVolume = 0d;

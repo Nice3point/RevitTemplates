@@ -1,0 +1,20 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug.R21" />
+    <BuildType Name="Debug.R22" />
+    <BuildType Name="Debug.R23" />
+    <BuildType Name="Debug.R24" />
+    <BuildType Name="Debug.R25" />
+    <BuildType Name="Debug.R26" />
+    <BuildType Name="Release.R21" />
+    <BuildType Name="Release.R22" />
+    <BuildType Name="Release.R23" />
+    <BuildType Name="Release.R24" />
+    <BuildType Name="Release.R25" />
+    <BuildType Name="Release.R26" />
+  </Configurations>
+  <Project Path="Module1/Module1.csproj" />
+  <Project Path="Module2/Module2.csproj" />
+  <Project Path="Module3/Module3.csproj" />
+  <Project Path="RevitAddIn/RevitAddIn.csproj" />
+</Solution>

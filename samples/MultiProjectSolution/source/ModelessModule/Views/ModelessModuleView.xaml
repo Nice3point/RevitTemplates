@@ -33,7 +33,7 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="8 0 0 0"
-            Text="{Binding Element}"
+            Text="{Binding ElementMetadata.ElementName, FallbackValue=''}"
             TextWrapping="Wrap" />
         <TextBlock
             Grid.Row="1"
@@ -43,7 +43,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Margin="8 0 0 0"
-            Text="{Binding Category}"
+            Text="{Binding ElementMetadata.CategoryName, FallbackValue=''}"
             TextWrapping="Wrap" />
         <Grid
             Grid.Row="2"

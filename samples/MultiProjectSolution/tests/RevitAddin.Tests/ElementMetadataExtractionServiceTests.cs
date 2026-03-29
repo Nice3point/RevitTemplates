@@ -1,12 +1,11 @@
 ﻿using ModelessModule.Services;
-using Nice3point.TUnit.Revit.Executors;
+using RevitAddin.Tests.Abstractions;
 using RevitAddin.Tests.DataSources;
-using TUnit.Core.Executors;
 
 namespace RevitAddin.Tests;
 
 [DependencyInjectionDataSource]
-public sealed class ElementMetadataExtractionServiceTests(ElementMetadataExtractionService extractionService) : RevitSamplesSourceTest
+public sealed class ElementMetadataExtractionServiceTests(ElementMetadataExtractionService extractionService) : RevitFamilySampleTest
 {
     [Test]
     public async Task ExtractMetadata_WhenElementIsNull_ReturnsNull()
@@ -17,97 +16,56 @@ public sealed class ElementMetadataExtractionServiceTests(ElementMetadataExtract
     }
 
     [Test]
-    [TestExecutor<RevitThreadExecutor>]
-    [MethodDataSource(nameof(GetSampleFiles))]
-    public async Task ExtractMetadata_WithValidElements_ReturnsNonNullResult(string filePath)
+    [MethodDataSource(nameof(RevitFamilies))]
+    public async Task ExtractMetadata_WithValidElements_ReturnsNonNullResult(string path)
     {
-        Document? document = null;
+        // Arrange
+        var document = FamilyDocuments[path];
+        var element = document.CollectElements()
+            .Instances()
+            .First();
 
-        try
-        {
-            document = Application.OpenDocumentFile(filePath);
+        // Act
+        var result = extractionService.ExtractMetadata(element);
 
-            var elements = new FilteredElementCollector(document)
-                .WhereElementIsNotElementType()
-                .Take(10);
-
-            foreach (var element in elements)
-            {
-                var result = extractionService.ExtractMetadata(element);
-
-                await Assert.That(result).IsNotNull();
-            }
-        }
-        finally
-        {
-            document?.Close(false);
-        }
+        // Assert
+        await Assert.That(result).IsNotNull();
     }
 
     [Test]
-    [TestExecutor<RevitThreadExecutor>]
-    [MethodDataSource(nameof(GetSampleFiles))]
-    public async Task ExtractMetadata_ElementsWithNullCategory_ReturnsEmptyCategoryName(string filePath)
+    [MethodDataSource(nameof(RevitFamilies))]
+    public async Task ExtractMetadata_ElementsWithNullCategory_ReturnsEmptyCategoryName(string path)
     {
-        Document? document = null;
+        // Arrange
+        var document = FamilyDocuments[path];
 
-        try
-        {
-            document = Application.OpenDocumentFile(filePath);
+        var elementWithoutCategory = document.CollectElements()
+            .Instances()
+            .First(element => element.Category is null);
 
-            var elementsWithoutCategory = new FilteredElementCollector(document)
-                .WhereElementIsNotElementType()
-                .Where(element => element.Category is null)
-                .Take(5)
-                .ToArray();
+        // Act
+        var result = extractionService.ExtractMetadata(elementWithoutCategory);
 
-            if (elementsWithoutCategory.Length == 0)
-            {
-                Skip.Test("No elements with null category found");
-                return;
-            }
-
-            foreach (var element in elementsWithoutCategory)
-            {
-                var result = extractionService.ExtractMetadata(element);
-
-                await Assert.That(result).IsNotNull();
-                await Assert.That(result!.CategoryName).IsEqualTo(string.Empty);
-            }
-        }
-        finally
-        {
-            document?.Close(false);
-        }
+        // Assert
+        await Assert.That(result).IsNotNull();
+        await Assert.That(result!.CategoryName).IsEqualTo(string.Empty);
     }
 
     [Test]
-    [TestExecutor<RevitThreadExecutor>]
-    [MethodDataSource(nameof(GetSampleFiles))]
-    public async Task ExtractMetadata_ElementsWithCategory_ReturnsCategoryName(string filePath)
+    [MethodDataSource(nameof(RevitFamilies))]
+    public async Task ExtractMetadata_ElementsWithCategory_ReturnsCategoryName(string path)
     {
-        Document? document = null;
+        // Arrange
+        var document = FamilyDocuments[path];
+        var elementWithCategory = document.CollectElements()
+            .Instances()
+            .FirstOrDefault(element => element.Category is not null);
 
-        try
-        {
-            document = Application.OpenDocumentFile(filePath);
+        // Act
+        var result = extractionService.ExtractMetadata(elementWithCategory);
 
-            var elementsWithCategory = new FilteredElementCollector(document)
-                .WhereElementIsNotElementType()
-                .Where(element => element.Category is not null)
-                .Take(10);
-
-            foreach (var element in elementsWithCategory)
-            {
-                var result = extractionService.ExtractMetadata(element);
-
-                await Assert.That(result).IsNotNull();
-                await Assert.That(result!.CategoryName).IsNotEmpty();
-            }
-        }
-        finally
-        {
-            document?.Close(false);
-        }
+        // Assert
+        await Assert.That(result).IsNotNull();
+        await Assert.That(result!.CategoryName).IsNotEmpty();
     }
 }

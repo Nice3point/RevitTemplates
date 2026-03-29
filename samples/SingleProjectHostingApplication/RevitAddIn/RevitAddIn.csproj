@@ -14,20 +14,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Revit Platform -->
-        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-
-        <!-- MVVM -->
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
-
-        <!-- IOC -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5"/>
-
-        <!-- Build -->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>

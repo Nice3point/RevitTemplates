@@ -1,4 +1,5 @@
-﻿using Nice3point.Revit.Toolkit.External;
+﻿using Nice3point.Revit.Extensions.UI;
+using Nice3point.Revit.Toolkit.External;
 using RevitAddIn.Commands;
 
 namespace RevitAddIn;
@@ -7,17 +8,17 @@ namespace RevitAddIn;
 ///     Application entry point
 /// </summary>
 [UsedImplicitly]
-public class Application : ExternalApplication
+public class Application : AsyncExternalApplication
 {
-    public override void OnStartup()
+    public override async Task OnStartupAsync()
     {
-        Host.Start();
+        await Host.StartAsync();
         CreateRibbon();
     }
 
-    public override void OnShutdown()
+    public override async Task OnShutdownAsync()
     {
-        Host.Stop();
+        await Host.StopAsync();
     }
 
     private void CreateRibbon()

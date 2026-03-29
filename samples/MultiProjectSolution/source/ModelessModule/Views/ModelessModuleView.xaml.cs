@@ -5,7 +5,10 @@ using ModelessModule.ViewModels;
 
 namespace ModelessModule.Views;
 
-public sealed partial class ModelessModuleView : IRecipient<SetWindowVisibilityMessage>
+public sealed partial class ModelessModuleView :
+    IRecipient<ShowRequestMessage>,
+    IRecipient<HideRequestMessage>,
+    IRecipient<FocusRequestMessage>
 {
     private readonly IMessenger _messenger;
 
@@ -21,7 +24,7 @@ public sealed partial class ModelessModuleView : IRecipient<SetWindowVisibilityM
 
     private void OnLoaded(object sender, RoutedEventArgs args)
     {
-        _messenger.Register(this);
+        _messenger.RegisterAll(this);
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs args)
@@ -29,15 +32,19 @@ public sealed partial class ModelessModuleView : IRecipient<SetWindowVisibilityM
         _messenger.UnregisterAll(this);
     }
 
-    public void Receive(SetWindowVisibilityMessage message)
+    public void Receive(ShowRequestMessage message)
     {
-        if (message.Visible)
-        {
-            Show();
-        }
-        else
-        {
-            Hide();
-        }
+        Show();
+    }
+
+    public void Receive(HideRequestMessage message)
+    {
+        Hide();
+    }
+
+    public void Receive(FocusRequestMessage message)
+    {
+        Activate();
+        message.Reply(Focus());
     }
 }

@@ -18,8 +18,8 @@ public class StartupCommand : ExternalCommand
         var selectionConfiguration = new SelectionConfiguration()
             .Allow.Element(element => element is Wall);
 
-        var reference = UiDocument.Selection.PickObject(ObjectType.Element, selectionConfiguration.Filter);
-        var element = reference.ElementId.ToElement(Document)!;
+        var reference = ActiveUiDocument.Selection.PickObject(ObjectType.Element, selectionConfiguration.Filter);
+        var element = reference.ElementId.ToElement(ActiveDocument)!;
 
         TaskDialog.Show("Selected element",element.Name);
     }

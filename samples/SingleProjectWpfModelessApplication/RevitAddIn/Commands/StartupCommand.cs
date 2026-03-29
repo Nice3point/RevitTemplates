@@ -1,8 +1,10 @@
 ﻿using Autodesk.Revit.Attributes;
+using CommunityToolkit.Mvvm.Messaging;
+using Nice3point.Revit.Extensions.UI;
 using Nice3point.Revit.Toolkit.External;
+using RevitAddIn.Messages;
 using RevitAddIn.ViewModels;
 using RevitAddIn.Views;
-using RevitAddIn.Utils;
 
 namespace RevitAddIn.Commands;
 
@@ -15,10 +17,14 @@ public class StartupCommand : ExternalCommand
 {
     public override void Execute()
     {
-        if (WindowController.Focus<RevitAddInView>()) return;
+        var focusRequest = StrongReferenceMessenger.Default.Send<FocusRequestMessage>();
+        if (focusRequest is { HasReceivedResponse: true, Response: true })
+        {
+            return;
+        }
 
         var viewModel = new RevitAddInViewModel();
         var view = new RevitAddInView(viewModel);
-        WindowController.Show(view, UiApplication.MainWindowHandle);
+        view.Show(Application.MainWindowHandle);
     }
 }

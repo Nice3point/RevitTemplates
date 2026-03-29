@@ -2,7 +2,8 @@
 
 public sealed partial class Module2ViewModel : ObservableObject
 {
-    [ObservableProperty] private string _projectName = Context.ActiveDocument?.ProjectInformation.Name;
+    [ObservableProperty]
+    public partial string? ProjectName { get; set; } = Context.ActiveDocument?.ProjectInformation.Name;
 
     [RelayCommand]
     private void SaveProjectName()

@@ -1,4 +1,5 @@
 ﻿using ModelessModule.Services;
+using Nice3point.TUnit.Revit;
 using Nice3point.TUnit.Revit.Executors;
 using RevitAddin.Tests.DataSources;
 using TUnit.Core.Executors;
@@ -6,12 +7,29 @@ using TUnit.Core.Executors;
 namespace RevitAddin.Tests;
 
 [DependencyInjectionDataSource]
-public sealed class VolumeCalculationTests(ElementMetadataExtractionService extractionService) : RevitSamplesSourceTest
+public sealed class VolumeCalculationTests(ElementMetadataExtractionService extractionService) : RevitApiTest
 {
+    private Wall _wall = null!;
+
+    [Before(Test)]
+    [HookExecutor<RevitThreadExecutor>]
+    public void SeedModel()
+    {
+        var document = Application.NewProjectDocument(UnitSystem.Metric);
+
+        using var transaction = new Transaction(document, "Seed model");
+        transaction.Start();
+
+        var level = Level.Create(document, 0);
+
+        _wall = Wall.Create(document, Line.CreateBound(new XYZ(0, 0, 0), new XYZ(1000, 0, 0)), level.Id, false);
+        _wall.FindParameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)!.Set(1000);
+
+        transaction.Commit();
+    }
+
     [Test]
-    [TestExecutor<RevitThreadExecutor>]
-    [MethodDataSource(nameof(GetSampleFiles))]
-    public async Task CalculateVolume_WhenElementIsNull_ReturnsZero(string filePath)
+    public async Task CalculateVolume_WhenElementIsNull_ReturnsZero()
     {
         var result = extractionService.CalculateVolume(null);
 
@@ -19,71 +37,10 @@ public sealed class VolumeCalculationTests(ElementMetadataExtractionService extr
     }
 
     [Test]
-    [TestExecutor<RevitThreadExecutor>]
-    [MethodDataSource(nameof(GetSampleFiles))]
-    public async Task CalculateVolume_ElementsWithGeometry_ReturnsVolume(string filePath)
+    public async Task CalculateVolume_ElementsWithGeometry_ReturnsVolume()
     {
-        Document? document = null;
+        var result = extractionService.CalculateVolume(_wall);
 
-        try
-        {
-            document = Application.OpenDocumentFile(filePath);
-
-            var elementsWithGeometry = new FilteredElementCollector(document)
-                .WhereElementIsNotElementType()
-                .Where(element => element.get_Geometry(new Options()) is not null)
-                .Take(10);
-
-            foreach (var element in elementsWithGeometry)
-            {
-                var result = extractionService.CalculateVolume(element);
-
-                await Assert.That(result).IsGreaterThanOrEqualTo(0);
-            }
-        }
-        finally
-        {
-            document?.Close(false);
-        }
-    }
-
-    [Test]
-    [TestExecutor<RevitThreadExecutor>]
-    [MethodDataSource(nameof(GetSampleFiles))]
-    public async Task CalculateVolume_SolidElements_ReturnsPositiveVolume(string filePath)
-    {
-        Document? document = null;
-
-        try
-        {
-            document = Application.OpenDocumentFile(filePath);
-
-            var solidElements = new FilteredElementCollector(document)
-                .WhereElementIsNotElementType()
-                .Where(element =>
-                {
-                    var geometry = element.get_Geometry(new Options());
-                    return geometry is not null && geometry.OfType<Solid>().Any(solid => solid.Volume > 0);
-                })
-                .Take(5)
-                .ToArray();
-
-            if (solidElements.Length == 0)
-            {
-                Skip.Test("No solid elements found");
-                return;
-            }
-
-            foreach (var element in solidElements)
-            {
-                var result = extractionService.CalculateVolume(element);
-
-                await Assert.That(result).IsGreaterThan(0);
-            }
-        }
-        finally
-        {
-            document?.Close(false);
-        }
+        await Assert.That(result).IsGreaterThan(0);
     }
 }

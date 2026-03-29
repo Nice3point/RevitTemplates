@@ -5,6 +5,6 @@ using Nice3point.BenchmarkDotNet.Revit;
 using RevitAddIn.Benchmark.Benchmarks;
 
 var configuration = ManualConfig.Create(DefaultConfig.Instance)
-    .AddJob(Job.ShortRun.WithCurrentConfiguration());
+    .AddJob(Job.Dry.WithCurrentConfiguration());
 
 BenchmarkRunner.Run<VolumeCalculationBenchmarks>(configuration);

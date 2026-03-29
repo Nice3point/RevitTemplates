@@ -13,7 +13,7 @@ public class ShowModalWindowCommand : ExternalCommand
 {
     public override void Execute()
     {
-        var view = Host.GetService<ModalModuleView>();
-        view.ShowDialog();
+        var view = Host.CreateScope<ModalModuleView>();
+        view.Show();
     }
 }
