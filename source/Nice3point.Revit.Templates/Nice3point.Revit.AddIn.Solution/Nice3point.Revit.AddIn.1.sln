@@ -20,39 +20,39 @@ EndProject
 #endif
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug.R22|Any CPU = Debug.R22|Any CPU
 		Debug.R23|Any CPU = Debug.R23|Any CPU
 		Debug.R24|Any CPU = Debug.R24|Any CPU
 		Debug.R25|Any CPU = Debug.R25|Any CPU
 		Debug.R26|Any CPU = Debug.R26|Any CPU
-		Release.R22|Any CPU = Release.R22|Any CPU
+		Debug.R27|Any CPU = Debug.R27|Any CPU
 		Release.R23|Any CPU = Release.R23|Any CPU
 		Release.R24|Any CPU = Release.R24|Any CPU
 		Release.R25|Any CPU = Release.R25|Any CPU
 		Release.R26|Any CPU = Release.R26|Any CPU
+		Release.R27|Any CPU = Release.R27|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R22|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R23|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R24|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R25|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R26|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R22|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R27|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R23|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R24|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R25|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R26|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R27|Any CPU.ActiveCfg = Release|Any CPU
 #if (includeInstaller)
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R22|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R23|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R24|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R25|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R26|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R22|Any CPU.ActiveCfg = Release|Any CPU
+		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R27|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R23|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R24|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R25|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R26|Any CPU.ActiveCfg = Release|Any CPU
+		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R27|Any CPU.ActiveCfg = Release|Any CPU
 #endif
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution

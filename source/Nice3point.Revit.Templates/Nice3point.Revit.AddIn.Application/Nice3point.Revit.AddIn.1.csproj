@@ -12,13 +12,13 @@
         <IsRepackable>false</IsRepackable>
 <!--#endif-->
         <EnableDynamicLoading>true</EnableDynamicLoading>
-        <Configurations>Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26</Configurations>
-        <Configurations>$(Configurations);Release.R22;Release.R23;Release.R24;Release.R25;Release.R26</Configurations>
+        <Configurations>Debug.R23;Debug.R24;Debug.R25;Debug.R26;Debug.R27</Configurations>
+        <Configurations>$(Configurations);Release.R23;Release.R24;Release.R25;Release.R26;Release.R27</Configurations>
         <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Nice3point.Revit.AddIn._1</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- Revit Platform -->
+        <!-- Revit Dependencies -->
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
@@ -46,12 +46,13 @@
 <!--#endif-->
 <!--#if (addinLogging || useDi)-->
 
-        <!-- Build -->
+        <!-- Build Automation-->
         <PackageReference Include="ILRepack" Version="2.0.44"/>
 <!--#endif-->
 
-        <!-- Development References -->
+        <!-- Development Dependencies -->
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="9.23.0" PrivateAssets="all"/>
     </ItemGroup>
 
 <!--#if (isApplicationAddin)-->

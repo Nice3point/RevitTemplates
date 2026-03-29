@@ -21,7 +21,7 @@
 <!--#if (includeBundle)-->
         <PackageReference Include="Autodesk.PackageBuilder" Version="2.0.2"/>
 <!--#endif-->
-        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>

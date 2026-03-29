@@ -1,17 +1,15 @@
 <Solution>
     <Configurations>
-        <BuildType Name="Debug.R21" />
-        <BuildType Name="Debug.R22" />
         <BuildType Name="Debug.R23" />
         <BuildType Name="Debug.R24" />
         <BuildType Name="Debug.R25" />
         <BuildType Name="Debug.R26" />
-        <BuildType Name="Release.R21" />
-        <BuildType Name="Release.R22" />
+        <BuildType Name="Debug.R27" />
         <BuildType Name="Release.R23" />
         <BuildType Name="Release.R24" />
         <BuildType Name="Release.R25" />
         <BuildType Name="Release.R26" />
+        <BuildType Name="Release.R27" />
     </Configurations>
     <Folder Name="/Solution Items/">
         <File Path=".gitignore" />
@@ -20,46 +18,38 @@
     </Folder>
     <Folder Name="/Automation/">
         <Project Path="build/Build.csproj">
-            <BuildType Solution="Debug.R21|*" Project="Debug" />
-            <BuildType Solution="Debug.R22|*" Project="Debug" />
             <BuildType Solution="Debug.R23|*" Project="Debug" />
             <BuildType Solution="Debug.R24|*" Project="Debug" />
             <BuildType Solution="Debug.R25|*" Project="Debug" />
             <BuildType Solution="Debug.R26|*" Project="Debug" />
-            <BuildType Solution="Release.R21|*" Project="Release" />
-            <BuildType Solution="Release.R22|*" Project="Release" />
+            <BuildType Solution="Debug.R27|*" Project="Debug" />
             <BuildType Solution="Release.R23|*" Project="Release" />
             <BuildType Solution="Release.R24|*" Project="Release" />
             <BuildType Solution="Release.R25|*" Project="Release" />
             <BuildType Solution="Release.R26|*" Project="Release" />
+            <BuildType Solution="Release.R27|*" Project="Release" />
             <Build Project="false" />
-        </Project>
-        <Project Path="install/Installer.csproj">
-            <BuildType Solution="Debug.R21|*" Project="Debug" />
-            <BuildType Solution="Debug.R22|*" Project="Debug" />
+        </Project>        <Project Path="install/Installer.csproj">
             <BuildType Solution="Debug.R23|*" Project="Debug" />
             <BuildType Solution="Debug.R24|*" Project="Debug" />
             <BuildType Solution="Debug.R25|*" Project="Debug" />
             <BuildType Solution="Debug.R26|*" Project="Debug" />
-            <BuildType Solution="Release.R21|*" Project="Release" />
-            <BuildType Solution="Release.R22|*" Project="Release" />
+            <BuildType Solution="Debug.R27|*" Project="Debug" />
             <BuildType Solution="Release.R23|*" Project="Release" />
             <BuildType Solution="Release.R24|*" Project="Release" />
             <BuildType Solution="Release.R25|*" Project="Release" />
             <BuildType Solution="Release.R26|*" Project="Release" />
+            <BuildType Solution="Release.R27|*" Project="Release" />
             <Build Project="false" />
-        </Project>
-    </Folder>
+        </Project>    </Folder>
     <Folder Name="/Tests/">
         <Project Path="tests/RevitAddIn.Benchmark/RevitAddIn.Benchmark.csproj">
-            <BuildType Solution="Debug.R21|*" Project="Debug.R22" />
-            <BuildType Solution="Release.R21|*" Project="Debug.R22" />
-        </Project>
-        <Project Path="tests/RevitAddin.Tests/RevitAddin.Tests.csproj">
-            <BuildType Solution="Debug.R21|*" Project="Debug.R22" />
-            <BuildType Solution="Release.R21|*" Project="Debug.R22" />
-        </Project>
-    </Folder>
+            <BuildType Solution="Debug.R23|*" Project="Debug.R23" />
+            <BuildType Solution="Release.R23|*" Project="Debug.R23" />
+        </Project>        <Project Path="tests/RevitAddin.Tests/RevitAddin.Tests.csproj">
+            <BuildType Solution="Debug.R23|*" Project="Debug.R23" />
+            <BuildType Solution="Release.R23|*" Project="Debug.R23" />
+        </Project>    </Folder>
     <Project Path="source/ModalModule/ModalModule.csproj" />
     <Project Path="source/ModelessModule/ModelessModule.csproj" />
     <Project Path="source/RevitAddIn/RevitAddIn.csproj" />

@@ -7,12 +7,12 @@ namespace Module3;
 /// <summary>
 ///     Initializes a new instance of the DatabaseConnection class with the specified entry key.
 /// </summary>
-public class DatabaseConnection
+public sealed class DatabaseConnection
 {
-    private Transaction _transaction;
     private readonly Element _storage;
-
     private readonly Schema _schema;
+    
+    private Transaction? _transaction;
 
     /// <summary>
     ///     Initializes a new instance of the DatabaseConnection class with the specified entry key.
@@ -57,7 +57,7 @@ public class DatabaseConnection
     /// <typeparam name="T">The type of the value to be saved.</typeparam>
     /// <param name="field">The field name in which to save the value.</param>
     /// <param name="value">The value to be saved.</param>
-    public void Save<T>(string field, T value)
+    public void Save<T>(string field, T? value) where T : notnull
     {
         if (value == null) return;
         _storage.SaveEntity(_schema, value, field);
@@ -69,7 +69,7 @@ public class DatabaseConnection
     /// <typeparam name="T">The type of the value to be loaded.</typeparam>
     /// <param name="field">The field name from which to load the value.</param>
     /// <returns>The value loaded from the database.</returns>
-    public T Load<T>(string field)
+    public T? Load<T>(string field) where T : notnull
     {
         return _storage.LoadEntity<T>(_schema, field);
     }
@@ -78,16 +78,18 @@ public class DatabaseConnection
     {
         const string storageName = "RevitAddIn DataStorage";
 
-        var storage = Context.ActiveDocument!
-            .EnumerateInstances<DataStorage>()
+        var activeDocument = RevitContext.ActiveDocument;
+        var storage = (DataStorage?) activeDocument!.CollectElements()
+            .Instances()
+            .OfClass<DataStorage>()
             .FirstOrDefault(storage => storage.Name == storageName);
 
         if (storage is not null) return storage;
 
-        using var transaction = new Transaction(Context.ActiveDocument, "Create data storage");
+        using var transaction = new Transaction(activeDocument, "Create data storage");
         transaction.Start();
 
-        storage = DataStorage.Create(Context.ActiveDocument);
+        storage = DataStorage.Create(activeDocument);
         storage.Name = storageName;
 
         transaction.Commit();
