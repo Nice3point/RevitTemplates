@@ -16,6 +16,7 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<PackTemplatesModule>(Optional = true)]
 [DependsOn<PackSdkModule>(Optional = true)]
+[DependsOn<TestTemplatesModule>(Optional = true)]
 public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOptions<NuGetOptions> nuGetOptions) : Module
 {
     protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)

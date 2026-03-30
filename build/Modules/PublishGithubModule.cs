@@ -22,6 +22,7 @@ namespace Build.Modules;
 [DependsOn<GenerateGitHubChangelogModule>]
 [DependsOn<PackTemplatesModule>(Optional = true)]
 [DependsOn<PackSdkModule>(Optional = true)]
+[DependsOn<TestTemplatesModule>(Optional = true)]
 [DependsOn<PublishNugetModule>(Optional = true)]
 public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module
 {

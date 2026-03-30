@@ -31,6 +31,7 @@ if (args.Contains("pack"))
 
 if (args.Contains("publish"))
 {
+    builder.Services.AddModule<TestTemplatesModule>();
     builder.Services.AddModule<PublishNugetModule>();
     builder.Services.AddModule<PublishGithubModule>();
 }
