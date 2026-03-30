@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/template",
   "author": "Nice3point",
   "name": "Revit AddIn Application",
-  "shortName": "revit-addin-app",
+  "shortName": "revit-addin-application",
   "identity": "Nice3point.Revit.AddIn.Application",
   "defaultName": "RevitAddIn",
   "sourceName": "Nice3point.Revit.AddIn.1",

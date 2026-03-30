@@ -15,7 +15,7 @@
     }
   },
   "usageExamples": [
-    "dotnet new revit-addin-app",
-    "dotnet new revit-addin-app --addin command --di hosting --logger"
+    "dotnet new revit-addin-application",
+    "dotnet new revit-addin-application --addin command --di hosting --logger"
   ]
 }
