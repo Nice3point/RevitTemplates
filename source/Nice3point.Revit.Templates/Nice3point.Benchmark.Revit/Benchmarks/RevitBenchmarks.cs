@@ -5,7 +5,7 @@ namespace Nice3point.Benchmark.Revit._1.Benchmarks;
 
 public class RevitBenchmarks : RevitApiBenchmark
 {
-    private Document? _document;
+    private Document _document = null!;
 
     protected sealed override void OnGlobalSetup()
     {
@@ -19,7 +19,7 @@ public class RevitBenchmarks : RevitApiBenchmark
     
     protected sealed override void OnGlobalCleanup()
     {
-        _documentFile.Close(false);
+        _document.Close(false);
     }
 
     [Benchmark]

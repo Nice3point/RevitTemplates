@@ -6,7 +6,7 @@ namespace Nice3point.Unit.Revit._1;
 
 public sealed class RevitTests : RevitApiTest
 {
-    private static Document _document = null!;
+    private Document _document = null!;
 
     [Before(Test)]
     [HookExecutor<RevitThreadExecutor>]
