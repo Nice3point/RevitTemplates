@@ -14,15 +14,15 @@
 To write code compatible with different Revit versions, use the directives **#if**, **#elif**, **#else**, **#endif**.
 
 ```c#
-#if REVIT2026
+#if REVIT2027
     //Your code here
 #endif
 ```
 
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
-E.g., select the `Debug.R26` configuration for the Revit 2026 API.
+E.g., select the `Debug.R27` configuration for the Revit 2027 API.
 
-The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`. 
+The project has available constants such as `REVIT2027`, `REVIT2027_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.
 
 > [!NOTE]
@@ -69,16 +69,16 @@ Example:
 
 ```text
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug.R24|Any CPU = Debug.R24|Any CPU
     Debug.R25|Any CPU = Debug.R25|Any CPU
     Debug.R26|Any CPU = Debug.R26|Any CPU
-    Release.R24|Any CPU = Release.R24|Any CPU
+    Debug.R27|Any CPU = Debug.R27|Any CPU
     Release.R25|Any CPU = Release.R25|Any CPU
     Release.R26|Any CPU = Release.R26|Any CPU
+    Release.R27|Any CPU = Release.R27|Any CPU
 EndGlobalSection
 ```
 
-For example `Debug.R26` is the Debug configuration for Revit 2026 version.
+For example `Debug.R27` is the Debug configuration for Revit 2027 version.
 
 > [!TIP]  
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
@@ -95,8 +95,8 @@ Example:
 
 ```xml
 <PropertyGroup>
-    <Configurations>Debug.R24;Debug.R25;Debug.R26</Configurations>
-    <Configurations>$(Configurations);Release.R24;Release.R25;Release.R26</Configurations>
+    <Configurations>Debug.R25;Debug.R26;Debug.R27</Configurations>
+    <Configurations>$(Configurations);Release.R25;Release.R26;Release.R27</Configurations>
 </PropertyGroup>
 ```
 
@@ -109,7 +109,7 @@ If you need to add support for an unreleased or unsupported version of Revit tha
 
 ```xml
 <PropertyGroup>
-    <TargetFramework Condition="$(RevitVersion) == '2025'">net8.0-windows7.0</TargetFramework>
+    <TargetFramework Condition="$(RevitVersion) == '2027'">net10.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 

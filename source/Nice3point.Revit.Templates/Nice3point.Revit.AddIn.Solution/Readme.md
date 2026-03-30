@@ -360,7 +360,7 @@ If you need to add support for an unreleased or unsupported version of Revit tha
 
 ```xml
 <PropertyGroup>
-    <TargetFramework Condition="$(RevitVersion) >= '2027'">net10.0-windows7.0</TargetFramework>
+    <TargetFramework Condition="$(RevitVersion) == '2027'">net10.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 

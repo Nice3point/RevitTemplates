@@ -314,8 +314,8 @@ These properties are automatically applied to the `.csproj` file, but can be ove
 
 ```xml
 <PropertyGroup>
-    <ImplicitRevitUsings>false</ImplicitRevitUsings>
-    <TargetFramework Condition="$(RevitVersion) == '2025'">net8.0</TargetFramework>
+    <StartArguments>/language CHS</StartArguments>
+    <TargetFramework Condition="$(RevitVersion) == '2027'">net10.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 
@@ -323,12 +323,13 @@ These properties are automatically applied to the `.csproj` file, but can be ove
 
 **TargetFramework default values:**
 
-| RevitVersion | TargetFramework     |
-|--------------|---------------------|
-| 2014         | net40               |
-| 2015         | net45               |
-| 2016-2017    | net452              |
-| 2018         | net46               |
-| 2019-2020    | net47               |
-| 2021-2024    | net48               |
-| 2025-2026+   | net8.0-windows7.0   |
+| RevitVersion | TargetFramework    |
+|--------------|--------------------|
+| 2014         | net40              |
+| 2015         | net45              |
+| 2016-2017    | net452             |
+| 2018         | net46              |
+| 2019-2020    | net47              |
+| 2021-2024    | net48              |
+| 2025-2026    | net8.0-windows7.0  |
+| 2027+        | net10.0-windows7.0 |
