@@ -1,3 +1,15 @@
+# 6.2.0
+
+## Templates
+
+- Revit 2027 support
+- Removed Revit 2022 from default configurations (can be added manually).
+- Support for Async External Command/Application when using Hosting.
+
+## SDK
+
+- Added implicit `Nice3point.Revit.Extensions.UI` using when `RevitAPIUI.dll` is referenced.
+
 # 6.1.2
 
 - Fix bundle Contents folder name https://github.com/lookup-foundation/RevitLookup/pull/360
