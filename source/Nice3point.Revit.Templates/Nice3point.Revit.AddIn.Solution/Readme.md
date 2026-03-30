@@ -1,6 +1,6 @@
 # Nice3point.Revit.AddIn.1
 
-Autodesk Revit plugin project organized into multiple solution files that target versions 2022 - 2026.
+Autodesk Revit plugin project organized into multiple solution files that target versions 2023 - 2027.
 
 ## Table of content
 
@@ -75,7 +75,7 @@ We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET sup
 from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
-2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R27` or `Debug.R27`. Suffix `R27` means compiling for the Revit 2027.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 4. `Debug` button will start Revit add-in in the debug mode.
 
@@ -84,7 +84,7 @@ from [here](https://www.jetbrains.com/rider/).
 Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
-2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R27` or `Debug.R27`. Suffix `R27` means compiling for the Revit 2027.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 ---#if (hasArtifacts)
 ---#if (includeInstaller && includeBundle)
@@ -261,15 +261,15 @@ That way, you can check if the plugin is compatible with different API versions 
 To write code compatible with different Revit versions, use the directives **#if**, **#elif**, **#else**, **#endif**.
 
 ```c#
-#if REVIT2026
+#if REVIT2027
     //Your code here
 #endif
 ```
 
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
-E.g., select the `Debug.R26` configuration for the Revit 2026 API.
+E.g., select the `Debug.R27` configuration for the Revit 2027 API.
 
-The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`. 
+The project has available constants such as `REVIT2027`, `REVIT2027_OR_GREATER`. 
 Create conditions, experiment to achieve the desired result.
 
 ---#if (isGitHubCi)
@@ -316,16 +316,16 @@ Example:
 
 ```text
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug.R24|Any CPU = Debug.R24|Any CPU
     Debug.R25|Any CPU = Debug.R25|Any CPU
     Debug.R26|Any CPU = Debug.R26|Any CPU
-    Release.R24|Any CPU = Release.R24|Any CPU
+    Debug.R27|Any CPU = Debug.R27|Any CPU
     Release.R25|Any CPU = Release.R25|Any CPU
     Release.R26|Any CPU = Release.R26|Any CPU
+    Release.R27|Any CPU = Release.R27|Any CPU
 EndGlobalSection
 ```
 
-For example `Debug.R26` is the Debug configuration for Revit 2026 version.
+For example `Debug.R27` is the Debug configuration for Revit 2027 version.
 
 ---#if (isGitHubCi)
 > [!TIP]  
@@ -344,8 +344,8 @@ Example:
 
 ```xml
 <PropertyGroup>
-    <Configurations>Debug.R24;Debug.R25;Debug.R26</Configurations>
-    <Configurations>$(Configurations);Release.R24;Release.R25;Release.R26</Configurations>
+    <Configurations>Debug.R25;Debug.R26;Debug.R27</Configurations>
+    <Configurations>$(Configurations);Release.R25;Release.R26;Release.R27</Configurations>
 </PropertyGroup>
 ```
 
@@ -360,7 +360,7 @@ If you need to add support for an unreleased or unsupported version of Revit tha
 
 ```xml
 <PropertyGroup>
-    <TargetFramework Condition="$(RevitVersion) >= '2025'">net8.0-windows7.0</TargetFramework>
+    <TargetFramework Condition="$(RevitVersion) >= '2027'">net10.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 
@@ -373,13 +373,12 @@ To support CI/CD pipelines and build a project for Revit versions not installed 
 ---#endif
 > Revit API dependencies are available in the [Revit.API](https://github.com/Nice3point/RevitApi) repository.
 
-The Nuget package version must include wildcards `Version="$(RevitVersion).*-*"` to automatically include adding a specific package version, depending on the selected solution
-configuration.
+The Nuget package version must include wildcards `Version="$(RevitVersion).*"` to automatically include adding a specific package version, depending on the selected solution configuration.
 
 ```xml
 <ItemGroup>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 </ItemGroup>
 ```
 
