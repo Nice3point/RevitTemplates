@@ -8,6 +8,15 @@ namespace Nice3point.Revit.AddIn._1.Commands;
 /// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]
+#if (diHosting && isCommandAddin)
+public class StartupCommand : AsyncExternalCommand
+{
+    public override async Task ExecuteAsync()
+    {
+        await Host.StartAsync();
+    }
+}
+#else
 public class StartupCommand : ExternalCommand
 {
     public override void Execute()
@@ -17,3 +26,4 @@ public class StartupCommand : ExternalCommand
 #endif
     }
 }
+#endif

@@ -34,25 +34,9 @@ public static class Host
     /// <summary>
     ///     Starts the host and configures the application's services
     /// </summary>
-    public static void Start()
-    {
-#if (diContainer)
-        var services = new ServiceCollection();
-#if (addinLogging)
-
-        //Logging
-        services.AddSerilog();
-#endif
-#if (useUi)
-
-        //MVVM
-        services.AddTransient<Nice3point_Revit_AddIn__1ViewModel>();
-        services.AddTransient<Nice3point_Revit_AddIn__1View>();
-#endif
-
-        _serviceProvider = services.BuildServiceProvider();
-#endif
 #if (diHosting)
+    public static async Task StartAsync()
+    {
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -75,17 +59,37 @@ public static class Host
 #endif
 
         _host = builder.Build();
-        _host.Start();
-#endif
+        await _host.StartAsync();
     }
-#if (diHosting)
 
     /// <summary>
     ///     Stops the host and handle <see cref="IHostedService"/> services
     /// </summary>
-    public static void Stop()
+    public static async Task StopAsync()
     {
-        _host!.StopAsync().GetAwaiter().GetResult();
+        if (_host is null) return;
+
+        await _host.StopAsync();
+    }
+#else
+    public static void Start()
+    {
+#if (diContainer)
+        var services = new ServiceCollection();
+#if (addinLogging)
+
+        //Logging
+        services.AddSerilog();
+#endif
+#if (useUi)
+
+        //MVVM
+        services.AddTransient<Nice3point_Revit_AddIn__1ViewModel>();
+        services.AddTransient<Nice3point_Revit_AddIn__1View>();
+#endif
+
+        _serviceProvider = services.BuildServiceProvider();
+#endif
     }
 #endif
 

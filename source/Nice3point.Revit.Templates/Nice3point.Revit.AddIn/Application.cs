@@ -13,12 +13,28 @@ namespace Nice3point.Revit.AddIn._1;
 ///     Application entry point
 /// </summary>
 [UsedImplicitly]
-#if (isApplicationAddin)
+#if (diHosting && isApplicationAddin)
+public class Application : AsyncExternalApplication
+#elseif (isApplicationAddin)
 public class Application : ExternalApplication
 #else
 public class Application : ExternalDBApplication
 #endif
 {
+#if (diHosting)
+    public override async Task OnStartupAsync()
+    {
+        await Host.StartAsync();
+#if (isApplicationAddin)
+        CreateRibbon();
+#endif
+    }
+
+    public override async Task OnShutdownAsync()
+    {
+        await Host.StopAsync();
+    }
+#else
     public override void OnStartup()
     {
 #if (useDi)
@@ -31,16 +47,13 @@ public class Application : ExternalDBApplication
         CreateRibbon();
 #endif
     }
-#if (diHosting || (!useDi && addinLogging))
+#if (!useDi && addinLogging)
 
     public override void OnShutdown()
     {
-#if (diHosting)
-        Host.Stop();
-#elseif (addinLogging)
         Log.CloseAndFlush();
-#endif
     }
+#endif
 #endif
 #if (isApplicationAddin)
 
