@@ -22,6 +22,7 @@ public class StartupCommand : ExternalCommand
     {
 #if (isCommandAddin && diHosting)
         await Host.StartAsync();
+        await Host.StopAsync();
 #elseif (isCommandAddin && useDi)
         Host.Start();
 #endif

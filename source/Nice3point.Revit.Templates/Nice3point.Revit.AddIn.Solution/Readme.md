@@ -373,13 +373,13 @@ To support CI/CD pipelines and build a project for Revit versions not installed 
 ---#endif
 > Revit API dependencies are available in the [Revit.API](https://github.com/Nice3point/RevitApi) repository.
 
-The Nuget package version must include wildcards `Version="$(RevitVersion).*"` to automatically include adding a specific package version, depending on the selected solution
+The Nuget package version must include wildcards `Version="$(RevitVersion).*-*"` to automatically include adding a specific package version, depending on the selected solution
 configuration.
 
 ```xml
 <ItemGroup>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
 </ItemGroup>
 ```
 

@@ -1,7 +1,5 @@
 #if (diHosting)
-#if (useUi)
 using System.IO;
-#endif
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
