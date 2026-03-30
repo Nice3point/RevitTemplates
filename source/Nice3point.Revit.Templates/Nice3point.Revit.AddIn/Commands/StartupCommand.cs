@@ -23,24 +23,19 @@ namespace Nice3point.Revit.AddIn._1.Commands;
 [Transaction(TransactionMode.Manual)]
 #if (diHosting && isCommandAddin)
 public class StartupCommand : AsyncExternalCommand
-{
-    public override async Task ExecuteAsync()
-    {
-        await Host.StartAsync();
-#if (useUi)
-        var view = Host.GetService<Nice3point_Revit_AddIn__1View>();
-        view.ShowDialog();
-#elseif (!useUi)
-        TaskDialog.Show(Document.Title, "Nice3point.Revit.AddIn.1");
-#endif
-    }
-}
 #else
 public class StartupCommand : ExternalCommand
+#endif
 {
+#if (diHosting && isCommandAddin)
+    public override async Task ExecuteAsync()
+#else
     public override void Execute()
+#endif
     {
-#if (useDi && isCommandAddin)
+#if (isCommandAddin && diHosting)
+        await Host.StartAsync();
+#elseif (isCommandAddin && useDi)
         Host.Start();
 #endif
 #if (addinLogging && isCommandAddin && !useDi)
@@ -72,4 +67,3 @@ public class StartupCommand : ExternalCommand
     }
 #endif
 }
-#endif

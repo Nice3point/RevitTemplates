@@ -25,12 +25,13 @@ public static class Host
     private static IHost? _host;
 #endif
 
-    /// <summary>
-    ///     Starts the host and configures the application's services
-    /// </summary>
-#if (diHosting)
+#if (diHosting && (isApplicationAddin || isCommandAddin))
     public static async Task StartAsync()
+#else
+    public static void Start()
+#endif
     {
+#if (diHosting)
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -47,21 +48,12 @@ public static class Host
         builder.ConfigureHosting();
 
         _host = builder.Build();
+#if (isApplicationAddin || isCommandAddin)
         await _host.StartAsync();
-    }
-
-    /// <summary>
-    ///     Stops the host and handle <see cref="IHostedService"/> services
-    /// </summary>
-    public static async Task StopAsync()
-    {
-        if (_host is null) return;
-
-        await _host.StopAsync();
-    }
 #else
-    public static void Start()
-    {
+        _host.StartAsync().GetAwaiter().GetResult();
+#endif
+#else
 #if (diContainer)
         var services = new ServiceCollection();
 #if (addinLogging)
@@ -71,6 +63,26 @@ public static class Host
 #endif
 
         _serviceProvider = services.BuildServiceProvider();
+#endif
+#endif
+    }
+#if (diHosting)
+
+    /// <summary>
+    ///     Stops the host and handle <see cref="IHostedService"/> services
+    /// </summary>
+#if (isApplicationAddin || isCommandAddin)
+    public static async Task StopAsync()
+#else
+    public static void Stop()
+#endif
+    {
+        if (_host is null) return;
+
+#if (isApplicationAddin || isCommandAddin)
+        await _host.StopAsync();
+#else
+        _host.StopAsync().GetAwaiter().GetResult();
 #endif
     }
 #endif

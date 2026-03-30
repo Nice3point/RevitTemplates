@@ -21,23 +21,15 @@ public class Application : ExternalApplication
 public class Application : ExternalDBApplication
 #endif
 {
-#if (diHosting)
+#if (diHosting && isApplicationAddin)
     public override async Task OnStartupAsync()
-    {
-        await Host.StartAsync();
-#if (isApplicationAddin)
-        CreateRibbon();
-#endif
-    }
-
-    public override async Task OnShutdownAsync()
-    {
-        await Host.StopAsync();
-    }
 #else
     public override void OnStartup()
+#endif
     {
-#if (useDi)
+#if (diHosting && isApplicationAddin)
+        await Host.StartAsync();
+#elseif (useDi)
         Host.Start();
 #endif
 #if (addinLogging && !useDi)
@@ -47,13 +39,23 @@ public class Application : ExternalDBApplication
         CreateRibbon();
 #endif
     }
-#if (!useDi && addinLogging)
 
+#if (diHosting || (addinLogging && !useDi))
+#if (diHosting && isApplicationAddin)
+    public override async Task OnShutdownAsync()
+#else
     public override void OnShutdown()
-    {
-        Log.CloseAndFlush();
-    }
 #endif
+    {
+#if (diHosting && isApplicationAddin)
+        await Host.StopAsync();
+#elseif (diHosting)
+        Host.Stop();
+#endif
+#if (addinLogging && !useDi)
+        Log.CloseAndFlush();
+#endif
+    }
 #endif
 #if (isApplicationAddin)
 
