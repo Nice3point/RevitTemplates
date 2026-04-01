@@ -79,7 +79,7 @@ public sealed class CreateInstallerModule(IOptions<BuildOptions> buildOptions) :
         var wixToolFolder = Folder.CreateTemporaryFolder();
         await context.DotNet().Tool.Execute(new DotNetToolOptions
         {
-            Arguments = ["install", "wix", "--tool-path", wixToolFolder.Path]
+            Arguments = ["install", "wix", "--version", "6.*", "--tool-path", wixToolFolder.Path]
         }, cancellationToken: cancellationToken);
 
         return wixToolFolder;
