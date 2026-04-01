@@ -6,6 +6,9 @@ using ModularPipelines.Modules;
 
 namespace Build.Modules;
 
+/// <summary>
+///     Restore the readme.
+/// </summary>
 [DependsOn<UpdateTemplatesReadmeModule>]
 [DependsOn<PackSdkModule>(Optional = true)]
 [DependsOn<PackTemplatesModule>(Optional = true)]

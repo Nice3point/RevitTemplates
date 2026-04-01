@@ -5,7 +5,7 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Update the template Readme.md file for packaging.
+///     Remove the unsupported NuGet formating from the readme.
 /// </summary>
 public sealed class UpdateTemplatesReadmeModule : Module<string>
 {
