@@ -13,19 +13,20 @@
             Condition="'$(ImplicitRevitUsings)' == 'true' AND ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
 
         <ItemGroup>
-            <_ImplicitRevitUsing Include="Autodesk.Revit.DB" RequiredReference="RevitAPI.dll"/>
-            <_ImplicitRevitUsing Include="JetBrains.Annotations" RequiredReference="JetBrains.Annotations.dll"/>
-            <_ImplicitRevitUsing Include="Nice3point.Revit.Toolkit" RequiredReference="Nice3point.Revit.Toolkit.dll"/>
-            <_ImplicitRevitUsing Include="Nice3point.Revit.Extensions" RequiredReference="Nice3point.Revit.Extensions.dll"/>
-            <_ImplicitRevitUsing Include="Nice3point.Revit.Extensions.UI" RequiredReference="Nice3point.Revit.Extensions.dll;RevitAPIUI.dll"/>
-            <_ImplicitRevitUsing Include="Nice3point.Revit.Extensions.UI" RequiredReference="Nice3point.Revit.Toolkit.dll;RevitAPIUI.dll"/>
-            <_ImplicitRevitUsing Include="CommunityToolkit.Mvvm.Input" RequiredReference="CommunityToolkit.Mvvm.dll"/>
-            <_ImplicitRevitUsing Include="CommunityToolkit.Mvvm.ComponentModel" RequiredReference="CommunityToolkit.Mvvm.dll"/>
+            <_ImplicitRevitUsing Include="Autodesk.Revit.DB" RequiredAssembly="RevitAPI.dll"/>
+            <_ImplicitRevitUsing Include="JetBrains.Annotations" RequiredAssembly="JetBrains.Annotations.dll"/>
+            <_ImplicitRevitUsing Include="JetBrains.Annotations" RequiredGlobalReference="JetBrains.Annotations.Sources"/>
+            <_ImplicitRevitUsing Include="Nice3point.Revit.Toolkit" RequiredAssembly="Nice3point.Revit.Toolkit.dll"/>
+            <_ImplicitRevitUsing Include="Nice3point.Revit.Extensions" RequiredAssembly="Nice3point.Revit.Extensions.dll"/>
+            <_ImplicitRevitUsing Include="Nice3point.Revit.Extensions.UI" RequiredAssembly="Nice3point.Revit.Extensions.dll;RevitAPIUI.dll"/>
+            <_ImplicitRevitUsing Include="CommunityToolkit.Mvvm.Input" RequiredAssembly="CommunityToolkit.Mvvm.dll"/>
+            <_ImplicitRevitUsing Include="CommunityToolkit.Mvvm.ComponentModel" RequiredAssembly="CommunityToolkit.Mvvm.dll"/>
         </ItemGroup>
 
         <AddImplicitUsings
                 AdditionalUsings="@(_ImplicitRevitUsing)"
-                References="@(Reference)">
+                References="@(Reference)"
+                GlobalPackageReferences="@(GlobalPackageReference)">
             <Output TaskParameter="Usings"
                     ItemName="_RevitGlobalUsings"/>
         </AddImplicitUsings>

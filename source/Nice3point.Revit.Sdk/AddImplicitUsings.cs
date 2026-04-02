@@ -8,51 +8,25 @@ namespace Nice3point.Revit.Sdk;
 public class AddImplicitUsings : Task
 {
     [Required] public required ITaskItem[] AdditionalUsings { get; set; }
-    [Required] public required ITaskItem[] References { get; set; }
+    public required ITaskItem[] References { get; set; } = [];
+    public ITaskItem[] GlobalPackageReferences { get; set; } = [];
     [Output] public string[]? Usings { get; private set; }
 
     public override bool Execute()
     {
         try
         {
-            var implicitUsings = new List<string>();
-            foreach (var additionalUsing in AdditionalUsings)
+            var usings = new HashSet<string>();
+            foreach (var item in AdditionalUsings)
             {
-                var requiredReferencesMetadata = additionalUsing.GetMetadata("RequiredReference");
-                if (string.IsNullOrEmpty(requiredReferencesMetadata))
+                if (CanResolveUsing(item))
                 {
-                    implicitUsings.Add(additionalUsing.ItemSpec);
-                }
-                else if (requiredReferencesMetadata.Contains(';'))
-                {
-                    var hasRequiredReferences = true;
-                    var requiredReferences = requiredReferencesMetadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var requiredReference in requiredReferences)
-                    {
-                        var reference = References.FirstOrDefault(refItem => refItem.ItemSpec.EndsWith(requiredReference));
-                        if (reference is null)
-                        {
-                            hasRequiredReferences = false;
-                            break;
-                        }
-                    }
-
-                    if (hasRequiredReferences)
-                    {
-                        implicitUsings.Add(additionalUsing.ItemSpec);
-                    }
-                }
-                else
-                {
-                    var reference = References.FirstOrDefault(refItem => refItem.ItemSpec.EndsWith(requiredReferencesMetadata));
-                    if (reference is not null)
-                    {
-                        implicitUsings.Add(additionalUsing.ItemSpec);
-                    }
+                    usings.Add(item.ItemSpec);
                 }
             }
 
-            Usings = implicitUsings.ToArray();
+            Usings = [..usings];
+
             return true;
         }
         catch (Exception exception)
@@ -60,5 +34,50 @@ public class AddImplicitUsings : Task
             Log.LogErrorFromException(exception, false);
             return false;
         }
+    }
+
+    private bool CanResolveUsing(ITaskItem usingItem)
+    {
+        var requiredAssembly = usingItem.GetMetadata("RequiredAssembly");
+        var requiredGlobalReference = usingItem.GetMetadata("RequiredGlobalReference");
+
+        if (string.IsNullOrEmpty(requiredAssembly) && string.IsNullOrEmpty(requiredGlobalReference))
+        {
+            return true;
+        }
+
+        if (!string.IsNullOrEmpty(requiredAssembly) && !HasRequiredAssemblies(requiredAssembly))
+        {
+            return false;
+        }
+
+        if (!string.IsNullOrEmpty(requiredGlobalReference) && !HasRequiredGlobalReferences(requiredGlobalReference))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool HasRequiredAssemblies(string metadata)
+    {
+        var assemblies = metadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
+        foreach (var assembly in assemblies)
+        {
+            if (References.All(refItem => !refItem.ItemSpec.EndsWith(assembly))) return false;
+        }
+
+        return true;
+    }
+
+    private bool HasRequiredGlobalReferences(string metadata)
+    {
+        var references = metadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
+        foreach (var reference in references)
+        {
+            if (GlobalPackageReferences.All(refItem => refItem.ItemSpec != reference)) return false;
+        }
+
+        return true;
     }
 }
