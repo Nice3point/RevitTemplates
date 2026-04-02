@@ -37,7 +37,7 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'Directory.Packages.props') }}
           restore-keys: ${{ runner.os }}-nuget-
 
-      - name: Publish packages
+      - name: Publish release
         run: dotnet run -c Release -- pack publish
         working-directory: "build"
         env:
