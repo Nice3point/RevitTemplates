@@ -25,19 +25,14 @@
 <!--#if (!isDbApplicationAddin)-->
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 <!--#endif-->
-<!--#if (useUi)-->
-
-        <!-- MVVM -->
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
-<!--#endif-->
 <!--#if (diContainer)-->
 
-        <!-- IOC -->
+        <!-- Application Hosting -->
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5"/>
 <!--#endif-->
 <!--#if (diHosting)-->
 
-        <!-- IOC -->
+        <!-- Application Hosting -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5"/>
 <!--#endif-->
 <!--#if (addinLogging)-->
@@ -45,6 +40,11 @@
         <!-- Logging -->
         <PackageReference Include="Serilog" Version="4.3.1"/>
         <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0"/>
+<!--#endif-->
+<!--#if (useUi)-->
+
+        <!-- MVVM -->
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
 <!--#endif-->
 <!--#if (addinLogging && diHosting)-->
         <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0"/>
