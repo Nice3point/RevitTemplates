@@ -65,7 +65,7 @@ public sealed class CreateInstallerModule(IOptions<BuildOptions> buildOptions) :
             }, cancellationToken: cancellationToken);
 
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
-        var outputFiles = outputFolder.GetFiles(file => file.Extension == ".msi");
+        var outputFiles = outputFolder.GetFiles(file => file.Extension == ".msi").ToArray();
         outputFiles.ShouldNotBeEmpty("Failed to create an installer");
 
         foreach (var outputFile in outputFiles)
