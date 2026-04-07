@@ -3,8 +3,11 @@
 ## Templates
 
 - Revit 2027 support
-- Removed Revit 2022 from default configurations (can be added manually).
 - Support for Async External Command/Application when using Hosting.
+- Removed Revit 2022 from default configurations (can be added manually).
+- Configured fluent diagnozers for Benchmark tempalte
+- Pinned version for Wix extensions https://github.com/oleg-shilo/wixsharp/issues/1900
+- Disabled IlRepack for CI|CD testing
 
 ## SDK
 
