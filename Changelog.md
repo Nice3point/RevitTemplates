@@ -1,3 +1,9 @@
+# 6.2.1
+
+## Templates
+
+- Accept WiX v7 EULA
+
 # 6.2.0
 
 ## Templates
