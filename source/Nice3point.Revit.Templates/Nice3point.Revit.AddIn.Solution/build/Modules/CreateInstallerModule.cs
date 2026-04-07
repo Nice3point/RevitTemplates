@@ -10,6 +10,7 @@ using ModularPipelines.Modules;
 using ModularPipelines.Options;
 using Shouldly;
 using Sourcy.DotNet;
+using System.Diagnostics;
 using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
