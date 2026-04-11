@@ -11,7 +11,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.TUnit.Revit" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="TUnit" Version="1.28.7"/>
-        <PackageReference Include="Polyfill" Version="10.0.0" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="10.3.0" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
