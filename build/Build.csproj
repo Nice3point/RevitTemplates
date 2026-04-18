@@ -8,10 +8,10 @@
     <ItemGroup>
         <PackageReference Include="Sourcy.DotNet" Version="1.1.1"/>
         <PackageReference Include="Shouldly" Version="4.3.0"/>
-        <PackageReference Include="ModularPipelines" Version="3.1.90"/>
-        <PackageReference Include="ModularPipelines.Git" Version="3.1.90"/>
-        <PackageReference Include="ModularPipelines.GitHub" Version="3.1.90"/>
-        <PackageReference Include="ModularPipelines.DotNet" Version="3.1.90"/>
+        <PackageReference Include="ModularPipelines" Version="3.2.8"/>
+        <PackageReference Include="ModularPipelines.Git" Version="3.2.8"/>
+        <PackageReference Include="ModularPipelines.GitHub" Version="3.2.8"/>
+        <PackageReference Include="ModularPipelines.DotNet" Version="3.2.8"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
         <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.5"/>
     </ItemGroup>
