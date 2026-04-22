@@ -28,12 +28,12 @@
 <!--#if (diContainer)-->
 
         <!-- Application Hosting -->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7"/>
 <!--#endif-->
 <!--#if (diHosting)-->
 
         <!-- Application Hosting -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7"/>
 <!--#endif-->
 <!--#if (addinLogging)-->
 
