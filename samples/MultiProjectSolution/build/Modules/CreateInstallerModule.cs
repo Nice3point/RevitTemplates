@@ -1,4 +1,6 @@
-﻿using ModularPipelines.Attributes;
+﻿using Build.Options;
+using Microsoft.Extensions.Options;
+using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
@@ -8,6 +10,7 @@ using ModularPipelines.Modules;
 using ModularPipelines.Options;
 using Shouldly;
 using Sourcy.DotNet;
+using System.Diagnostics;
 using File = ModularPipelines.FileSystem.File;
 
 namespace Build.Modules;
@@ -71,8 +74,23 @@ public sealed class CreateInstallerModule : Module
         var wixToolFolder = Folder.CreateTemporaryFolder();
         await context.DotNet().Tool.Execute(new DotNetToolOptions
         {
-            Arguments = ["install", "wix", "--tool-path", wixToolFolder.Path]
+            Arguments = ["install", "wix", "--version", "7.*", "--tool-path", wixToolFolder.Path]
         }, cancellationToken: cancellationToken);
+
+        var wixExe = wixToolFolder.GetFile("wix.exe");
+        var wixVersion = FileVersionInfo.GetVersionInfo(wixExe.Path).FileVersion!;
+
+        await context.Shell.Command.ExecuteCommandLineTool(
+            new GenericCommandLineToolOptions(wixExe.Path)
+            {
+                Arguments = ["eula", "accept", "wix7"]
+            }, cancellationToken: cancellationToken);
+
+        await context.Shell.Command.ExecuteCommandLineTool(
+            new GenericCommandLineToolOptions(wixExe.Path)
+            {
+                Arguments = ["extension", "add", "-g", $"WixToolset.UI.wixext/{wixVersion}"]
+            }, cancellationToken: cancellationToken);
 
         return wixToolFolder;
     }
