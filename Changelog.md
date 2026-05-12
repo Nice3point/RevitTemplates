@@ -1,3 +1,15 @@
+# 6.2.2
+
+## Templates
+
+- Update TUnit to 1.44.0
+- Update ModularPipelines to 3.2.8
+- Update dependency Polyfill to 10.5.1
+- Update WixSharp to 2.14.0
+- Update dotnet to 10.0.203
+- Update Microsoft monorepo to 10.0.7
+- Remove extra space for some conditions
+
 # 6.2.1
 
 ## Templates
