@@ -183,4 +183,4 @@ For C++ dependencies or dependencies that cause issues, add to the `RepackBinari
 > [!NOTE]  
 > For repacking, Revit MSBuild SDK is used.
 > You can find more detailed documentation about it here
-> [Revit MSBuild SDK](MsBuild-Sdk.md) and here [ILRepack](https://www.nuget.org/packages/ILRepack).
+> [Revit MSBuild SDK](MsBuild-Sdk) and here [ILRepack](https://www.nuget.org/packages/ILRepack).

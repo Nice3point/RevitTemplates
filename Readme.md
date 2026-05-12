@@ -37,6 +37,6 @@ This repository contains a collection of project templates for creating Revit Ad
 ## Usage
 
 - IDE: select one of the Revit templates from the New Project dialog in JetBrains Rider or Visual Studio.
-- CLI: run `dotnet new revit-addin` or other available [templates](https://github.com/Nice3point/RevitTemplates/blob/main/docs/Templates.md).
+- CLI: run `dotnet new revit-addin` or other available [templates](https://github.com/Nice3point/RevitTemplates/wiki/Templates).
 
-For more information, read [Step-by-step Guide](https://github.com/Nice3point/RevitTemplates/blob/main/docs/Step%E2%80%90by%E2%80%90step-Guide.md) and check [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
+For more information, read [Step-by-step Guide](https://github.com/Nice3point/RevitTemplates/wiki/Step%E2%80%90by%E2%80%90step-Guide) and check [Wiki](https://github.com/Nice3point/RevitTemplates/wiki).

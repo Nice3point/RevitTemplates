@@ -57,7 +57,7 @@ Publishing is used to create a package of files used by the installers, as well 
 
 > [!NOTE]  
 > For publishing, a Revit MSBuild SDK is used.
-> You can find more detailed documentation about it here: [Revit MSBuild SDK](MsBuild-Sdk.md)
+> You can find more detailed documentation about it here: [Revit MSBuild SDK](MsBuild-Sdk)
 
 Publishing files disabled by default.
 To enable it, set `<PublishAddin>true</PublishAddin>` or `<DeployAddin>true</DeployAddin>`.

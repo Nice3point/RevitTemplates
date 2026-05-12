@@ -27,7 +27,7 @@ Create conditions, experiment to achieve the desired result.
 
 > [!NOTE]
 > For generating directives, a Revit MSBuild SDK is used.
-> You can find more detailed documentation about it here: [Revit MSBuild SDK](MsBuild-Sdk.md)
+> You can find more detailed documentation about it here: [Revit MSBuild SDK](MsBuild-Sdk)
 
 ### Examples
 
