@@ -39,8 +39,8 @@ public class Application : ExternalDBApplication
         CreateRibbon();
 #endif
     }
-
 #if (diHosting || (addinLogging && !useDi))
+
 #if (diHosting && isApplicationAddin)
     public override async Task OnShutdownAsync()
 #else
