@@ -14,6 +14,6 @@ public class ShowModalWindowCommand : ExternalCommand
     public override void Execute()
     {
         var view = Host.CreateScope<ModalModuleView>();
-        view.Show();
+        view.ShowDialog();
     }
 }
