@@ -11,7 +11,7 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.BenchmarkDotNet.Revit" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
-        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2026.2.0"/>
         <PackageReference Include="Polyfill" Version="10.5.1" PrivateAssets="all"/>
     </ItemGroup>
 
