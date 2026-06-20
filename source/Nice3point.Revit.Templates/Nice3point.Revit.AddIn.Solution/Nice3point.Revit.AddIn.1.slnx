@@ -13,10 +13,10 @@
     </Configurations>
     <Folder Name="/Solution Items/">
         <File Path=".gitignore" />
-        <File Path="Readme.md" />
+        <File Path="README.md" />
         <File Path="build/appsettings.json" />
 #if (isGitHubCi)
-        <File Path="Changelog.md" />
+        <File Path="CHANGELOG.md" />
 #endif
     </Folder>
     <Folder Name="/Automation/">

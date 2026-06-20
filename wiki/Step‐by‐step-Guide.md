@@ -146,7 +146,7 @@ Before running the build system, you must initialize a Git repository and make t
    git add .
    git commit -m "Initial commit"
    ```
-3. Open the **Readme.md** file in your solution for instructions on building the installer, including publishing to GitHub.
+3. Open the **README.md** file in your solution for instructions on building the installer, including publishing to GitHub.
 4. Run the following command:
    ```shell
    cd build; dotnet run
@@ -186,7 +186,7 @@ Updating the changelog is optional. If you provide a changelog, the build system
 To update the changelog manually:
 
 1. Navigate to the solution root.
-2. Open the file **Changelog.md**.
+2. Open the file **CHANGELOG.md**.
 3. Add a section for your version. The version separator is the `#` symbol.
 4. Specify the release number e.g. `# 1.0.0` or `# Release v1.0.0`, the format does not matter, the main thing is that it contains the version.
 5. In the lines below version, write a changes for this version. Style to your taste.

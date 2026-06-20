@@ -116,7 +116,7 @@
           "condition": "!isGitHubCi",
           "exclude": [
             ".github/**",
-            "Changelog.md",
+            "CHANGELOG.md",
             "build/Modules/GenerateChangelogModule.cs",
             "build/Modules/GenerateGitHubChangelogModule.cs",
             "build/Modules/PublishGithubModule.cs",
@@ -149,13 +149,13 @@
   ],
   "primaryOutputs": [
     {
-      "path": "Readme.md"
+      "path": "README.md"
     }
   ],
   "postActions": [
     {
       "condition": "HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\"",
-      "description": "Opens Readme.md in the editor",
+      "description": "Opens README.md in the editor",
       "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {
@@ -165,7 +165,7 @@
     }
   ],
   "SpecialCustomOperations": {
-    "Readme.md": {
+    "README.md": {
       "operations": [
         {
           "type": "conditional",

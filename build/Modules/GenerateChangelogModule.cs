@@ -19,7 +19,7 @@ public sealed class GenerateChangelogModule : Module<string>
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var versioning = versioningResult.ValueOrDefault!;
 
-        var changelogFile = context.Git().RootDirectory.GetFile("Changelog.md");
+        var changelogFile = context.Git().RootDirectory.GetFile("CHANGELOG.md");
 
         var changelog = await ParseChangelog(changelogFile, versioning.Version);
         changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");

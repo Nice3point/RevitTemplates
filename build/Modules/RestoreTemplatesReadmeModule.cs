@@ -32,7 +32,7 @@ public sealed class RestoreReadmeModule : Module
         }
 
         var nugetReadme = nugetReadmeResult.ValueOrDefault!;
-        var readmePath = context.Git().RootDirectory.GetFile("Readme.md");
+        var readmePath = context.Git().RootDirectory.GetFile("README.md");
         await readmePath.WriteAsync(nugetReadme, cancellationToken);
     }
 }

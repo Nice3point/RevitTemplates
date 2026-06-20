@@ -69,7 +69,7 @@ This template contains:
 
 - `ModularPipelines` build system
 - Installer project, that generates an **.msi** package
-- Auxiliary files such as `.gitignore`, `Changelog.md` which are usually created in each solution. `Readme.md` contains documentation and instructions for building the project.
+- Auxiliary files such as `.gitignore`, `CHANGELOG.md` which are usually created in each solution. `README.md` contains documentation and instructions for building the project.
 - CI\CD setup
 - JetBrains Rider `Run configurations`
 

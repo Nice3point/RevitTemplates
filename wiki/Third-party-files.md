@@ -11,7 +11,7 @@ First you need to change the `build action` for the file from `None` to `Content
     <Content Include="Resources\Families\Window.rfa"/>
     <Content Include="Resources\Music\Click.wav"/>
     <Content Include="Resources\Images\Image.png"/>
-    <Content Include="Readme.md"/>
+    <Content Include="README.md"/>
 </ItemGroup>
 ```
 
@@ -23,7 +23,7 @@ If it is not specified, the files will be copied to the root add-in folder.
     <Content Include="Resources\Families\Window.rfa" PublishDirectory="Families"/>
     <Content Include="Resources\Music\Click.wav" PublishDirectory="Music\Effects"/>
     <Content Include="Resources\Images\Image.png" PublishDirectory="Images"/>
-    <Content Include="Readme.md"/>
+    <Content Include="README.md"/>
 </ItemGroup>
 ```
 
@@ -82,5 +82,5 @@ To enable it, set `<PublishAddin>true</PublishAddin>` or `<DeployAddin>true</Dep
    ┃   ┗📜Click.wav
    ┣📜CommunityToolkit.Mvvm.dll
    ┣📜RevitAddIn.dll
-   ┗📜Readme.md
+   ┗📜README.md
 ```

@@ -11,7 +11,7 @@ public sealed class UpdateTemplatesReadmeModule : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var readmePath = context.Git().RootDirectory.GetFile("Readme.md");
+        var readmePath = context.Git().RootDirectory.GetFile("README.md");
         var readme = await readmePath.ReadAsync(cancellationToken);
 
         const string startSymbol = "<p";

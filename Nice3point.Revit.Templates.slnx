@@ -2,8 +2,8 @@
     <Folder Name="/Solution Items/">
         <File Path=".gitignore" />
         <File Path="build/appsettings.json" />
-        <File Path="Changelog.md" />
-        <File Path="Readme.md" />
+        <File Path="CHANGELOG.md" />
+        <File Path="README.md" />
     </Folder>
     <Folder Name="/Automation/">
         <Project Path="build/Build.csproj">
