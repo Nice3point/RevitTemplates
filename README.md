@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
     <picture>
         <source media="(prefers-color-scheme: dark)" width="750" srcset="https://github.com/Nice3point/RevitTemplates/assets/20504884/cb0992f1-927f-4937-a87b-0e9657318c05">
         <img alt="RevitTemplates" width="750" src="https://github.com/Nice3point/RevitTemplates/assets/20504884/ddeb2dd2-e3e9-46f8-a643-4176a09c8560">
@@ -7,9 +7,9 @@
 
 ## Create your Add-In for Revit on the .NET platform
 
-[![Nuget](https://img.shields.io/nuget/vpre/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
-[![Downloads](https://img.shields.io/nuget/dt/Nice3point.Revit.Templates?style=for-the-badge)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
-[![Last Commit](https://img.shields.io/github/last-commit/Nice3point/RevitTemplates/develop?style=for-the-badge)](https://github.com/Nice3point/RevitTemplates/commits/develop)
+[![Nuget](https://img.shields.io/nuget/vpre/Nice3point.Revit.Templates?style=for-the-badge&color=1A1A1A&labelColor=C42A2A)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
+[![Downloads](https://img.shields.io/nuget/dt/Nice3point.Revit.Templates?style=for-the-badge&color=1A1A1A&labelColor=C42A2A)](https://www.nuget.org/packages/Nice3point.Revit.Templates)
+[![Last Commit](https://img.shields.io/github/last-commit/Nice3point/RevitTemplates/develop?style=for-the-badge&color=1A1A1A&labelColor=C42A2A)](https://github.com/Nice3point/RevitTemplates/commits/develop)
 
 This repository contains a collection of project templates for creating Revit Add-Ins.
 
