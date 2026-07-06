@@ -11,8 +11,8 @@ builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection("Build"));
-builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection("Bundle"));
+builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection("Build")).ValidateDataAnnotations();
+builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
 builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection("Publish"));
 
 if (args.Length == 0)

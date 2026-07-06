@@ -11,12 +11,12 @@ builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection("Build"));
+builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection("Build")).ValidateDataAnnotations();
 #if (includeBundle)
-builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection("Bundle"));
+builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
 #endif
 #if (isGitHubCi)
-builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection("Publish"));
+builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection("Publish")).ValidateDataAnnotations();
 #endif
 
 if (args.Length == 0)
