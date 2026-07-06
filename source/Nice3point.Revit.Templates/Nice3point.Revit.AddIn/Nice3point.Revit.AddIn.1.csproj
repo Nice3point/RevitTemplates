@@ -1,7 +1,7 @@
 <Project Sdk="Nice3point.Revit.Sdk">
 
     <PropertyGroup>
-<!--#if (!isDbApplicationAddin)-->
+<!--#if (isApplicationAddin || useUi)-->
         <UseWPF>true</UseWPF>
 <!--#endif-->
         <DeployAddin>true</DeployAddin>
