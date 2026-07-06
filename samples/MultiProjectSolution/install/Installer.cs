@@ -6,7 +6,7 @@ using WixSharp.Controls;
 const string outputName = "MultiProjectSolution";
 const string projectName = "MultiProjectSolution";
 
-var versioning = Versioning.CreateFromVersionStringAsync(args[0]);
+var versioning = Versioning.CreateFromVersionString(args[0]);
 var project = new Project
 {
     OutDir = "output",
@@ -29,7 +29,7 @@ var wixEntities = Generator.GenerateWixEntities(args[1..]);
 project.RemoveDialogsBetween(NativeDialogs.WelcomeDlg, NativeDialogs.CustomizeDlg);
 
 BuildSingleUserMsi();
-BuildMultiUserUserMsi();
+BuildMultiUserMsi();
 
 void BuildSingleUserMsi()
 {
@@ -42,7 +42,7 @@ void BuildSingleUserMsi()
     project.BuildMsi();
 }
 
-void BuildMultiUserUserMsi()
+void BuildMultiUserMsi()
 {
     project.Scope = InstallScope.perMachine;
     project.OutFileName = $"{outputName}-{versioning.Version}-MultiUser";

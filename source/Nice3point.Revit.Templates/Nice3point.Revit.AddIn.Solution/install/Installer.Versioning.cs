@@ -5,7 +5,7 @@ public static class Versioning
     /// <summary>
     ///     Resolve versions using the specified version string.
     /// </summary>
-    public static ResolveVersioningResult CreateFromVersionStringAsync(string version)
+    public static ResolveVersioningResult CreateFromVersionString(string version)
     {
         var versionParts = version.Split('-');
         var semanticVersion = Version.Parse(versionParts[0]);
