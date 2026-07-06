@@ -9,7 +9,7 @@
     d:DataContext="{d:DesignInstance viewModel:RevitAddInViewModel}"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    Title="RevitAddInn"
+    Title="RevitAddIn"
     Height="200"
     Width="350">
     <Grid
