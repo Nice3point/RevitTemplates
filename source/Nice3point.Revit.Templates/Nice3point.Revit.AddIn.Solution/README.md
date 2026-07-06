@@ -23,7 +23,7 @@ Autodesk Revit plugin project organized into multiple solution files that target
 ---#if (isGitHubCi)
   * [Creating a new Release on GitHub](#creating-a-new-release-on-github)
 ---#endif
----#if (isAzureCi)
+---#if (isAzureCi && hasArtifacts)
   * [Creating a new Release on Azure DevOps](#creating-a-new-release-on-azure-devops)
 ---#endif
 ---#endif
@@ -56,6 +56,9 @@ If you haven't already installed these, you can do so by visiting the following:
 | install | Add-in installer, called implicitly by the ModularPipelines build          |
 ---#endif
 | source  | Project source code folder. Contains all solution projects                 |
+---#if (includeTests)
+| tests   | Unit test projects, run implicitly by the ModularPipelines build           |
+---#endif
 | output  | Folder of generated files by the build system, such as bundles, installers |
 
 ## Project Structure
@@ -231,7 +234,7 @@ To create releases directly on GitHub:
 
     ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 ---#endif
----#if (isAzureCi)
+---#if (isAzureCi && hasArtifacts)
 
 ### Creating a new Release on Azure DevOps
 
