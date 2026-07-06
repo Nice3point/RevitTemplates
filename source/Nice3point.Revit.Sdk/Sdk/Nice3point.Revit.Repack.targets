@@ -42,12 +42,17 @@
 
         <Message Text="Repacking $(MSBuildProjectDirectory)\$(OutputPath)$(AssemblyName).dll" Importance="high"/>
 
+        <PropertyGroup>
+            <_IsReleaseConfiguration>$(Configuration.ToLowerInvariant().Contains('release'))</_IsReleaseConfiguration>
+            <_IsDebugConfiguration Condition="'$(_IsReleaseConfiguration)' != 'true'">true</_IsDebugConfiguration>
+        </PropertyGroup>
+
         <Exec Command="$(_ILRepackPath) /union /illink /parallel $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
-              Condition="$(Configuration.Contains('Debug'))"/>
+              Condition="'$(_IsDebugConfiguration)' == 'true'"/>
 
         <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
               StandardOutputImportance="Low"
-              Condition="$(Configuration.Contains('Release'))"/>
+              Condition="'$(_IsReleaseConfiguration)' == 'true'"/>
 
         <ItemGroup>
             <_RepackedFiles Include="@(_ILRepackInputAssemblies -> '%(RootDir)%(Directory)%(Filename).dll')" Condition="%(Filename) != $(_ILRepackOutputName)"/>
