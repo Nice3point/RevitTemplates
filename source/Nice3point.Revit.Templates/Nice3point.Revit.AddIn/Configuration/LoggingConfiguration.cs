@@ -1,4 +1,4 @@
-﻿#if (diContainer)
+#if (diContainer)
 using Microsoft.Extensions.DependencyInjection;
 #endif
 #if (diHosting)
@@ -34,7 +34,7 @@ namespace Nice3point.Revit.AddIn._1.Configuration;
 #endif
 /// </code>
 /// </example>
-public static class LoggerConfiguration
+public static class LoggingConfiguration
 {
 #if (diContainer)
     private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}]: {Message:lj}{NewLine}{Exception}";
@@ -68,7 +68,7 @@ public static class LoggerConfiguration
 
     private static Logger CreateDefaultLogger()
     {
-        return new Serilog.LoggerConfiguration()
+        return new LoggerConfiguration()
             .WriteTo.Debug(LogEventLevel.Debug, LogTemplate)
             .MinimumLevel.Debug()
             .CreateLogger();

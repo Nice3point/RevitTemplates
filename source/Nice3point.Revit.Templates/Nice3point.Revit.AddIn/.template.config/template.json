@@ -162,7 +162,7 @@
         {
           "condition": "!addinLogging || !useDi",
           "exclude": [
-            "Configuration/LoggerConfiguration.cs"
+            "Configuration/LoggingConfiguration.cs"
           ]
         }
       ]
