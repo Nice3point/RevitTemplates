@@ -22,6 +22,7 @@ public class StartupCommand : ExternalCommand
     {
 #if (isCommandAddin && diHosting)
         await Host.StartAsync();
+        // Resolve a module service from Host and invoke it here, e.g. Host.GetService<TService>()
         await Host.StopAsync();
 #elseif (isCommandAddin && useDi)
         Host.Start();
