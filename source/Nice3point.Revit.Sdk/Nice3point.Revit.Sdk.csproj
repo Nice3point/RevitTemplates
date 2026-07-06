@@ -30,7 +30,7 @@
     <ItemGroup>
         <None Include="..\..\.nuget\PackageIcon.png" PackagePath="images/" Pack="true" Visible="false"/>
         <None Include="..\..\LICENSE.md" PackagePath="" Pack="true" Visible="false"/>
-        <None Include="..\..\docs\MsBuild-Sdk.md" PackagePath="README.md" Pack="true" Visible="false"/>
+        <None Include="..\..\wiki\MsBuild-Sdk.md" PackagePath="README.md" Pack="true" Visible="false"/>
         <Content Include="Sdk\**\*" PackagePath="Sdk\" Pack="true"/>
     </ItemGroup>
 
