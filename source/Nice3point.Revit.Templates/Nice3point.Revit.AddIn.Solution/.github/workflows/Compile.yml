@@ -3,7 +3,7 @@ name: Compile solution
 on:
   push:
     branches:
-      - '*'
+      - '**'
   pull_request:
 
 jobs:
