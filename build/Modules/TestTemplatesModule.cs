@@ -20,6 +20,7 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<PackTemplatesModule>]
 [DependsOn<PackSdkModule>]
+[DependsOn<CompileSamplesModule>(Optional = true)]
 public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOptions) : Module
 {
     protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)

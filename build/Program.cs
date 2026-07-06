@@ -36,6 +36,7 @@ if (args.Contains("test"))
 
 if (args.Contains("publish"))
 {
+    builder.Services.AddModule<CompileSamplesModule>();
     builder.Services.AddModule<PublishNugetModule>();
     builder.Services.AddModule<PublishGithubModule>();
 }
