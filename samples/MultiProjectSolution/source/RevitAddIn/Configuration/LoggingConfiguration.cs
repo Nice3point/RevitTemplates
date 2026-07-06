@@ -29,7 +29,7 @@ public static class LoggingConfiguration
         var logger = CreateDefaultLogger();
         builder.Logging.AddSerilog(logger);
 
-        AppDomain.CurrentDomain.UnhandledException += OnOnUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         return builder;
     }
 
@@ -41,7 +41,7 @@ public static class LoggingConfiguration
             .CreateLogger();
     }
 
-    private static void OnOnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+    private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject;
         var logger = Host.GetService<ILogger<AppDomain>>();
