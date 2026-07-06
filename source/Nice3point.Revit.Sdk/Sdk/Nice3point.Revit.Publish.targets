@@ -28,8 +28,10 @@
         </ItemGroup>
 
         <Copy SourceFiles="@(AddinRootFiles)"
+              SkipUnchangedFiles="true"
               DestinationFolder="$(AddinPublishDir)"/>
         <Copy SourceFiles="@(AddinContentFiles)"
+              SkipUnchangedFiles="true"
               DestinationFolder="$(AddinPublishDir)\$(AssemblyName)\%(RecursiveDir)"/>
         <Copy SourceFiles="@(_ResolvedFileToPublishAlways)"
               SkipUnchangedFiles="false"
@@ -50,6 +52,7 @@
         </ItemGroup>
 
         <Copy SourceFiles="@(_AddinDeploySourceFiles)"
+              SkipUnchangedFiles="true"
               DestinationFolder="$(AddinDeployDir)\%(RecursiveDir)"/>
 
         <Message Text="$(AssemblyName) -> $(AddinDeployDir)\" Importance="high"/>
