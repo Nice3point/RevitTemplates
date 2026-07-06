@@ -26,6 +26,10 @@
     "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"
   ],
   "symbols": {
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    },
     "ciProvider": {
       "type": "parameter",
       "displayName": "Pipeline",

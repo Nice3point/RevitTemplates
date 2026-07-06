@@ -23,6 +23,10 @@
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
   ],
   "symbols": {
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    },
     "addinManifestType": {
       "type": "parameter",
       "displayName": "Add-In type",
