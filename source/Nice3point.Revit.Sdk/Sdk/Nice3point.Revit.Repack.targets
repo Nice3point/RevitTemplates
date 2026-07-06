@@ -29,7 +29,7 @@
         <ItemGroup>
             <_ILRepackInputAssemblies Include="$(OutputPath)$(AssemblyName).dll"/>
             <_ILRepackInputAssemblies Include="$(OutputPath)*.dll"
-                                     Exclude="@(_ILRepackInputAssembliesExcludes)"/>
+                                     Exclude="@(_ILRepackInputAssembliesExcludes);$(OutputPath)$(AssemblyName).dll"/>
         </ItemGroup>
 
         <PropertyGroup>
