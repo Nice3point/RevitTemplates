@@ -13,6 +13,9 @@
             BeforeTargets="PublishAddin"
             Condition="'$(IsRepackable)' == 'true'">
 
+        <Error Condition="!$([MSBuild]::IsOSPlatform('Windows'))"
+               Text="Repacking requires ILRepack.exe, which only runs on Windows. Build on Windows or disable the IsRepackable property for non-Windows builds."/>
+
         <ItemGroup>
             <_ILRepackVersion Include="@(PackageVersion->WithMetadataValue('Identity', 'ILRepack'))"/>
             <_ILRepackVersion Include="@(PackageReference->WithMetadataValue('Identity', 'ILRepack'))" Condition="'@(_ILRepackVersion)' == ''"/>
