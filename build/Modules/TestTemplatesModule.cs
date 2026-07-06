@@ -226,6 +226,19 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
                         SubTemplates = ["revit-addin-application"]
                     });
                 }
+
+                matrix.Add(new TemplateMetadata
+                {
+                    Template = "revit-addin-sln",
+                    Options = new Dictionary<string, string>
+                    {
+                        { "pipeline", pipeline },
+                        { "installer", installer },
+                        { "bundle", "false" },
+                        { "tests", "true" }
+                    },
+                    SubTemplates = ["revit-addin-application"]
+                });
             }
         }
 
