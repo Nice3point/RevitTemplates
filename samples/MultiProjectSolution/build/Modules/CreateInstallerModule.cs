@@ -27,7 +27,7 @@ public sealed class CreateInstallerModule : Module
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var versioning = versioningResult.ValueOrDefault!;
 
-        var wixTarget = new File(Projects.MultiProjectSolution.FullName);
+        var wixTarget = new File(Projects.RevitAddIn.FullName);
         var wixInstaller = new File(Projects.Installer.FullName);
         var wixToolFolder = await InstallWixAsync(context, cancellationToken);
 
