@@ -9,7 +9,7 @@ namespace Nice3point.Revit.Sdk;
 public class GenerateCompatibleDefineConstants : Task
 {
     [Required] public required string Configuration { get; set; }
-    [Required] public required string[] Configurations { get; set; }
+    public string[] Configurations { get; set; } = [];
     public string? RevitVersion { get; set; }
     [Output] public string[]? DefineConstants { get; private set; }
 
