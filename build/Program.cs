@@ -29,9 +29,13 @@ if (args.Contains("pack"))
     builder.Services.AddModule<RestoreReadmeModule>();
 }
 
-if (args.Contains("publish"))
+if (args.Contains("test"))
 {
     builder.Services.AddModule<TestTemplatesModule>();
+}
+
+if (args.Contains("publish"))
+{
     builder.Services.AddModule<PublishNugetModule>();
     builder.Services.AddModule<PublishGithubModule>();
 }

@@ -29,3 +29,10 @@ jobs:
         working-directory: "build"
         env:
           DOTNET_ENVIRONMENT: ${{ github.ref_name == 'main' && 'Production' || 'Development' }}
+
+      - name: Validate templates
+        if: github.event_name == 'pull_request'
+        run: dotnet run -c Release -- pack test
+        working-directory: "build"
+        env:
+          DOTNET_ENVIRONMENT: ${{ github.ref_name == 'main' && 'Production' || 'Development' }}

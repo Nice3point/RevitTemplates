@@ -38,7 +38,7 @@ jobs:
           restore-keys: ${{ runner.os }}-nuget-
 
       - name: Publish release
-        run: dotnet run -c Release -- pack publish
+        run: dotnet run -c Release -- pack test publish
         working-directory: "build"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
