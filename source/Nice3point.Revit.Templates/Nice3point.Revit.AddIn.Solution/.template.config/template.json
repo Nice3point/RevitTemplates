@@ -22,8 +22,7 @@
   "placeholderFilename": "keep.folder",
   "guids": [
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
-    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
-    "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"
+    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"
   ],
   "symbols": {
     "HostIdentifier": {

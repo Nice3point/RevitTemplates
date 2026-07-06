@@ -12,10 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}"
 EndProject
-Project("{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}") = "Build", "build\Build.csproj", "{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build", "build\Build.csproj", "{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}"
 EndProject
 #if (includeInstaller)
-Project("{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}") = "Installer", "install\Installer.csproj", "{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Installer", "install\Installer.csproj", "{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}"
 EndProject
 #endif
 Global
@@ -32,17 +32,6 @@ Global
 		Release.R27|Any CPU = Release.R27|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R23|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R24|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R25|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R26|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Debug.R27|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R23|Any CPU.ActiveCfg = Release|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R24|Any CPU.ActiveCfg = Release|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R25|Any CPU.ActiveCfg = Release|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R26|Any CPU.ActiveCfg = Release|Any CPU
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC}.Release.R27|Any CPU.ActiveCfg = Release|Any CPU
-#if (includeInstaller)
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R23|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R24|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Debug.R25|Any CPU.ActiveCfg = Debug|Any CPU
@@ -53,12 +42,23 @@ Global
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R25|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R26|Any CPU.ActiveCfg = Release|Any CPU
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}.Release.R27|Any CPU.ActiveCfg = Release|Any CPU
+#if (includeInstaller)
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug.R23|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug.R24|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug.R25|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug.R26|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Debug.R27|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release.R23|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release.R24|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release.R25|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release.R26|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}.Release.R27|Any CPU.ActiveCfg = Release|Any CPU
 #endif
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC} = {FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}
-#if (includeInstaller)
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB} = {FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}
+#if (includeInstaller)
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA} = {FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}
 #endif
 	EndGlobalSection
 EndGlobal
