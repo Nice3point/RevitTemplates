@@ -16,12 +16,15 @@ jobs:
     displayName: "Publish release"
     pool:
       vmImage: "windows-2025"
+    variables:
+      - name: dotnetEnvironment
+        value: $[ iif(or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/tags/')), 'Production', 'Development') ]
     steps:
       - checkout: self
         persistCredentials: true
         fetchDepth: 0
 
-      - script: |
+      - bash: |
           set -e
           git tag ${{ parameters.version }}
           git push origin ${{ parameters.version }}
@@ -39,7 +42,7 @@ jobs:
         displayName: "Publish release"
         workingDirectory: "build"
         env:
-          DOTNET_ENVIRONMENT: $[ if(or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/tags/')), 'Production', 'Development' ) ]
+          DOTNET_ENVIRONMENT: $(dotnetEnvironment)
           Build__Version: ${{ parameters.version }}
 
       - task: PublishBuildArtifacts@1
