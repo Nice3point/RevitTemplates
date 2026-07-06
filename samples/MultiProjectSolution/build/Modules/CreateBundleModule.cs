@@ -19,7 +19,7 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<CompileProjectModule>]
-public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOptions) : Module
+public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptions, IOptions<BundleOptions> bundleOptions) : Module
 {
     protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
     {
@@ -34,7 +34,7 @@ public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOpt
 
         targetDirectories.ShouldNotBeEmpty("No content were found to create a bundle");
 
-        var outputFolder = context.Git().RootDirectory.GetFolder("output");
+        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var bundleFolder = outputFolder.CreateFolder($"{bundleTarget.NameWithoutExtension}.bundle");
         var contentFolder = bundleFolder.CreateFolder("Contents");
         var manifestFile = bundleFolder.GetFile("PackageContents.xml");
@@ -42,8 +42,11 @@ public sealed partial class CreateBundleModule(IOptions<BundleOptions> bundleOpt
         PackFiles(targetDirectories, contentFolder);
         GenerateManifest(bundleTarget, targetDirectories, manifestFile, versioning);
 
-        context.Files.Zip.ZipFolder(bundleFolder, outputFolder.GetFile($"{bundleFolder.Name}.zip").Path);
+        var outputFile = outputFolder.GetFile($"{bundleFolder.Name}.zip");
+        context.Files.Zip.ZipFolder(bundleFolder, outputFile.Path);
         await bundleFolder.DeleteAsync(cancellationToken);
+
+        context.Summary.KeyValue("Artifacts", "Bundle", outputFile.Path);
     }
 
     private static void PackFiles(Folder[] targetDirectories, Folder contentFolder)

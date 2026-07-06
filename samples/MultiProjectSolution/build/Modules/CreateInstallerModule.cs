@@ -20,7 +20,7 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<CompileProjectModule>]
-public sealed class CreateInstallerModule : Module
+public sealed class CreateInstallerModule(IOptions<BuildOptions> buildOptions) : Module
 {
     protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
     {
@@ -64,6 +64,15 @@ public sealed class CreateInstallerModule : Module
                     { "PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}" }
                 }
             }, cancellationToken: cancellationToken);
+
+        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
+        var outputFiles = outputFolder.GetFiles(file => file.Extension == ".msi").ToArray();
+        outputFiles.ShouldNotBeEmpty("Failed to create an installer");
+
+        foreach (var outputFile in outputFiles)
+        {
+            context.Summary.KeyValue("Artifacts", "Installer", outputFile.Path);
+        }
     }
 
     /// <summary>

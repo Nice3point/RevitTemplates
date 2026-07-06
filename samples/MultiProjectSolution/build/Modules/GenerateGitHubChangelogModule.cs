@@ -26,7 +26,7 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
     /// <summary>
     ///     Append a GitHub compare URL to the changelog if it is not already included.
     /// </summary>
-    private static string AppendGitHubCompareUrl(IPipelineContext context, string changelog, ResolveVersioningResult versioning)
+    private static string AppendGitHubCompareUrl(IModuleContext context, string changelog, ResolveVersioningResult versioning)
     {
         var repositoryInfo = context.GitHub().RepositoryInfo;
         StringBuilder? changelogBuilder = null;

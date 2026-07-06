@@ -12,6 +12,7 @@ namespace Build.Modules;
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<ResolveConfigurationsModule>]
+[DependsOn<CleanProjectModule>(Optional = true)]
 public sealed class CompileProjectModule : Module
 {
     protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)

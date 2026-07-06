@@ -17,12 +17,12 @@ public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions)
     protected override async Task<ResolveVersioningResult?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var version = buildOptions.Value.Version;
-        if (!string.IsNullOrEmpty(version))
-        {
-            return await CreateFromVersionStringAsync(context, version);
-        }
+        var versioning = !string.IsNullOrEmpty(version)
+            ? await CreateFromVersionStringAsync(context, version)
+            : await CreateFromGitVersioningAsync(context);
 
-        return await CreateFromGitVersioningAsync(context);
+        context.Summary.KeyValue("Build", "Version", versioning.Version);
+        return versioning;
     }
 
     /// <summary>

@@ -29,12 +29,14 @@ public sealed class ResolveConfigurationsModule : Module<string[]>
         var solution = context.Git().RootDirectory.FindFile(file => file.Extension == ".slnx");
         if (solution is not null)
         {
-            return await SolutionSerializers.SlnXml.OpenAsync(solution.GetStream(), cancellationToken);
+            await using var slnxStream = solution.GetStream();
+            return await SolutionSerializers.SlnXml.OpenAsync(slnxStream, cancellationToken);
         }
 
         solution = context.Git().RootDirectory.FindFile(file => file.Extension == ".sln");
         solution.ShouldNotBeNull("Solution file not found.");
 
-        return await SolutionSerializers.SlnFileV12.OpenAsync(solution.GetStream(), cancellationToken);
+        await using var slnStream = solution.GetStream();
+        return await SolutionSerializers.SlnFileV12.OpenAsync(slnStream, cancellationToken);
     }
 }
