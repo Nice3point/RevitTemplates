@@ -7,11 +7,11 @@ namespace Installer;
 public static partial class Generator
 {
     /// <summary>
-    ///     Generates Wix entities, features and directories for the installer.
+    ///     Generates Wix directories for the installer, one per Revit version found in the given content directories.
     /// </summary>
-    public static WixEntity[] GenerateWixEntities(string[] args)
+    public static (int Version, Dir Directory)[] GenerateWixEntities(string[] args)
     {
-        var versionStorages = new Dictionary<string, List<WixEntity>>();
+        var versionStorages = new Dictionary<int, List<WixEntity>>();
         var revitFeature = new Feature
         {
             Name = "Revit Add-in",
@@ -27,6 +27,7 @@ public static partial class Generator
                 throw new Exception($"Could not parse version from directory name: {directoryInfo.FullName}");
             }
 
+            var version = int.Parse(fileVersion);
             var feature = new Feature
             {
                 Name = fileVersion,
@@ -37,21 +38,20 @@ public static partial class Generator
             revitFeature.Add(feature);
 
             var files = new Files(feature, $@"{directory}\*.*");
-            if (versionStorages.TryGetValue(fileVersion, out var storage))
+            if (versionStorages.TryGetValue(version, out var storage))
             {
                 storage.Add(files);
             }
             else
             {
-                versionStorages.Add(fileVersion, [files]);
+                versionStorages.Add(version, [files]);
             }
 
             LogFeatureFiles(directory, fileVersion);
         }
 
         return versionStorages
-            .Select(storage => new Dir(new Id($"INSTALL{storage.Key}"), storage.Key, storage.Value.ToArray()))
-            .Cast<WixEntity>()
+            .Select(storage => (storage.Key, new Dir(new Id($"INSTALL{storage.Key}"), storage.Key.ToString(), storage.Value.ToArray())))
             .ToArray();
     }
 

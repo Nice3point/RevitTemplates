@@ -37,7 +37,7 @@ void BuildSingleUserMsi()
     project.OutFileName = $"{outputName}-{versioning.Version}-SingleUser";
     project.Dirs =
     [
-        new InstallDir(@"%AppDataFolder%\Autodesk\Revit\Addins\", wixEntities)
+        new InstallDir(@"%AppDataFolder%\Autodesk\Revit\Addins\", wixEntities.Select(entity => entity.Directory).Cast<WixEntity>().ToArray())
     ];
     project.BuildMsi();
 }
@@ -46,9 +46,16 @@ void BuildMultiUserMsi()
 {
     project.Scope = InstallScope.perMachine;
     project.OutFileName = $"{outputName}-{versioning.Version}-MultiUser";
-    project.Dirs =
-    [
-        new InstallDir(versioning.VersionPrefix.Major >= 2027 ? @"%ProgramFiles%\Autodesk\Revit\Addins" : @"%CommonAppDataFolder%\Autodesk\Revit\Addins", wixEntities)
-    ];
+
+    project.Dirs = wixEntities
+        .GroupBy(entity => entity.Version switch
+        {
+            >= 2027 => @"%ProgramFiles%\Autodesk\Revit\Addins",
+            _ => @"%CommonAppDataFolder%\Autodesk\Revit\Addins"
+        })
+        .Select(root => new InstallDir(root.Key, root.Select(entity => entity.Directory).Cast<WixEntity>().ToArray()))
+        .Cast<WixEntity>()
+        .ToArray();
+
     project.BuildMsi();
 }
