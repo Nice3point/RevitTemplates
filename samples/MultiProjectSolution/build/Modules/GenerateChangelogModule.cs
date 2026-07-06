@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 using Build.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -66,7 +67,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
                 continue;
             }
 
-            if (line.StartsWith(separator) && line.Contains(version))
+            if (line.StartsWith(separator) && Regex.IsMatch(line, $@"\b{Regex.Escape(version)}\b"))
             {
                 isChangelogEntryFound = true;
             }
