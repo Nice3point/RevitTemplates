@@ -27,6 +27,8 @@ public class GenerateCompatibleDefineConstants : Task
                 if (!int.TryParse(RevitVersion, out currentVersion)) return true;
             }
 
+            if (currentVersion <= 0) return true;
+
             var constants = new List<string>();
 
             AddVersionConstants(constants, currentVersion);
