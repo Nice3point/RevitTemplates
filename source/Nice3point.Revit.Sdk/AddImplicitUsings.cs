@@ -64,10 +64,19 @@ public class AddImplicitUsings : Task
         var assemblies = metadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
         foreach (var assembly in assemblies)
         {
-            if (References.All(refItem => !refItem.ItemSpec.EndsWith(assembly))) return false;
+            if (References.All(refItem => !MatchesAssembly(refItem.ItemSpec, assembly))) return false;
         }
 
         return true;
+    }
+
+    private static bool MatchesAssembly(string itemSpec, string assembly)
+    {
+        var fileName = Path.GetFileName(itemSpec);
+        if (string.Equals(fileName, assembly, StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(fileName, Path.GetFileNameWithoutExtension(assembly), StringComparison.OrdinalIgnoreCase)) return true;
+
+        return false;
     }
 
     private bool HasRequiredGlobalReferences(string metadata)
