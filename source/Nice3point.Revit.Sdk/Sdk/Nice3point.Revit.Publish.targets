@@ -22,7 +22,7 @@
 
         <ItemGroup>
             <AddinRootFiles Include="$(ProjectDir)*.addin"/>
-            <AddinContentFiles Include="$(TargetDir)**\*" Exclude="$(PublishDir)**\*"/>
+            <AddinContentFiles Include="$(TargetDir)**\*" Exclude="$(AddinPublishDir)**\*"/>
             <_ResolvedFileToPublishAlways Include="@(Content)" PublishDirectory="%(Content.PublishDirectory)" Condition="'%(Content.CopyToPublishDirectory)' == 'Always'"/>
             <_ResolvedFileToPublishPreserveNewest Include="@(Content)" PublishDirectory="%(Content.PublishDirectory)" Condition="'%(Content.CopyToPublishDirectory)' == 'PreserveNewest'"/>
         </ItemGroup>
@@ -67,7 +67,7 @@
             AfterTargets="Clean"
             Condition="'$(PublishAddin)' == 'true'">
 
-        <RemoveDir Directories="$(PublishDir)"/>
+        <RemoveDir Directories="$(AddinPublishDir)"/>
     </Target>
 
 </Project>
