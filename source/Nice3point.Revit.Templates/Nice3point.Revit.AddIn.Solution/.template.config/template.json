@@ -74,10 +74,6 @@
       "description": "Unit testing solution configuration",
       "defaultValue": "false"
     },
-    "isCiDisabled": {
-      "type": "computed",
-      "value": "ciProvider == \"Disabled\""
-    },
     "isAzureCi": {
       "type": "computed",
       "value": "ciProvider == \"Azure\""

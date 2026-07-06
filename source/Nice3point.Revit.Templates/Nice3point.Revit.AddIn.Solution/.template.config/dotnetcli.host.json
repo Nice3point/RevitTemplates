@@ -12,6 +12,10 @@
     "includeBundle": {
       "longName": "bundle",
       "shortName": ""
+    },
+    "includeTests": {
+      "longName": "tests",
+      "shortName": ""
     }
   },
   "usageExamples": [
