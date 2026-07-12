@@ -14,7 +14,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
-        <PackageReference Include="Polyfill" Version="10.10.0" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="10.11.2" PrivateAssets="all"/>
     </ItemGroup>
 
 </Project>
