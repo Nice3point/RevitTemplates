@@ -22,7 +22,7 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7"/>
         <PackageReference Include="ILRepack" Version="2.0.45"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
-        <PackageReference Include="Polyfill" Version="10.10.0" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="11.0.1" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
