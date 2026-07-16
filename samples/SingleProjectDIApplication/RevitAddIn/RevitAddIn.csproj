@@ -19,7 +19,7 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10"/>
         <PackageReference Include="ILRepack" Version="2.0.45"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
         <PackageReference Include="Polyfill" Version="10.10.0" PrivateAssets="all"/>
