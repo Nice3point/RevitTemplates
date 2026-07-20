@@ -279,7 +279,7 @@ Create conditions, experiment to achieve the desired result.
 > [!NOTE]  
 ---#endif
 > For generating directives, a Revit MSBuild SDK is used.
-> You can find more detailed documentation about it here: [Revit MSBuild SDK](https://github.com/Nice3point/Revit.Build.Tasks)
+> You can find more detailed documentation about it here: [Revit MSBuild SDK](https://github.com/Nice3point/RevitTemplates/wiki/MsBuild-Sdk)
 
 To support the latest APIs in legacy Revit versions:
 
