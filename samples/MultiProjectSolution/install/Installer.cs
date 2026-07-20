@@ -54,7 +54,6 @@ void BuildMultiUserMsi()
             _ => @"%CommonAppDataFolder%\Autodesk\Revit\Addins"
         })
         .Select(root => new InstallDir(root.Key, root.Select(entity => entity.Directory).Cast<WixEntity>().ToArray()))
-        .Cast<WixEntity>()
         .ToArray();
 
     project.BuildMsi();
