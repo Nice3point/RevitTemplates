@@ -1,0 +1,16 @@
+[marketplaces.revit-skills]
+source_type = "git"
+source = "https://github.com/Nice3point/revit-skills.git"
+
+[marketplaces.dotnet-agent-skills]
+source_type = "git"
+source = "https://github.com/dotnet/skills.git"
+
+[plugins."dotnet@revit-skills"]
+enabled = true
+
+[plugins."dotnet-template-engine@dotnet-agent-skills"]
+enabled = true
+
+[plugins."dotnet-msbuild@dotnet-agent-skills"]
+enabled = true

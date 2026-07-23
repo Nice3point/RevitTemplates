@@ -1,6 +1,6 @@
 # Contributing to Nice3point.Revit.Templates
 
-Thanks for taking the time to contribute. This guide covers issues and pull requests. For the architecture and conventions, see the project guidelines in [AGENTS.md](AGENTS.md) and the [docs](docs/) folder.
+Thanks for taking the time to contribute. This guide covers issues and pull requests. For the architecture and conventions, see the project guidelines in [AGENTS.md](AGENTS.md).
 
 ## Issues
 
