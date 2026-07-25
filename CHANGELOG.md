@@ -1,5 +1,25 @@
 # 6.2.3
 
+Minor fixes and polishing. In existing projects, update the SDK version.
+
+## SDK
+
+- Projects with a single configuration no longer fail with a missing `Configurations` parameter.
+- Repacking on a non-Windows machine fails with an explanation instead of an obscure tool error.
+- Repacking no longer passes your own assembly into the merge twice.
+- Custom configuration names like `Staging.R26` now repack with debug behaviour instead of being silently skipped.
+- Publish and deploy skip unchanged files, an incremental build no longer rewrites the whole add-in folder.
+- Updated dependencies.
+
+## Templates
+
+- Missing required values in `appsettings.json` now fail the build instead of being ignored.
+- `dotnet new` no longer reports an unsupported action after scaffolding a project.
+- The generated readme documents the `tests` folder and hides the Azure release instructions when there is no Azure pipeline.
+- The sample solution opens its modal window with `ShowDialog()` by @kjs-chang in https://github.com/Nice3point/RevitTemplates/pull/167.
+- Documentation moved to the [Wiki](https://github.com/Nice3point/RevitTemplates/wiki) and is published automatically, all links updated.
+- Updated dependencies.
+
 # 6.2.2
 
 ## Templates
