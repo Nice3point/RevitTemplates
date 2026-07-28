@@ -33,6 +33,7 @@ This repository contains a collection of project templates for creating Revit Ad
    ```shell
    dotnet new install Nice3point.Revit.Templates
    ```
+3. Install [agent skills](https://github.com/Nice3point/revit-skills) if you prefer working with AI.
 
 ## Usage
 
