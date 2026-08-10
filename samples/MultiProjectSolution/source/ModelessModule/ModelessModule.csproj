@@ -1,4 +1,4 @@
-<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
+<Project Sdk="Nice3point.Revit.Sdk/6.2.3">
 
     <PropertyGroup>
         <UseWPF>true</UseWPF>
@@ -14,7 +14,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.10"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
-        <PackageReference Include="Polyfill" Version="11.0.1" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="11.0.2" PrivateAssets="all"/>
     </ItemGroup>
 
 </Project>

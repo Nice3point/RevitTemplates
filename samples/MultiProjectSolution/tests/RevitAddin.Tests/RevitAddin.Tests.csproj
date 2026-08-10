@@ -1,4 +1,4 @@
-<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
+<Project Sdk="Nice3point.Revit.Sdk/6.2.3">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -10,8 +10,8 @@
     <ItemGroup>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.TUnit.Revit" Version="$(RevitVersion).*-*"/>
-        <PackageReference Include="TUnit" Version="1.61.38"/>
-        <PackageReference Include="Polyfill" Version="11.0.1" PrivateAssets="all"/>
+        <PackageReference Include="TUnit" Version="1.64.6"/>
+        <PackageReference Include="Polyfill" Version="11.0.2" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
