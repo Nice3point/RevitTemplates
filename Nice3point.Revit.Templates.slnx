@@ -1,15 +1,15 @@
 <Solution>
-    <Folder Name="/Solution Items/">
-        <File Path=".gitignore"/>
-        <File Path="build/appsettings.json"/>
-        <File Path="CHANGELOG.md"/>
-        <File Path="README.md"/>
-    </Folder>
-    <Folder Name="/Automation/">
-        <Project Path="build/Build.csproj">
-            <Build Project="false"/>
-        </Project>
-    </Folder>
-    <Project Path="source/Nice3point.Revit.Templates/Nice3point.Revit.Templates.csproj"/>
-    <Project Path="source/Nice3point.Revit.Sdk/Nice3point.Revit.Sdk.csproj"/>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore"/>
+    <File Path="build/appsettings.json"/>
+    <File Path="CHANGELOG.md"/>
+    <File Path="README.md"/>
+  </Folder>
+  <Folder Name="/Automation/">
+    <Project Path="build/Build.csproj">
+      <Build Project="false"/>
+    </Project>
+  </Folder>
+  <Project Path="source/Nice3point.Revit.Templates/Nice3point.Revit.Templates.csproj"/>
+  <Project Path="source/Nice3point.Revit.Sdk/Nice3point.Revit.Sdk.csproj"/>
 </Solution>
