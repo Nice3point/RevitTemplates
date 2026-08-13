@@ -214,7 +214,7 @@ For .NET Core applications, it is recommended to disable this feature and use **
 
 By default, enabled target is used to modify the Revit `.addin` manifest to ensure backward compatibility between different Revit versions.
 
-For example, if the manifest includes nodes or properties, which is only supported in newest Revit version, it will be removed for older versions. 
+For example, if the manifest includes nodes or properties, which is only supported in newest Revit version, it will be removed for older versions.
 Currently, the SDK removes the `ManifestSettings` node for Revit versions older than 2026.
 
 **Original `.addin` manifest:**

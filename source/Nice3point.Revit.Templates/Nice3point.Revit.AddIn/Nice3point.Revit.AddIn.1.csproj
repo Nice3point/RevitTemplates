@@ -59,7 +59,7 @@
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
         <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
     </ItemGroup>
-    
+
 <!--#if (isApplicationAddin)-->
     <ItemGroup>
         <Resource Include="Resources\Icons\RibbonIcon16.png"/>

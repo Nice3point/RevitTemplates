@@ -217,14 +217,14 @@ No complex settings, frameworks and versions configuration, SDK takes care of it
 
 1. Create a completely clean project with the same name based on v5 of the template.
 2. Copy the following folders and files to your working project with replacement:
-   - `build` folder.
-   - `install` folder.
-   - `Readme.md` file.
-   - `.yml` files.
+    - `build` folder.
+    - `install` folder.
+    - `Readme.md` file.
+    - `.yml` files.
 3. Review the Git Diff carefully:
-   - Keep your custom GUIDs and project names.
-   - Preserve any user-specific customizations.
-   - Roll back any changes to your business logic.
+    - Keep your custom GUIDs and project names.
+    - Preserve any user-specific customizations.
+    - Roll back any changes to your business logic.
 4. Update your solution's dependencies to match v5 requirements.
 5. Test the build process to ensure everything compiles correctly.
 
@@ -245,7 +245,7 @@ No complex settings, frameworks and versions configuration, SDK takes care of it
    ```xml
    <!-- Replace this line -->
    <PublishAddinFiles>true</PublishAddinFiles>
-   
+
    <!-- With these lines -->
    <DeployRevitAddin>true</DeployRevitAddin>
    <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -266,9 +266,9 @@ No complex settings, frameworks and versions configuration, SDK takes care of it
 
 # 4.0.7
 
-- Moved commands from the Module template. 
-    Please keep the commands in the Primary project that contains External Application to avoid isolation issues.
-    Issue: https://github.com/Nice3point/RevitToolkit/issues/7
+- Moved commands from the Module template.
+  Please keep the commands in the Primary project that contains External Application to avoid isolation issues.
+  Issue: https://github.com/Nice3point/RevitToolkit/issues/7
 - Removed WindowsController class to simplify templates
 - Updated descriptions
 
@@ -287,9 +287,9 @@ No complex settings, frameworks and versions configuration, SDK takes care of it
 
 # 4.0.4
 
-- Removed template engine "isEnabled" property. Visual Studio does not support it compared to Jetbrains Rider. 
-    This property caused an exception to create a Module project without UI.
-    Thanks to @SergeyNefyodov for finding this bug
+- Removed template engine "isEnabled" property. Visual Studio does not support it compared to Jetbrains Rider.
+  This property caused an exception to create a Module project without UI.
+  Thanks to @SergeyNefyodov for finding this bug
 
 # 4.0.3
 

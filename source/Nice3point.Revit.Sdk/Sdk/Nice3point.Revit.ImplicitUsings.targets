@@ -3,7 +3,7 @@
     <!--
     ============================================================
                             Implicit usings
-    
+
     Define implicit global usings
     ============================================================
     -->
@@ -24,26 +24,26 @@
         </ItemGroup>
 
         <AddImplicitUsings
-                AdditionalUsings="@(_ImplicitRevitUsing)"
-                References="@(Reference)"
-                GlobalPackageReferences="@(GlobalPackageReference)">
+            AdditionalUsings="@(_ImplicitRevitUsing)"
+            References="@(Reference)"
+            GlobalPackageReferences="@(GlobalPackageReference)">
             <Output TaskParameter="Usings"
                     ItemName="_RevitGlobalUsings"/>
         </AddImplicitUsings>
 
         <ItemGroup>
-            <Using Include="@(_RevitGlobalUsings)" />
+            <Using Include="@(_RevitGlobalUsings)"/>
         </ItemGroup>
 
         <GenerateGlobalUsings Usings="@(Using)">
-            <Output TaskParameter="Lines" ItemName="_RevitGlobalUsingLines" />
+            <Output TaskParameter="Lines" ItemName="_RevitGlobalUsingLines"/>
         </GenerateGlobalUsings>
 
         <WriteLinesToFile
-                File="$(GeneratedGlobalUsingsFile)"
-                Lines="@(_RevitGlobalUsingLines)"
-                Overwrite="true"
-                WriteOnlyWhenDifferent="true" />
-    </Target>  
-    
+            File="$(GeneratedGlobalUsingsFile)"
+            Lines="@(_RevitGlobalUsingLines)"
+            Overwrite="true"
+            WriteOnlyWhenDifferent="true"/>
+    </Target>
+
 </Project>

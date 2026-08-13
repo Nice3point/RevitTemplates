@@ -3,8 +3,8 @@
     <!--
     ============================================================
                             PatchManifest
-    
-    Patch the Revit .addin manifest, for backwards compatibility 
+
+    Patch the Revit .addin manifest, for backwards compatibility
     ============================================================
     -->
 
@@ -17,8 +17,8 @@
         </ItemGroup>
 
         <PatchManifest
-                RevitVersion="$(RevitVersion)"
-                Manifests="@(_ManifestItem)">
+            RevitVersion="$(RevitVersion)"
+            Manifests="@(_ManifestItem)">
         </PatchManifest>
     </Target>
 

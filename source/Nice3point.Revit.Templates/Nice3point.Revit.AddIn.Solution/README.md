@@ -139,7 +139,7 @@ To execute your ModularPipelines build locally, you can follow these steps:
 Releases are managed by creating new [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
 A tag in Git used to capture a snapshot of the project at a particular point in time, with the ability to roll back to a previous version.
 
-The build system uses [GitVersion.Tool](https://gitversion.net/docs/) to automatically determine the Release version based on the Git history and tags. 
+The build system uses [GitVersion.Tool](https://gitversion.net/docs/) to automatically determine the Release version based on the Git history and tags.
 If a tag is present on the current commit, the version will match the tag. If no tag is specified, the tool automatically generates a release version based on the branch name and commit history.
 
 You can also specify a fixed version by setting the `Version` property in the `build/appsettings.json` file. This will override the version determined by GitVersion.Tool.
@@ -170,7 +170,7 @@ For example:
 
 ### Updating the Changelog
 
-Updating the changelog is optional. If you provide a changelog, the build system will use it for the release notes. 
+Updating the changelog is optional. If you provide a changelog, the build system will use it for the release notes.
 If no entry is found for the current version, GitHub will automatically generate release notes based on your pull requests and commits.
 
 To update the changelog manually:
@@ -217,7 +217,7 @@ Alternatively, you can create and push tags using the terminal:
    ```
 
 ---#if (isGitHubCi)
-> [!NOTE]  
+> [!NOTE]
 ---#endif
 > The tag will reference your current commit, so verify you're on the correct branch and have fetched latest changes from remote first.
 ---#if (isGitHubCi)
@@ -232,7 +232,7 @@ To create releases directly on GitHub:
 4. (Optional) Specify the release version. If not specified, the system will automatically determine the version based on your Git history.
 5. Click **Run**.
 
-    ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
+   ![image](https://github.com/user-attachments/assets/088388c1-6055-4d21-8d22-70f047d8f104)
 ---#endif
 ---#if (isAzureCi && hasArtifacts)
 
@@ -255,7 +255,7 @@ To create releases directly on Azure:
 
 ## Compiling a solution on GitHub
 
-Pushing commits to the remote repository will start a pipeline compiling the solution for all specified Revit versions. 
+Pushing commits to the remote repository will start a pipeline compiling the solution for all specified Revit versions.
 That way, you can check if the plugin is compatible with different API versions without having to spend time building it locally.
 ---#endif
 
@@ -272,11 +272,11 @@ To write code compatible with different Revit versions, use the directives **#if
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
 E.g., select the `Debug.R27` configuration for the Revit 2027 API.
 
-The project has available constants such as `REVIT2027`, `REVIT2027_OR_GREATER`. 
+The project has available constants such as `REVIT2027`, `REVIT2027_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.
 
 ---#if (isGitHubCi)
-> [!NOTE]  
+> [!NOTE]
 ---#endif
 > For generating directives, a Revit MSBuild SDK is used.
 > You can find more detailed documentation about it here: [Revit MSBuild SDK](https://github.com/Nice3point/RevitTemplates/wiki/MsBuild-Sdk)
@@ -312,6 +312,7 @@ To extend or reduce the range of supported Revit API versions, you need to updat
 Solution configurations determine which projects are built and how they are configured.
 
 To support multiple Revit versions:
+
 - Open the `.sln` file.
 - Add or remove configurations for each Revit version.
 
@@ -331,7 +332,7 @@ EndGlobalSection
 For example `Debug.R27` is the Debug configuration for Revit 2027 version.
 
 ---#if (isGitHubCi)
-> [!TIP]  
+> [!TIP]
 ---#endif
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
 
@@ -340,6 +341,7 @@ For example `Debug.R27` is the Debug configuration for Revit 2027 version.
 Project configurations define build conditions for specific versions.
 
 To add or remove support:
+
 - Open `.csproj` file
 - Add or remove configurations for Debug and Release builds.
 
@@ -353,11 +355,11 @@ Example:
 ```
 
 ---#if (isGitHubCi)
-> [!IMPORTANT]  
+> [!IMPORTANT]
 ---#endif
 > Edit the `.csproj` file only manually, IDEs often break configurations.
 
-Revit MSBuild SDK automatically sets the required `TargetFramework` based on the `RevitVersion`, extracted from the solution configuration name. 
+Revit MSBuild SDK automatically sets the required `TargetFramework` based on the `RevitVersion`, extracted from the solution configuration name.
 
 If you need to add support for an unreleased or unsupported version of Revit that the SDK doesn't yet know about, you can add a conditional block to specify the `TargetFramework` manually:
 
@@ -372,7 +374,7 @@ If you need to add support for an unreleased or unsupported version of Revit tha
 To support CI/CD pipelines and build a project for Revit versions not installed on your computer, use Nuget packages.
 
 ---#if (isGitHubCi)
-> [!NOTE]  
+> [!NOTE]
 ---#endif
 > Revit API dependencies are available in the [Revit.API](https://github.com/Nice3point/RevitApi) repository.
 

@@ -3,7 +3,7 @@
     <!--
     ============================================================
                          Repack Output files
-    
+
     Targets for repacking the build output into a single assembly
     ============================================================
     -->
@@ -32,7 +32,7 @@
         <ItemGroup>
             <_ILRepackInputAssemblies Include="$(OutputPath)$(AssemblyName).dll"/>
             <_ILRepackInputAssemblies Include="$(OutputPath)*.dll"
-                                     Exclude="@(_ILRepackInputAssembliesExcludes);$(OutputPath)$(AssemblyName).dll"/>
+                                      Exclude="@(_ILRepackInputAssembliesExcludes);$(OutputPath)$(AssemblyName).dll"/>
         </ItemGroup>
 
         <PropertyGroup>

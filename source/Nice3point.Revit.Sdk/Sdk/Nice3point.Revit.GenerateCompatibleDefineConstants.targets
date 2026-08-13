@@ -3,7 +3,7 @@
     <!--
     ============================================================
             GenerateRevitCompatibleDefineConstants
-    
+
     Generate implicit define constants and OR_GREATER constants
     ============================================================
     -->
@@ -13,16 +13,16 @@
             Condition="'$(DisableImplicitRevitDefines)' != 'true' ">
 
         <GenerateCompatibleDefineConstants
-                RevitVersion="$(RevitVersion)"
-                Configuration="$(Configuration)"
-                Configurations="$(Configurations)">
+            RevitVersion="$(RevitVersion)"
+            Configuration="$(Configuration)"
+            Configurations="$(Configurations)">
             <Output TaskParameter="DefineConstants"
                     ItemName="_ImplicitRevitDefineConstant"/>
         </GenerateCompatibleDefineConstants>
 
         <PropertyGroup>
-            <DefineConstants Condition=" '@(_ImplicitRevitDefineConstant)' != '' " >$(DefineConstants);@(_ImplicitRevitDefineConstant)</DefineConstants>
+            <DefineConstants Condition=" '@(_ImplicitRevitDefineConstant)' != '' ">$(DefineConstants);@(_ImplicitRevitDefineConstant)</DefineConstants>
         </PropertyGroup>
     </Target>
-    
+
 </Project>

@@ -25,7 +25,7 @@ public class AddImplicitUsings : Task
                 }
             }
 
-            Usings = [..usings];
+            Usings = [.. usings];
 
             return true;
         }
@@ -64,7 +64,10 @@ public class AddImplicitUsings : Task
         var assemblies = metadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
         foreach (var assembly in assemblies)
         {
-            if (References.All(refItem => !MatchesAssembly(refItem.ItemSpec, assembly))) return false;
+            if (References.All(refItem => !MatchesAssembly(refItem.ItemSpec, assembly)))
+            {
+                return false;
+            }
         }
 
         return true;
@@ -73,8 +76,15 @@ public class AddImplicitUsings : Task
     private static bool MatchesAssembly(string itemSpec, string assembly)
     {
         var fileName = Path.GetFileName(itemSpec);
-        if (string.Equals(fileName, assembly, StringComparison.OrdinalIgnoreCase)) return true;
-        if (string.Equals(fileName, Path.GetFileNameWithoutExtension(assembly), StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(fileName, assembly, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (string.Equals(fileName, Path.GetFileNameWithoutExtension(assembly), StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
 
         return false;
     }
@@ -84,7 +94,10 @@ public class AddImplicitUsings : Task
         var references = metadata.Split(';', StringSplitOptions.RemoveEmptyEntries);
         foreach (var reference in references)
         {
-            if (GlobalPackageReferences.All(refItem => refItem.ItemSpec != reference)) return false;
+            if (GlobalPackageReferences.All(refItem => refItem.ItemSpec != reference))
+            {
+                return false;
+            }
         }
 
         return true;

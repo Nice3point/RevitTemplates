@@ -15,7 +15,10 @@ public class PatchManifest : Task
     {
         try
         {
-            if (!int.TryParse(RevitVersion, out var targetVersion)) return true;
+            if (!int.TryParse(RevitVersion, out var targetVersion))
+            {
+                return true;
+            }
 
             foreach (var manifest in Manifests)
             {
@@ -35,12 +38,18 @@ public class PatchManifest : Task
 
     private void PatchManifestSettings(string manifestPath, int targetVersion)
     {
-        if (targetVersion >= 2026) return;
+        if (targetVersion >= 2026)
+        {
+            return;
+        }
 
         var xmlDocument = XDocument.Load(manifestPath);
 
         var manifestSettings = xmlDocument.Root?.Elements("ManifestSettings").FirstOrDefault();
-        if (manifestSettings is null) return;
+        if (manifestSettings is null)
+        {
+            return;
+        }
 
         Log.LogMessage(MessageImportance.High, $"Patching {manifestPath}: removing 'ManifestSettings'");
 

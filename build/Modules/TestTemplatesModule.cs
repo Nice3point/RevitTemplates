@@ -72,7 +72,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             new CommandExecutionOptions
             {
                 ThrowOnNonZeroExitCode = false
-            }, cancellationToken: cancellationToken);
+            }, cancellationToken);
     }
 
     private static async Task<Folder> GenerateProjectAsync(IModuleContext context, string template, Dictionary<string, string> options, Folder samplesFolder, CancellationToken cancellationToken)
@@ -172,7 +172,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
                 }
             }
         }
-        
+
         // Nice3point.Revit.AddIn.Application
         foreach (var type in addInManifestTypes)
         {
@@ -193,7 +193,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
                 }
             }
         }
-        
+
         // Nice3point.Revit.AddIn.Module
         foreach (var wpf in boolOptions)
         {
@@ -258,13 +258,13 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
         return matrix;
     }
 
+    [GeneratedRegex("<Configurations>(.*?)</Configurations>")]
+    private static partial Regex ConfigurationsRegex();
+
     private sealed record TemplateMetadata
     {
         public required string Template { get; init; }
         public Dictionary<string, string> Options { get; init; } = [];
         public string[] SubTemplates { get; init; } = [];
     }
-
-    [GeneratedRegex("<Configurations>(.*?)</Configurations>")]
-    private static partial Regex ConfigurationsRegex();
 }

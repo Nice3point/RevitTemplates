@@ -33,7 +33,7 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
         var changelog = changelogResult?.ValueOrDefault ?? string.Empty;
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetProject = new File(Projects.Nice3point_Revit_Templates.FullName);
-        
+
         List<string> updatedFiles = [];
 
         try

@@ -20,14 +20,23 @@ public class GenerateCompatibleDefineConstants : Task
             int currentVersion;
             if (string.IsNullOrEmpty(RevitVersion))
             {
-                if (!TryGetRevitVersion(Configuration, out currentVersion)) return true;
+                if (!TryGetRevitVersion(Configuration, out currentVersion))
+                {
+                    return true;
+                }
             }
             else
             {
-                if (!int.TryParse(RevitVersion, out currentVersion)) return true;
+                if (!int.TryParse(RevitVersion, out currentVersion))
+                {
+                    return true;
+                }
             }
 
-            if (currentVersion <= 0) return true;
+            if (currentVersion <= 0)
+            {
+                return true;
+            }
 
             var constants = new List<string>();
 
@@ -35,9 +44,9 @@ public class GenerateCompatibleDefineConstants : Task
             AddGreaterConstants(currentVersion, constants);
 
             DefineConstants = constants
-                .Select(constant => constant.Replace('.', '_'))
+                .Select(static constant => constant.Replace('.', '_'))
                 .Distinct()
-                .OrderBy(constant => constant)
+                .OrderBy(static constant => constant)
                 .ToArray();
 
             return true;
@@ -58,8 +67,15 @@ public class GenerateCompatibleDefineConstants : Task
     {
         foreach (var configuration in Configurations)
         {
-            if (!TryGetRevitVersion(configuration, out var version)) continue;
-            if (version > currentVersion) continue;
+            if (!TryGetRevitVersion(configuration, out var version))
+            {
+                continue;
+            }
+
+            if (version > currentVersion)
+            {
+                continue;
+            }
 
             constants.Add($"REVIT{version}_OR_GREATER");
         }
@@ -69,7 +85,10 @@ public class GenerateCompatibleDefineConstants : Task
     {
         version = 0;
         var match = Regex.Match(configuration, @"(\d+)(?!.*\d)");
-        if (!match.Success) return false;
+        if (!match.Success)
+        {
+            return false;
+        }
 
         if (match.Value.Length == 4)
         {
