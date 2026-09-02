@@ -52,7 +52,7 @@
 <!--#if (addinLogging || useDi)-->
 
         <!-- Build Automation-->
-        <PackageReference Include="ILRepack" Version="2.0.47"/>
+        <PackageReference Include="ILRepack" Version="2.0.48"/>
 <!--#endif-->
 
         <!-- Development Dependencies -->
