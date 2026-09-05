@@ -22,7 +22,8 @@
   "placeholderFilename": "keep.folder",
   "guids": [
     "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA",
-    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"
+    "BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB",
+    "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"
   ],
   "symbols": {
     "HostIdentifier": {
@@ -126,7 +127,8 @@
           "condition": "!includeInstaller",
           "exclude": [
             "install/**",
-            "build/Modules/CreateInstallerModule.cs"
+            "build/Modules/CreateInstallerModule.cs",
+            "build/Options/InstallerOptions.cs"
           ]
         },
         {

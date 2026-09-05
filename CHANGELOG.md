@@ -1,3 +1,20 @@
+# 6.3.0
+
+## Templates
+
+- The installer builds the packages from a manifest the build writes, the add-in content is no longer passed as command line arguments.
+- The `.addin` manifests install after the assemblies they point at, an interrupted installation leaves Revit no add-in to load.
+- The installer upgrade code moved to the `Installer` section of `build/appsettings.json`.
+- The installer no longer packages `.pdb` files.
+- The product name of the packages comes from the add-in project.
+
+### Solution migration
+
+1. Delete the `install` folder and `build/Modules/CreateInstallerModule.cs`.
+2. Create a temporary solution using version 6.3.0 and copy the new `install` folder, `build/Modules/CreateInstallerModule.cs` and `build/Options/InstallerOptions.cs` to your solution.
+3. Register the options in `build/Program.cs`: `builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection("Installer")).ValidateDataAnnotations();`.
+4. Add the `Installer` section to `build/appsettings.json` and set `UpgradeCode` to the GUID your previous `install/Installer.cs` passed to the `Project.GUID` property.
+
 # 6.2.3
 
 Minor fixes and polishing. In existing projects, update the SDK version.

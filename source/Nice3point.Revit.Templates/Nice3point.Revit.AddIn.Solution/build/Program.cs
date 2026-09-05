@@ -15,6 +15,9 @@ builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSectio
 #if (includeBundle)
 builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
 #endif
+#if (includeInstaller)
+builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection("Installer")).ValidateDataAnnotations();
+#endif
 #if (isGitHubCi)
 builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection("Publish")).ValidateDataAnnotations();
 #endif
