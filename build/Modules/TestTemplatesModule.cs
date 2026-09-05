@@ -207,6 +207,20 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             });
         }
 
+        // Nice3point.Revit.ServiceDefaults
+        string[] serviceDefaultsDiModes = ["container", "hosting"];
+        foreach (var di in serviceDefaultsDiModes)
+        {
+            matrix.Add(new TemplateMetadata
+            {
+                Template = "revit-servicedefaults",
+                Options = new Dictionary<string, string>
+                {
+                    { "di", di }
+                }
+            });
+        }
+
         // Nice3point.Revit.AddIn.Solution
         string[] pipelines = ["github", "azure", "disabled"];
         foreach (var pipeline in pipelines)

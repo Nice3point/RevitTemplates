@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/dotnetcli.host",
+  "symbolInfo": {
+    "addinDiMode": {
+      "longName": "di",
+      "shortName": ""
+    }
+  },
+  "usageExamples": [
+    "dotnet new revit-servicedefaults",
+    "dotnet new revit-servicedefaults --di container"
+  ]
+}

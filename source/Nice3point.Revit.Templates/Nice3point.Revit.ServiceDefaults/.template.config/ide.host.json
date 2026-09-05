@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/ide.host.json",
+  "order": 4,
+  "symbolInfo": [
+    {
+      "id": "addinDiMode",
+      "persistenceScope": "shared"
+    }
+  ]
+}

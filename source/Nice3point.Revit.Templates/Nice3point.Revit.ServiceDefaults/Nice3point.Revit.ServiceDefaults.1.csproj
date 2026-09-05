@@ -1,0 +1,32 @@
+<Project Sdk="Nice3point.Revit.Sdk">
+
+    <PropertyGroup>
+        <Configurations>Debug.R23;Debug.R24;Debug.R25;Debug.R26;Debug.R27</Configurations>
+        <Configurations>$(Configurations);Release.R23;Release.R24;Release.R25;Release.R26;Release.R27</Configurations>
+        <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Nice3point.Revit.ServiceDefaults._1</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+<!--#if (diContainer)-->
+        <!-- Application Hosting -->
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11"/>
+<!--#endif-->
+<!--#if (diHosting)-->
+        <!-- Application Hosting -->
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
+<!--#endif-->
+
+        <!-- Logging -->
+<!--#if (diContainer)-->
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11"/>
+<!--#endif-->
+        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release-->
+        <!--<PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*"/>-->
+
+        <!-- Development Dependencies -->
+        <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
+    </ItemGroup>
+
+</Project>

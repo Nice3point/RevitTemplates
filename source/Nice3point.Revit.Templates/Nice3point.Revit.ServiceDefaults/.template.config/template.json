@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json.schemastore.org/template",
+  "author": "Nice3point",
+  "name": "Revit Service Defaults",
+  "shortName": "revit-servicedefaults",
+  "identity": "Nice3point.Revit.ServiceDefaults",
+  "defaultName": "ServiceDefaults",
+  "sourceName": "Nice3point.Revit.ServiceDefaults.1",
+  "description": "Template for creating a project with the hosting defaults shared by the projects of a multi-project Revit add-in",
+  "classifications": [
+    "Revit",
+    "Desktop",
+    "AddIn",
+    "Service Defaults"
+  ],
+  "tags": {
+    "type": "project",
+    "language": "C#",
+    "platform": ".NET"
+  },
+  "preferNameDirectory": true,
+  "symbols": {
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    },
+    "addinDiMode": {
+      "type": "parameter",
+      "displayName": "Dependency Injection",
+      "datatype": "choice",
+      "description": "Dependency Injection implementation the defaults are applied to",
+      "choices": [
+        {
+          "choice": "container",
+          "displayName": "Service container",
+          "description": "Use Microsoft.Extensions.DependencyInjection implementation"
+        },
+        {
+          "choice": "hosting",
+          "displayName": "Hosting",
+          "description": "Use Microsoft.Extensions.Hosting implementation"
+        }
+      ],
+      "defaultValue": "hosting"
+    },
+    "diContainer": {
+      "type": "computed",
+      "value": "addinDiMode == \"container\""
+    },
+    "diHosting": {
+      "type": "computed",
+      "value": "addinDiMode == \"hosting\""
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "ServiceDefaultsRegistration.cs"
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\"",
+      "description": "Opens ServiceDefaultsRegistration.cs in the editor",
+      "manualInstructions": [],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "0"
+      },
+      "continueOnError": true
+    }
+  ]
+}
