@@ -6,7 +6,7 @@
 <!--#endif-->
         <DeployAddin>true</DeployAddin>
         <LaunchRevit>true</LaunchRevit>
-<!--#if (addinLogging || useDi)-->
+<!--#if (useDi)-->
         <IsRepackable>true</IsRepackable>
 <!--#else-->
         <IsRepackable>false</IsRepackable>
@@ -35,21 +35,18 @@
         <!-- Application Hosting -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
 <!--#endif-->
-<!--#if (addinLogging)-->
+<!--#if (useLogging && diContainer)-->
 
         <!-- Logging -->
-        <PackageReference Include="Serilog" Version="4.4.0"/>
-        <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11"/>
 <!--#endif-->
 <!--#if (useUi)-->
 
         <!-- MVVM -->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
 <!--#endif-->
-<!--#if (addinLogging && diHosting)-->
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0"/>
-<!--#endif-->
-<!--#if (addinLogging || useDi)-->
+<!--#if (useDi)-->
 
         <!-- Build Automation-->
         <PackageReference Include="ILRepack" Version="2.0.48"/>

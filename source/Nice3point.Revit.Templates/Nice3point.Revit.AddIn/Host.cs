@@ -3,16 +3,16 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
-#if (diHosting && addinLogging)
-using Microsoft.Extensions.Logging;
-#endif
 using Microsoft.Extensions.DependencyInjection;
 #if (useUi)
 using Nice3point.Revit.AddIn._1.Views;
 using Nice3point.Revit.AddIn._1.ViewModels;
 #endif
-#if (diHosting || addinLogging)
-using Nice3point.Revit.AddIn._1.Configuration;
+#if (useLogging && diContainer)
+using Nice3point.Revit.AddIn._1.Diagnostics;
+#endif
+#if (useLogging)
+using Nice3point.Revit.AddIn._1.Logging;
 #endif
 
 namespace Nice3point.Revit.AddIn._1;
@@ -44,15 +44,11 @@ public static class Host
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });
-#if (addinLogging)
+#if (useLogging)
 
         //Logging
-        builder.Logging.ClearProviders();
-        builder.Logging.AddSerilog();
+        builder.AddLoggingDefaults();
 #endif
-
-        //Configuration
-        builder.ConfigureHosting();
 #if (useUi)
 
         //MVVM
@@ -69,10 +65,10 @@ public static class Host
 #else
 #if (diContainer)
         var services = new ServiceCollection();
-#if (addinLogging)
+#if (useLogging)
 
         //Logging
-        services.AddSerilog();
+        services.AddLoggingDefaults();
 #endif
 #if (useUi)
 
@@ -82,6 +78,9 @@ public static class Host
 #endif
 
         _serviceProvider = services.BuildServiceProvider();
+#if (useLogging)
+        _serviceProvider.GetRequiredService<AppDomainExceptionsHandler>().LogExceptions();
+#endif
 #endif
 #endif
     }

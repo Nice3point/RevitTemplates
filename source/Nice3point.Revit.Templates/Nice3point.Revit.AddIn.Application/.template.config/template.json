@@ -78,9 +78,10 @@
     },
     "addinLogging": {
       "type": "parameter",
-      "displayName": "Serilog support",
+      "displayName": "Logging support",
       "datatype": "bool",
-      "description": "Serilog infrastructure for structured diagnostic logging",
+      "description": "Microsoft.Extensions.Logging infrastructure for diagnostic logging",
+      "isEnabled": "addinDiMode != \"disabled\"",
       "defaultValue": "false"
     },
     "isCommandAddin": {
@@ -106,6 +107,10 @@
     "useDi": {
       "type": "computed",
       "value": "addinDiMode != \"disabled\""
+    },
+    "useLogging": {
+      "type": "computed",
+      "value": "addinLogging && addinDiMode != \"disabled\""
     }
   },
   "sources": [
@@ -136,15 +141,10 @@
           ]
         },
         {
-          "condition": "!diHosting",
+          "condition": "!useLogging",
           "exclude": [
-            "Configuration/HostingConfiguration.cs"
-          ]
-        },
-        {
-          "condition": "!addinLogging || !useDi",
-          "exclude": [
-            "Configuration/LoggingConfiguration.cs"
+            "Logging/**",
+            "Diagnostics/**"
           ]
         }
       ]
