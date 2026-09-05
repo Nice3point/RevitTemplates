@@ -26,10 +26,4 @@
         <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
     </ItemGroup>
 
-<!--#if (addinUiWpf)-->
-    <ItemGroup>
-        <Folder Include="Models"/>
-    </ItemGroup>
-
-<!--#endif-->
 </Project>

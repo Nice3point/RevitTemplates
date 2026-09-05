@@ -142,7 +142,6 @@
         {
           "condition": "!useUi",
           "exclude": [
-            "Models/**",
             "Views/**",
             "ViewModels/**"
           ]

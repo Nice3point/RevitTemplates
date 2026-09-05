@@ -67,10 +67,4 @@
     </ItemGroup>
 
 <!--#endif-->
-<!--#if (useUi)-->
-    <ItemGroup>
-        <Folder Include="Models"/>
-    </ItemGroup>
-
-<!--#endif-->
 </Project>

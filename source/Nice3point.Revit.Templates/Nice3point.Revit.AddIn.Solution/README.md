@@ -66,11 +66,9 @@ If you haven't already installed these, you can do so by visiting the following:
 | Folder     | Description                                                                                                                                                                                          |
 |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Commands   | External commands invoked from the Revit ribbon. Registered in the `Application` class                                                                                                               |
-| Models     | Classes that encapsulate the app's data, include data transfer objects (DTOs). More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm).                                      |
 | ViewModels | Classes that implement properties and commands to which the view can bind data. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm).                                     |
 | Views      | Classes that are responsible for defining the structure, layout and appearance of what the user sees on the screen. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm). |
 | Resources  | Images, sounds, localisation files, etc.                                                                                                                                                             |
-| Utils      | Utilities, extensions, helpers used across the application                                                                                                                                           |
 
 ## Building
 

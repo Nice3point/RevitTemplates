@@ -35,7 +35,6 @@
         {
           "condition": "!addinUiWpf",
           "exclude": [
-            "Models/**",
             "Views/**",
             "ViewModels/**"
           ]
