@@ -47,6 +47,10 @@ public static class LoggingRegistration
             {
                 logging.SetMinimumLevel(LogLevel.Debug);
                 logging.AddDebug();
+
+                //TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release
+                //logging.AddRevitJournal();
+                //logging.AddFilter<RevitJournalLoggerProvider>(null, LogLevel.Error);
             });
 
             services.AddSingleton<AppDomainExceptionsHandler>();
@@ -67,11 +71,15 @@ public static class LoggingRegistration
         {
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
             {
-                ["Logging:LogLevel:Default"] = nameof(LogLevel.Debug)
+                ["Logging:LogLevel:Default"] = nameof(LogLevel.Debug),
+                //["Logging:RevitJournal:LogLevel:Default"] = nameof(LogLevel.Error)
             });
 
             builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
             builder.Logging.AddDebug();
+
+            //TODO: uncomment the Revit journal provider and its log level after the Nice3point.Revit.Logging release
+            //builder.Logging.AddRevitJournal();
 
             builder.Services.AddHostedService<AppDomainExceptionsHandler>();
             builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);

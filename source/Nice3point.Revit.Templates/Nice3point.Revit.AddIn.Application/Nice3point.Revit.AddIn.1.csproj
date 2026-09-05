@@ -35,11 +35,15 @@
         <!-- Application Hosting -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
 <!--#endif-->
-<!--#if (useLogging && diContainer)-->
+<!--#if (useLogging)-->
 
         <!-- Logging -->
+<!--#if (diContainer)-->
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11"/>
+<!--#endif-->
+        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release-->
+        <!--<PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*"/>-->
 <!--#endif-->
 <!--#if (useDi)-->
 
