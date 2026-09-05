@@ -30,8 +30,4 @@
         <Resource Include="Resources\Icons\RibbonIcon32.png"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Models"/>
-    </ItemGroup>
-
 </Project>

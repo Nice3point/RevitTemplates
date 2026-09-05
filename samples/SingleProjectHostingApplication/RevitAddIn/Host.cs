@@ -49,6 +49,6 @@ public static class Host
     /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
     public static T GetService<T>() where T : class
     {
-        return _host.Services.GetRequiredService<T>();
+        return _host!.Services.GetRequiredService<T>();
     }
 }

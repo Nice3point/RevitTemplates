@@ -1,4 +1,4 @@
-namespace ModelessModule.Models;
+namespace ModelessModule;
 
 public sealed class ElementMetadata
 {

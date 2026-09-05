@@ -3,8 +3,6 @@ using Autodesk.Revit.UI.Selection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using ModelessModule.Messages;
-using ModelessModule.Models;
-using ModelessModule.Services;
 using Nice3point.Revit.Toolkit.External;
 using Nice3point.Revit.Toolkit.Options;
 

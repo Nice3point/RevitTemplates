@@ -17,10 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Models"/>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Module3\Module3.csproj" />
     </ItemGroup>
 

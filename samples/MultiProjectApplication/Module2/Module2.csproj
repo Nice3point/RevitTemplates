@@ -16,8 +16,4 @@
         <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Models"/>
-    </ItemGroup>
-
 </Project>

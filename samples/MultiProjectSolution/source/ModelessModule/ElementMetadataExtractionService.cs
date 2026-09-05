@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
-using ModelessModule.Models;
 
-namespace ModelessModule.Services;
+namespace ModelessModule;
 
 public sealed class ElementMetadataExtractionService(ILogger<ElementMetadataExtractionService> logger)
 {

@@ -82,7 +82,7 @@ Templates description: https://github.com/Nice3point/RevitTemplates/wiki/Templat
 | Template                | Creation options                                                      | Value                                              |
 |-------------------------|-----------------------------------------------------------------------|----------------------------------------------------|
 | Revit Solution          | Bundle support<br/>Installer support<br/>Testing support<br/>Pipeline | Enabled<br/>Enabled<br/>Enabled<br/>GitHub actions |
-| Revit AddIn Application | Serilog support<br/>AddIn type<br/>IoC                                | Enabled<br/>Application<br/>Hosting                |
+| Revit AddIn Application | Logging support<br/>AddIn type<br/>IoC                                | Enabled<br/>Application<br/>Hosting                |
 | Revit AddIn Module      | Inject dependencies<br/>User interface                                | Enabled<br/>Modal                                  |
 | Revit AddIn Module      | Inject dependencies<br/>User interface                                | Enabled<br/>Modeless                               |
 | Revit Benchmarks        |                                                                       |                                                    |
