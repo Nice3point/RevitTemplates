@@ -52,7 +52,7 @@
 <!--#if (useDi)-->
 
         <!-- Build Automation-->
-        <PackageReference Include="ILRepack" Version="2.0.48"/>
+        <PackageReference Include="ILRepack" Version="2.0.48" PrivateAssets="all"/>
 <!--#endif-->
 
         <!-- Development Dependencies -->

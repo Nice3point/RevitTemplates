@@ -2,6 +2,8 @@
 
 ## Templates
 
+- Generated entry points, views, view models, and host services carry XML documentation; test and benchmark classes include summaries.
+- ILRepack package references are private to the generated projects.
 - The installer builds the packages from a manifest the build writes, the add-in content is no longer passed as command line arguments.
 - The `.addin` manifests install after the assemblies they point at, an interrupted installation leaves Revit no add-in to load.
 - The installer upgrade code moved to the `Installer` section of `build/appsettings.json`.

@@ -11,18 +11,18 @@ namespace RevitAddIn.ServiceDefaults.Logging;
 ///     Provides extension methods for <see cref="IHostApplicationBuilder" /> to add the application logging defaults.
 /// </summary>
 /// <example>
-/// <code lang="csharp">
-/// public partial class Class(ILogger&lt;Class&gt; logger)
-/// {
-///     private void Execute()
-///     {
-///         LogMessage(logger);
-///     }
+///     <code lang="csharp">
+///         public partial class Class(ILogger&lt;Class&gt; logger)
+///         {
+///             private void Execute()
+///             {
+///                 LogMessage(logger);
+///             }
 ///
-///     [LoggerMessage(LogLevel.Information, "Message")]
-///     private static partial void LogMessage(ILogger&lt;Class&gt; logger);
-/// }
-/// </code>
+///             [LoggerMessage(LogLevel.Information, "Message")]
+///             private static partial void LogMessage(ILogger&lt;Class&gt; logger);
+///         }
+///     </code>
 /// </example>
 public static class LoggingRegistration
 {

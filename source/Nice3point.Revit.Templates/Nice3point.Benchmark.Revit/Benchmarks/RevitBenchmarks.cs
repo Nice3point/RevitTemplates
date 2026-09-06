@@ -3,6 +3,9 @@ using Nice3point.BenchmarkDotNet.Revit;
 
 namespace Nice3point.Benchmark.Revit._1.Benchmarks;
 
+/// <summary>
+///     Provides Revit API benchmarks.
+/// </summary>
 public class RevitBenchmarks : RevitApiBenchmark
 {
     private Document _document = null!;
@@ -10,13 +13,13 @@ public class RevitBenchmarks : RevitApiBenchmark
     protected sealed override void OnGlobalSetup()
     {
         _document = Application.NewProjectDocument(UnitSystem.Metric);
-        
+
         using var transaction = new Transaction(_document, "Seed model");
         transaction.Start();
-        
+
         transaction.Commit();
     }
-    
+
     protected sealed override void OnGlobalCleanup()
     {
         _document.Close(false);

@@ -7,9 +7,9 @@ namespace Nice3point.Revit.AddIn._1.Diagnostics;
 
 /// <summary>
 #if (diContainer)
-///     Represents a service that writes unhandled AppDomain exceptions to the log.
+///     Represents a service that writes unhandled <see cref="AppDomain" /> exceptions to the log.
 #elseif (diHosting)
-///     Represents a hosted service that writes unhandled AppDomain exceptions to the log while the host is running.
+///     Represents a hosted service that writes unhandled <see cref="AppDomain" /> exceptions to the log while the host is running.
 #endif
 /// </summary>
 /// <param name="logger">The logger the service writes unhandled exceptions to.</param>
@@ -21,7 +21,7 @@ public sealed partial class AppDomainExceptionsHandler(ILogger<AppDomainExceptio
 {
 #if (diContainer)
     /// <summary>
-    ///     Starts writing unhandled AppDomain exceptions to the log.
+    ///     Starts writing unhandled <see cref="AppDomain" /> exceptions to the log.
     /// </summary>
     public void LogExceptions()
     {

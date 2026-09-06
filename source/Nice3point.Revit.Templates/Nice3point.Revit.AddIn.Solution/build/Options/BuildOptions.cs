@@ -14,7 +14,7 @@ public sealed record BuildOptions
     ///     Application version.
     /// </summary>
     /// <remarks>
-    ///     This will override the version determined by GitVersion.Tool. <br/>
+    ///     The configured value overrides the version determined by GitVersion.Tool.
     /// </remarks>
     /// <example>
     ///     1.0.0-alpha.1.250101 <br/>
@@ -25,7 +25,7 @@ public sealed record BuildOptions
 #if (hasArtifacts)
 
     /// <summary>
-    ///     Path to build output
+    ///     Path to the build output directory.
     /// </summary>
     [Required] public string OutputDirectory { get; init; } = null!;
 #endif

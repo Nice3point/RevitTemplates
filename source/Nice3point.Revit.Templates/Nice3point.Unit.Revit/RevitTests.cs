@@ -4,6 +4,9 @@ using TUnit.Core.Executors;
 
 namespace Nice3point.Unit.Revit._1;
 
+/// <summary>
+///     Provides Revit API tests.
+/// </summary>
 public sealed class RevitTests : RevitApiTest
 {
     private Document _document = null!;
@@ -28,12 +31,12 @@ public sealed class RevitTests : RevitApiTest
     }
 
     [Test]
-    public async Task RevitTest()
+    public async Task RevitTestAsync()
     {
         // Arrange
-        
+
         // Act
-        
+
         // Assert
         // await Assert.That();
     }

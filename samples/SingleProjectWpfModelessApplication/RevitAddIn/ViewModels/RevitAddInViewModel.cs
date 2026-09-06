@@ -7,6 +7,9 @@ using RevitAddIn.Messages;
 
 namespace RevitAddIn.ViewModels;
 
+/// <summary>
+///     Represents the data and commands for the add-in window.
+/// </summary>
 public sealed partial class RevitAddInViewModel : ObservableObject
 {
     [ObservableProperty]

@@ -1,6 +1,6 @@
 # Nice3point.Revit.AddIn.1
 
-Autodesk Revit plugin project organized into multiple solution files that target versions 2023 - 2027.
+Autodesk Revit plugin project organized into a single solution with configurations that target versions 2023 - 2027.
 
 ## Table of content
 
@@ -53,7 +53,7 @@ If you haven't already installed these, you can do so by visiting the following:
 |---------|----------------------------------------------------------------------------|
 | build   | ModularPipelines build system. Used to automate project builds             |
 ---#if (includeInstaller)
-| install | Add-in installer, called implicitly by the ModularPipelines build          |
+| installer | Add-in installer, called by the ModularPipelines build                   |
 ---#endif
 | source  | Project source code folder. Contains all solution projects                 |
 ---#if (includeTests)
@@ -74,8 +74,8 @@ If you haven't already installed these, you can do so by visiting the following:
 
 ## Building
 
-We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET support. If you don't have Rider installed, you can download it
-from [here](https://www.jetbrains.com/rider/).
+We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET support.
+If you don't have Rider installed, you can download it from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
 2. In the `Solutions Configuration` drop-down menu, select `Release.R27` or `Debug.R27`. Suffix `R27` means compiling for the Revit 2027.

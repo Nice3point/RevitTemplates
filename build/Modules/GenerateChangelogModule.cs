@@ -21,7 +21,7 @@ public sealed class GenerateChangelogModule : Module<string>
 
         var changelogFile = context.Git().RootDirectory.GetFile("CHANGELOG.md");
 
-        var changelog = await ParseChangelog(changelogFile, versioning.Version);
+        var changelog = await ParseChangelogAsync(changelogFile, versioning.Version);
         changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
 
         return changelog.ToString();
@@ -30,7 +30,7 @@ public sealed class GenerateChangelogModule : Module<string>
     /// <summary>
     ///     Parse the changelog file to extract the entries for a specific version.
     /// </summary>
-    private static async Task<StringBuilder> ParseChangelog(File changelogFile, string version)
+    private static async Task<StringBuilder> ParseChangelogAsync(File changelogFile, string version)
     {
         const string separator = "# ";
 

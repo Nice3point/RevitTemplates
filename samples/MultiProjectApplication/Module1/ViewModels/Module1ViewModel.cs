@@ -2,6 +2,9 @@ using Module3;
 
 namespace Module1.ViewModels;
 
+/// <summary>
+///     Represents the data and commands for the add-in window.
+/// </summary>
 public sealed partial class Module1ViewModel : ObservableObject
 {
     private readonly Document _document = RevitContext.ActiveDocument!;

@@ -8,7 +8,7 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 /// <summary>
-///     Compile solution projects
+///     Compile solution projects.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 public sealed class CompileProjectModule : Module

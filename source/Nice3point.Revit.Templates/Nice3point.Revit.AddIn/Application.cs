@@ -6,7 +6,7 @@ using Nice3point.Revit.AddIn._1.Commands;
 namespace Nice3point.Revit.AddIn._1;
 
 /// <summary>
-///     Application entry point
+///     Provides the Revit application entry point.
 /// </summary>
 [UsedImplicitly]
 #if (diHosting && isApplicationAddin)

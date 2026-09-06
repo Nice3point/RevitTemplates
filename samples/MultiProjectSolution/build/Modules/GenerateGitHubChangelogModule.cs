@@ -7,7 +7,7 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Generate and format the changelog for publishing on the GitHub.
+///     Generate and format the changelog for publishing on GitHub.
 /// </summary>
 [DependsOn<GenerateChangelogModule>]
 [DependsOn<ResolveVersioningModule>]

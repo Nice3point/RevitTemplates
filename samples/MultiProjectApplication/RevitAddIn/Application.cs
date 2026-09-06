@@ -5,7 +5,7 @@ using RevitAddIn.Commands;
 namespace RevitAddIn;
 
 /// <summary>
-///     Application entry point
+///     Provides the Revit application entry point.
 /// </summary>
 [UsedImplicitly]
 public class Application : ExternalApplication

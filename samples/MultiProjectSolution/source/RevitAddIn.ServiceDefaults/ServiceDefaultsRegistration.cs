@@ -7,7 +7,6 @@ namespace Microsoft.Extensions.Hosting;
 /// <summary>
 ///     Provides extension methods for <see cref="IHostApplicationBuilder" /> to apply the defaults every project of the add-in shares.
 /// </summary>
-/// <remarks>The registration lives in the namespace of the type it extends. A project referencing this one calls it without an extra using directive.</remarks>
 [PublicAPI]
 public static class ServiceDefaultsRegistration
 {

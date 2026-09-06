@@ -5,7 +5,7 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Generate and format the changelog for publishing on the NuGet.
+///     Generate and format the changelog for publishing on NuGet.
 /// </summary>
 [DependsOn<GenerateChangelogModule>]
 public sealed class GenerateNugetChangelogModule : Module<string>

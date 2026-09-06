@@ -37,7 +37,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
             return await GenerateReleaseNotesAsync(context, versioning);
         }
 
-        var changelog = await ParseChangelog(changelogFile, versioning.Version);
+        var changelog = await ParseChangelogAsync(changelogFile, versioning.Version);
         if (changelog.Length == 0)
         {
             context.Logger.LogWarning("No version entry exists in the changelog: {Version}", versioning.Version);
@@ -50,7 +50,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
     /// <summary>
     ///     Parse the changelog file to extract the entries for a specific version.
     /// </summary>
-    private static async Task<StringBuilder> ParseChangelog(File changelogFile, string version)
+    private static async Task<StringBuilder> ParseChangelogAsync(File changelogFile, string version)
     {
         const string separator = "# ";
 
@@ -87,8 +87,15 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
         var start = 0;
         var end = changelog.Length - 1;
 
-        while (start < changelog.Length && (changelog[start] == '\r' || changelog[start] == '\n')) start++;
-        while (end >= start && (changelog[end] == '\r' || changelog[end] == '\n')) end--;
+        while (start < changelog.Length && (changelog[start] == '\r' || changelog[start] == '\n'))
+        {
+            start++;
+        }
+
+        while (end >= start && (changelog[end] == '\r' || changelog[end] == '\n'))
+        {
+            end--;
+        }
 
         if (end < changelog.Length - 1)
         {
@@ -109,7 +116,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
         var repositoryId = long.Parse(context.GitHub().EnvironmentVariables.RepositoryId!);
 
         var previousVersion = versioning.PreviousVersion;
-        var isHashedVersion = previousVersion.Length >= 40 && previousVersion.All(c => char.IsDigit(c) || c is >= 'a' and <= 'f');
+        var isHashedVersion = previousVersion.Length >= 40 && previousVersion.All(character => char.IsDigit(character) || character is >= 'a' and <= 'f');
 
         var releaseNotes = await context.GitHub().Client.Repository.Release.GenerateReleaseNotes(repositoryId,
             new GenerateReleaseNotesRequest(versioning.Version)

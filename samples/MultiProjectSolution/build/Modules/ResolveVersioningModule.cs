@@ -98,11 +98,14 @@ public sealed class ResolveVersioningModule(IOptions<BuildOptions> buildOptions)
     }
 }
 
+/// <summary>
+///     Versions used to compile and publish the release.
+/// </summary>
 [PublicAPI]
 public sealed record ResolveVersioningResult
 {
     /// <summary>
-    ///     Release version, includes version number and release stage.
+    ///     The release version, with an optional prerelease label.
     /// </summary>
     /// <remarks>Version format: <c>version-environment.n.date</c>.</remarks>
     /// <example>
@@ -135,14 +138,11 @@ public sealed record ResolveVersioningResult
     /// <summary>
     ///     Indicates whether the current version represents a prerelease.
     /// </summary>
-    /// <remarks>
-    /// A version is considered a prerelease if it includes a version suffix,
-    /// such as "alpha", "beta", or similar identifiers.
-    /// </remarks>
+    /// <remarks>A version is considered a prerelease if it includes a version suffix, such as <c>alpha</c>, <c>beta</c>, or similar identifiers.</remarks>
     public required bool IsPrerelease { get; init; }
 
     /// <summary>
-    ///     The previous release version.
+    ///     The previous release reference, specified as a tag or commit SHA.
     /// </summary>
     public required string PreviousVersion { get; init; }
 }

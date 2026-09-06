@@ -112,7 +112,7 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
 
                 return new
                 {
-                    RevitVersion = int.Parse(revitVersion!),
+                    RevitVersion = int.Parse(revitVersion),
                     Files = new[]
                     {
                         new

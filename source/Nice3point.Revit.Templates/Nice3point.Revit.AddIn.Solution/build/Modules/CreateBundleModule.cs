@@ -106,7 +106,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
             }
         }, manifestDirectory);
     }
-    
+
     /// <summary>
     ///     Parse a version string from the given input.
     /// </summary>

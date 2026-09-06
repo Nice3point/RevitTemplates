@@ -8,6 +8,12 @@ using Nice3point.Revit.Toolkit.Options;
 
 namespace ModelessModule.ViewModels;
 
+/// <summary>
+///     Represents the data and commands for the add-in window.
+/// </summary>
+/// <param name="elementService">The service that extracts metadata from selected elements.</param>
+/// <param name="messenger">The messenger for window visibility requests.</param>
+/// <param name="logger">The logger for window operations.</param>
 public sealed partial class ModelessModuleViewModel(ElementMetadataExtractionService elementService, IMessenger messenger, ILogger<ModelessModuleViewModel> logger) : ObservableObject
 {
     [ObservableProperty]
@@ -20,7 +26,7 @@ public sealed partial class ModelessModuleViewModel(ElementMetadataExtractionSer
     private void ShowSummary()
     {
         ShowSummaryEvent.Raise();
-        
+
         logger.LogInformation("Selection successful");
     }
 
@@ -44,7 +50,7 @@ public sealed partial class ModelessModuleViewModel(ElementMetadataExtractionSer
         logger.LogInformation("Selection successful");
         Status = string.Empty;
     }
-    
+
     [ExternalEvent]
     private void ShowSummary(UIApplication application)
     {
@@ -54,7 +60,7 @@ public sealed partial class ModelessModuleViewModel(ElementMetadataExtractionSer
 
         ElementMetadata = elementService.ExtractMetadata(element);
     }
-    
+
     [ExternalEvent]
     private ElementId DeleteElement(UIApplication application)
     {
@@ -70,8 +76,8 @@ public sealed partial class ModelessModuleViewModel(ElementMetadataExtractionSer
 
         return reference.ElementId;
     }
-    
-    
+
+
     [ExternalEvent]
     private void SelectDelayedElement(UIApplication application)
     {

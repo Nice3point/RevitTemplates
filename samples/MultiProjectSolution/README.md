@@ -1,6 +1,6 @@
 # MultiProjectSolution
 
-Autodesk Revit plugin project organized into multiple solution files that target versions 2022 - 2026.
+Autodesk Revit plugin project organized into a single solution with configurations that target versions 2023 - 2027.
 
 ## Table of content
 
@@ -36,12 +36,12 @@ If you haven't already installed these, you can do so by visiting the following:
 
 ## Solution Structure
 
-| Folder  | Description                                                                |
-|---------|----------------------------------------------------------------------------|
-| build   | ModularPipelines build system. Used to automate project builds             |
-| install | Add-in installer, called implicitly by the ModularPipelines build          |
-| source  | Project source code folder. Contains all solution projects                 |
-| output  | Folder of generated files by the build system, such as bundles, installers |
+| Folder    | Description                                                                |
+|-----------|----------------------------------------------------------------------------|
+| build     | ModularPipelines build system. Used to automate project builds             |
+| installer | Add-in installer, called by the ModularPipelines build                     |
+| source    | Project source code folder. Contains all solution projects                 |
+| output    | Folder of generated files by the build system, such as bundles, installers |
 
 ## Project Structure
 
@@ -56,8 +56,8 @@ If you haven't already installed these, you can do so by visiting the following:
 
 ## Building
 
-We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET support. If you don't have Rider installed, you can download it
-from [here](https://www.jetbrains.com/rider/).
+We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET support.
+If you don't have Rider installed, you can download it from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
 2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.

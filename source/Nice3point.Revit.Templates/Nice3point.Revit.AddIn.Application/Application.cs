@@ -6,7 +6,7 @@ using Nice3point.Revit.AddIn._1.Commands;
 namespace Nice3point.Revit.AddIn._1;
 
 /// <summary>
-///     Application entry point
+///     Provides the Revit application entry point.
 /// </summary>
 [UsedImplicitly]
 #if (diHosting && isApplicationAddin)
@@ -18,8 +18,10 @@ public class Application : ExternalDBApplication
 #endif
 {
 #if (diHosting && isApplicationAddin)
+    /// <inheritdoc />
     public override async Task OnStartupAsync()
 #else
+    /// <inheritdoc />
     public override void OnStartup()
 #endif
     {

@@ -7,7 +7,7 @@ using Nice3point.Revit.Toolkit.Options;
 namespace RevitAddIn.Commands;
 
 /// <summary>
-///     External command entry point
+///     Provides the Revit external command entry point.
 /// </summary>
 [UsedImplicitly]
 [Transaction(TransactionMode.Manual)]

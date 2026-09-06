@@ -1,4 +1,4 @@
-﻿All templates are fully supported by .Net, and you can use them in your favourite IDE, such as **Visual Studio**, **JetBrains Rider** or CLI.
+All templates are fully supported by .NET, and you can use them in your favourite IDE, such as **Visual Studio**, **JetBrains Rider** or CLI.
 
 These templates supports Revit 2021-2026 versions out of the box and can be extended without any limitations.
 
