@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 #endif
 using Microsoft.Extensions.Logging;
 using Nice3point.Revit.AddIn._1.Diagnostics;
+using Nice3point.Revit.Logging;
 
 namespace Nice3point.Revit.AddIn._1.Logging;
 
@@ -48,9 +49,8 @@ public static class LoggingRegistration
                 logging.SetMinimumLevel(LogLevel.Debug);
                 logging.AddDebug();
 
-                //TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release
-                //logging.AddRevitJournal(RevitApiContext.Application);
-                //logging.AddFilter<RevitJournalLoggerProvider>(null, LogLevel.Error);
+                logging.AddRevitJournal(RevitApiContext.Application);
+                logging.AddFilter<RevitJournalLoggerProvider>(null, LogLevel.Error);
             });
 
             services.AddSingleton<AppDomainExceptionsHandler>();
@@ -72,14 +72,12 @@ public static class LoggingRegistration
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["Logging:LogLevel:Default"] = nameof(LogLevel.Debug),
-                //["Logging:RevitJournal:LogLevel:Default"] = nameof(LogLevel.Error)
+                ["Logging:RevitJournal:LogLevel:Default"] = nameof(LogLevel.Error)
             });
 
             builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
             builder.Logging.AddDebug();
-
-            //TODO: uncomment the Revit journal provider and its log level after the Nice3point.Revit.Logging release
-            //builder.Logging.AddRevitJournal(RevitApiContext.Application, options => options.ApplicationName = builder.Environment.ApplicationName);
+            builder.Logging.AddRevitJournal(RevitApiContext.Application, options => options.ApplicationName = builder.Environment.ApplicationName);
 
             builder.Services.AddHostedService<AppDomainExceptionsHandler>();
             builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);

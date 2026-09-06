@@ -6,9 +6,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*-*"/>
+        <PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
-        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release, the journal writer needs the Revit API-->
-        <!--<PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*-*"/>-->
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
         <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
     </ItemGroup>

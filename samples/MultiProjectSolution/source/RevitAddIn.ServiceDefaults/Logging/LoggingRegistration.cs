@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Nice3point.Revit.Logging;
 using RevitAddIn.ServiceDefaults.Diagnostics;
 
 namespace RevitAddIn.ServiceDefaults.Logging;
@@ -38,14 +39,12 @@ public static class LoggingRegistration
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["Logging:LogLevel:Default"] = nameof(LogLevel.Debug),
-                //["Logging:RevitJournal:LogLevel:Default"] = nameof(LogLevel.Error)
+                ["Logging:RevitJournal:LogLevel:Default"] = nameof(LogLevel.Error)
             });
 
             builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
             builder.Logging.AddDebug();
-
-            //TODO: uncomment the Revit journal provider and its log level after the Nice3point.Revit.Logging release
-            //builder.Logging.AddRevitJournal(RevitApiContext.Application, options => options.ApplicationName = builder.Environment.ApplicationName);
+            builder.Logging.AddRevitJournal(RevitApiContext.Application, options => options.ApplicationName = builder.Environment.ApplicationName);
 
             builder.Services.AddHostedService<AppDomainExceptionsHandler>();
             builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);

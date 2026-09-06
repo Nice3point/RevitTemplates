@@ -7,11 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <!-- Revit Dependencies -->
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
 <!--#if (diContainer)-->
+
         <!-- Application Hosting -->
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11"/>
 <!--#endif-->
 <!--#if (diHosting)-->
+
         <!-- Application Hosting -->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
 <!--#endif-->
@@ -21,8 +26,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11"/>
 <!--#endif-->
-        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release, the journal writer needs the Revit API-->
-        <!--<PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*"/>-->
+        <PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*"/>
 
         <!-- Development Dependencies -->
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>

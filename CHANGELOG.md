@@ -8,6 +8,7 @@
 - The installer no longer packages `.pdb` files.
 - The product name of the packages comes from the add-in project.
 - Add-ins log through `Microsoft.Extensions.Logging`, the Serilog packages are no longer referenced.
+- Records reach the Revit journal through the `Nice3point.Revit.Logging` provider, filtered to `Error`.
 - The logging option is available only when dependency injection is enabled.
 - The `Configuration` folder is replaced by `Logging` and `Diagnostics`.
 - The `Models` folder is no longer created.
