@@ -9,8 +9,6 @@ using ModalModule.Views;
 using ModelessModule;
 using ModelessModule.ViewModels;
 using ModelessModule.Views;
-using RevitAddIn.Logging;
-using RevitAddIn.Serialization;
 
 namespace RevitAddIn;
 
@@ -28,15 +26,13 @@ public static class Host
     {
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
+            ApplicationName = "RevitAddIn",
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });
 
-        //Logging
-        builder.AddLoggingDefaults();
-
-        //Serialization
-        builder.ConfigureJsonSerializer();
+        //Service defaults
+        builder.AddServiceDefaults();
 
         //MVVM services
         builder.Services.AddScoped<ModalModuleView>();

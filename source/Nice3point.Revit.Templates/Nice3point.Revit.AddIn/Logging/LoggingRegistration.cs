@@ -49,7 +49,7 @@ public static class LoggingRegistration
                 logging.AddDebug();
 
                 //TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release
-                //logging.AddRevitJournal();
+                //logging.AddRevitJournal(RevitApiContext.Application);
                 //logging.AddFilter<RevitJournalLoggerProvider>(null, LogLevel.Error);
             });
 
@@ -79,7 +79,7 @@ public static class LoggingRegistration
             builder.Logging.AddDebug();
 
             //TODO: uncomment the Revit journal provider and its log level after the Nice3point.Revit.Logging release
-            //builder.Logging.AddRevitJournal();
+            //builder.Logging.AddRevitJournal(RevitApiContext.Application, options => options.ApplicationName = builder.Environment.ApplicationName);
 
             builder.Services.AddHostedService<AppDomainExceptionsHandler>();
             builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);

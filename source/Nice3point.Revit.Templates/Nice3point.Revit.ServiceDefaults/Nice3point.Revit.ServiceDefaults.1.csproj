@@ -21,7 +21,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11"/>
 <!--#endif-->
-        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release-->
+        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release, the journal writer needs the Revit API-->
         <!--<PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*"/>-->
 
         <!-- Development Dependencies -->

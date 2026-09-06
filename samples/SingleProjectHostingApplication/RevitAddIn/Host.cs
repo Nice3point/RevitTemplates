@@ -21,6 +21,7 @@ public static class Host
     {
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
+            ApplicationName = "RevitAddIn",
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace RevitAddIn.Diagnostics;
+namespace RevitAddIn.ServiceDefaults.Diagnostics;
 
 /// <summary>
 ///     Represents a hosted service that writes unhandled AppDomain exceptions to the log while the host is running.

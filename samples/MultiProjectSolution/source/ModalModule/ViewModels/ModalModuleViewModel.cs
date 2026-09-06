@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RevitAddIn.ServiceDefaults.Serialization;
 
 namespace ModalModule.ViewModels;
 
@@ -22,6 +23,8 @@ public sealed partial class ModalModuleViewModel(ILogger<ModalModuleViewModel> l
 
         transaction.Commit();
         logger.LogInformation("Saving successful");
-        logger.LogInformation("{Info}", JsonSerializer.Serialize(this, serializerOptions.Value));
+
+        var snapshot = new ProjectMetadata(ProjectName);
+        logger.LogInformation("{Info}", JsonSerializer.Serialize(snapshot, serializerOptions.Value));
     }
 }

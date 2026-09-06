@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace RevitAddIn.Serialization;
+namespace RevitAddIn.ServiceDefaults.Serialization;
 
 /// <summary>
 ///     Provides extension methods for <see cref="IHostApplicationBuilder" /> to configure JSON serialization.
@@ -19,7 +19,7 @@ public static class SerializerRegistration
         ///     Configures the JSON serializer options the application serializes through.
         /// </summary>
         /// <returns>The <typeparamref name="TBuilder" /> for chaining.</returns>
-        /// <remarks><see cref="ModalModule.ViewModels.ModalModuleViewModel" /> shows how the options reach a consumer.</remarks>
+        /// <remarks>The options reach a consumer through <see cref="Microsoft.Extensions.Options.IOptions{TOptions}" />.</remarks>
         public TBuilder ConfigureJsonSerializer()
         {
             builder.Services.Configure<JsonSerializerOptions>(options =>
@@ -28,6 +28,7 @@ public static class SerializerRegistration
                 options.PropertyNameCaseInsensitive = true;
                 options.DefaultIgnoreCondition = builder.Environment.IsDevelopment() ? JsonIgnoreCondition.Never : JsonIgnoreCondition.WhenWritingNull;
                 options.Converters.Add(new JsonStringEnumConverter());
+                options.TypeInfoResolverChain.Add(ApplicationSerializerContext.Default);
             });
 
             return builder;

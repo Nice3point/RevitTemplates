@@ -19,8 +19,6 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
-        <!--TODO: uncomment the Revit journal provider after the Nice3point.Revit.Logging release-->
-        <!--<PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*-*"/>-->
         <PackageReference Include="ILRepack" Version="2.0.48"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
         <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
@@ -34,6 +32,7 @@
     <ItemGroup>
       <ProjectReference Include="..\ModalModule\ModalModule.csproj" />
       <ProjectReference Include="..\ModelessModule\ModelessModule.csproj" />
+      <ProjectReference Include="..\RevitAddIn.ServiceDefaults\RevitAddIn.ServiceDefaults.csproj" />
     </ItemGroup>
 
 </Project>

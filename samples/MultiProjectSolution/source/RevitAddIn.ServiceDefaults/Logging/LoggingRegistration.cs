@@ -2,9 +2,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RevitAddIn.Diagnostics;
+using RevitAddIn.ServiceDefaults.Diagnostics;
 
-namespace RevitAddIn.Logging;
+namespace RevitAddIn.ServiceDefaults.Logging;
 
 /// <summary>
 ///     Provides extension methods for <see cref="IHostApplicationBuilder" /> to add the application logging defaults.
@@ -45,7 +45,7 @@ public static class LoggingRegistration
             builder.Logging.AddDebug();
 
             //TODO: uncomment the Revit journal provider and its log level after the Nice3point.Revit.Logging release
-            //builder.Logging.AddRevitJournal();
+            //builder.Logging.AddRevitJournal(RevitApiContext.Application, options => options.ApplicationName = builder.Environment.ApplicationName);
 
             builder.Services.AddHostedService<AppDomainExceptionsHandler>();
             builder.Services.Configure<ConsoleLifetimeOptions>(options => options.SuppressStatusMessages = true);

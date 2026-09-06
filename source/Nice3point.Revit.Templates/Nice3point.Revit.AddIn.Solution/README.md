@@ -63,12 +63,14 @@ If you haven't already installed these, you can do so by visiting the following:
 
 ## Project Structure
 
-| Folder     | Description                                                                                                                                                                                          |
-|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commands   | External commands invoked from the Revit ribbon. Registered in the `Application` class                                                                                                               |
-| ViewModels | Classes that implement properties and commands to which the view can bind data. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm).                                     |
-| Views      | Classes that are responsible for defining the structure, layout and appearance of what the user sees on the screen. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm). |
-| Resources  | Images, sounds, localisation files, etc.                                                                                                                                                             |
+| Folder      | Description                                                                                                                                                                                          |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Commands    | External commands invoked from the Revit ribbon. Registered in the `Application` class                                                                                                               |
+| ViewModels  | Classes that implement properties and commands to which the view can bind data. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm).                                     |
+| Views       | Classes that are responsible for defining the structure, layout and appearance of what the user sees on the screen. More [details](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm). |
+| Resources   | Images, sounds, localisation files, etc.                                                                                                                                                             |
+| Logging     | Logging providers and levels. Applied by the `AddLoggingDefaults` method                                                                                                                             |
+| Diagnostics | Services that report failures of the running add-in                                                                                                                                                  |
 
 ## Building
 

@@ -20,4 +20,8 @@
         <PackageReference Include="Polyfill" Version="11.2.0" PrivateAssets="all"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\RevitAddIn.ServiceDefaults\RevitAddIn.ServiceDefaults.csproj"/>
+    </ItemGroup>
+
 </Project>

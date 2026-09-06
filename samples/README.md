@@ -8,7 +8,7 @@ Templates description: https://github.com/Nice3point/RevitTemplates/wiki/Templat
 
 ## Basic
 
-- **[Single-project Application](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectApplication)** — 
+- **[Single-project Application](https://github.com/Nice3point/RevitTemplates/tree/develop/samples/SingleProjectApplication)** —
   a simple add-in without a user interface, perfect for beginners.
   It contains only one command and a button on the Revit ribbon to run it.
 
@@ -74,6 +74,7 @@ Templates description: https://github.com/Nice3point/RevitTemplates/wiki/Templat
     - MVVM pattern implementation with modal and modeless windows
     - Dependency Injection implementation using Hosting
     - Logging
+    - Common configuration in a separate `ServiceDefaults` project
     - Tests example
     - Benchmarks example
     - `IOptions\<T\>` usages for serialization
@@ -83,6 +84,7 @@ Templates description: https://github.com/Nice3point/RevitTemplates/wiki/Templat
 |-------------------------|-----------------------------------------------------------------------|----------------------------------------------------|
 | Revit Solution          | Bundle support<br/>Installer support<br/>Testing support<br/>Pipeline | Enabled<br/>Enabled<br/>Enabled<br/>GitHub actions |
 | Revit AddIn Application | Logging support<br/>AddIn type<br/>IoC                                | Enabled<br/>Application<br/>Hosting                |
+| Revit Service Defaults  | Dependency Injection                                                  | Hosting                                            |
 | Revit AddIn Module      | Inject dependencies<br/>User interface                                | Enabled<br/>Modal                                  |
 | Revit AddIn Module      | Inject dependencies<br/>User interface                                | Enabled<br/>Modeless                               |
 | Revit Benchmarks        |                                                                       |                                                    |

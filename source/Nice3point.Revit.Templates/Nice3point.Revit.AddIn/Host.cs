@@ -41,6 +41,7 @@ public static class Host
 #if (diHosting)
         var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
+            ApplicationName = "Nice3point.Revit.AddIn.1",
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });
