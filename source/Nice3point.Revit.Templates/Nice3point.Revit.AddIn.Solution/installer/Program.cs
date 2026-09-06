@@ -18,12 +18,12 @@ var project = new Project
     Platform = Platform.x64,
     UI = WUI.WixUI_FeatureTree,
     MajorUpgrade = MajorUpgrade.Default,
-    BannerImage = @"install\Resources\Icons\BannerImage.png",
-    BackgroundImage = @"install\Resources\Icons\BackgroundImage.png",
+    BannerImage = @"installer\Resources\Icons\BannerImage.png",
+    BackgroundImage = @"installer\Resources\Icons\BackgroundImage.png",
     ControlPanelInfo =
     {
         Manufacturer = Environment.UserName,
-        ProductIcon = @"install\Resources\Icons\ShellIcon.ico"
+        ProductIcon = @"installer\Resources\Icons\ShellIcon.ico"
     }
 };
 

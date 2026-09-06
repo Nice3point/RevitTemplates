@@ -16,7 +16,7 @@
     <File Path="CHANGELOG.md"/>
     <File Path="README.md"/>
   </Folder>
-  <Folder Name="/Automation/">
+  <Folder Name="/Build/">
     <Project Path="build/Build.csproj">
       <BuildType Solution="Debug.R23|*" Project="Debug"/>
       <BuildType Solution="Debug.R24|*" Project="Debug"/>
@@ -30,7 +30,9 @@
       <BuildType Solution="Release.R27|*" Project="Release"/>
       <Build Project="false"/>
     </Project>
-    <Project Path="install/Installer.csproj">
+  </Folder>
+  <Folder Name="/Installer/">
+    <Project Path="installer/Installer.csproj">
       <BuildType Solution="Debug.R23|*" Project="Debug"/>
       <BuildType Solution="Debug.R24|*" Project="Debug"/>
       <BuildType Solution="Debug.R25|*" Project="Debug"/>

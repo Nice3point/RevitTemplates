@@ -10,12 +10,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build\appsettings.json = build\appsettings.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build", "build\Build.csproj", "{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB}"
 EndProject
 #if (includeInstaller)
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Installer", "install\Installer.csproj", "{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Installer", "installer\Installer.csproj", "{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA}"
 EndProject
 #endif
 Global
@@ -58,7 +60,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB} = {FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}
 #if (includeInstaller)
-		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA} = {FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}
+		{AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA} = {DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD}
 #endif
 	EndGlobalSection
 EndGlobal

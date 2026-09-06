@@ -19,7 +19,7 @@
     <File Path="CHANGELOG.md"/>
 #endif
   </Folder>
-  <Folder Name="/Automation/">
+  <Folder Name="/Build/">
     <Project Path="build/Build.csproj">
       <BuildType Solution="Debug.R23|*" Project="Debug"/>
       <BuildType Solution="Debug.R24|*" Project="Debug"/>
@@ -32,8 +32,11 @@
       <BuildType Solution="Release.R26|*" Project="Debug"/>
       <BuildType Solution="Release.R27|*" Project="Debug"/>
       <Build Project="false"/>
-    </Project>#if (includeInstaller)
-    <Project Path="install\Installer.csproj">
+    </Project>
+  </Folder>
+#if (includeInstaller)
+  <Folder Name="/Installer/">
+    <Project Path="installer/Installer.csproj">
       <BuildType Solution="Debug.R23|*" Project="Debug"/>
       <BuildType Solution="Debug.R24|*" Project="Debug"/>
       <BuildType Solution="Debug.R25|*" Project="Debug"/>
@@ -45,6 +48,7 @@
       <BuildType Solution="Release.R26|*" Project="Debug"/>
       <BuildType Solution="Release.R27|*" Project="Debug"/>
       <Build Project="false"/>
-    </Project>#endif
+    </Project>
   </Folder>
+#endif
 </Solution>
