@@ -9,7 +9,8 @@
 - The product name of the packages comes from the add-in project.
 - Add-ins log through `Microsoft.Extensions.Logging`, the Serilog packages are no longer referenced.
 - Records reach the Revit journal through the `Nice3point.Revit.Logging` provider, filtered to `Error`.
-- The logging option is available only when dependency injection is enabled.
+- The logging option is available only when dependency injection is enabled, and the `revit-addin-application` template no longer carries it.
+- `revit-addin-application` scaffolds the entry point alone, and `revit-servicedefaults` carries the logging and diagnostics its modules share.
 - The `Configuration` folder is replaced by `Logging` and `Diagnostics`.
 - The `Models` folder is no longer created.
 - The new `revit-servicedefaults` template creates a project with the configuration common to the application and its modules.

@@ -76,14 +76,6 @@
       ],
       "defaultValue": "disabled"
     },
-    "addinLogging": {
-      "type": "parameter",
-      "displayName": "Logging support",
-      "datatype": "bool",
-      "description": "Microsoft.Extensions.Logging infrastructure for diagnostic logging",
-      "isEnabled": "addinDiMode != \"disabled\"",
-      "defaultValue": "false"
-    },
     "isCommandAddin": {
       "type": "computed",
       "value": "addinManifestType == \"command\""
@@ -107,10 +99,6 @@
     "useDi": {
       "type": "computed",
       "value": "addinDiMode != \"disabled\""
-    },
-    "useLogging": {
-      "type": "computed",
-      "value": "addinLogging && addinDiMode != \"disabled\""
     }
   },
   "sources": [
@@ -138,13 +126,6 @@
           "condition": "!useDi",
           "exclude": [
             "Host.cs"
-          ]
-        },
-        {
-          "condition": "!useLogging",
-          "exclude": [
-            "Logging/**",
-            "Diagnostics/**"
           ]
         }
       ]

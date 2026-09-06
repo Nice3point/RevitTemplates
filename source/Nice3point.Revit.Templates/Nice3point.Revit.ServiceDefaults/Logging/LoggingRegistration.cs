@@ -48,7 +48,6 @@ public static class LoggingRegistration
             {
                 logging.SetMinimumLevel(LogLevel.Debug);
                 logging.AddDebug();
-
                 logging.AddRevitJournal(RevitApiContext.Application);
                 logging.AddFilter<RevitJournalLoggerProvider>(null, LogLevel.Error);
             });

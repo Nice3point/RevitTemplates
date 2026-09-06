@@ -8,14 +8,10 @@
     "addinDiMode": {
       "longName": "di",
       "shortName": ""
-    },
-    "addinLogging": {
-      "longName": "logger",
-      "shortName": ""
     }
   },
   "usageExamples": [
     "dotnet new revit-addin-application",
-    "dotnet new revit-addin-application --addin command --di hosting --logger"
+    "dotnet new revit-addin-application --addin command --di hosting"
   ]
 }

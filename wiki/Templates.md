@@ -1,4 +1,4 @@
-All templates are fully supported by .Net, and you can use them in your favourite IDE, such as **Visual Studio**, **JetBrains Rider** or CLI.
+﻿All templates are fully supported by .Net, and you can use them in your favourite IDE, such as **Visual Studio**, **JetBrains Rider** or CLI.
 
 These templates supports Revit 2021-2026 versions out of the box and can be extended without any limitations.
 
@@ -40,7 +40,8 @@ Option for developers who want to create a distributed scalable application.
 
 This template creates a main empty application containing only the entry point file and `.addin` manifest.
 
-Optionally, you can enable dependency injection and support, where this application becomes a dependency provider for other modules.
+Optionally, you can enable dependency injection, where this application becomes a dependency provider for other modules.
+For Logging, diagnostics and the rest of the shared configuration add [Revit Service Defaults](#revit-service-defaults).
 
 > [!NOTE]  
 > Project based on this template should be used to combine all modules and connect them to the Revit ribbon, and it should not contain business logic if you plan to create a modular application.
@@ -69,8 +70,7 @@ Option for developers who want one configuration for the application and all its
 This template creates a class library with the logging and diagnostics setup, and a single `AddServiceDefaults` method that applies it.
 The method is declared in the namespace of the host builder, and you call it without an extra `using` directive.
 
-After creating a project based on this template, you have to add a `reference` to this project from [Revit AddIn Application](#revit-addin-application).
-Then delete the `Logging` and `Diagnostics` folders from the application, this template already contains them, and call `AddServiceDefaults` instead of `AddLoggingDefaults`.
+After creating a project based on this template, you have to add a `reference` to this project from [Revit AddIn Application](#revit-addin-application) and call `AddServiceDefaults`.
 
 > [!IMPORTANT]
 > Choose the same `Dependency Injection` option the application was created with, it selects the type the defaults are applied to.

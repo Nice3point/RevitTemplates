@@ -9,10 +9,6 @@
     {
       "id": "addinDiMode",
       "persistenceScope": "shared"
-    },
-    {
-      "id": "addinLogging",
-      "persistenceScope": "shared"
     }
   ]
 }

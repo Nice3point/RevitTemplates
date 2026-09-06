@@ -4,12 +4,6 @@ using System.Reflection;
 using Microsoft.Extensions.Hosting;
 #endif
 using Microsoft.Extensions.DependencyInjection;
-#if (useLogging && diContainer)
-using Nice3point.Revit.AddIn._1.Diagnostics;
-#endif
-#if (useLogging)
-using Nice3point.Revit.AddIn._1.Logging;
-#endif
 
 namespace Nice3point.Revit.AddIn._1;
 
@@ -38,11 +32,6 @@ public static class Host
             ContentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             DisableDefaults = true
         });
-#if (useLogging)
-
-        //Logging
-        builder.AddLoggingDefaults();
-#endif
 
         _host = builder.Build();
 #if (isApplicationAddin || isCommandAddin)
@@ -53,16 +42,8 @@ public static class Host
 #else
 #if (diContainer)
         var services = new ServiceCollection();
-#if (useLogging)
-
-        //Logging
-        services.AddLoggingDefaults();
-#endif
 
         _serviceProvider = services.BuildServiceProvider();
-#if (useLogging)
-        _serviceProvider.GetRequiredService<AppDomainExceptionsHandler>().LogExceptions();
-#endif
 #endif
 #endif
     }

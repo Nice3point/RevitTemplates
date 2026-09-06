@@ -178,19 +178,15 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
         {
             foreach (var di in addInDiModes)
             {
-                foreach (var logging in boolOptions)
+                matrix.Add(new TemplateMetadata
                 {
-                    matrix.Add(new TemplateMetadata
+                    Template = "revit-addin-application",
+                    Options = new Dictionary<string, string>
                     {
-                        Template = "revit-addin-application",
-                        Options = new Dictionary<string, string>
-                        {
-                            { "addin", type },
-                            { "di", di },
-                            { "logger", logging }
-                        }
-                    });
-                }
+                        { "addin", type },
+                        { "di", di }
+                    }
+                });
             }
         }
 
