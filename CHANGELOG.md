@@ -7,6 +7,22 @@
 - The installer upgrade code moved to the `Installer` section of `build/appsettings.json`.
 - The installer no longer packages `.pdb` files.
 - The product name of the packages comes from the add-in project.
+- Add-ins log through `Microsoft.Extensions.Logging`, the Serilog packages are no longer referenced.
+- The logging option is available only when dependency injection is enabled.
+- The `Configuration` folder is replaced by `Logging` and `Diagnostics`.
+- The `Models` folder is no longer created.
+- The new `revit-servicedefaults` template creates a project with the configuration common to the application and its modules.
+- The host of a generated add-in carries the project name in `IHostEnvironment.ApplicationName`.
+- The sample solution keeps its logging, diagnostics and serialization in a `ServiceDefaults` project, and serializes through a source-generated context.
+- The Extensible Storage sample stores its data through a schema definition and a typed context.
+
+### Add-in migration
+
+1. Delete the `Configuration` folder from the add-in project.
+2. Create a temporary project using version 6.3.0 with the same options and copy the new `Logging` and `Diagnostics` folders to your project.
+3. Replace the Serilog registration in `Host.cs` with `AddLoggingDefaults()`, the `ConfigureHosting()` call is no longer needed.
+4. Remove the `Serilog`, `Serilog.Sinks.Debug` and `Serilog.Extensions.Hosting` package references.
+5. Replace `Serilog.ILogger` with `ILogger<T>` and `logger.Information(...)` with `logger.LogInformation(...)` in the classes that write logs.
 
 ### Solution migration
 

@@ -18,7 +18,7 @@ This repository contains a collection of project templates for creating Revit Ad
 - Multi-target Revit API version support
 - WPF support with MVVM architecture
 - Dependency Injection support
-- Integrated Serilog support for structured logging
+- Logging support with Microsoft.Extensions.Logging
 - Custom MSBuild SDK for simplified development
 - Assembly isolation support for .NET Core builds
 - Modern build system for building, testing and packaging
