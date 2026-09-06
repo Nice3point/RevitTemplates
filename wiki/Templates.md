@@ -10,6 +10,7 @@ More information about dotnet templates: https://github.com/dotnet/templating/wi
 * [Revit AddIn](#revit-addin) - template for creating single-project add-in.
 * [Revit AddIn Application](#revit-addin-application) - template for creating an empty application for multi-project add-in.
 * [Revit AddIn Module](#revit-addin-module) - template for creating an empty module for multi-project add-in.
+* [Revit Service Defaults](#revit-service-defaults) - template for creating a common configuration project for multi-project add-in.
 * [Revit AddIn Solution](#revit-addin-solution) - template for creating a solution structure for Revit add-ins.
 * [Revit Benchmark](#revit-benchmark) - template for creating performance benchmarks for Revit API.
 * [Revit Test](#revit-test) - template for creating unit tests for Revit API.
@@ -59,6 +60,20 @@ After creating a project based on this template, you have to add a `reference` t
 > Creating a project without UI based on this template will create a completely empty project, great for writing util libraries for your add-in.
 
 ![image](https://github.com/user-attachments/assets/abedaa19-5e66-41f2-bedb-f43c5dac1d06)
+
+# Revit Service Defaults
+
+Suitable for modular add-ins.
+Option for developers who want one configuration for the application and all its modules.
+
+This template creates a class library with the logging and diagnostics setup, and a single `AddServiceDefaults` method that applies it.
+The method is declared in the namespace of the host builder, and you call it without an extra `using` directive.
+
+After creating a project based on this template, you have to add a `reference` to this project from [Revit AddIn Application](#revit-addin-application).
+Then delete the `Logging` and `Diagnostics` folders from the application, this template already contains them, and call `AddServiceDefaults` instead of `AddLoggingDefaults`.
+
+> [!IMPORTANT]
+> Choose the same `Dependency Injection` option the application was created with, it selects the type the defaults are applied to.
 
 # Revit AddIn Solution
 
