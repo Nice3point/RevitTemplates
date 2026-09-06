@@ -6,9 +6,11 @@
 #Project-specific folders
 *obj/
 *bin/
+*temp/
 
 #Build output folder
 /output/
+BenchmarkDotNet.Artifacts/
 
 #User-specific files
 *.user
