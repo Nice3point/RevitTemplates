@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using JetBrains.Annotations;
 
 namespace Build.Options;
 
 /// <summary>
 ///     Build configuration options.
 /// </summary>
-[Serializable]
+[PublicAPI]
 public sealed record BuildOptions
 {
     /// <summary>

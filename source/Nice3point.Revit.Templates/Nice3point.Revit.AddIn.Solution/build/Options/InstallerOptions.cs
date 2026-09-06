@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using JetBrains.Annotations;
 
 namespace Build.Options;
 
 /// <summary>
 ///     Installer configuration options.
 /// </summary>
-[Serializable]
+[PublicAPI]
 public sealed record InstallerOptions
 {
     /// <summary>

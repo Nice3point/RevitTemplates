@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using ModularPipelines.Attributes;
 
 namespace Build.Options;
@@ -5,7 +6,7 @@ namespace Build.Options;
 /// <summary>
 ///     NuGet publishing options.
 /// </summary>
-[Serializable]
+[PublicAPI]
 public sealed record NuGetOptions
 {
     /// <summary>

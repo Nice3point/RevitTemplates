@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using JetBrains.Annotations;
 
 namespace Build.Options;
 
@@ -6,7 +7,7 @@ namespace Build.Options;
 ///     Information about the Autodesk application package.
 /// </summary>
 /// <seealso href="https://www.autodesk.com/autodesk-university/class/AppBundle-Cross-Distribution-Autodesk-Products-App-Store-and-Forge-2020">AppBundle: Cross-Distribution Autodesk Products, App Store, and Forge</seealso>
-[Serializable]
+[PublicAPI]
 public sealed record BundleOptions
 {
     /// <summary>

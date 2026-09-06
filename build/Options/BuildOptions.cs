@@ -1,9 +1,11 @@
+using JetBrains.Annotations;
+
 namespace Build.Options;
 
 /// <summary>
 ///     Build output options.
 /// </summary>
-[Serializable]
+[PublicAPI]
 public sealed record BuildOptions
 {
     /// <summary>
