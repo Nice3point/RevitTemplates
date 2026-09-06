@@ -1,4 +1,4 @@
-﻿using Nice3point.Revit.Toolkit.External;
+using Nice3point.Revit.Toolkit.External;
 #if (isApplicationAddin)
 using Nice3point.Revit.AddIn._1.Commands;
 #endif

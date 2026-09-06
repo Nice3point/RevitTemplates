@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Attributes;
 using CommunityToolkit.Mvvm.Messaging;
 using Nice3point.Revit.Extensions.UI;
 using Nice3point.Revit.Toolkit.External;

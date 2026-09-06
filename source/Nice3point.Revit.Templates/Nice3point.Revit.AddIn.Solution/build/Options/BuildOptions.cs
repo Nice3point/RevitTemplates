@@ -1,4 +1,4 @@
-﻿#if (hasArtifacts)
+#if (hasArtifacts)
 using System.ComponentModel.DataAnnotations;
 
 #endif

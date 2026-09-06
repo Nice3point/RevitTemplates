@@ -1,4 +1,4 @@
-﻿By default, the `.dll` and `.addin` files are included for publishing.
+By default, the `.dll` and `.addin` files are included for publishing.
 If you need to include additional files, such as configurations or family files, include them in the `Content` item.
 
 ## Tagging third-party files

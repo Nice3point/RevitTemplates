@@ -1,4 +1,4 @@
-﻿#if (hasArtifacts)
+#if (hasArtifacts)
 using Build.Options;
 using Microsoft.Extensions.Options;
 #endif

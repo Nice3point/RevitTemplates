@@ -1,4 +1,4 @@
-﻿namespace Build.Options;
+namespace Build.Options;
 
 [Serializable]
 public sealed record PublishOptions

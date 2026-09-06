@@ -1,4 +1,4 @@
-﻿namespace Build.Options;
+namespace Build.Options;
 
 /// <summary>
 ///     Release publishing options.

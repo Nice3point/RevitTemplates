@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.Git.Extensions;

@@ -1,4 +1,4 @@
-﻿using RevitAddIn.ViewModels;
+using RevitAddIn.ViewModels;
 
 namespace RevitAddIn.Views;
 

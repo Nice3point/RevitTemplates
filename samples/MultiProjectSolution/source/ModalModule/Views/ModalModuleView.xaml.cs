@@ -1,4 +1,4 @@
-﻿using ModalModule.ViewModels;
+using ModalModule.ViewModels;
 
 namespace ModalModule.Views;
 

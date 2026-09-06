@@ -1,4 +1,4 @@
-﻿namespace RevitAddIn.ViewModels;
+namespace RevitAddIn.ViewModels;
 
 public sealed partial class RevitAddInViewModel : ObservableObject
 {

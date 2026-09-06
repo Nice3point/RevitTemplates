@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using RevitAddIn.Messages;
 using RevitAddIn.ViewModels;

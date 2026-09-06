@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.UI;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;

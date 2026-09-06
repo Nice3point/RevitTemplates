@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Attributes;
 using ModalModule.Views;
 using Nice3point.Revit.Toolkit.External;
 

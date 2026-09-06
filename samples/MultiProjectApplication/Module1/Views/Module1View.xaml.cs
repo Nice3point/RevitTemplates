@@ -1,4 +1,4 @@
-﻿using Module1.ViewModels;
+using Module1.ViewModels;
 
 namespace Module1.Views;
 

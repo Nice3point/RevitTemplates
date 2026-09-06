@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using Nice3point.BenchmarkDotNet.Revit;
 
 namespace RevitAddIn.Benchmark.Benchmarks;

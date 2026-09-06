@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Attributes;
 using Nice3point.Revit.Toolkit.External;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;

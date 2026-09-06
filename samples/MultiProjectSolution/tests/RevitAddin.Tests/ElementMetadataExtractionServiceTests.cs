@@ -1,4 +1,4 @@
-﻿using ModelessModule;
+using ModelessModule;
 using RevitAddin.Tests.Abstractions;
 using RevitAddin.Tests.DataSources;
 

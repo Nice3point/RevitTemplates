@@ -1,4 +1,4 @@
-﻿namespace Module2.ViewModels;
+namespace Module2.ViewModels;
 
 public sealed partial class Module2ViewModel : ObservableObject
 {
