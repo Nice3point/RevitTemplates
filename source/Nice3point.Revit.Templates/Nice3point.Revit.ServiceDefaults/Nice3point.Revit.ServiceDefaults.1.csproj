@@ -13,18 +13,18 @@
 <!--#if (diContainer)-->
 
         <!-- Application Hosting -->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12"/>
 <!--#endif-->
 <!--#if (diHosting)-->
 
         <!-- Application Hosting -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12"/>
 <!--#endif-->
 
         <!-- Logging -->
 <!--#if (diContainer)-->
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12"/>
 <!--#endif-->
         <PackageReference Include="Nice3point.Revit.Logging" Version="$(RevitVersion).*"/>
 
