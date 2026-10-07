@@ -28,14 +28,15 @@ public sealed partial class ProjectService(ILogger<ProjectService> logger)
 }
 ```
 
-- Records with the `Error` level and above reach the Revit journal through the `Nice3point.Revit.Logging` provider. With hosting, the `Logging:RevitJournal:LogLevel` configuration section changes the level.
+- Records with the `Error` level and above are written to the Revit journal through the `Nice3point.Revit.Logging` provider. With hosting, the `Logging:RevitJournal:LogLevel` configuration section changes the level.
 - Unhandled `AppDomain` exceptions are written to the log with the `Critical` level.
 - The `Configuration` folder is replaced by `Logging` and `Diagnostics`.
 
 ### Service defaults template
 
-The new `revit-servicedefaults` template creates a project with the logging and diagnostics that an application and its modules share.
-`revit-addin-application` now creates the entry point alone, and the application host applies the shared defaults:
+The new `revit-servicedefaults` template creates a project for the service configuration that an application and its modules share, on the model of the [.NET Aspire service defaults](https://learn.microsoft.com/dotnet/aspire/fundamentals/service-defaults).
+The template provides logging and diagnostics, and the project is the place for every other shared registration: serialization, HTTP clients, options.
+`revit-addin-application` now creates the entry point alone, and the application host applies the shared defaults with one call:
 
 ```shell
 dotnet new revit-addin-application -n RevitAddIn --di hosting
@@ -64,9 +65,9 @@ The installer project moved from the `install` folder to `installer` and builds 
 
 ### Tests and benchmarks
 
-- Test hooks run on the Revit thread without `[HookExecutor<RevitThreadExecutor>]`, and the test project no longer contains `TestsConfiguration.cs`.
-- The new test contains a TUnit assertion, and the project builds without warnings.
-- The benchmark project runs through `BenchmarkSwitcher`. Command-line arguments select the benchmarks to run: `dotnet run -c Release.R26 -- --filter *`.
+- The test project is adapted to the latest `Nice3point.TUnit.Revit`, which runs test hooks on the Revit thread. `[HookExecutor<RevitThreadExecutor>]` and `TestsConfiguration.cs` are removed.
+- The test template contains a TUnit assertion.
+- The benchmark project runs through `BenchmarkSwitcher`. Command-line arguments select the benchmarks to run: `dotnet run -c Release.R26 -- --filter '*'`.
 - The benchmark class is marked `[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]`, and the IDE no longer reports the benchmarks as unused.
 
 ### Generated code
@@ -128,21 +129,30 @@ The installer project moved from the `install` folder to `installer` and builds 
 3. Replace the Serilog registration in `Host.cs`:
 
    ```c#
-   // Before
+   // Before, hosting
    builder.Logging.ClearProviders();
    builder.Logging.AddSerilog();
    builder.ConfigureHosting();
 
-   // After
+   // After, hosting
    builder.AddLoggingDefaults();
+
+   // Before, container
+   services.AddSerilog();
+   _serviceProvider = services.BuildServiceProvider();
+
+   // After, container
+   services.AddLoggingDefaults();
+   _serviceProvider = services.BuildServiceProvider();
+   _serviceProvider.GetRequiredService<AppDomainExceptionsHandler>().LogExceptions();
    ```
 
 4. Remove the `Serilog`, `Serilog.Sinks.Debug`, and `Serilog.Extensions.Hosting` package references.
-5. Replace `Serilog.ILogger` with `ILogger<T>` in the classes that write logs:
+5. With hosting, Serilog was a provider of `Microsoft.Extensions.Logging`, and the classes already receive `ILogger<T>`. With the container option, replace the injected `Serilog.ILogger` with `ILogger<T>`:
 
    ```c#
    // Before
-   public class ProjectService(ILogger logger)
+   public class ProjectService(Serilog.ILogger logger)
    {
        public void Save() => logger.Information("Message");
    }

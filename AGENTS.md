@@ -18,11 +18,10 @@ Each template is a real project annotated for the .NET template engine; the SDK 
 ## Template content
 
 * Generated code is a starting point the consumer extends. An extension point stays in place even where the IDE offers a shorter form: the `if` around an optional `StringBuilder`, the `{ }` body of an empty view model.
-* A build module is self-contained. Two modules repeat a small helper, such as `VersionRegex`, rather than share a file the template has to include conditionally.
-* An options type of the build declares `public const string ConfigurationSectionName`, and `Program.cs` binds it as `AddOptions<T>().Bind(builder.Configuration.GetSection(T.ConfigurationSectionName)).ValidateDataAnnotations()`. A required property is `[Required]` on its own line above `public string Name { get; init; } = null!;`.
-* The test template contains a real assertion, and the generated projects build without warnings.
+* A build module is self-contained. Two modules may repeat a small helper, such as `VersionRegex`, and template content has no shared helper file.
+* An options type of the build declares its configuration section in `ConfigurationSectionName`, and `Program.cs` binds the options through it, never through a section name literal.
 * `samples/MultiProjectSolution/build` and `samples/MultiProjectSolution/installer` equal the Solution template with every option enabled; only the Sourcy solution name differs (`Solutions.MultiProjectSolution`).
-* Template content and samples use LF line endings and end with a newline. The package packs the files from the working tree, so a CRLF file on disk reaches the consumer.
+* Template content and samples use LF line endings and end with a newline. The package packs the files from the working tree, and a CRLF file on disk reaches the consumer.
 * Renovate skips a file that holds template directives, such as the `global.json` of the Solution template. Such a file is updated by hand together with its counterpart at the root.
 
 ## Style
@@ -33,7 +32,7 @@ The `writing-xml-doc-comments` skill applies, in the register of the Microsoft .
 
 * A tag uses the vocabulary of the domain: upgrade code, disk ID, installation scope, side by side, feature band. Figurative verbs such as *leaves*, *carries*, *holds*, *offers*, and *lays out* are replaced by *contains*, *stores*, *defines*, *has*, or a conditional sentence.
 * A tag states a condition as `If …, …` and contains no participial phrase: *including*, *preferring*, *selecting*, *targeting*.
-* A ModularPipelines module opens with `Represents the pipeline step that …`. An override in the build project has no `<inheritdoc />`, because ModularPipelines documents no base member.
+* A ModularPipelines module opens with `Represents the pipeline step that …`. ModularPipelines documents no base member, and an override in the build project has no `<inheritdoc />`.
 * An `<example>` lists the values a consumer reads in the code, one per line, separated by `<br />`, without `<c>`.
 
 ### Public messages
