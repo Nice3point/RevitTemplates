@@ -11,6 +11,10 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   windows:
     name: windows-2025
@@ -37,6 +41,12 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'Directory.Packages.props') }}
           restore-keys: ${{ runner.os }}-nuget-
 
+      - name: Log in to NuGet
+        id: nuget
+        uses: NuGet/login@v1
+        with:
+          user: Nice3point
+
       - name: Publish release
         run: dotnet run -c Release -- pack test publish
         working-directory: "build"
@@ -44,4 +54,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOTNET_ENVIRONMENT: ${{ (github.ref_name == 'main' || github.ref_type == 'tag') && 'Production' || 'Development' }}
           Publish__Version: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version || github.ref_name }}
-          NuGet__ApiKey: ${{ secrets.NUGET_API_KEY }}
+          NuGet__ApiKey: ${{ steps.nuget.outputs.NUGET_API_KEY }}
