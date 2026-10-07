@@ -206,7 +206,9 @@ To exclude certain assemblies from repacking if they cause unexpected behavior, 
 ```
 
 Wildcards are supported.
-All binaries are repacked into the **bin** directory after the build.
+All binaries are repacked into the **publish** directory.
+The **bin** directory keeps the original assemblies, and a project that references the add-in, such as a test project.
+Repacking requires `PublishAddin` or `DeployAddin` enabled.
 
 For .NET Core applications, it is recommended to disable this feature and use **Dependency Isolation**, which is available starting from Revit 2026.
 

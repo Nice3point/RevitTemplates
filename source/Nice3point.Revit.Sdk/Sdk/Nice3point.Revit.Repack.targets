@@ -4,14 +4,15 @@
     ============================================================
                          Repack Output files
 
-    Targets for repacking the build output into a single assembly
+    Targets for repacking the published add-in into a single assembly.
+    The build output keeps the original assemblies.
     ============================================================
     -->
 
     <Target Name="RepackAddinFiles"
-            AfterTargets="Build"
-            BeforeTargets="PublishAddin"
-            Condition="'$(IsRepackable)' == 'true'">
+            AfterTargets="PublishAddin"
+            BeforeTargets="DeployAddin"
+            Condition="'$(IsRepackable)' == 'true' AND '$(PublishAddin)' == 'true'">
 
         <Error Condition="!$([MSBuild]::IsOSPlatform('Windows'))"
                Text="Repacking requires ILRepack.exe, which only runs on Windows. Build on Windows or disable the IsRepackable property for non-Windows builds."/>
@@ -24,26 +25,30 @@
         <Error Condition="'@(_ILRepackVersion)' == ''"
                Text="ILRepack is required but not installed. Ensure that ILRepack PackageReference added in your project. If repacking is not needed, disable the IsRepackable property."/>
 
+        <PropertyGroup>
+            <_ILRepackDirectory>$([MSBuild]::EnsureTrailingSlash('$(AddinPublishDir)'))$(AssemblyName)\</_ILRepackDirectory>
+        </PropertyGroup>
+
         <ItemGroup>
             <_ILRepackInputNamesExcludes Include="$(RepackBinariesExcludes.Split(';'))"/>
-            <_ILRepackInputAssembliesExcludes Include="$(OutputPath)%(_ILRepackInputNamesExcludes.Identity)"/>
+            <_ILRepackInputAssembliesExcludes Include="$(_ILRepackDirectory)%(_ILRepackInputNamesExcludes.Identity)"/>
         </ItemGroup>
 
         <ItemGroup>
-            <_ILRepackInputAssemblies Include="$(OutputPath)$(AssemblyName).dll"/>
-            <_ILRepackInputAssemblies Include="$(OutputPath)*.dll"
-                                      Exclude="@(_ILRepackInputAssembliesExcludes);$(OutputPath)$(AssemblyName).dll"/>
+            <_ILRepackInputAssemblies Include="$(_ILRepackDirectory)$(AssemblyName).dll"/>
+            <_ILRepackInputAssemblies Include="$(_ILRepackDirectory)*.dll"
+                                      Exclude="@(_ILRepackInputAssembliesExcludes);$(_ILRepackDirectory)$(AssemblyName).dll"/>
         </ItemGroup>
 
         <PropertyGroup>
             <_ILRepackOutputName>$(AssemblyName)</_ILRepackOutputName>
-            <_ILRepackOutput>/out:&quot;$(OutputPath)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
+            <_ILRepackOutput>/out:&quot;$(_ILRepackDirectory)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
             <_ILRepackInput>@(_ILRepackInputAssemblies -> '&quot;%(FullPath)&quot;', ' ')</_ILRepackInput>
             <_ILRepackPath>&quot;$(NuGetPackageRoot)\ilrepack\%(_ILRepackVersion.Version)\tools\ILRepack.exe&quot;</_ILRepackPath>
             <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity) &quot;', ' ')</_ILRepackLib>
         </PropertyGroup>
 
-        <Message Text="Repacking $(MSBuildProjectDirectory)\$(OutputPath)$(AssemblyName).dll" Importance="high"/>
+        <Message Text="Repacking $(_ILRepackDirectory)$(AssemblyName).dll" Importance="high"/>
 
         <PropertyGroup>
             <_IsReleaseConfiguration>$(Configuration.ToLowerInvariant().Contains('release'))</_IsReleaseConfiguration>
