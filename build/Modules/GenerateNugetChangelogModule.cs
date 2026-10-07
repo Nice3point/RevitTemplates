@@ -5,8 +5,9 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Generate and format the changelog for publishing on NuGet.
+///     Represents the pipeline step that formats the release notes for the NuGet package.
 /// </summary>
+/// <remarks>The step removes the Markdown syntax that NuGet does not render, and escapes the characters that the MSBuild property syntax reserves.</remarks>
 [DependsOn<GenerateChangelogModule>]
 public sealed class GenerateNugetChangelogModule : Module<string>
 {

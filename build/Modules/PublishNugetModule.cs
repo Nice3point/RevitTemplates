@@ -12,7 +12,7 @@ using Shouldly;
 namespace Build.Modules;
 
 /// <summary>
-///     Publish the NuGet packages to NuGet.org.
+///     Represents the pipeline step that pushes the packages to the NuGet package source.
 /// </summary>
 [DependsOn<PackTemplatesModule>(Optional = true)]
 [DependsOn<PackSdkModule>(Optional = true)]
@@ -23,7 +23,7 @@ public sealed class PublishNugetModule(IOptions<BuildOptions> buildOptions, IOpt
     {
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetPackages = outputFolder.GetFiles(file => file.Extension == ".nupkg").ToArray();
-        targetPackages.ShouldNotBeEmpty("No NuGet packages were found to publish");
+        targetPackages.ShouldNotBeEmpty($"Cannot push the packages. No NuGet packages were found in '{outputFolder.Path}'. Run the build with the 'pack' argument before publishing.");
 
         await targetPackages
             .ForEachAsync(async file => await context.DotNet().Nuget.Push(new DotNetNugetPushOptions

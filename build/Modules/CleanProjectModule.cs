@@ -10,10 +10,10 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 /// <summary>
-///     Clean projects and artifact directories.
+///     Represents the pipeline step that cleans the build output of the projects and the artifact directory.
 /// </summary>
 [SkipIf<IsCI>]
-public sealed class CleanProjectsModule(IOptions<BuildOptions> buildOptions) : SyncModule
+public sealed class CleanProjectModule(IOptions<BuildOptions> buildOptions) : SyncModule
 {
     protected override void ExecuteModule(IModuleContext context, CancellationToken cancellationToken)
     {

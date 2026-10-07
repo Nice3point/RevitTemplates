@@ -10,8 +10,9 @@ using ModularPipelines.Options;
 namespace Build.Modules;
 
 /// <summary>
-///     Resolve semantic versions for compiling and publishing the templates.
+///     Represents the pipeline step that resolves the version the packages are compiled and published under.
 /// </summary>
+/// <remarks>If <see cref="PublishOptions.Version" /> is set, the step uses that value; otherwise, GitVersion calculates the version from the Git history.</remarks>
 public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOptions) : Module<ResolveVersioningResult>
 {
     protected override async Task<ResolveVersioningResult?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
@@ -28,11 +29,11 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
     }
 
     /// <summary>
-    ///     Resolve versions using the specified version string.
+    ///     Resolves the versions from the specified version string.
     /// </summary>
     private static async Task<ResolveVersioningResult> CreateFromVersionStringAsync(IModuleContext context, string version)
     {
-        var versionParts = version.Split('-');
+        var versionParts = version.Split('-', 2);
 
         return new ResolveVersioningResult
         {
@@ -45,7 +46,7 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
     }
 
     /// <summary>
-    ///     Resolve versions using the GitVersion Tool.
+    ///     Resolves the versions from the Git history by using GitVersion.
     /// </summary>
     private static async Task<ResolveVersioningResult> CreateFromGitVersioningAsync(IModuleContext context)
     {
@@ -62,7 +63,7 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
     }
 
     /// <summary>
-    ///     Retrieves the previous version from the git history.
+    ///     Gets the tag of the previous release, or the SHA of the root commit if no earlier commit has a tag.
     /// </summary>
     private static async Task<string> FetchPreviousVersionAsync(IModuleContext context)
     {
@@ -104,50 +105,47 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
 }
 
 /// <summary>
-///     Versions used to compile and publish the release.
+///     Represents the versions the packages are compiled and published under.
 /// </summary>
 [PublicAPI]
 public sealed record ResolveVersioningResult
 {
     /// <summary>
-    ///     The release version, with an optional prerelease label.
+    ///     Gets the release version with the optional prerelease label.
     /// </summary>
-    /// <remarks>Version format: <c>version-environment.n.date</c>.</remarks>
     /// <example>
-    ///     1.0.0-alpha.1 <br />
-    ///     12.3.6-rc.2.250101 <br />
-    ///     2026.4.0
+    ///     6.3.0-preview.1.20261007 <br />
+    ///     6.3.0
     /// </example>
     public required string Version { get; init; }
 
     /// <summary>
-    ///     The normal part of the release version number.
+    ///     Gets the major, minor, and patch components of the release version.
     /// </summary>
     /// <example>
-    ///     1.0.0 <br />
-    ///     12.3.6 <br />
-    ///     2026.4.0
+    ///     6.3.0
     /// </example>
     public required string VersionPrefix { get; init; }
 
     /// <summary>
-    ///     The pre-release label of the release version number.
+    ///     Gets the prerelease label of the release version, or <see langword="null" /> for a stable release.
     /// </summary>
     /// <example>
-    ///     alpha <br />
-    ///     beta <br />
-    ///     rc.1.250101
+    ///     preview.1.20261007
     /// </example>
     public required string? VersionSuffix { get; init; }
 
     /// <summary>
-    ///     Indicates whether the current version represents a prerelease.
+    ///     Gets a value indicating whether the release version has a prerelease label.
     /// </summary>
-    /// <remarks>A version is considered a prerelease if it includes a version suffix, such as <c>alpha</c>, <c>beta</c>, or similar identifiers.</remarks>
     public required bool IsPrerelease { get; init; }
 
     /// <summary>
-    ///     The previous release reference, specified as a tag or commit SHA.
+    ///     Gets the tag of the previous release, or the SHA of the root commit if no earlier commit has a tag.
     /// </summary>
+    /// <example>
+    ///     6.2.3 <br />
+    ///     2f5c3e1a9b7d4c6e8f0a1b2c3d4e5f6a7b8c9d0e
+    /// </example>
     public required string PreviousVersion { get; init; }
 }

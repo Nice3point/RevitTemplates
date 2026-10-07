@@ -1,21 +1,29 @@
+using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
 using ModularPipelines.Attributes;
 
 namespace Build.Options;
 
 /// <summary>
-///     NuGet publishing options.
+///     Represents the options of the NuGet publication.
 /// </summary>
 [PublicAPI]
 public sealed record NuGetOptions
 {
     /// <summary>
-    ///     API key used to publish packages.
+    ///     The name of the configuration section that contains the options.
     /// </summary>
-    [SecretValue] public string? ApiKey { get; init; }
+    public const string ConfigurationSectionName = "NuGet";
 
     /// <summary>
-    ///     Package source used for publishing.
+    ///     Gets the API key that authorizes the package push.
     /// </summary>
-    public string Source { get; init; } = "https://api.nuget.org/v3/index.json";
+    [SecretValue]
+    public string? ApiKey { get; init; }
+
+    /// <summary>
+    ///     Gets the URL of the package source the packages are pushed to.
+    /// </summary>
+    [Required]
+    public string Source { get; init; } = null!;
 }

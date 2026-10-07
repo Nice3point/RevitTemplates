@@ -16,7 +16,7 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 /// <summary>
-///     Create and build projects from templates to verify they work correctly.
+///     Represents the pipeline step that creates a project for every template option set and compiles it.
 /// </summary>
 [DependsOn<PackTemplatesModule>]
 [DependsOn<PackSdkModule>]
@@ -55,6 +55,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
         }
     }
 
+    /// <summary>
+    ///     Installs the templates from the specified package.
+    /// </summary>
     private static async Task InstallTemplatesAsync(IModuleContext context, string templatesPackage, CancellationToken cancellationToken)
     {
         await context.DotNet().New.Execute(new DotNetNewOptions
@@ -63,6 +66,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
         }, cancellationToken: cancellationToken);
     }
 
+    /// <summary>
+    ///     Uninstalls the templates of the specified package if they are installed.
+    /// </summary>
     private static async Task UninstallTemplatesAsync(IModuleContext context, string templatesPackage, CancellationToken cancellationToken)
     {
         await context.DotNet().New.Execute(new DotNetNewOptions
@@ -75,6 +81,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             }, cancellationToken);
     }
 
+    /// <summary>
+    ///     Creates a project from the specified template and options in a new folder.
+    /// </summary>
     private static async Task<Folder> GenerateProjectAsync(IModuleContext context, string template, Dictionary<string, string> options, Folder samplesFolder, CancellationToken cancellationToken)
     {
         var projectFolder = samplesFolder.CreateFolder($"{template}-{Guid.NewGuid():N}");
@@ -88,6 +97,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
         return projectFolder;
     }
 
+    /// <summary>
+    ///     Creates a project from the specified template in the <c>source</c> folder of a solution.
+    /// </summary>
     private static async Task GenerateSubProjectAsync(IModuleContext context, string template, Folder projectFolder, CancellationToken cancellationToken)
     {
         await context.DotNet().New.Execute(new DotNetNewOptions
@@ -98,10 +110,14 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
         }, cancellationToken: cancellationToken);
     }
 
+    /// <summary>
+    ///     Compiles every project of the folder in its first release configuration.
+    /// </summary>
+    /// <remarks>The add-in is not deployed to the Revit add-ins folder of the machine.</remarks>
     private static async Task CompileGeneratedProjectsAsync(IModuleContext context, Folder projectFolder, CancellationToken cancellationToken)
     {
         var projectFiles = projectFolder.GetFiles(file => file.Extension is ".csproj").ToArray();
-        projectFiles.Length.ShouldBeGreaterThan(0);
+        projectFiles.Length.ShouldBeGreaterThan(0, $"Cannot compile the generated projects. The template created no project in '{projectFolder.Path}'.");
 
         foreach (var projectFile in projectFiles)
         {
@@ -112,11 +128,18 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             await context.DotNet().Build(new DotNetBuildOptions
             {
                 ProjectSolution = projectFile.Path,
-                Configuration = configuration
+                Configuration = configuration,
+                Properties =
+                [
+                    ("DeployAddin", "false")
+                ]
             }, cancellationToken: cancellationToken);
         }
     }
 
+    /// <summary>
+    ///     Gets the release configurations declared in the project file.
+    /// </summary>
     private static string[] ParseProjectConfigurations(string projectContent)
     {
         var configurationsMatch = ConfigurationsRegex().Matches(projectContent);
@@ -127,6 +150,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             .ToArray();
     }
 
+    /// <summary>
+    ///     Writes a NuGet configuration that adds the local packages as a package source.
+    /// </summary>
     private static async Task GenerateNuGetConfigAsync(Folder projectFolder, Folder outputFolder, CancellationToken cancellationToken)
     {
         var nugetConfigPath = projectFolder.GetFile("NuGet.config");
@@ -140,6 +166,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
                                           """, cancellationToken);
     }
 
+    /// <summary>
+    ///     Creates the list of template option sets to verify.
+    /// </summary>
     private static List<TemplateMetadata> GenerateMatrix()
     {
         var matrix = new List<TemplateMetadata>();

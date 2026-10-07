@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.Git.Extensions;
@@ -9,7 +10,7 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 /// <summary>
-///     Generate the changelog for publishing the templates.
+///     Represents the pipeline step that reads the release notes of the version from the changelog.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateChangelogModule : Module<string>
@@ -22,18 +23,20 @@ public sealed class GenerateChangelogModule : Module<string>
         var changelogFile = context.Git().RootDirectory.GetFile("CHANGELOG.md");
 
         var changelog = await ParseChangelogAsync(changelogFile, versioning.Version);
-        changelog.Length.ShouldBePositive($"No version entry exists in the changelog: {versioning.Version}");
+        changelog.Length.ShouldBePositive($"Cannot publish the release. CHANGELOG.md has no entry for version '{versioning.Version}'. Add a '# {versioning.Version}' heading with the release notes.");
 
         return changelog.ToString();
     }
 
     /// <summary>
-    ///     Parse the changelog file to extract the entries for a specific version.
+    ///     Reads the entry of the specified version from the changelog file.
     /// </summary>
+    /// <remarks>The entry starts at the heading that contains the version and ends before the next heading.</remarks>
     private static async Task<StringBuilder> ParseChangelogAsync(File changelogFile, string version)
     {
         const string separator = "# ";
 
+        var versionPattern = $@"(?<![\w.-]){Regex.Escape(version)}(?![\w.-])";
         var isChangelogEntryFound = false;
         var changelog = new StringBuilder();
 
@@ -50,7 +53,7 @@ public sealed class GenerateChangelogModule : Module<string>
                 continue;
             }
 
-            if (line.StartsWith(separator) && line.Contains(version))
+            if (line.StartsWith(separator) && Regex.IsMatch(line, versionPattern))
             {
                 isChangelogEntryFound = true;
             }
@@ -61,7 +64,7 @@ public sealed class GenerateChangelogModule : Module<string>
     }
 
     /// <summary>
-    ///     Remove empty lines from the beginning and end of the changelog builder.
+    ///     Removes the empty lines from the start and the end of the changelog.
     /// </summary>
     private static void TrimEmptyLines(StringBuilder changelog)
     {
@@ -73,12 +76,12 @@ public sealed class GenerateChangelogModule : Module<string>
         var start = 0;
         var end = changelog.Length - 1;
 
-        while (start < changelog.Length && (changelog[start] == '\r' || changelog[start] == '\n'))
+        while (start < changelog.Length && changelog[start] is '\r' or '\n')
         {
             start++;
         }
 
-        while (end >= start && (changelog[end] == '\r' || changelog[end] == '\n'))
+        while (end >= start && changelog[end] is '\r' or '\n')
         {
             end--;
         }

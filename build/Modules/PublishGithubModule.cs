@@ -15,8 +15,9 @@ using Shouldly;
 namespace Build.Modules;
 
 /// <summary>
-///     Publish the templates to GitHub.
+///     Represents the pipeline step that publishes the GitHub release of the packages.
 /// </summary>
+/// <remarks>If the publication fails, the step deletes the version tag from the remote repository.</remarks>
 [SkipIfNoGitHubToken]
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<GenerateGitHubChangelogModule>]
@@ -35,7 +36,7 @@ public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOpti
         var changelog = changelogResult.ValueOrDefault!;
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetFiles = outputFolder.ListFiles().ToArray();
-        targetFiles.ShouldNotBeEmpty("No artifacts were found to create the Release");
+        targetFiles.ShouldNotBeEmpty($"Cannot publish the release. No packages were found in '{outputFolder.Path}'. Run the build with the 'pack' argument before publishing.");
 
         var repositoryInfo = context.GitHub().RepositoryInfo;
         var newRelease = new NewRelease(versioning.Version)
@@ -50,11 +51,12 @@ public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOpti
         await targetFiles
             .ForEachAsync(async file =>
             {
+                await using var stream = file.GetStream();
                 var asset = new ReleaseAssetUpload
                 {
-                    ContentType = "application/x-binary",
+                    ContentType = "application/octet-stream",
                     FileName = file.Name,
-                    RawData = file.GetStream()
+                    RawData = stream
                 };
 
                 LogAssetUploading(context.Logger, asset.FileName);

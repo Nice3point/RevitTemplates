@@ -6,7 +6,6 @@ using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
 using ModularPipelines.Git.Extensions;
 using ModularPipelines.Git.Options;
-using ModularPipelines.Models;
 using ModularPipelines.Modules;
 using Sourcy.DotNet;
 using File = ModularPipelines.FileSystem.File;
@@ -14,11 +13,12 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 /// <summary>
-///     Pack the templates NuGet package.
+///     Represents the pipeline step that packs the templates NuGet package.
 /// </summary>
+/// <remarks>The step pins the template projects to the SDK of the same version while it packs, and restores the project files from Git afterward.</remarks>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<UpdateTemplatesReadmeModule>(Optional = true)]
-[DependsOn<CleanProjectsModule>(Optional = true)]
+[DependsOn<CleanProjectModule>(Optional = true)]
 [DependsOn<GenerateNugetChangelogModule>(Optional = true)]
 public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : Module
 {
@@ -43,12 +43,12 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
             {
                 ProjectSolution = targetProject.Path,
                 Configuration = "Release",
-                Properties = new List<KeyValue>
-                {
+                Properties =
+                [
                     ("VersionPrefix", versioning.VersionPrefix),
-                    ("VersionSuffix", versioning.VersionSuffix!),
+                    ("VersionSuffix", versioning.VersionSuffix ?? string.Empty),
                     ("PackageReleaseNotes", changelog)
-                },
+                ],
                 Output = outputFolder
             }, cancellationToken: cancellationToken);
 
@@ -67,8 +67,9 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
     }
 
     /// <summary>
-    ///     Set the SDK version in the template project files.
+    ///     Pins the template projects to the SDK of the specified version.
     /// </summary>
+    /// <returns>The paths of the modified project files.</returns>
     private static async Task<List<string>> SetSdkVersionAsync(string version, CancellationToken cancellationToken)
     {
         var modifiedFiles = new List<string>();

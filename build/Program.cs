@@ -12,9 +12,9 @@ builder.Configuration.AddUserSecrets<Program>();
 builder.Configuration.AddEnvironmentVariables();
 builder.Configuration.AddCommandLine(args);
 
-builder.Services.Configure<BuildOptions>(builder.Configuration.GetSection("Build"));
-builder.Services.Configure<NuGetOptions>(builder.Configuration.GetSection("NuGet"));
-builder.Services.Configure<PublishOptions>(builder.Configuration.GetSection("Publish"));
+builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+builder.Services.AddOptions<NuGetOptions>().Bind(builder.Configuration.GetSection(NuGetOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName)).ValidateDataAnnotations();
 
 if (args.Length == 0)
 {
@@ -23,10 +23,10 @@ if (args.Length == 0)
 
 if (args.Contains("pack"))
 {
-    builder.Services.AddModule<CleanProjectsModule>();
+    builder.Services.AddModule<CleanProjectModule>();
     builder.Services.AddModule<PackSdkModule>();
     builder.Services.AddModule<PackTemplatesModule>();
-    builder.Services.AddModule<RestoreReadmeModule>();
+    builder.Services.AddModule<RestoreTemplatesReadmeModule>();
 }
 
 if (args.Contains("test"))

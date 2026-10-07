@@ -1,15 +1,23 @@
+using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
 
 namespace Build.Options;
 
 /// <summary>
-///     Build output options.
+///     Represents the options of the build pipeline.
 /// </summary>
 [PublicAPI]
 public sealed record BuildOptions
 {
     /// <summary>
-    ///     Path to the build output directory.
+    ///     The name of the configuration section that contains the options.
     /// </summary>
-    public string OutputDirectory { get; init; } = "output";
+    public const string ConfigurationSectionName = "Build";
+
+    /// <summary>
+    ///     Gets the path to the output directory of the build artifacts.
+    /// </summary>
+    /// <value>A path relative to the repository root.</value>
+    [Required]
+    public string OutputDirectory { get; init; } = null!;
 }

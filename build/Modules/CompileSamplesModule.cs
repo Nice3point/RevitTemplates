@@ -7,7 +7,7 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Compile every sample solution.
+///     Represents the pipeline step that compiles every sample solution for Revit 2027.
 /// </summary>
 public sealed class CompileSamplesModule : Module
 {

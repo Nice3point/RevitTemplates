@@ -5,8 +5,9 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Remove the unsupported NuGet formatting from the readme.
+///     Represents the pipeline step that removes the logo block from the readme of the NuGet packages.
 /// </summary>
+/// <remarks>The step returns the original readme, and <see cref="RestoreTemplatesReadmeModule" /> writes it back after the packages are packed.</remarks>
 public sealed class UpdateTemplatesReadmeModule : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
@@ -18,10 +19,16 @@ public sealed class UpdateTemplatesReadmeModule : Module<string>
         const string endSymbol = "</p>";
 
         var logoStartIndex = readme.IndexOf(startSymbol, StringComparison.Ordinal);
-        if (logoStartIndex < 0) throw new InvalidOperationException("The README logo block is not found.");
+        if (logoStartIndex < 0)
+        {
+            throw new InvalidOperationException("Cannot prepare the NuGet readme. README.md has no logo block that starts with '<p'.");
+        }
 
         var logoEndIndex = readme.IndexOf(endSymbol, logoStartIndex, StringComparison.Ordinal);
-        if (logoEndIndex < 0) throw new InvalidOperationException("The README logo block is not closed.");
+        if (logoEndIndex < 0)
+        {
+            throw new InvalidOperationException("Cannot prepare the NuGet readme. The logo block of README.md has no closing '</p>' tag.");
+        }
 
         logoEndIndex += endSymbol.Length;
         while (logoEndIndex < readme.Length && readme[logoEndIndex] is '\r' or '\n')

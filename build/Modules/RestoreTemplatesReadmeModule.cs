@@ -7,12 +7,13 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Restore the readme.
+///     Represents the pipeline step that restores the readme after the packages are packed.
 /// </summary>
+/// <remarks>The step runs after a failed pack as well, and the repository keeps the original readme.</remarks>
 [DependsOn<UpdateTemplatesReadmeModule>]
 [DependsOn<PackSdkModule>(Optional = true)]
 [DependsOn<PackTemplatesModule>(Optional = true)]
-public sealed class RestoreReadmeModule : Module
+public sealed class RestoreTemplatesReadmeModule : Module
 {
     protected override ModuleConfiguration Configure()
     {
