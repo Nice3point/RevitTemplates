@@ -3,6 +3,7 @@ using Nice3point.BenchmarkDotNet.Revit;
 
 namespace RevitAddIn.Benchmark.Benchmarks;
 
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class VolumeCalculationBenchmarks : RevitApiBenchmark
 {
     private Document? _document;
@@ -12,6 +13,7 @@ public class VolumeCalculationBenchmarks : RevitApiBenchmark
     public int ElementSizeIndex { get; set; }
     private Element GeometryElement => _geometryElements[ElementSizeIndex];
 
+    /// <inheritdoc />
     protected sealed override void OnGlobalSetup()
     {
         _document = Application.NewProjectDocument(UnitSystem.Metric);
@@ -29,6 +31,7 @@ public class VolumeCalculationBenchmarks : RevitApiBenchmark
         _geometryElements = [smallestWall, largestWall];
     }
 
+    /// <inheritdoc />
     protected sealed override void OnGlobalCleanup()
     {
         _document?.Close(false);

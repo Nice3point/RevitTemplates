@@ -6,10 +6,12 @@ namespace Nice3point.Benchmark.Revit._1.Benchmarks;
 /// <summary>
 ///     Provides Revit API benchmarks.
 /// </summary>
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public class RevitBenchmarks : RevitApiBenchmark
 {
     private Document _document = null!;
 
+    /// <inheritdoc />
     protected sealed override void OnGlobalSetup()
     {
         _document = Application.NewProjectDocument(UnitSystem.Metric);
@@ -20,6 +22,7 @@ public class RevitBenchmarks : RevitApiBenchmark
         transaction.Commit();
     }
 
+    /// <inheritdoc />
     protected sealed override void OnGlobalCleanup()
     {
         _document.Close(false);
