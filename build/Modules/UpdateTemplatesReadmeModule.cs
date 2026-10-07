@@ -15,12 +15,21 @@ public sealed class UpdateTemplatesReadmeModule : Module<string>
         var readme = await readmePath.ReadAsync(cancellationToken);
 
         const string startSymbol = "<p";
-        const string endSymbol = "</p>\r\n\r\n";
+        const string endSymbol = "</p>";
 
         var logoStartIndex = readme.IndexOf(startSymbol, StringComparison.Ordinal);
-        var logoEndIndex = readme.IndexOf(endSymbol, StringComparison.Ordinal);
+        if (logoStartIndex < 0) throw new InvalidOperationException("The README logo block is not found.");
 
-        var nugetReadme = readme.Remove(logoStartIndex, logoEndIndex - logoStartIndex + endSymbol.Length);
+        var logoEndIndex = readme.IndexOf(endSymbol, logoStartIndex, StringComparison.Ordinal);
+        if (logoEndIndex < 0) throw new InvalidOperationException("The README logo block is not closed.");
+
+        logoEndIndex += endSymbol.Length;
+        while (logoEndIndex < readme.Length && readme[logoEndIndex] is '\r' or '\n')
+        {
+            logoEndIndex++;
+        }
+
+        var nugetReadme = readme.Remove(logoStartIndex, logoEndIndex - logoStartIndex);
         await readmePath.WriteAsync(nugetReadme, cancellationToken);
 
         return readme;
