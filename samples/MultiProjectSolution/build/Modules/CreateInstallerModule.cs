@@ -20,7 +20,7 @@ using InstallerOptions = Build.Options.InstallerOptions;
 namespace Build.Modules;
 
 /// <summary>
-///     Create the .msi installer.
+///     Represents the pipeline step that builds the MSI installer packages of the add-in.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<CompileProjectModule>]
@@ -51,14 +51,14 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
             .GetFolder("bin")
             .FindFile(file => file.NameWithoutExtension == wixInstaller.NameWithoutExtension && file.Extension == ".exe");
 
-        builderFile.ShouldNotBeNull($"No installer builder was found for the project: {wixInstaller.NameWithoutExtension}");
+        builderFile.ShouldNotBeNull($"Cannot create the installer. The executable of the '{wixInstaller.NameWithoutExtension}' project was not found in '{wixInstaller.Folder!.Path}'.");
 
         var contentRoot = wixTarget.Folder!.GetFolder("bin");
         var targetDirectories = contentRoot
             .GetFolders(folder => folder.Name == "publish")
             .ToArray();
 
-        targetDirectories.ShouldNotBeEmpty("No content were found to create an installer");
+        targetDirectories.ShouldNotBeEmpty($"Cannot create the installer. No publish output was found in '{contentRoot.Path}'. Set 'PublishAddin' to 'true' in the add-in project.");
 
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         if (!outputFolder.Exists)
@@ -78,12 +78,14 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
                 WorkingDirectory = context.Git().RootDirectory,
                 EnvironmentVariables = new Dictionary<string, string?>
                 {
-                    {"PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}"}
+                    { "PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}" }
                 }
             }, cancellationToken: cancellationToken);
 
+        await wixToolFolder.DeleteAsync(cancellationToken);
+
         var outputFiles = outputFolder.GetFiles(file => file.Extension == ".msi").ToArray();
-        outputFiles.ShouldNotBeEmpty("Failed to create an installer");
+        outputFiles.ShouldNotBeEmpty($"Cannot create the installer. The installer project wrote no MSI packages to '{outputFolder.Path}'.");
 
         foreach (var outputFile in outputFiles)
         {
@@ -106,7 +108,7 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
             .Select(targetDirectory =>
             {
                 TryParseVersion(targetDirectory.Path, out var revitVersion)
-                    .ShouldBeTrue($"Could not parse version from directory name: {targetDirectory.Path}");
+                    .ShouldBeTrue($"Cannot create the installer. The Revit version of '{targetDirectory.Path}' cannot be resolved. Name the build configuration after the Revit version, such as 'Release.R26'.");
 
                 var basePath = Path.GetRelativePath(contentRoot.Path, targetDirectory.Path);
 
@@ -119,14 +121,14 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
                         {
                             Role = "payload",
                             BasePath = basePath,
-                            Include = new[] {"**"},
-                            Exclude = new[] {"**/*.addin", "**/*.pdb"}
+                            Include = new[] { "**" },
+                            Exclude = new[] { "**/*.addin", "**/*.pdb" }
                         },
                         new
                         {
                             Role = "addin",
                             BasePath = basePath,
-                            Include = new[] {"**/*.addin"},
+                            Include = new[] { "**/*.addin" },
                             Exclude = Array.Empty<string>()
                         }
                     }
@@ -152,7 +154,7 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
     }
 
     /// <summary>
-    ///     Installs the WiX toolset required for building installers.
+    ///     Installs the WiX toolset to a temporary folder.
     /// </summary>
     private static async Task<Folder> InstallWixAsync(IModuleContext context, CancellationToken cancellationToken)
     {
@@ -181,8 +183,12 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
     }
 
     /// <summary>
-    ///     Parse a version string from the given input.
+    ///     Converts the last number in the specified path to a four-digit Revit version.
     /// </summary>
+    /// <example>
+    ///     bin\Release.R26\publish → 2026 <br />
+    ///     bin\Release.R2026\publish → 2026
+    /// </example>
     private static bool TryParseVersion(string input, [NotNullWhen(true)] out string? version)
     {
         version = null;
@@ -203,7 +209,7 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
     }
 
     /// <summary>
-    ///     A regular expression that captures the Revit version at the end of a build output path.
+    ///     Gets the regular expression that matches the last number in a path.
     /// </summary>
     [GeneratedRegex(@"(\d+)(?!.*\d)")]
     private static partial Regex VersionRegex();

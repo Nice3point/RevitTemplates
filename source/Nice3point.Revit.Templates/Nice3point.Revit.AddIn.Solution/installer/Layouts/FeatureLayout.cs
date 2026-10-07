@@ -5,59 +5,61 @@ using WixSharp;
 namespace Installer.Layouts;
 
 /// <summary>
-///     Provides extension methods for a list of <see cref="Manifest.AddinContent" /> to lay the installation out as one feature per Revit version.
+///     Provides extension methods for a list of <see cref="Manifest.AddinContent" /> to create one installation feature per Revit version.
 /// </summary>
 public static class FeatureLayout
 {
-    /// <param name="content">The add-in content to lay out.</param>
+    /// <param name="content">The add-in content to install.</param>
     extension(IReadOnlyList<Manifest.AddinContent> content)
     {
         /// <summary>
-        ///     Creates the <see cref="Dir" /> tree installing the add-in of every Revit version.
+        ///     Creates the <see cref="Dir" /> tree that installs the add-in for every Revit version.
         /// </summary>
-        /// <param name="contentRoot">The directory the content base paths are resolved against.</param>
-        /// <param name="scope">The <see cref="InstallScope" /> the packages install under.</param>
-        /// <param name="installOrder">The order the file sets install in.</param>
-        /// <returns>The <see cref="Dir" /> array the packages install.</returns>
-        /// <exception cref="DirectoryNotFoundException">A file set points to a directory that is absent.</exception>
-        /// <exception cref="InvalidDataException">A file set selects no files.</exception>
-        /// <remarks>The feature tree offers every Revit version on its own, and each one carries the directory the user can change.</remarks>
-        public Dir[] CreateFeatureLayout(DirectoryInfo contentRoot, InstallScope scope, MediaLayout installOrder)
+        /// <param name="contentRoot">The root directory of the relative content paths.</param>
+        /// <param name="scope">The installation scope of the packages.</param>
+        /// <param name="mediaLayout">The cabinet layout of the packages.</param>
+        /// <returns>The directories to install.</returns>
+        /// <exception cref="DirectoryNotFoundException">The base directory of a file set doesn't exist.</exception>
+        /// <exception cref="InvalidDataException">A file set matches no files.</exception>
+        /// <remarks>The feature tree contains one feature per Revit version, and the user can change the installation directory of each feature.</remarks>
+        public Dir[] CreateFeatureLayout(DirectoryInfo contentRoot, InstallScope scope, MediaLayout mediaLayout)
         {
             var revitFeature = new Feature
             {
-                Name = "Revit Add-in",
-                Description = "Revit add-in installation files",
+                Name = "Revit add-in",
+                Description = "Installs the add-in for the selected Revit versions.",
                 Display = FeatureDisplay.expand
             };
 
-            return content
-                .GroupBy(addin => ResolveAddinsRoot(addin.RevitVersion, scope))
-                .Select(addinsRoot => new Dir(addinsRoot.Key, addinsRoot
-                    .Select(addin => CreateVersionDirectory(addin, revitFeature, contentRoot, installOrder))
-                    .Cast<WixEntity>()
-                    .ToArray()))
-                .ToArray();
+            return
+            [
+                .. content
+                    .GroupBy(addin => ResolveAddinsRoot(addin.RevitVersion, scope))
+                    .Select(addinsRoot => new Dir(addinsRoot.Key,
+                    [
+                        .. addinsRoot.Select(addin => CreateVersionDirectory(addin, revitFeature, contentRoot, mediaLayout))
+                    ]))
+            ];
         }
     }
 
     /// <summary>
-    ///     Creates the directory holding the add-in of a single Revit version.
+    ///     Creates the installation directory of the add-in for a single Revit version.
     /// </summary>
-    private static Dir CreateVersionDirectory(Manifest.AddinContent addin, Feature revitFeature, DirectoryInfo contentRoot, MediaLayout installOrder)
+    private static Dir CreateVersionDirectory(Manifest.AddinContent addin, Feature revitFeature, DirectoryInfo contentRoot, MediaLayout mediaLayout)
     {
         var fileVersion = addin.RevitVersion.ToString();
         var feature = new Feature
         {
             Name = fileVersion,
-            Description = $"Install add-in for Revit {fileVersion}",
+            Description = $"Installs the add-in for Revit {fileVersion}.",
             ConfigurableDir = $"INSTALL{fileVersion}"
         };
 
         revitFeature.Add(feature);
 
         var fileSets = addin.Files
-            .Select(fileSet => CreateFiles(fileSet, feature, contentRoot, installOrder))
+            .Select(fileSet => CreateFiles(fileSet, feature, contentRoot, mediaLayout))
             .Cast<WixEntity>()
             .ToArray();
 
@@ -67,12 +69,12 @@ public static class FeatureLayout
     /// <summary>
     ///     Selects the files of a single file set and assigns them to the specified feature and cabinet.
     /// </summary>
-    private static Files CreateFiles(Manifest.FileSet fileSet, Feature feature, DirectoryInfo contentRoot, MediaLayout installOrder)
+    private static Files CreateFiles(Manifest.FileSet fileSet, Feature feature, DirectoryInfo contentRoot, MediaLayout mediaLayout)
     {
         var basePath = Path.GetFullPath(Path.Combine(contentRoot.FullName, fileSet.BasePath));
         if (!Directory.Exists(basePath))
         {
-            throw new DirectoryNotFoundException($"The {fileSet.Role} file set points to a missing directory: {basePath}");
+            throw new DirectoryNotFoundException($"Cannot create the installer. The base directory '{basePath}' of the '{fileSet.Role}' file set does not exist.");
         }
 
         var matcher = new Matcher(StringComparison.OrdinalIgnoreCase);
@@ -82,7 +84,7 @@ public static class FeatureLayout
         var matchingResult = matcher.Execute(new DirectoryInfoWrapper(new DirectoryInfo(basePath)));
         if (!matchingResult.HasMatches)
         {
-            throw new InvalidDataException($"The {fileSet.Role} file set selects no files under: {basePath}");
+            throw new InvalidDataException($"Cannot create the installer. The '{fileSet.Role}' file set selects no files in '{basePath}'. Check the include and exclude patterns of the file set.");
         }
 
         var selectedFiles = matchingResult.Files
@@ -92,7 +94,7 @@ public static class FeatureLayout
 
         LogSelectedFiles(fileSet, selectedFiles);
 
-        var diskId = installOrder.ResolveDiskId(fileSet.Role);
+        var diskId = mediaLayout.ResolveDiskId(fileSet.Role);
         var selectedPaths = selectedFiles.ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         return new Files(feature, Path.Combine(basePath, "*.*"), path => selectedPaths.Contains(Path.GetFullPath(path)))
@@ -102,7 +104,7 @@ public static class FeatureLayout
     }
 
     /// <summary>
-    ///     Resolves the Revit add-ins directory the content is installed under.
+    ///     Gets the Revit add-ins directory for the specified Revit version and installation scope.
     /// </summary>
     private static string ResolveAddinsRoot(int revitVersion, InstallScope scope)
     {
@@ -119,7 +121,7 @@ public static class FeatureLayout
     }
 
     /// <summary>
-    ///     Writes the files of a single file set to the build log.
+    ///     Writes the selected files of a file set to the console.
     /// </summary>
     private static void LogSelectedFiles(Manifest.FileSet fileSet, string[] selectedFiles)
     {

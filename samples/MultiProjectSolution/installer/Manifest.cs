@@ -6,8 +6,8 @@ namespace Installer;
 ///     Represents the content and identity of the installer packages.
 /// </summary>
 /// <remarks>
-///     The manifest carries what changes from release to release.
-///     The presentation, the target platform, and the directory layout are fixed by the installer.
+///     The manifest contains the release-specific data.
+///     The installer project defines the user interface, the target platform, and the directory layout.
 /// </remarks>
 [PublicAPI]
 public sealed record Manifest
@@ -18,27 +18,27 @@ public sealed record Manifest
     public required string ProductName { get; init; }
 
     /// <summary>
-    ///     Gets the version Windows Installer compares against the installed package when it resolves an upgrade.
+    ///     Gets the product version that Windows Installer uses to detect upgrades.
     /// </summary>
     /// <remarks>
-    ///     The comparison covers the major, minor, and build components; the revision component takes no part in it.
-    ///     The <see href="https://learn.microsoft.com/windows/win32/msi/productversion">ProductVersion</see> property of the MSI database carries the value.
+    ///     Windows Installer compares the major, minor, and build fields and ignores the revision field.
+    ///     The <see href="https://learn.microsoft.com/windows/win32/msi/productversion">ProductVersion</see> property of the MSI database stores the value.
     /// </remarks>
     public required Version ProductVersion { get; init; }
 
     /// <summary>
-    ///     Gets the identity shared by every release of the product.
+    ///     Gets the upgrade code that identifies all releases of the product.
     /// </summary>
     /// <remarks>
-    ///     A release published under the installed value upgrades it in place.
-    ///     A release published under a new value installs alongside its predecessor.
+    ///     If a release has the same upgrade code as the installed product, the release upgrades the installed product.
+    ///     If the upgrade code differs, the release is installed side by side with the previous release.
     /// </remarks>
     public required Guid UpgradeCode { get; init; }
 
     /// <summary>
-    ///     Gets the version the release is published under.
+    ///     Gets the release version.
     /// </summary>
-    /// <remarks>The file name of every produced package includes this value.</remarks>
+    /// <remarks>The file name of each package contains the release version.</remarks>
     /// <example>
     ///     1.0.0-alpha.1.250101 <br />
     ///     1.0.0-beta.2.250101 <br />
@@ -47,14 +47,14 @@ public sealed record Manifest
     public required string ReleaseVersion { get; init; }
 
     /// <summary>
-    ///     Gets the absolute path of the directory the packages are written to.
+    ///     Gets the absolute path to the output directory of the packages.
     /// </summary>
     public required string OutputDirectory { get; init; }
 
     /// <summary>
-    ///     Gets the add-in content the packages install.
+    ///     Gets the add-in content to install.
     /// </summary>
-    /// <remarks>One entry describes a single Revit version, and the packages offer every entry as a separate feature.</remarks>
+    /// <remarks>Each entry describes the files for a single Revit version and is installed as a separate feature.</remarks>
     public required IReadOnlyList<AddinContent> Content { get; init; }
 
     /// <summary>
@@ -64,7 +64,7 @@ public sealed record Manifest
     public sealed record AddinContent
     {
         /// <summary>
-        ///     Gets the Revit version the files target.
+        ///     Gets the target Revit version.
         /// </summary>
         /// <value>The four-digit Revit release year.</value>
         public required int RevitVersion { get; init; }
@@ -72,7 +72,7 @@ public sealed record Manifest
         /// <summary>
         ///     Gets the file sets installed for the Revit version.
         /// </summary>
-        /// <remarks>The packages install the sets in the order their roles first appear in the manifest.</remarks>
+        /// <remarks>The file sets are installed in the order in which their roles first appear in the manifest.</remarks>
         public required IReadOnlyList<FileSet> Files { get; init; }
     }
 
@@ -83,28 +83,28 @@ public sealed record Manifest
     public sealed record FileSet
     {
         /// <summary>
-        ///     Gets the name of the installation stage the file set belongs to.
+        ///     Gets the installation stage of the file set.
         /// </summary>
         /// <remarks>
-        ///     File sets sharing a role install together, and every role installs after the roles declared before it.
-        ///     A file a running application picks up belongs in a role declared after the roles holding the files it depends on.
+        ///     File sets with the same role are installed together, in the order in which the roles are declared.
+        ///     A file that Revit loads, such as an <c>.addin</c> manifest, belongs to a role declared after the roles of its dependencies.
         /// </remarks>
         public required string Role { get; init; }
 
         /// <summary>
-        ///     Gets the source directory the patterns are matched against.
+        ///     Gets the source directory of the glob patterns.
         /// </summary>
-        /// <value>A path relative to the directory holding the manifest file.</value>
+        /// <value>A path relative to the directory of the manifest file.</value>
         public required string BasePath { get; init; }
 
         /// <summary>
-        ///     Gets the glob patterns selecting the files.
+        ///     Gets the glob patterns of the files to include.
         /// </summary>
         /// <remarks>The patterns follow the <see href="https://learn.microsoft.com/dotnet/core/extensions/file-globbing">.NET file globbing</see> format.</remarks>
         public required IReadOnlyList<string> Include { get; init; }
 
         /// <summary>
-        ///     Gets the glob patterns excluding files from the selection.
+        ///     Gets the glob patterns of the files to exclude.
         /// </summary>
         /// <value>Defaults to an empty list.</value>
         /// <remarks>The patterns follow the <see href="https://learn.microsoft.com/dotnet/core/extensions/file-globbing">.NET file globbing</see> format.</remarks>

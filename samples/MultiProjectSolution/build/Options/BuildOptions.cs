@@ -4,26 +4,31 @@ using JetBrains.Annotations;
 namespace Build.Options;
 
 /// <summary>
-///     Build configuration options.
+///     Represents the options of the build pipeline.
 /// </summary>
 [PublicAPI]
 public sealed record BuildOptions
 {
     /// <summary>
-    ///     Application version.
+    ///     The name of the configuration section that contains the options.
     /// </summary>
-    /// <remarks>
-    ///     The configured value overrides the version determined by GitVersion.Tool.
-    /// </remarks>
+    public const string ConfigurationSectionName = "Build";
+
+    /// <summary>
+    ///     Gets the version the add-in is compiled and published under.
+    /// </summary>
+    /// <remarks>If the value is empty, GitVersion calculates the version from the Git history.</remarks>
     /// <example>
-    ///     1.0.0-alpha.1.250101 <br/>
-    ///     1.0.0-beta.2.250101 <br/>
+    ///     1.0.0-alpha.1.250101 <br />
+    ///     1.0.0-beta.2.250101 <br />
     ///     1.0.0
     /// </example>
     public string? Version { get; init; }
 
     /// <summary>
-    ///     Path to the build output directory.
+    ///     Gets the path to the output directory of the build artifacts.
     /// </summary>
-    [Required] public string OutputDirectory { get; init; } = null!;
+    /// <value>A path relative to the repository root.</value>
+    [Required]
+    public string OutputDirectory { get; init; } = null!;
 }

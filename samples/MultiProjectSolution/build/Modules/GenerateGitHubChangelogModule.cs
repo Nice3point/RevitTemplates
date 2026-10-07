@@ -7,7 +7,7 @@ using ModularPipelines.Modules;
 namespace Build.Modules;
 
 /// <summary>
-///     Generate and format the changelog for publishing on GitHub.
+///     Represents the pipeline step that formats the release notes for the GitHub release.
 /// </summary>
 [DependsOn<GenerateChangelogModule>]
 [DependsOn<ResolveVersioningModule>]
@@ -24,7 +24,7 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
     }
 
     /// <summary>
-    ///     Append a GitHub compare URL to the changelog if it is not already included.
+    ///     Appends the link to the comparison with the previous release if the release notes don't contain a full changelog link.
     /// </summary>
     private static string AppendGitHubCompareUrl(IModuleContext context, string changelog, ResolveVersioningResult versioning)
     {

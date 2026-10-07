@@ -19,8 +19,9 @@ using Shouldly;
 namespace Build.Modules;
 
 /// <summary>
-///     Publish the add-in to GitHub.
+///     Represents the pipeline step that publishes the GitHub release of the add-in.
 /// </summary>
+/// <remarks>If the publication fails, the step deletes the version tag from the remote repository.</remarks>
 [SkipIfNoGitHubToken]
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<GenerateGitHubChangelogModule>]
@@ -31,7 +32,7 @@ namespace Build.Modules;
 [DependsOn<CreateInstallerModule>(Optional = true)]
 #endif
 #if (hasArtifacts)
-public sealed class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module
+public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module
 #else
 public sealed class PublishGithubModule : Module
 #endif
@@ -46,7 +47,7 @@ public sealed class PublishGithubModule : Module
 
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var targetFiles = outputFolder.ListFiles().ToArray();
-        targetFiles.ShouldNotBeEmpty("No artifacts were found to create the Release");
+        targetFiles.ShouldNotBeEmpty($"Cannot publish the release. No artifacts were found in '{outputFolder.Path}'. Run the build with the 'pack' argument before publishing.");
 #endif
 
         var repositoryInfo = context.GitHub().RepositoryInfo;
@@ -58,25 +59,24 @@ public sealed class PublishGithubModule : Module
             Prerelease = versioning.IsPrerelease
         };
 
-#if (hasArtifacts)
         var release = await context.GitHub().Client.Repository.Release.Create(repositoryInfo.Owner, repositoryInfo.RepositoryName, newRelease);
+#if (hasArtifacts)
         await targetFiles
             .ForEachAsync(async file =>
             {
+                await using var stream = file.GetStream();
                 var asset = new ReleaseAssetUpload
                 {
-                    ContentType = "application/x-binary",
+                    ContentType = "application/octet-stream",
                     FileName = file.Name,
-                    RawData = file.GetStream()
+                    RawData = stream
                 };
 
-                context.Logger.LogInformation("Uploading asset: {Asset}", asset.FileName);
+                LogAssetUploading(context.Logger, asset.FileName);
 
                 await context.GitHub().Client.Repository.Release.UploadAsset(release, asset, cancellationToken);
             }, cancellationToken)
             .ProcessInParallel();
-#else
-        var release = await context.GitHub().Client.Repository.Release.Create(repositoryInfo.Owner, repositoryInfo.RepositoryName, newRelease);
 #endif
 
         context.Summary.KeyValue("Deployment", "GitHub", release.HtmlUrl);
@@ -93,4 +93,9 @@ public sealed class PublishGithubModule : Module
             Arguments = ["origin", versioning.Version]
         }, token: cancellationToken);
     }
+#if (hasArtifacts)
+
+    [LoggerMessage(LogLevel.Information, "Uploading the release asset {Asset}.")]
+    private static partial void LogAssetUploading(ILogger logger, string asset);
+#endif
 }

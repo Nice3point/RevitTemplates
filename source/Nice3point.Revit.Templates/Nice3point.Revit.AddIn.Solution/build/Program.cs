@@ -11,15 +11,15 @@ builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection("Build")).ValidateDataAnnotations();
+builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName)).ValidateDataAnnotations();
 #if (includeBundle)
-builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection("Bundle")).ValidateDataAnnotations();
+builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection(BundleOptions.ConfigurationSectionName)).ValidateDataAnnotations();
 #endif
 #if (includeInstaller)
-builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection("Installer")).ValidateDataAnnotations();
+builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection(InstallerOptions.ConfigurationSectionName)).ValidateDataAnnotations();
 #endif
 #if (isGitHubCi)
-builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection("Publish")).ValidateDataAnnotations();
+builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName)).ValidateDataAnnotations();
 #endif
 
 if (args.Length == 0)
@@ -47,6 +47,7 @@ if (args.Contains("pack"))
 }
 #endif
 #if (isGitHubCi)
+
 if (args.Contains("publish"))
 {
     builder.Services.AddModule<PublishGithubModule>();

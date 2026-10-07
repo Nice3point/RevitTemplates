@@ -4,10 +4,15 @@ using WixSharp;
 using WixSharp.CommonTasks;
 using WixSharp.Controls;
 
-var manifestFile = new FileInfo(args[0]);
+if (args is not [var manifestPath])
+{
+    throw new ArgumentException("Cannot create the installer. The path of the installer manifest is not specified.");
+}
+
+var manifestFile = new FileInfo(manifestPath);
 var manifest = manifestFile.ReadManifest();
 var contentRoot = manifestFile.Directory!;
-var installOrder = new MediaLayout(manifest.Content);
+var mediaLayout = new MediaLayout(manifest.Content);
 
 var project = new Project
 {
@@ -28,7 +33,7 @@ var project = new Project
 };
 
 project.RemoveDialogsBetween(NativeDialogs.WelcomeDlg, NativeDialogs.CustomizeDlg);
-project.WixSourceGenerated += installOrder.WriteToWixSource;
+project.WixSourceGenerated += mediaLayout.WriteToWixSource;
 
 BuildSingleUserMsi();
 BuildMultiUserMsi();
@@ -38,7 +43,7 @@ void BuildSingleUserMsi()
 {
     project.Scope = InstallScope.perUser;
     project.OutFileName = $"{manifest.ProductName}-{manifest.ReleaseVersion}-SingleUser";
-    project.Dirs = manifest.Content.CreateFeatureLayout(contentRoot, InstallScope.perUser, installOrder);
+    project.Dirs = manifest.Content.CreateFeatureLayout(contentRoot, InstallScope.perUser, mediaLayout);
     project.BuildMsi();
 }
 
@@ -46,6 +51,6 @@ void BuildMultiUserMsi()
 {
     project.Scope = InstallScope.perMachine;
     project.OutFileName = $"{manifest.ProductName}-{manifest.ReleaseVersion}-MultiUser";
-    project.Dirs = manifest.Content.CreateFeatureLayout(contentRoot, InstallScope.perMachine, installOrder);
+    project.Dirs = manifest.Content.CreateFeatureLayout(contentRoot, InstallScope.perMachine, mediaLayout);
     project.BuildMsi();
 }

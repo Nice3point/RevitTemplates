@@ -10,7 +10,7 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 /// <summary>
-///     Test the add-in for each supported Revit configuration.
+///     Represents the pipeline step that tests the add-in for every Revit configuration of the solution.
 /// </summary>
 [SkipIf<IsCI>]
 [DependsOn<ResolveConfigurationsModule>]
@@ -29,18 +29,14 @@ public sealed class TestProjectModule : Module
     }
 
     /// <summary>
-    ///     Test the add-in project for the specified configuration.
+    ///     Runs the tests of the solution in the specified configuration.
     /// </summary>
     private static async Task<CommandResult> TestAsync(IModuleContext context, string configuration, CancellationToken cancellationToken)
     {
         return await context.DotNet().Test(new DotNetTestOptions
         {
             Solution = Solutions.Nice3point_Revit_AddIn__1.FullName,
-            Configuration = configuration,
-            Properties =
-            [
-                ("IsRepackable", "false")
-            ]
+            Configuration = configuration
         }, cancellationToken: cancellationToken);
     }
 }

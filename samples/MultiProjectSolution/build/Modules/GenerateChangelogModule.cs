@@ -14,10 +14,14 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 /// <summary>
-///     Generate the changelog for publishing the add-in.
+///     Represents the pipeline step that resolves the release notes of the version.
 /// </summary>
+/// <remarks>
+///     The step reads the release notes from the version entry in <see cref="PublishOptions.ChangelogFile" />.
+///     If the file or the entry doesn't exist, GitHub generates the release notes.
+/// </remarks>
 [DependsOn<ResolveVersioningModule>]
-public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOptions) : Module<string>
+public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> publishOptions) : Module<string>
 {
     protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
@@ -26,21 +30,21 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
 
         if (string.IsNullOrEmpty(publishOptions.Value.ChangelogFile))
         {
-            context.Logger.LogInformation("Changelog file not specified");
+            LogChangelogFileNotSpecified(context.Logger);
             return await GenerateReleaseNotesAsync(context, versioning);
         }
 
         var changelogFile = context.Git().RootDirectory.GetFile(publishOptions.Value.ChangelogFile);
         if (!changelogFile.Exists)
         {
-            context.Logger.LogWarning("Changelog specified but not found");
+            LogChangelogFileNotFound(context.Logger, changelogFile.Path);
             return await GenerateReleaseNotesAsync(context, versioning);
         }
 
         var changelog = await ParseChangelogAsync(changelogFile, versioning.Version);
         if (changelog.Length == 0)
         {
-            context.Logger.LogWarning("No version entry exists in the changelog: {Version}", versioning.Version);
+            LogChangelogEntryNotFound(context.Logger, versioning.Version);
             return await GenerateReleaseNotesAsync(context, versioning);
         }
 
@@ -48,12 +52,14 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
     }
 
     /// <summary>
-    ///     Parse the changelog file to extract the entries for a specific version.
+    ///     Reads the entry of the specified version from the changelog file.
     /// </summary>
+    /// <remarks>The entry starts at the heading that contains the version and ends before the next heading.</remarks>
     private static async Task<StringBuilder> ParseChangelogAsync(File changelogFile, string version)
     {
         const string separator = "# ";
 
+        var versionPattern = $@"(?<![\w.-]){Regex.Escape(version)}(?![\w.-])";
         var isChangelogEntryFound = false;
         var changelog = new StringBuilder();
 
@@ -67,7 +73,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
                 continue;
             }
 
-            if (line.StartsWith(separator) && Regex.IsMatch(line, $@"\b{Regex.Escape(version)}\b"))
+            if (line.StartsWith(separator) && Regex.IsMatch(line, versionPattern))
             {
                 isChangelogEntryFound = true;
             }
@@ -78,7 +84,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
     }
 
     /// <summary>
-    ///     Remove empty lines from the beginning and end of the changelog builder.
+    ///     Removes the empty lines from the start and the end of the changelog.
     /// </summary>
     private static void TrimEmptyLines(StringBuilder changelog)
     {
@@ -87,12 +93,12 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
         var start = 0;
         var end = changelog.Length - 1;
 
-        while (start < changelog.Length && (changelog[start] == '\r' || changelog[start] == '\n'))
+        while (start < changelog.Length && changelog[start] is '\r' or '\n')
         {
             start++;
         }
 
-        while (end >= start && (changelog[end] == '\r' || changelog[end] == '\n'))
+        while (end >= start && changelog[end] is '\r' or '\n')
         {
             end--;
         }
@@ -109,7 +115,7 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
     }
 
     /// <summary>
-    ///     Call the GitHub API to generate release notes for a specific version.
+    ///     Generates the release notes for the version by using the GitHub API.
     /// </summary>
     private static async Task<string?> GenerateReleaseNotesAsync(IModuleContext context, ResolveVersioningResult versioning)
     {
@@ -126,4 +132,13 @@ public sealed class GenerateChangelogModule(IOptions<PublishOptions> publishOpti
 
         return releaseNotes.Body;
     }
+
+    [LoggerMessage(LogLevel.Information, "The changelog file is not specified. GitHub generates the release notes.")]
+    private static partial void LogChangelogFileNotSpecified(ILogger logger);
+
+    [LoggerMessage(LogLevel.Warning, "The changelog file {ChangelogFile} was not found. GitHub generates the release notes.")]
+    private static partial void LogChangelogFileNotFound(ILogger logger, string changelogFile);
+
+    [LoggerMessage(LogLevel.Warning, "The changelog has no entry for version {Version}. GitHub generates the release notes.")]
+    private static partial void LogChangelogEntryNotFound(ILogger logger, string version);
 }

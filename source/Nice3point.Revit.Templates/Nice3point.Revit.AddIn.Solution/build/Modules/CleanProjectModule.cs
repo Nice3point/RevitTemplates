@@ -12,7 +12,11 @@ using Sourcy.DotNet;
 namespace Build.Modules;
 
 /// <summary>
-///     Clean projects and artifact directories.
+#if (hasArtifacts)
+///     Represents the pipeline step that cleans the build output of the projects and the artifact directory.
+#else
+///     Represents the pipeline step that cleans the build output of the projects.
+#endif
 /// </summary>
 [SkipIf<IsCI>]
 #if (hasArtifacts)

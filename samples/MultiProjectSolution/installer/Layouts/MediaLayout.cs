@@ -3,11 +3,11 @@ using System.Xml.Linq;
 namespace Installer.Layouts;
 
 /// <summary>
-///     Represents the cabinets the packages split their content into, one per file set role.
+///     Represents the cabinet files of the installer packages, one cabinet per file set role.
 /// </summary>
 /// <remarks>
-///     Windows Installer copies the content of a cabinet before the content of the cabinets that follow it.
-///     The order the roles appear in the manifest is the order the packages install them in.
+///     Windows Installer copies the files of the cabinets in the order of their disk IDs.
+///     The roles are installed in the order in which they appear in the manifest.
 /// </remarks>
 public sealed class MediaLayout
 {
@@ -17,7 +17,7 @@ public sealed class MediaLayout
     /// <summary>
     ///     Initializes a new instance of the <see cref="MediaLayout" /> class.
     /// </summary>
-    /// <param name="content">The add-in content the cabinets are resolved from.</param>
+    /// <param name="content">The add-in content that defines the file set roles.</param>
     public MediaLayout(IReadOnlyList<Manifest.AddinContent> content)
     {
         _roles =
@@ -32,34 +32,34 @@ public sealed class MediaLayout
     }
 
     /// <summary>
-    ///     Resolves the cabinet the specified file set role is packaged into.
+    ///     Gets the disk ID of the cabinet that contains the specified file set role.
     /// </summary>
     /// <param name="role">The role of the file set.</param>
-    /// <returns>The number of the cabinet, counted from one.</returns>
-    /// <exception cref="InvalidDataException">The role belongs to no cabinet of the layout.</exception>
+    /// <returns>The one-based disk ID of the cabinet.</returns>
+    /// <exception cref="InvalidDataException">The manifest has no file set with the specified role.</exception>
     public int ResolveDiskId(string role)
     {
         var index = Array.FindIndex(_roles, candidate => string.Equals(candidate, role, StringComparison.OrdinalIgnoreCase));
         if (index < 0)
         {
-            throw new InvalidDataException($"The file set role belongs to no cabinet: {role}");
+            throw new InvalidDataException($"Cannot resolve the cabinet of the '{role}' file set. The manifest has no file set with this role.");
         }
 
         return index + 1;
     }
 
     /// <summary>
-    ///     Writes the cabinets into the WiX source the project generates.
+    ///     Adds the cabinets to the generated WiX source.
     /// </summary>
     /// <param name="document">The generated WiX source document.</param>
-    /// <exception cref="InvalidDataException">The document holds no package.</exception>
-    /// <remarks>The project models a single medium and offers no model for the rest; the source carries them instead.</remarks>
+    /// <exception cref="InvalidDataException">The document has no <c>Package</c> element.</exception>
+    /// <remarks>A WixSharp project defines a single <c>Media</c> element. The method replaces it with one <c>Media</c> element per cabinet.</remarks>
     public void WriteToWixSource(XDocument document)
     {
         var package = document.Descendants().FirstOrDefault(element => element.Name.LocalName == "Package");
         if (package is null)
         {
-            throw new InvalidDataException("The generated WiX source holds no package");
+            throw new InvalidDataException("Cannot write the cabinets to the WiX source. The generated source has no Package element.");
         }
 
         var wixNamespace = package.Name.Namespace;

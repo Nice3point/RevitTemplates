@@ -15,7 +15,7 @@ using File = ModularPipelines.FileSystem.File;
 namespace Build.Modules;
 
 /// <summary>
-///     Create the Autodesk .bundle package.
+///     Represents the pipeline step that packs the add-in into an Autodesk application bundle.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<CompileProjectModule>]
@@ -27,12 +27,12 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
         var versioning = versioningResult.ValueOrDefault!;
 
         var bundleTarget = new File(Projects.Nice3point_Revit_AddIn__1.FullName);
-        var targetDirectories = bundleTarget.Folder!
-            .GetFolder("bin")
+        var contentRoot = bundleTarget.Folder!.GetFolder("bin");
+        var targetDirectories = contentRoot
             .GetFolders(folder => folder.Name == "publish")
             .ToArray();
 
-        targetDirectories.ShouldNotBeEmpty("No content were found to create a bundle");
+        targetDirectories.ShouldNotBeEmpty($"Cannot create the bundle. No publish output was found in '{contentRoot.Path}'. Set 'PublishAddin' to 'true' in the add-in project.");
 
         var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
         var bundleFolder = outputFolder.CreateFolder($"{bundleTarget.NameWithoutExtension}.bundle");
@@ -49,13 +49,14 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
         context.Summary.KeyValue("Artifacts", "Bundle", outputFile.Path);
     }
 
+    /// <summary>
+    ///     Copies the publish output of every Revit version to the bundle contents.
+    /// </summary>
     private static void PackFiles(Folder[] targetDirectories, Folder contentFolder)
     {
         foreach (var targetDirectory in targetDirectories)
         {
-            TryParseVersion(targetDirectory.Path, out var version)
-                .ShouldBeTrue($"Could not parse version from directory name: {targetDirectory.Path}");
-
+            var version = ResolveRevitVersion(targetDirectory);
             var versionFolder = contentFolder.CreateFolder(version);
             foreach (var filePath in targetDirectory.GetFiles(file => file.Exists))
             {
@@ -72,9 +73,9 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
     }
 
     /// <summary>
-    ///     Generate the Autodesk manifest.
+    ///     Creates the <c>PackageContents.xml</c> manifest of the bundle.
     /// </summary>
-    private void GenerateManifest(File bundleTarget, Folder[] targetDirectories, File manifestDirectory, ResolveVersioningResult versioning)
+    private void GenerateManifest(File bundleTarget, Folder[] targetDirectories, File manifestFile, ResolveVersioningResult versioning)
     {
         BuilderUtils.Build<PackageContentsBuilder>(builder =>
         {
@@ -90,9 +91,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
 
             foreach (var targetDirectory in targetDirectories)
             {
-                TryParseVersion(targetDirectory.Path, out var version)
-                    .ShouldBeTrue($"Could not parse version from directory name: {targetDirectory.Path}");
-
+                var version = ResolveRevitVersion(targetDirectory);
                 var addinManifests = targetDirectory.GetFiles(file => file.Extension == ".addin");
                 foreach (var addinManifest in addinManifests)
                 {
@@ -104,12 +103,27 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
                         .ModuleName($"./Contents/{version}/{relativePath}");
                 }
             }
-        }, manifestDirectory);
+        }, manifestFile);
     }
 
     /// <summary>
-    ///     Parse a version string from the given input.
+    ///     Gets the four-digit Revit version of the specified publish directory.
     /// </summary>
+    private static string ResolveRevitVersion(Folder targetDirectory)
+    {
+        TryParseVersion(targetDirectory.Path, out var version)
+            .ShouldBeTrue($"Cannot create the bundle. The Revit version of '{targetDirectory.Path}' cannot be resolved. Name the build configuration after the Revit version, such as 'Release.R26'.");
+
+        return version;
+    }
+
+    /// <summary>
+    ///     Converts the last number in the specified path to a four-digit Revit version.
+    /// </summary>
+    /// <example>
+    ///     bin\Release.R26\publish → 2026 <br />
+    ///     bin\Release.R2026\publish → 2026
+    /// </example>
     private static bool TryParseVersion(string input, [NotNullWhen(true)] out string? version)
     {
         version = null;
@@ -130,7 +144,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
     }
 
     /// <summary>
-    ///     A regular expression to match the last sequence of numeric characters in a string.
+    ///     Gets the regular expression that matches the last number in a path.
     /// </summary>
     [GeneratedRegex(@"(\d+)(?!.*\d)")]
     private static partial Regex VersionRegex();
