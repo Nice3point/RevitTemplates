@@ -1,39 +1,200 @@
 # 6.3.0
 
+Logging moves to `Microsoft.Extensions.Logging`, the code shared by an application and its modules moves to the new service defaults template, and the installer builds from a manifest.
+In existing projects, update the SDK version and follow the [migration guide](#migration-guide).
+
 ## Templates
 
-- Generated entry points, views, view models, and host services carry XML documentation; test and benchmark classes include summaries.
-- ILRepack package references are private to the generated projects.
-- The installer builds the packages from a manifest the build writes, the add-in content is no longer passed as command line arguments.
-- The `.addin` manifests install after the assemblies they point at, an interrupted installation leaves Revit no add-in to load.
-- The installer upgrade code moved to the `Installer` section of `build/appsettings.json`.
-- The installer no longer packages `.pdb` files.
-- The product name of the packages comes from the add-in project.
-- Add-ins log through `Microsoft.Extensions.Logging`, the Serilog packages are no longer referenced.
-- Records reach the Revit journal through the `Nice3point.Revit.Logging` provider, filtered to `Error`.
-- The logging option is available only when dependency injection is enabled, and the `revit-addin-application` template no longer carries it.
-- `revit-addin-application` scaffolds the entry point alone, and `revit-servicedefaults` carries the logging and diagnostics its modules share.
+### Microsoft.Extensions.Logging
+
+Add-ins log through `Microsoft.Extensions.Logging` with source-generated `LoggerMessage` methods. The Serilog packages are no longer referenced.
+The logging option is available when dependency injection is enabled, and one call registers the providers:
+
+```c#
+builder.AddLoggingDefaults();
+```
+
+```c#
+public sealed partial class ProjectService(ILogger<ProjectService> logger)
+{
+    public void Save(Document document)
+    {
+        document.Save();
+        LogProjectSaved(logger, document.Title);
+    }
+
+    [LoggerMessage(LogLevel.Information, "The project {Title} is saved.")]
+    private static partial void LogProjectSaved(ILogger<ProjectService> logger, string title);
+}
+```
+
+- Records with the `Error` level and above reach the Revit journal through the `Nice3point.Revit.Logging` provider. With hosting, the `Logging:RevitJournal:LogLevel` configuration section changes the level.
+- Unhandled `AppDomain` exceptions are written to the log with the `Critical` level.
 - The `Configuration` folder is replaced by `Logging` and `Diagnostics`.
+
+### Service defaults template
+
+The new `revit-servicedefaults` template creates a project with the logging and diagnostics that an application and its modules share.
+`revit-addin-application` now creates the entry point alone, and the application host applies the shared defaults:
+
+```shell
+dotnet new revit-addin-application -n RevitAddIn --di hosting
+dotnet new revit-servicedefaults -n RevitAddIn.ServiceDefaults
+```
+
+```c#
+builder.AddServiceDefaults();
+```
+
+### Installer
+
+The installer project moved from the `install` folder to `installer` and builds the MSI packages from a manifest that the build writes.
+
+- The `.addin` manifests are installed after the assemblies they reference. An interrupted installation no longer registers an add-in whose assemblies are missing.
+- The upgrade code is configured in the `Installer` section of `build/appsettings.json`:
+
+  ```json
+  "Installer": {
+    "UpgradeCode": "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"
+  }
+  ```
+
+- The product name of the packages comes from the add-in project.
+- The packages no longer contain `.pdb` files.
+
+### Tests and benchmarks
+
+- Test hooks run on the Revit thread without `[HookExecutor<RevitThreadExecutor>]`, and the test project no longer contains `TestsConfiguration.cs`.
+- The new test contains a TUnit assertion, and the project builds without warnings.
+- The benchmark project runs through `BenchmarkSwitcher`. Command-line arguments select the benchmarks to run: `dotnet run -c Release.R26 -- --filter *`.
+- The benchmark class is marked `[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]`, and the IDE no longer reports the benchmarks as unused.
+
+### Generated code
+
+- Entry points, views, view models, host services, and build options have XML documentation.
+- The solution contains the code style in `.editorconfig` and the LF line-ending policy in `.gitattributes`.
+- Generated files use LF line endings, end with a newline, and follow the code style of the solution.
+- The solution pins the .NET SDK to the 10.0.1xx feature band.
 - The `Models` folder is no longer created.
-- The new `revit-servicedefaults` template creates a project with the configuration common to the application and its modules.
-- The host of a generated add-in carries the project name in `IHostEnvironment.ApplicationName`.
-- The sample solution keeps its logging, diagnostics and serialization in a `ServiceDefaults` project, and serializes through a source-generated context.
+- The host of an add-in sets `IHostEnvironment.ApplicationName` to the project name.
+- ILRepack, Polyfill, and `JetBrains.Annotations` are private assets of the generated projects.
+
+### Build
+
+- Every options type declares its configuration section in `ConfigurationSectionName`, and `Program.cs` binds the options through it.
+- Build modules log through source-generated `LoggerMessage` methods.
+- Build and installer errors state the problem, the cause, and the action that resolves it:
+
+  ```text
+  Cannot create the bundle. No publish output was found in 'source/RevitAddIn/bin'. Set 'PublishAddin' to 'true' in the add-in project.
+  ```
+
+- A solution without a bundle and an installer compiles `BuildOptions`.
+- A version with a hyphen in the prerelease label keeps the whole label in `VersionSuffix`.
+- The release of `1.0.0` no longer takes the release notes from the `1.0.0-rc.1` entry of the changelog.
+- Release assets are uploaded as `application/octet-stream`, and the asset files are closed after the upload.
+- The installer step removes the temporary WiX toolset after the build.
+- The `test` step no longer disables ILRepack.
+
+### Samples
+
+- The sample solution keeps logging, diagnostics, and serialization in a `ServiceDefaults` project, and serializes through a source-generated context.
 - The Extensible Storage sample stores its data through a schema definition and a typed context.
 
-### Add-in migration
+### Dependencies
+
+- Updated dependencies.
+
+## SDK
+
+- ILRepack merges the published add-in. The `bin` directory keeps the original assemblies for the projects that reference the add-in, such as a test project.
+- Repacking runs only when `PublishAddin` or `DeployAddin` is enabled.
+- Updated dependencies.
+
+## Breaking changes
+
+- Serilog is replaced by `Microsoft.Extensions.Logging`.
+- `revit-addin-application` no longer has the logging option. Logging comes from a `revit-servicedefaults` project.
+- The installer project moved from `install` to `installer`, and the upgrade code moved to `build/appsettings.json`.
+- Test hooks no longer use `RevitThreadExecutor`.
+- Repacking requires `PublishAddin` or `DeployAddin`.
+
+## Migration guide
+
+### Add-in
 
 1. Delete the `Configuration` folder from the add-in project.
-2. Create a temporary project using version 6.3.0 with the same options and copy the new `Logging` and `Diagnostics` folders to your project.
-3. Replace the Serilog registration in `Host.cs` with `AddLoggingDefaults()`, the `ConfigureHosting()` call is no longer needed.
-4. Remove the `Serilog`, `Serilog.Sinks.Debug` and `Serilog.Extensions.Hosting` package references.
-5. Replace `Serilog.ILogger` with `ILogger<T>` and `logger.Information(...)` with `logger.LogInformation(...)` in the classes that write logs.
+2. Create a temporary project with version 6.3.0 and the same options, and copy the `Logging` and `Diagnostics` folders to the add-in project.
+3. Replace the Serilog registration in `Host.cs`:
 
-### Solution migration
+   ```c#
+   // Before
+   builder.Logging.ClearProviders();
+   builder.Logging.AddSerilog();
+   builder.ConfigureHosting();
+
+   // After
+   builder.AddLoggingDefaults();
+   ```
+
+4. Remove the `Serilog`, `Serilog.Sinks.Debug`, and `Serilog.Extensions.Hosting` package references.
+5. Replace `Serilog.ILogger` with `ILogger<T>` in the classes that write logs:
+
+   ```c#
+   // Before
+   public class ProjectService(ILogger logger)
+   {
+       public void Save() => logger.Information("Message");
+   }
+
+   // After
+   public partial class ProjectService(ILogger<ProjectService> logger)
+   {
+       public void Save() => LogMessage(logger);
+
+       [LoggerMessage(LogLevel.Information, "Message")]
+       private static partial void LogMessage(ILogger<ProjectService> logger);
+   }
+   ```
+
+### Solution
 
 1. Delete the `install` folder and `build/Modules/CreateInstallerModule.cs`.
-2. Create a temporary solution using version 6.3.0 and copy the new `install` folder, `build/Modules/CreateInstallerModule.cs` and `build/Options/InstallerOptions.cs` to your solution.
-3. Register the options in `build/Program.cs`: `builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection("Installer")).ValidateDataAnnotations();`.
-4. Add the `Installer` section to `build/appsettings.json` and set `UpgradeCode` to the GUID your previous `install/Installer.cs` passed to the `Project.GUID` property.
+2. Create a temporary solution with version 6.3.0, and copy the `installer` folder, `build/Modules/CreateInstallerModule.cs`, and `build/Options/InstallerOptions.cs` to the solution.
+3. Replace the `install` project with `installer/Installer.csproj` in the solution file.
+4. Register the options in `build/Program.cs`:
+
+   ```c#
+   builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection(InstallerOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+   ```
+
+5. Add the `Installer` section to `build/appsettings.json`, and set `UpgradeCode` to the GUID that `install/Installer.cs` passed to `Project.GUID`. A new GUID makes the next release install side by side with the previous one.
+
+### Tests
+
+1. Update `Nice3point.TUnit.Revit` to the latest version.
+2. Delete `TestsConfiguration.cs` and remove the executor from the test hooks:
+
+   ```c#
+   // Before
+   [Before(Test)]
+   [HookExecutor<RevitThreadExecutor>]
+   public void SeedModel()
+
+   // After
+   [Before(Test)]
+   public void SeedModel()
+   ```
+
+### SDK
+
+A project that repacks its assemblies enables `PublishAddin` or `DeployAddin`:
+
+```xml
+<PropertyGroup>
+    <PublishAddin>true</PublishAddin>
+</PropertyGroup>
+```
 
 # 6.2.3
 
