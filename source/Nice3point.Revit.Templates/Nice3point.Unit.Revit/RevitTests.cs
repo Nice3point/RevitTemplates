@@ -12,7 +12,6 @@ public sealed class RevitTests : RevitApiTest
     private Document _document = null!;
 
     [Before(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void SeedModel()
     {
         _document = Application.NewProjectDocument(UnitSystem.Metric);
@@ -24,7 +23,6 @@ public sealed class RevitTests : RevitApiTest
     }
 
     [After(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void CloseModel()
     {
         _document.Close(false);
