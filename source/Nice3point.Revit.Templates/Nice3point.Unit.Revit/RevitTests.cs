@@ -1,6 +1,4 @@
 using Nice3point.TUnit.Revit;
-using Nice3point.TUnit.Revit.Executors;
-using TUnit.Core.Executors;
 
 namespace Nice3point.Unit.Revit._1;
 
@@ -34,8 +32,9 @@ public sealed class RevitTests : RevitApiTest
         // Arrange
 
         // Act
+        var isValidDocument = _document.IsValidObject;
 
         // Assert
-        // await Assert.That();
+        await Assert.That(isValidDocument).IsTrue();
     }
 }

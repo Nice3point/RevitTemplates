@@ -1,8 +1,6 @@
 using ModelessModule;
 using Nice3point.TUnit.Revit;
-using Nice3point.TUnit.Revit.Executors;
 using RevitAddin.Tests.DataSources;
-using TUnit.Core.Executors;
 
 namespace RevitAddin.Tests;
 
@@ -12,7 +10,6 @@ public sealed class VolumeCalculationTests(ElementMetadataExtractionService extr
     private Wall _wall = null!;
 
     [Before(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void SeedModel()
     {
         var document = Application.NewProjectDocument(UnitSystem.Metric);

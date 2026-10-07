@@ -1,7 +1,5 @@
 using Nice3point.Revit.Injector;
 using Nice3point.TUnit.Revit;
-using Nice3point.TUnit.Revit.Executors;
-using TUnit.Core.Executors;
 
 namespace RevitAddin.Tests.Abstractions;
 
@@ -13,7 +11,6 @@ public class RevitFamilySampleTest : RevitApiTest
     public static string[] RevitFamilies { get; } = Directory.Exists(SamplesPath) ? Directory.EnumerateFiles(SamplesPath, "*.rfa").ToArray() : [];
 
     [Before(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void OpenDocuments()
     {
         foreach (var path in RevitFamilies)
@@ -29,7 +26,6 @@ public class RevitFamilySampleTest : RevitApiTest
     }
 
     [After(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void CloseDocuments()
     {
         foreach (var document in FamilyDocuments.Values)

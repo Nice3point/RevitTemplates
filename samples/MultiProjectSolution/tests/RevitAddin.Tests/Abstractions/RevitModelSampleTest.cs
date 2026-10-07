@@ -1,7 +1,5 @@
 using Nice3point.Revit.Injector;
 using Nice3point.TUnit.Revit;
-using Nice3point.TUnit.Revit.Executors;
-using TUnit.Core.Executors;
 
 namespace RevitAddin.Tests.Abstractions;
 
@@ -21,7 +19,6 @@ public class RevitModelSampleTest : RevitApiTest
         : [];
 
     [Before(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void OpenDocuments()
     {
         foreach (var path in RevitModels)
@@ -37,7 +34,6 @@ public class RevitModelSampleTest : RevitApiTest
     }
 
     [After(Test)]
-    [HookExecutor<RevitThreadExecutor>]
     public void CloseDocuments()
     {
         foreach (var document in ModelDocuments.Values)

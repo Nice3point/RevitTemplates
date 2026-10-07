@@ -12,6 +12,7 @@
         <PackageReference Include="Nice3point.TUnit.Revit" Version="$(RevitVersion).*-*"/>
         <PackageReference Include="TUnit" Version="1.72.16"/>
         <PackageReference Include="Polyfill" Version="11.4.3" PrivateAssets="all"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
