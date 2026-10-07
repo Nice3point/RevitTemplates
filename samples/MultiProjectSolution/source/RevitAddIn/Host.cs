@@ -20,7 +20,7 @@ public static class Host
     private static IHost? _host;
 
     /// <summary>
-    ///     Starts the host and registers the add-in services.
+    ///     Registers the add-in services and starts the host.
     /// </summary>
     /// <returns>A task that represents the asynchronous host startup operation.</returns>
     public static async Task StartAsync()
@@ -59,10 +59,10 @@ public static class Host
     }
 
     /// <summary>
-    ///     Resolves a required service from the add-in service provider.
+    ///     Gets the service of the specified type from the add-in service provider.
     /// </summary>
     /// <typeparam name="T">The type of service to resolve.</typeparam>
-    /// <returns>The registered service instance.</returns>
+    /// <returns>The service instance.</returns>
     /// <exception cref="System.InvalidOperationException">No service of type <typeparamref name="T" /> is registered.</exception>
     /// <remarks>Service resolution requires a started host.</remarks>
     public static T GetService<T>() where T : class
@@ -71,15 +71,12 @@ public static class Host
     }
 
     /// <summary>
-    ///     Creates a FrameworkElement with the scope lifetime and manages the scope lifecycle.
+    ///     Creates a <see cref="FrameworkElement" /> in a new service scope.
     /// </summary>
-    /// <typeparam name="T">The type of FrameworkElement to get.</typeparam>
-    /// <returns>A FrameworkElement of type T with managed scope lifecycle.</returns>
-    /// <remarks>
-    ///     The scope is automatically disposed when the element is unloaded or,
-    ///     in the case of a Window, when it is closed.
-    /// </remarks>
+    /// <typeparam name="T">The type of the <see cref="FrameworkElement" /> to create.</typeparam>
+    /// <returns>The created element.</returns>
     /// <exception cref="System.InvalidOperationException">No service of type <typeparamref name="T" /> is registered.</exception>
+    /// <remarks>The scope is disposed when the element is unloaded, or when the <see cref="Window" /> is closed.</remarks>
     public static T CreateScope<T>() where T : FrameworkElement
     {
         var scopeFactory = _host!.Services.GetRequiredService<IServiceScopeFactory>();

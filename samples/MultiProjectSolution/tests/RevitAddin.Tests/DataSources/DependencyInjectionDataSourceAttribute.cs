@@ -8,11 +8,13 @@ public sealed class DependencyInjectionDataSourceAttribute : DependencyInjection
 {
     private static readonly IServiceProvider ServiceProvider = CreateSharedServiceProvider();
 
+    /// <inheritdoc />
     public override IServiceScope CreateScope(DataGeneratorMetadata dataGeneratorMetadata)
     {
         return ServiceProvider.CreateScope();
     }
 
+    /// <inheritdoc />
     public override object? Create(IServiceScope scope, Type type)
     {
         return scope.ServiceProvider.GetService(type);

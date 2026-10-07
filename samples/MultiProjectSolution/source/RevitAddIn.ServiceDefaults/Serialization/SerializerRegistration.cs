@@ -16,7 +16,7 @@ public static class SerializerRegistration
     extension<TBuilder>(TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         /// <summary>
-        ///     Configures the JSON serializer options the application serializes through.
+        ///     Configures the JSON serializer options of the application.
         /// </summary>
         /// <returns>The <typeparamref name="TBuilder" /> for chaining.</returns>
         /// <remarks>The options reach a consumer through <see cref="Microsoft.Extensions.Options.IOptions{TOptions}" />.</remarks>

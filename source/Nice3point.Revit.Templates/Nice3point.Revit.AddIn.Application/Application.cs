@@ -17,11 +17,10 @@ public class Application : ExternalApplication
 public class Application : ExternalDBApplication
 #endif
 {
-#if (diHosting && isApplicationAddin)
     /// <inheritdoc />
+#if (diHosting && isApplicationAddin)
     public override async Task OnStartupAsync()
 #else
-    /// <inheritdoc />
     public override void OnStartup()
 #endif
     {
@@ -36,6 +35,7 @@ public class Application : ExternalDBApplication
     }
 #if (diHosting)
 
+    /// <inheritdoc />
 #if (isApplicationAddin)
     public override async Task OnShutdownAsync()
 #else

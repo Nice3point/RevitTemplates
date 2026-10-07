@@ -5,7 +5,7 @@ using RevitAddIn.ServiceDefaults.Serialization;
 namespace Microsoft.Extensions.Hosting;
 
 /// <summary>
-///     Provides extension methods for <see cref="IHostApplicationBuilder" /> to apply the defaults every project of the add-in shares.
+///     Provides extension methods for <see cref="IHostApplicationBuilder" /> to add the defaults shared by the projects of the add-in.
 /// </summary>
 [PublicAPI]
 public static class ServiceDefaultsRegistration

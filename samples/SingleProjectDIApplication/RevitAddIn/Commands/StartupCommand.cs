@@ -12,6 +12,7 @@ namespace RevitAddIn.Commands;
 [Transaction(TransactionMode.Manual)]
 public class StartupCommand : ExternalCommand
 {
+    /// <inheritdoc />
     public override void Execute()
     {
         var view = Host.GetService<RevitAddInView>();

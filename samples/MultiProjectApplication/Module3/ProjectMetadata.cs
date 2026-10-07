@@ -1,7 +1,7 @@
 namespace Module3;
 
 /// <summary>
-///     Represents the project record the add-in stores in the document.
+///     Represents the project metadata that the add-in stores in the document.
 /// </summary>
 public sealed class ProjectMetadata
 {

@@ -12,6 +12,7 @@ namespace RevitAddIn.Commands;
 [Transaction(TransactionMode.Manual)]
 public class Module1StartupCommand : ExternalCommand
 {
+    /// <inheritdoc />
     public override void Execute()
     {
         var viewModel = new Module1ViewModel();

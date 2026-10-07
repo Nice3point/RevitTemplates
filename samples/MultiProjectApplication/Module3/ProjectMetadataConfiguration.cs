@@ -3,7 +3,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 namespace Module3;
 
 /// <summary>
-///     Defines the Extensible Storage schema <see cref="ProjectMetadata" /> is stored in.
+///     Defines the Extensible Storage schema of <see cref="ProjectMetadata" />.
 /// </summary>
 public static class ProjectMetadataConfiguration
 {
@@ -14,9 +14,9 @@ public static class ProjectMetadataConfiguration
     public static readonly Guid Identity = new("0E73AF93-E7F3-42E6-9BA5-AFC1CA23D42B");
 
     /// <summary>
-    ///     Returns the schema registered in the session, and registers it on the first call.
+    ///     Gets the registered schema, or registers the schema if it doesn't exist.
     /// </summary>
-    /// <returns>The schema the project record is stored in.</returns>
+    /// <returns>The schema of the project metadata.</returns>
     public static Schema Create()
     {
         var schema = Schema.Lookup(Identity);

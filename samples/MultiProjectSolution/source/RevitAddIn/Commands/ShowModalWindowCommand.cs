@@ -11,6 +11,7 @@ namespace RevitAddIn.Commands;
 [Transaction(TransactionMode.Manual)]
 public class ShowModalWindowCommand : ExternalCommand
 {
+    /// <inheritdoc />
     public override void Execute()
     {
         var view = Host.CreateScope<ModalModuleView>();

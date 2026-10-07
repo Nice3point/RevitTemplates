@@ -23,6 +23,7 @@ public class StartupCommand : AsyncExternalCommand
 public class StartupCommand : ExternalCommand
 #endif
 {
+    /// <inheritdoc />
 #if (diHosting && isCommandAddin)
     public override async Task ExecuteAsync()
 #else

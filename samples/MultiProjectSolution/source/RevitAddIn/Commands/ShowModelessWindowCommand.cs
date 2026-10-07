@@ -14,6 +14,7 @@ namespace RevitAddIn.Commands;
 [Transaction(TransactionMode.Manual)]
 public class ShowModelessWindowCommand : ExternalCommand
 {
+    /// <inheritdoc />
     public override void Execute()
     {
         var messenger = Host.GetService<IMessenger>();

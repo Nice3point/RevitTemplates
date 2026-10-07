@@ -10,6 +10,7 @@ namespace RevitAddIn;
 [UsedImplicitly]
 public class Application : ExternalApplication
 {
+    /// <inheritdoc />
     public override void OnStartup()
     {
         CreateRibbon();

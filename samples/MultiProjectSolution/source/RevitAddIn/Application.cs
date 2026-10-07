@@ -10,12 +10,14 @@ namespace RevitAddIn;
 [UsedImplicitly]
 public class Application : AsyncExternalApplication
 {
+    /// <inheritdoc />
     public override async Task OnStartupAsync()
     {
         await Host.StartAsync();
         CreateRibbon();
     }
 
+    /// <inheritdoc />
     public override async Task OnShutdownAsync()
     {
         await Host.StopAsync();

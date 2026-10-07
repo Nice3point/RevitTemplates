@@ -3,9 +3,9 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 namespace Module3;
 
 /// <summary>
-///     Reads and writes the <see cref="ProjectMetadata" /> record of a single document.
+///     Provides access to the <see cref="ProjectMetadata" /> of a document.
 /// </summary>
-/// <param name="document">The document the record is stored in.</param>
+/// <param name="document">The document that stores the project metadata.</param>
 public sealed class ProjectMetadataContext(Document document)
 {
     private const string StorageName = "RevitAddIn DataStorage";
@@ -13,9 +13,9 @@ public sealed class ProjectMetadataContext(Document document)
     private readonly Schema _schema = ProjectMetadataConfiguration.Create();
 
     /// <summary>
-    ///     Reads the record of the document.
+    ///     Reads the project metadata from the document.
     /// </summary>
-    /// <returns>The stored record, or an empty one when the document carries none.</returns>
+    /// <returns>The stored project metadata, or empty metadata if the document has no metadata.</returns>
     public ProjectMetadata Load()
     {
         var storage = FindStorage();
@@ -30,10 +30,10 @@ public sealed class ProjectMetadataContext(Document document)
     }
 
     /// <summary>
-    ///     Writes the record to the document, creating the storage element on the first write.
+    ///     Writes the project metadata to the document.
     /// </summary>
-    /// <param name="data">The record to write.</param>
-    /// <remarks>The caller opens the transaction.</remarks>
+    /// <param name="data">The project metadata to write.</param>
+    /// <remarks>The caller starts the transaction. If the document has no storage element, the method creates it.</remarks>
     public void Save(ProjectMetadata data)
     {
         var storage = FindStorage();

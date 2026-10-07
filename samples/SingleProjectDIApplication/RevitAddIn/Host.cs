@@ -12,7 +12,7 @@ public static class Host
     private static IServiceProvider? _serviceProvider;
 
     /// <summary>
-    ///     Starts the host and registers the add-in services.
+    ///     Registers the add-in services and starts the host.
     /// </summary>
     public static void Start()
     {
@@ -25,10 +25,10 @@ public static class Host
     }
 
     /// <summary>
-    ///     Resolves a required service from the add-in service provider.
+    ///     Gets the service of the specified type from the add-in service provider.
     /// </summary>
     /// <typeparam name="T">The type of service to resolve.</typeparam>
-    /// <returns>The registered service instance.</returns>
+    /// <returns>The service instance.</returns>
     /// <exception cref="System.InvalidOperationException">No service of type <typeparamref name="T" /> is registered.</exception>
     /// <remarks>Service resolution requires a started host.</remarks>
     public static T GetService<T>() where T : class

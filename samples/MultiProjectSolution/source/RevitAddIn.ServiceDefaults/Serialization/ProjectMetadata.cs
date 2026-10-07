@@ -1,7 +1,7 @@
 namespace RevitAddIn.ServiceDefaults.Serialization;
 
 /// <summary>
-///     Represents the project state the application writes to the log after a save.
+///     Represents the project data that the application logs after the document is saved.
 /// </summary>
-/// <param name="ProjectName">The name the project carries after the save.</param>
+/// <param name="ProjectName">The project name after the document is saved.</param>
 public sealed record ProjectMetadata(string? ProjectName);

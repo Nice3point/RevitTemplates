@@ -12,7 +12,7 @@ namespace Nice3point.Revit.ServiceDefaults._1.Diagnostics;
 ///     Represents a hosted service that writes unhandled <see cref="AppDomain" /> exceptions to the log while the host is running.
 #endif
 /// </summary>
-/// <param name="logger">The logger the service writes unhandled exceptions to.</param>
+/// <param name="logger">The logger for unhandled exceptions.</param>
 #if (diContainer)
 public sealed partial class AppDomainExceptionsHandler(ILogger<AppDomainExceptionsHandler> logger)
 #elseif (diHosting)
@@ -21,7 +21,7 @@ public sealed partial class AppDomainExceptionsHandler(ILogger<AppDomainExceptio
 {
 #if (diContainer)
     /// <summary>
-    ///     Starts writing unhandled <see cref="AppDomain" /> exceptions to the log.
+    ///     Subscribes to unhandled <see cref="AppDomain" /> exceptions and writes them to the log.
     /// </summary>
     public void LogExceptions()
     {
@@ -54,9 +54,9 @@ public sealed partial class AppDomainExceptionsHandler(ILogger<AppDomainExceptio
         LogNonExceptionDomainUnhandledException(logger, args.IsTerminating);
     }
 
-    [LoggerMessage(LogLevel.Critical, "Domain unhandled exception")]
+    [LoggerMessage(LogLevel.Critical, "An unhandled exception occurred in the application domain.")]
     private static partial void LogDomainUnhandledException(ILogger<AppDomainExceptionsHandler> logger, Exception exception);
 
-    [LoggerMessage(LogLevel.Critical, "Domain unhandled non-exception object, terminating: {isTerminating}")]
+    [LoggerMessage(LogLevel.Critical, "An unhandled object that is not an exception was thrown in the application domain. Terminating: {IsTerminating}.")]
     private static partial void LogNonExceptionDomainUnhandledException(ILogger<AppDomainExceptionsHandler> logger, bool isTerminating);
 }
