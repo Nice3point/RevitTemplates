@@ -1,7 +1,7 @@
 using Autodesk.Revit.Attributes;
-using Nice3point.Revit.Toolkit.External;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using Nice3point.Revit.Toolkit.External;
 using Nice3point.Revit.Toolkit.Options;
 
 namespace RevitAddIn.Commands;

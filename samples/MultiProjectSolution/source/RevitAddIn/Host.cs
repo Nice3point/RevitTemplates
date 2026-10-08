@@ -1,4 +1,3 @@
-using Path = System.IO.Path;
 using System.Reflection;
 using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
@@ -9,6 +8,7 @@ using ModalModule.Views;
 using ModelessModule;
 using ModelessModule.ViewModels;
 using ModelessModule.Views;
+using Path = System.IO.Path;
 
 namespace RevitAddIn;
 
@@ -53,7 +53,10 @@ public static class Host
     /// <returns>A task that represents the asynchronous host shutdown operation.</returns>
     public static async Task StopAsync()
     {
-        if (_host is null) return;
+        if (_host is null)
+        {
+            return;
+        }
 
         await _host.StopAsync();
     }

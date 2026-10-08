@@ -1,18 +1,22 @@
 #if (diHosting)
-using Path = System.IO.Path;
 using System.Reflection;
-using Microsoft.Extensions.Hosting;
 #endif
 using Microsoft.Extensions.DependencyInjection;
-#if (useUi)
-using Nice3point.Revit.AddIn._1.Views;
-using Nice3point.Revit.AddIn._1.ViewModels;
+#if (diHosting)
+using Microsoft.Extensions.Hosting;
 #endif
 #if (useLogging && diContainer)
 using Nice3point.Revit.AddIn._1.Diagnostics;
 #endif
 #if (useLogging)
 using Nice3point.Revit.AddIn._1.Logging;
+#endif
+#if (useUi)
+using Nice3point.Revit.AddIn._1.ViewModels;
+using Nice3point.Revit.AddIn._1.Views;
+#endif
+#if (diHosting)
+using Path = System.IO.Path;
 #endif
 
 namespace Nice3point.Revit.AddIn._1;
@@ -94,7 +98,10 @@ public static class Host
     public static void Stop()
 #endif
     {
-        if (_host is null) return;
+        if (_host is null)
+        {
+            return;
+        }
 
 #if (isApplicationAddin || isCommandAddin)
         await _host.StopAsync();

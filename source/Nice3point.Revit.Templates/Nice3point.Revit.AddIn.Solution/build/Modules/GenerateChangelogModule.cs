@@ -67,7 +67,10 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
         {
             if (isChangelogEntryFound)
             {
-                if (line.StartsWith(separator)) break;
+                if (line.StartsWith(separator))
+                {
+                    break;
+                }
 
                 changelog.AppendLine(line);
                 continue;
@@ -88,7 +91,10 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
     /// </summary>
     private static void TrimEmptyLines(StringBuilder changelog)
     {
-        if (changelog.Length == 0) return;
+        if (changelog.Length == 0)
+        {
+            return;
+        }
 
         var start = 0;
         var end = changelog.Length - 1;

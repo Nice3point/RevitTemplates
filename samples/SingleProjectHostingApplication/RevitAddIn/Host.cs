@@ -1,9 +1,9 @@
-using Path = System.IO.Path;
 using System.Reflection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using RevitAddIn.Views;
+using Microsoft.Extensions.Hosting;
 using RevitAddIn.ViewModels;
+using RevitAddIn.Views;
+using Path = System.IO.Path;
 
 namespace RevitAddIn;
 
@@ -40,7 +40,10 @@ public static class Host
     /// <returns>A task that represents the asynchronous host shutdown operation.</returns>
     public static async Task StopAsync()
     {
-        if (_host is null) return;
+        if (_host is null)
+        {
+            return;
+        }
 
         await _host.StopAsync();
     }

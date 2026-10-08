@@ -1,3 +1,12 @@
+# 6.3.1
+
+A new project now passes Code Cleanup without changes. Existing projects require no update.
+
+## Templates
+
+- Generated code follows the `.editorconfig` rules of the solution: `if` statements have braces, and `using` directives are sorted the way the IDE sorts them.
+- The code style no longer wraps a long assignment after `=`: `resharper_prefer_wrap_around_eq` is set to `avoid`.
+
 # 6.3.0
 
 Logging moves to `Microsoft.Extensions.Logging`, the code shared by an application and its modules moves to the new service defaults template, and the installer builds from a manifest.

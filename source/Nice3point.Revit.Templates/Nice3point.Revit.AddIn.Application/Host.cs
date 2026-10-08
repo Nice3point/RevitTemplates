@@ -1,9 +1,11 @@
 #if (diHosting)
-using Path = System.IO.Path;
 using System.Reflection;
-using Microsoft.Extensions.Hosting;
 #endif
 using Microsoft.Extensions.DependencyInjection;
+#if (diHosting)
+using Microsoft.Extensions.Hosting;
+using Path = System.IO.Path;
+#endif
 
 namespace Nice3point.Revit.AddIn._1;
 
@@ -63,7 +65,10 @@ public static class Host
     public static void Stop()
 #endif
     {
-        if (_host is null) return;
+        if (_host is null)
+        {
+            return;
+        }
 
 #if (isApplicationAddin || isCommandAddin)
         await _host.StopAsync();

@@ -128,7 +128,10 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
     {
         version = null;
         var match = VersionRegex().Match(input);
-        if (!match.Success) return false;
+        if (!match.Success)
+        {
+            return false;
+        }
 
         switch (match.Value.Length)
         {

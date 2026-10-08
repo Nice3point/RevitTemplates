@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 #endif
 using Microsoft.Extensions.Logging;
-using Nice3point.Revit.AddIn._1.Diagnostics;
 using Nice3point.Revit.Logging;
+using Nice3point.Revit.AddIn._1.Diagnostics;
 
 namespace Nice3point.Revit.AddIn._1.Logging;
 

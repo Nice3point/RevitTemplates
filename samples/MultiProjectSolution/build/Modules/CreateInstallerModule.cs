@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Build.Options;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Attributes;
@@ -10,10 +14,6 @@ using ModularPipelines.Modules;
 using ModularPipelines.Options;
 using Shouldly;
 using Sourcy.DotNet;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 using File = ModularPipelines.FileSystem.File;
 using InstallerOptions = Build.Options.InstallerOptions;
 
@@ -80,7 +80,7 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
                 {
                     { "PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}" }
                 }
-            }, cancellationToken: cancellationToken);
+            }, cancellationToken);
 
         await wixToolFolder.DeleteAsync(cancellationToken);
 
@@ -193,7 +193,10 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
     {
         version = null;
         var match = VersionRegex().Match(input);
-        if (!match.Success) return false;
+        if (!match.Success)
+        {
+            return false;
+        }
 
         switch (match.Value.Length)
         {

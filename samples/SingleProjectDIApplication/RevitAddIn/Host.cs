@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using RevitAddIn.Views;
 using RevitAddIn.ViewModels;
+using RevitAddIn.Views;
 
 namespace RevitAddIn;
 

@@ -5,26 +5,27 @@ Autodesk Revit plugin project organized into a single solution with configuratio
 ## Table of content
 
 <!-- TOC -->
+
 * [Prerequisites](#prerequisites)
 * [Solution Structure](#solution-structure)
 * [Project Structure](#project-structure)
 * [Building](#building)
 ---#if (includeInstaller && includeBundle)
-  * [Building the MSI installer and the Autodesk bundle on local machine](#building-the-msi-installer-and-the-autodesk-bundle-on-local-machine)
+    * [Building the MSI installer and the Autodesk bundle on local machine](#building-the-msi-installer-and-the-autodesk-bundle-on-local-machine)
 ---#elseif (includeInstaller)
-  * [Building the MSI installer on local machine](#building-the-msi-installer-on-local-machine)
+    * [Building the MSI installer on local machine](#building-the-msi-installer-on-local-machine)
 ---#elseif (includeBundle)
-  * [Building the Autodesk bundle on local machine](#building-the-autodesk-bundle-on-local-machine)
+    * [Building the Autodesk bundle on local machine](#building-the-autodesk-bundle-on-local-machine)
 ---#endif
 ---#if (isReleaseCi)
 * [Publishing Releases](#publishing-releases)
-  * [Creating a new Release from the JetBrains Rider](#creating-a-new-release-from-the-jetbrains-rider)
-  * [Creating a new Release from the Terminal](#creating-a-new-release-from-the-terminal)
+    * [Creating a new Release from the JetBrains Rider](#creating-a-new-release-from-the-jetbrains-rider)
+    * [Creating a new Release from the Terminal](#creating-a-new-release-from-the-terminal)
 ---#if (isGitHubCi)
-  * [Creating a new Release on GitHub](#creating-a-new-release-on-github)
+    * [Creating a new Release on GitHub](#creating-a-new-release-on-github)
 ---#endif
 ---#if (isAzureCi && hasArtifacts)
-  * [Creating a new Release on Azure DevOps](#creating-a-new-release-on-azure-devops)
+    * [Creating a new Release on Azure DevOps](#creating-a-new-release-on-azure-devops)
 ---#endif
 ---#endif
 ---#if (isGitHubCi)
@@ -32,10 +33,11 @@ Autodesk Revit plugin project organized into a single solution with configuratio
 ---#endif
 * [Conditional compilation for a specific Revit version](#conditional-compilation-for-a-specific-revit-version)
 * [Managing Supported Revit Versions](#managing-supported-revit-versions)
-  * [Solution configurations](#solution-configurations)
-  * [Project configurations](#project-configurations)
+    * [Solution configurations](#solution-configurations)
+    * [Project configurations](#project-configurations)
 * [API references](#api-references)
 * [Learn More](#learn-more)
+
 <!-- TOC -->
 
 ## Prerequisites
@@ -49,17 +51,26 @@ If you haven't already installed these, you can do so by visiting the following:
 
 ## Solution Structure
 
-| Folder  | Description                                                                |
-|---------|----------------------------------------------------------------------------|
-| build   | ModularPipelines build system. Used to automate project builds             |
 ---#if (includeInstaller)
-| installer | Add-in installer, called by the ModularPipelines build                   |
----#endif
-| source  | Project source code folder. Contains all solution projects                 |
+| Folder    | Description                                                                |
+|-----------|----------------------------------------------------------------------------|
+| build     | ModularPipelines build system. Used to automate project builds             |
+| installer | Add-in installer, called by the ModularPipelines build                     |
+| source    | Project source code folder. Contains all solution projects                 |
 ---#if (includeTests)
-| tests   | Unit test projects, run implicitly by the ModularPipelines build           |
+| tests     | Unit test projects, run implicitly by the ModularPipelines build           |
 ---#endif
-| output  | Folder of generated files by the build system, such as bundles, installers |
+| output    | Folder of generated files by the build system, such as bundles, installers |
+---#else
+| Folder | Description                                                                |
+|--------|----------------------------------------------------------------------------|
+| build  | ModularPipelines build system. Used to automate project builds             |
+| source | Project source code folder. Contains all solution projects                 |
+---#if (includeTests)
+| tests  | Unit test projects, run implicitly by the ModularPipelines build           |
+---#endif
+| output | Folder of generated files by the build system, such as bundles, installers |
+---#endif
 
 ## Project Structure
 
@@ -248,7 +259,6 @@ To create releases directly on Azure:
 6. Click **Run**.
 
    ![image](https://github.com/user-attachments/assets/39d2b173-3092-48a5-a9eb-7c0981708b07)
-
 ---#endif
 ---#endif
 ---#if (isGitHubCi)

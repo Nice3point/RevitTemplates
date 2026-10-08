@@ -1,8 +1,8 @@
 using Autodesk.Revit.Attributes;
-using Nice3point.Revit.Toolkit.External;
 #if (!useUi)
 using Autodesk.Revit.UI;
 #endif
+using Nice3point.Revit.Toolkit.External;
 #if (useUi && !useDi)
 using Nice3point.Revit.AddIn._1.ViewModels;
 #endif
