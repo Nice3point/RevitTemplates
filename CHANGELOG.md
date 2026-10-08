@@ -1,11 +1,18 @@
 # 6.3.1
 
-A new project now passes Code Cleanup without changes. Existing projects require no update.
+The SDK is cross-platform now.
 
 ## Templates
 
 - Generated code follows the `.editorconfig` rules of the solution: `if` statements have braces, and `using` directives are sorted the way the IDE sorts them.
 - The code style no longer wraps a long assignment after `=`: `resharper_prefer_wrap_around_eq` is set to `avoid`.
+
+## SDK
+
+- Add-ins build on Linux and macOS. The SDK enables `EnableWindowsTargeting` outside Windows, and a project no longer needs to set it.
+- Repacking runs on Linux and macOS through the `dotnet` host.
+- Outside Windows, `DeployAddin` skips the deployment with a message unless `AddinDeployDir` is set. The build no longer fails on the missing `%AppData%` folder.
+- The publish message shows the correct path when `AddinPublishDir` is an absolute path.
 
 # 6.3.0
 

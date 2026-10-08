@@ -13,7 +13,7 @@
         <PublishAddin Condition="'$(DeployAddin)' == 'true'">true</PublishAddin>
         <PublishAddin Condition="'$(PublishAddin)' == ''">false</PublishAddin>
         <AddinPublishDir Condition="'$(AddinPublishDir)' == ''">$(PublishDir)</AddinPublishDir>
-        <AddinDeployDir Condition="'$(AddinDeployDir)' == ''">$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</AddinDeployDir>
+        <AddinDeployDir Condition="'$(AddinDeployDir)' == '' AND $([MSBuild]::IsOSPlatform('Windows'))">$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</AddinDeployDir>
     </PropertyGroup>
 
     <Target Name="PublishAddin"
@@ -40,12 +40,12 @@
               SkipUnchangedFiles="true"
               DestinationFolder="$(AddinPublishDir)\$(AssemblyName)\%(_ResolvedFileToPublishPreserveNewest.PublishDirectory)\%(RecursiveDir)"/>
 
-        <Message Text="$(AssemblyName) -> $(MSBuildProjectDirectory)\$(AddinPublishDir)" Importance="high"/>
+        <Message Text="$(AssemblyName) -> $([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', '$(AddinPublishDir)'))" Importance="high"/>
     </Target>
 
     <Target Name="DeployAddin"
             AfterTargets="PublishAddin"
-            Condition="'$(DeployAddin)' == 'true'">
+            Condition="'$(DeployAddin)' == 'true' AND '$(AddinDeployDir)' != ''">
 
         <ItemGroup>
             <_AddinDeploySourceFiles Include="$(AddinPublishDir)\**\*"/>
@@ -55,12 +55,19 @@
               SkipUnchangedFiles="true"
               DestinationFolder="$(AddinDeployDir)\%(RecursiveDir)"/>
 
-        <Message Text="$(AssemblyName) -> $(AddinDeployDir)\" Importance="high"/>
+        <Message Text="$(AssemblyName) -> $([MSBuild]::NormalizeDirectory('$(AddinDeployDir)'))" Importance="high"/>
+    </Target>
+
+    <Target Name="SkipDeployAddin"
+            AfterTargets="PublishAddin"
+            Condition="'$(DeployAddin)' == 'true' AND '$(AddinDeployDir)' == ''">
+
+        <Message Text="The add-in is not deployed. The default Revit add-ins folder exists only on Windows. Set 'AddinDeployDir' to deploy the add-in on this operating system." Importance="high"/>
     </Target>
 
     <Target Name="CleanAddin"
             AfterTargets="Clean"
-            Condition="'$(DeployAddin)' == 'true'">
+            Condition="'$(DeployAddin)' == 'true' AND '$(AddinDeployDir)' != ''">
 
         <RemoveDir Directories="$(AddinDeployDir)\$(AssemblyName)"/>
         <Delete Files="$(AddinDeployDir)\$(AssemblyName).addin"/>

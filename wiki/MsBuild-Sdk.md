@@ -26,6 +26,7 @@ MSBuild SDK for developing and publishing the add-ins for multiple Revit version
 - Easy Testing automatically copies your add-in to Revit folders for quick testing.
 - Manifest patching automatically fixes .addin files to support breaking changes between Revit versions.
 - Clean Project Files removes all the messy boilerplates from your .csproj configuration.
+- Cross-platform builds compile, publish, and repack the add-in on Windows, Linux, and macOS.
 
 ## Installation
 

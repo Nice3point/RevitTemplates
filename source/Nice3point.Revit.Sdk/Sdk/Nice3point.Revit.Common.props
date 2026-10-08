@@ -16,6 +16,10 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
+    <PropertyGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
+        <EnableWindowsTargeting Condition="'$(EnableWindowsTargeting)' == ''">true</EnableWindowsTargeting>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(Configuration)' != 'Debug' AND $(Configuration.Contains('Debug'))">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>portable</DebugType>

@@ -14,19 +14,25 @@
             BeforeTargets="DeployAddin"
             Condition="'$(IsRepackable)' == 'true' AND '$(PublishAddin)' == 'true'">
 
-        <Error Condition="!$([MSBuild]::IsOSPlatform('Windows'))"
-               Text="Repacking requires ILRepack.exe, which only runs on Windows. Build on Windows or disable the IsRepackable property for non-Windows builds."/>
-
         <ItemGroup>
             <_ILRepackVersion Include="@(PackageVersion->WithMetadataValue('Identity', 'ILRepack'))"/>
             <_ILRepackVersion Include="@(PackageReference->WithMetadataValue('Identity', 'ILRepack'))" Condition="'@(_ILRepackVersion)' == ''"/>
         </ItemGroup>
 
-        <Error Condition="'@(_ILRepackVersion)' == ''"
+        <PropertyGroup>
+            <_ILRepackExecutable>$(ILRepack)</_ILRepackExecutable>
+            <_ILRepackExecutable Condition="!Exists('$(_ILRepackExecutable)') AND '@(_ILRepackVersion)' != ''">$([MSBuild]::NormalizePath('$(NuGetPackageRoot)', 'ilrepack', '%(_ILRepackVersion.Version)', 'tools', 'ILRepack.exe'))</_ILRepackExecutable>
+        </PropertyGroup>
+
+        <Error Condition="!Exists('$(_ILRepackExecutable)')"
                Text="ILRepack is required but not installed. Ensure that ILRepack PackageReference added in your project. If repacking is not needed, disable the IsRepackable property."/>
 
         <PropertyGroup>
-            <_ILRepackDirectory>$([MSBuild]::EnsureTrailingSlash('$(AddinPublishDir)'))$(AssemblyName)\</_ILRepackDirectory>
+            <_ILRepackHost>$(DOTNET_HOST_PATH)</_ILRepackHost>
+            <_ILRepackHost Condition="'$(_ILRepackHost)' == ''">dotnet</_ILRepackHost>
+            <_ILRepackPath>&quot;$(_ILRepackExecutable)&quot;</_ILRepackPath>
+            <_ILRepackPath Condition="!$([MSBuild]::IsOSPlatform('Windows'))">&quot;$(_ILRepackHost)&quot; $(_ILRepackPath)</_ILRepackPath>
+            <_ILRepackDirectory>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', '$(AddinPublishDir)', '$(AssemblyName)'))</_ILRepackDirectory>
         </PropertyGroup>
 
         <ItemGroup>
@@ -44,7 +50,6 @@
             <_ILRepackOutputName>$(AssemblyName)</_ILRepackOutputName>
             <_ILRepackOutput>/out:&quot;$(_ILRepackDirectory)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
             <_ILRepackInput>@(_ILRepackInputAssemblies -> '&quot;%(FullPath)&quot;', ' ')</_ILRepackInput>
-            <_ILRepackPath>&quot;$(NuGetPackageRoot)\ilrepack\%(_ILRepackVersion.Version)\tools\ILRepack.exe&quot;</_ILRepackPath>
             <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity) &quot;', ' ')</_ILRepackLib>
         </PropertyGroup>
 
