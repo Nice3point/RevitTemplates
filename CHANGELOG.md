@@ -5,6 +5,7 @@ Repacking works for large add-ins under long paths on Windows. In existing proje
 ## SDK
 
 - Repacking passes the assemblies to ILRepack in a response file. A large add-in no longer fails with exit code 9020 when the command line exceeds the Windows limit of 32,767 characters.
+- Repacking runs ILRepack through the `dotnet` host on Windows, as on Linux and macOS. An assembly path longer than 260 characters no longer fails with `PathTooLongException`.
 - Repacking requires ILRepack 2.0.24 or later.
 
 # 6.3.1

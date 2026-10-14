@@ -27,11 +27,14 @@
         <Error Condition="!Exists('$(_ILRepackExecutable)')"
                Text="ILRepack is required but not installed. Ensure that ILRepack PackageReference added in your project. If repacking is not needed, disable the IsRepackable property."/>
 
+        <!--
+            ILRepack runs on .NET through the dotnet host on every operating system.
+            On Windows, ILRepack.exe started directly runs on .NET Framework, which rejects a path longer than 260 characters.
+        -->
         <PropertyGroup>
             <_ILRepackHost>$(DOTNET_HOST_PATH)</_ILRepackHost>
             <_ILRepackHost Condition="'$(_ILRepackHost)' == ''">dotnet</_ILRepackHost>
-            <_ILRepackPath>&quot;$(_ILRepackExecutable)&quot;</_ILRepackPath>
-            <_ILRepackPath Condition="!$([MSBuild]::IsOSPlatform('Windows'))">&quot;$(_ILRepackHost)&quot; $(_ILRepackPath)</_ILRepackPath>
+            <_ILRepackPath>&quot;$(_ILRepackHost)&quot; &quot;$(_ILRepackExecutable)&quot;</_ILRepackPath>
             <_ILRepackDirectory>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', '$(AddinPublishDir)', '$(AssemblyName)'))</_ILRepackDirectory>
         </PropertyGroup>
 
