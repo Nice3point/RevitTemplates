@@ -1,3 +1,12 @@
+# 6.3.2
+
+Repacking works for large add-ins under long paths on Windows. In existing projects, update the SDK version.
+
+## SDK
+
+- Repacking passes the assemblies to ILRepack in a response file. A large add-in no longer fails with exit code 9020 when the command line exceeds the Windows limit of 32,767 characters.
+- Repacking requires ILRepack 2.0.24 or later.
+
 # 6.3.1
 
 The SDK is cross-platform now.

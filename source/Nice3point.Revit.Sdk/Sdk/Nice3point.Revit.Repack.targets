@@ -48,10 +48,27 @@
 
         <PropertyGroup>
             <_ILRepackOutputName>$(AssemblyName)</_ILRepackOutputName>
-            <_ILRepackOutput>/out:&quot;$(_ILRepackDirectory)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
-            <_ILRepackInput>@(_ILRepackInputAssemblies -> '&quot;%(FullPath)&quot;', ' ')</_ILRepackInput>
-            <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity) &quot;', ' ')</_ILRepackLib>
+            <_ILRepackResponseFile>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'ILRepack.rsp'))</_ILRepackResponseFile>
         </PropertyGroup>
+
+        <!--
+            ILRepack reads the paths from a response file: on Windows, the paths of a large add-in exceed the command line limit of 32,767 characters.
+            ILRepack takes each line as one argument, quotes included.
+        -->
+        <ItemGroup>
+            <_ILRepackArguments Include="/out:$(_ILRepackDirectory)$(_ILRepackOutputName).dll"/>
+            <_ILRepackArguments Include="@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:%(Identity)')"/>
+            <_ILRepackArguments Include="@(_ILRepackInputAssemblies->'%(FullPath)')"/>
+        </ItemGroup>
+
+        <WriteLinesToFile File="$(_ILRepackResponseFile)"
+                          Lines="@(_ILRepackArguments)"
+                          Overwrite="true"
+                          WriteOnlyWhenDifferent="true"/>
+
+        <ItemGroup>
+            <FileWrites Include="$(_ILRepackResponseFile)"/>
+        </ItemGroup>
 
         <Message Text="Repacking $(_ILRepackDirectory)$(AssemblyName).dll" Importance="high"/>
 
@@ -60,10 +77,10 @@
             <_IsDebugConfiguration Condition="'$(_IsReleaseConfiguration)' != 'true'">true</_IsDebugConfiguration>
         </PropertyGroup>
 
-        <Exec Command="$(_ILRepackPath) /union /illink /parallel $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel &quot;@$(_ILRepackResponseFile)&quot;"
               Condition="'$(_IsDebugConfiguration)' == 'true'"/>
 
-        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes &quot;@$(_ILRepackResponseFile)&quot;"
               StandardOutputImportance="Low"
               Condition="'$(_IsReleaseConfiguration)' == 'true'"/>
 
