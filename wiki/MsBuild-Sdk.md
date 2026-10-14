@@ -188,7 +188,7 @@ Result:
 Assembly repacking is used to merge multiple assemblies into a single Dll, primarily to avoid dependency conflicts between different add-ins.
 
 If you need to repack assemblies into a single Dll, enable the `IsRepackable` property.
-The [ILRepack](https://www.nuget.org/packages/ILRepack/) package, version 2.0.24 or later, is required in your project.
+[ILRepack](https://www.nuget.org/packages/ILRepack/) package 2.0.24 or later is required in your project.
 
 ```xml
 <PropertyGroup>
