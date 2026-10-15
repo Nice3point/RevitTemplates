@@ -50,7 +50,7 @@ public static class LoggingRegistration
                 logging.AddDebug();
 
                 logging.AddRevitJournal(RevitApiContext.Application);
-                logging.AddFilter<RevitJournalLoggerProvider>(null, LogLevel.Error);
+                logging.AddFilter<RevitJournalLoggerProvider>(category: null, LogLevel.Error);
             });
 
             services.AddSingleton<AppDomainExceptionsHandler>();

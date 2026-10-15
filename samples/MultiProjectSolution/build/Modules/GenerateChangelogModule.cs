@@ -116,7 +116,7 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
 
         if (start > 0)
         {
-            changelog.Remove(0, start);
+            changelog.Remove(startIndex: 0, start);
         }
     }
 

@@ -33,7 +33,7 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
     /// </summary>
     private static async Task<ResolveVersioningResult> CreateFromVersionStringAsync(IModuleContext context, string version)
     {
-        var versionParts = version.Split('-', 2);
+        var versionParts = version.Split(separator: '-', count: 2);
 
         return new ResolveVersioningResult
         {
