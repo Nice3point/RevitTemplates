@@ -2,6 +2,10 @@
 
 Repacking fixes for large add-ins on Windows. In existing projects, update the SDK version.
 
+## Templates
+
+- The code style names a literal argument unless it is the only argument of the call, as in `version.Split(separator: '-', count: 2)`, and adds a blank line after a multiline statement.
+
 ## SDK
 
 - Repacking passes the ILRepack arguments in a response file. A large add-in no longer exceeds the Windows command line limit.
