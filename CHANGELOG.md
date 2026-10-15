@@ -1,3 +1,13 @@
+# 6.3.2
+
+Repacking fixes for large add-ins on Windows. In existing projects, update the SDK version.
+
+## SDK
+
+- Repacking passes the ILRepack arguments in a response file. A large add-in no longer exceeds the Windows command line limit.
+- Repacking runs through the `dotnet` host on Windows too, and accepts paths longer than 260 characters.
+- Repacking requires ILRepack 2.0.24 or later.
+
 # 6.3.1
 
 The SDK is cross-platform now.

@@ -30,8 +30,7 @@
         <PropertyGroup>
             <_ILRepackHost>$(DOTNET_HOST_PATH)</_ILRepackHost>
             <_ILRepackHost Condition="'$(_ILRepackHost)' == ''">dotnet</_ILRepackHost>
-            <_ILRepackPath>&quot;$(_ILRepackExecutable)&quot;</_ILRepackPath>
-            <_ILRepackPath Condition="!$([MSBuild]::IsOSPlatform('Windows'))">&quot;$(_ILRepackHost)&quot; $(_ILRepackPath)</_ILRepackPath>
+            <_ILRepackPath>&quot;$(_ILRepackHost)&quot; &quot;$(_ILRepackExecutable)&quot;</_ILRepackPath>
             <_ILRepackDirectory>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', '$(AddinPublishDir)', '$(AssemblyName)'))</_ILRepackDirectory>
         </PropertyGroup>
 
@@ -48,10 +47,20 @@
 
         <PropertyGroup>
             <_ILRepackOutputName>$(AssemblyName)</_ILRepackOutputName>
-            <_ILRepackOutput>/out:&quot;$(_ILRepackDirectory)$(_ILRepackOutputName).dll&quot;</_ILRepackOutput>
-            <_ILRepackInput>@(_ILRepackInputAssemblies -> '&quot;%(FullPath)&quot;', ' ')</_ILRepackInput>
-            <_ILRepackLib>@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:&quot;%(identity) &quot;', ' ')</_ILRepackLib>
+            <_ILRepackResponseFile>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'ILRepack.rsp'))</_ILRepackResponseFile>
         </PropertyGroup>
+
+        <ItemGroup>
+            <_ILRepackArguments Include="/out:$(_ILRepackDirectory)$(_ILRepackOutputName).dll"/>
+            <_ILRepackArguments Include="@(ReferencePath->'%(RelativeDir)'->Distinct()->'/lib:%(identity)')"/>
+            <_ILRepackArguments Include="@(_ILRepackInputAssemblies -> '%(FullPath)')"/>
+        </ItemGroup>
+
+        <WriteLinesToFile
+            File="$(_ILRepackResponseFile)"
+            Lines="@(_ILRepackArguments)"
+            Overwrite="true"
+            WriteOnlyWhenDifferent="true"/>
 
         <Message Text="Repacking $(_ILRepackDirectory)$(AssemblyName).dll" Importance="high"/>
 
@@ -60,10 +69,10 @@
             <_IsDebugConfiguration Condition="'$(_IsReleaseConfiguration)' != 'true'">true</_IsDebugConfiguration>
         </PropertyGroup>
 
-        <Exec Command="$(_ILRepackPath) /union /illink /parallel $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel &quot;@$(_ILRepackResponseFile)&quot;"
               Condition="'$(_IsDebugConfiguration)' == 'true'"/>
 
-        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes $(_ILRepackOutput) $(_ILRepackLib) $(_ILRepackInput)"
+        <Exec Command="$(_ILRepackPath) /union /illink /parallel /noRepackRes &quot;@$(_ILRepackResponseFile)&quot;"
               StandardOutputImportance="Low"
               Condition="'$(_IsReleaseConfiguration)' == 'true'"/>
 
