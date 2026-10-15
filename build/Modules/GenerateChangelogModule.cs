@@ -93,7 +93,7 @@ public sealed class GenerateChangelogModule : Module<string>
 
         if (start > 0)
         {
-            changelog.Remove(0, start);
+            changelog.Remove(startIndex: 0, start);
         }
     }
 }
