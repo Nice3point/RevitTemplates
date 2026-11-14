@@ -3,15 +3,11 @@ using System.Text.RegularExpressions;
 using Build.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.GitHub.Extensions;
-using ModularPipelines.Modules;
+using ModularPipelines.FileSystem;
 using Octokit;
-using File = ModularPipelines.FileSystem.File;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that resolves the release notes of the version.
@@ -23,10 +19,10 @@ namespace Build.Modules;
 [DependsOn<ResolveVersioningModule>]
 public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> publishOptions) : Module<string>
 {
-    protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
 
         if (string.IsNullOrEmpty(publishOptions.Value.ChangelogFile))
         {
@@ -34,14 +30,15 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
             return await GenerateReleaseNotesAsync(context, versioning);
         }
 
-        var changelogFile = context.Git().RootDirectory.GetFile(publishOptions.Value.ChangelogFile);
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var changelogFile = repository.Root.GetFile(publishOptions.Value.ChangelogFile);
         if (!changelogFile.Exists)
         {
             LogChangelogFileNotFound(context.Logger, changelogFile.Path);
             return await GenerateReleaseNotesAsync(context, versioning);
         }
 
-        var changelog = await ParseChangelogAsync(changelogFile, versioning.Version);
+        var changelog = await ParseChangelogAsync(changelogFile, versioning.Version, cancellationToken);
         if (changelog.Length == 0)
         {
             LogChangelogEntryNotFound(context.Logger, versioning.Version);
@@ -55,7 +52,7 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
     ///     Reads the entry of the specified version from the changelog file.
     /// </summary>
     /// <remarks>The entry starts at the heading that contains the version and ends before the next heading.</remarks>
-    private static async Task<StringBuilder> ParseChangelogAsync(File changelogFile, string version)
+    private static async Task<StringBuilder> ParseChangelogAsync(FilePath changelogFile, string version, CancellationToken cancellationToken)
     {
         const string separator = "# ";
 
@@ -63,7 +60,7 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
         var isChangelogEntryFound = false;
         var changelog = new StringBuilder();
 
-        await foreach (var line in changelogFile.ReadLinesAsync())
+        await foreach (var line in changelogFile.ReadLinesAsync(cancellationToken))
         {
             if (isChangelogEntryFound)
             {
@@ -123,14 +120,14 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
     /// <summary>
     ///     Generates the release notes for the version by using the GitHub API.
     /// </summary>
-    private static async Task<string?> GenerateReleaseNotesAsync(IModuleContext context, ResolveVersioningResult versioning)
+    private static async Task<string> GenerateReleaseNotesAsync(IModuleContext context, ResolveVersioningResult versioning)
     {
-        var repositoryId = long.Parse(context.GitHub().EnvironmentVariables.RepositoryId!);
+        var repositoryId = long.Parse(context.Tools.GitHub.EnvironmentVariables.RepositoryId!);
 
         var previousVersion = versioning.PreviousVersion;
         var isHashedVersion = previousVersion.Length >= 40 && previousVersion.All(character => char.IsDigit(character) || character is >= 'a' and <= 'f');
 
-        var releaseNotes = await context.GitHub().Client.Repository.Release.GenerateReleaseNotes(repositoryId,
+        var releaseNotes = await context.Tools.GitHub.Client.Repository.Release.GenerateReleaseNotes(repositoryId,
             new GenerateReleaseNotesRequest(versioning.Version)
             {
                 PreviousTagName = isHashedVersion ? null : previousVersion

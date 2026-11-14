@@ -1,11 +1,9 @@
 using Microsoft.VisualStudio.SolutionPersistence.Model;
 using Microsoft.VisualStudio.SolutionPersistence.Serializer;
 using ModularPipelines.Context;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
 using Shouldly;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that resolves the solution configurations for the supported Revit versions.
@@ -13,7 +11,7 @@ namespace Build.Modules;
 /// <remarks>The step selects the configurations whose names contain <c>Release.R</c>, for example, <c>Release.R26</c>.</remarks>
 public sealed class ResolveConfigurationsModule : Module<string[]>
 {
-    protected override async Task<string[]?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string[]> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var solutionModel = await LoadSolutionModelAsync(context, cancellationToken);
         var configurations = solutionModel.BuildTypes
@@ -30,17 +28,18 @@ public sealed class ResolveConfigurationsModule : Module<string[]>
     /// </summary>
     private static async Task<SolutionModel> LoadSolutionModelAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var solution = context.Git().RootDirectory.FindFile(file => file.Extension == ".slnx");
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var solution = repository.Root.FindFile(file => file.Extension == ".slnx");
         if (solution is not null)
         {
-            await using var slnxStream = solution.GetStream();
+            await using var slnxStream = solution.GetStream(FileAccess.Read);
             return await SolutionSerializers.SlnXml.OpenAsync(slnxStream, cancellationToken);
         }
 
-        solution = context.Git().RootDirectory.FindFile(file => file.Extension == ".sln");
+        solution = repository.Root.FindFile(file => file.Extension == ".sln");
         solution.ShouldNotBeNull("Cannot resolve the Revit configurations. No .slnx or .sln file was found in the repository.");
 
-        await using var slnStream = solution.GetStream();
+        await using var slnStream = solution.GetStream(FileAccess.Read);
         return await SolutionSerializers.SlnFileV12.OpenAsync(slnStream, cancellationToken);
     }
 }

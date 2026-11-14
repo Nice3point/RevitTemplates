@@ -3,21 +3,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Build.Options;
+using Build.Wix;
 using Microsoft.Extensions.Options;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
 using ModularPipelines.FileSystem;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
 using ModularPipelines.Options;
 using Shouldly;
 using Sourcy.DotNet;
-using File = ModularPipelines.FileSystem.File;
 using InstallerOptions = Build.Options.InstallerOptions;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that builds the MSI installer packages of the add-in.
@@ -32,16 +28,16 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
 
-        var wixTarget = new File(Projects.Nice3point_Revit_AddIn__1.FullName);
-        var wixInstaller = new File(Projects.Installer.FullName);
+        var wixTarget = new FilePath(Projects.Nice3point_Revit_AddIn__1.FullName);
+        var wixInstaller = new FilePath(Projects.Installer.FullName);
         var wixToolFolder = await InstallWixAsync(context, cancellationToken);
 
-        await context.DotNet().Build(new DotNetBuildOptions
+        await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
         {
             ProjectSolution = wixInstaller.Path,
             Configuration = "Release"
@@ -60,7 +56,8 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
 
         targetDirectories.ShouldNotBeEmpty($"Cannot create the installer. No publish output was found in '{contentRoot.Path}'. Set 'PublishAddin' to 'true' in the add-in project.");
 
-        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
         if (!outputFolder.Exists)
         {
             await outputFolder.CreateAsync(cancellationToken);
@@ -68,14 +65,12 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
 
         var manifestFile = await WriteManifestAsync(wixTarget.NameWithoutExtension, contentRoot, targetDirectories, outputFolder, versioning, cancellationToken);
 
-        await context.Shell.Command.ExecuteCommandLineTool(
-            new GenericCommandLineToolOptions(builderFile.Path)
-            {
-                Arguments = [manifestFile.Path]
-            },
+        await context.Shell.RunAsync(
+            builderFile.Path,
+            [manifestFile.Path],
             new CommandExecutionOptions
             {
-                WorkingDirectory = context.Git().RootDirectory,
+                WorkingDirectory = repository.Root.Path,
                 EnvironmentVariables = new Dictionary<string, string?>
                 {
                     { "PATH", $"{Environment.GetEnvironmentVariable("PATH")};{wixToolFolder}" }
@@ -96,11 +91,11 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
     /// <summary>
     ///     Writes the installer manifest for every compiled Revit configuration.
     /// </summary>
-    private async Task<File> WriteManifestAsync(
+    private async Task<FilePath> WriteManifestAsync(
         string productName,
-        Folder contentRoot,
-        Folder[] targetDirectories,
-        Folder outputFolder,
+        FolderPath contentRoot,
+        FolderPath[] targetDirectories,
+        FolderPath outputFolder,
         ResolveVersioningResult versioning,
         CancellationToken cancellationToken)
     {
@@ -156,28 +151,28 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
     /// <summary>
     ///     Installs the WiX toolset to a temporary folder.
     /// </summary>
-    private static async Task<Folder> InstallWixAsync(IModuleContext context, CancellationToken cancellationToken)
+    private static async Task<FolderPath> InstallWixAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var wixToolFolder = Folder.CreateTemporaryFolder();
-        await context.DotNet().Tool.Execute(new DotNetToolOptions
+        var wixToolFolder = FolderPath.CreateTemporaryFolder();
+        await context.Tools.DotNet.Tool.InstallAsync(new DotNetToolInstallOptions("wix")
         {
-            Arguments = ["install", "wix", "--version", "7.*", "--tool-path", wixToolFolder.Path]
+            Version = "7.*",
+            ToolPath = wixToolFolder.Path
         }, cancellationToken: cancellationToken);
 
         var wixExe = wixToolFolder.GetFile("wix.exe");
         var wixVersion = FileVersionInfo.GetVersionInfo(wixExe.Path).FileVersion!;
 
-        await context.Shell.Command.ExecuteCommandLineTool(
-            new GenericCommandLineToolOptions(wixExe.Path)
-            {
-                Arguments = ["eula", "accept", "wix7"]
-            }, cancellationToken: cancellationToken);
+        await context.Tools.Wix.EulaAcceptAsync(new WixEulaAcceptOptions("wix7")
+        {
+            Tool = wixExe.Path
+        }, cancellationToken: cancellationToken);
 
-        await context.Shell.Command.ExecuteCommandLineTool(
-            new GenericCommandLineToolOptions(wixExe.Path)
-            {
-                Arguments = ["extension", "add", "-g", $"WixToolset.UI.wixext/{wixVersion}"]
-            }, cancellationToken: cancellationToken);
+        await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
+        {
+            Tool = wixExe.Path,
+            Global = true
+        }, cancellationToken: cancellationToken);
 
         return wixToolFolder;
     }

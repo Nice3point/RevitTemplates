@@ -103,7 +103,8 @@
         {
           "condition": "!hasArtifacts",
           "exclude": [
-            ".run/Pack.run.xml"
+            ".run/Pack.run.xml",
+            "build/Pipeline/CleanProjectModule.cs"
           ]
         },
         {
@@ -117,9 +118,9 @@
           "exclude": [
             ".github/**",
             "CHANGELOG.md",
-            "build/Modules/GenerateChangelogModule.cs",
-            "build/Modules/GenerateGitHubChangelogModule.cs",
-            "build/Modules/PublishGithubModule.cs",
+            "build/Pipeline/GenerateChangelogModule.cs",
+            "build/Pipeline/GenerateGitHubChangelogModule.cs",
+            "build/Pipeline/PublishGithubModule.cs",
             "build/Options/PublishOptions.cs"
           ]
         },
@@ -127,14 +128,15 @@
           "condition": "!includeInstaller",
           "exclude": [
             "installer/**",
-            "build/Modules/CreateInstallerModule.cs",
-            "build/Options/InstallerOptions.cs"
+            "build/Pipeline/CreateInstallerModule.cs",
+            "build/Options/InstallerOptions.cs",
+            "build/Wix/**"
           ]
         },
         {
           "condition": "!includeBundle",
           "exclude": [
-            "build/Modules/CreateBundleModule.cs",
+            "build/Pipeline/CreateBundleModule.cs",
             "build/Options/BundleOptions.cs"
           ]
         },
@@ -142,7 +144,7 @@
           "condition": "!includeTests",
           "exclude": [
             "tests/**",
-            "build/Modules/TestProjectModule.cs"
+            "build/Pipeline/TestProjectModule.cs"
           ]
         }
       ]

@@ -1,11 +1,9 @@
-using Build.Modules;
 using Build.Options;
+using Build.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ModularPipelines;
-using ModularPipelines.Extensions;
 
-var builder = Pipeline.CreateBuilder();
+var builder = Pipeline.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
@@ -24,25 +22,25 @@ builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSect
 
 if (args.Length == 0)
 {
-    builder.Services.AddModule<CompileProjectModule>();
+    builder.AddModule<CompileProjectModule>();
 }
 #if (includeTests)
 
 if (args.Contains("test"))
 {
-    builder.Services.AddModule<TestProjectModule>();
+    builder.AddModule<TestProjectModule>();
 }
 #endif
 #if (hasArtifacts)
 
 if (args.Contains("pack"))
 {
-    builder.Services.AddModule<CleanProjectModule>();
+    builder.AddModule<CleanProjectModule>();
 #if (includeBundle)
-    builder.Services.AddModule<CreateBundleModule>();
+    builder.AddModule<CreateBundleModule>();
 #endif
 #if (includeInstaller)
-    builder.Services.AddModule<CreateInstallerModule>();
+    builder.AddModule<CreateInstallerModule>();
 #endif
 }
 #endif
@@ -50,8 +48,8 @@ if (args.Contains("pack"))
 
 if (args.Contains("publish"))
 {
-    builder.Services.AddModule<PublishGithubModule>();
+    builder.AddModule<PublishGithubModule>();
 }
 #endif
 
-await builder.Build().RunAsync();
+await builder.RunAsync();

@@ -1,30 +1,29 @@
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
-using ModularPipelines.Modules;
 using Sourcy.DotNet;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that compiles the add-in for every Revit configuration of the solution.
 /// </summary>
 [DependsOn<ResolveVersioningModule>]
 [DependsOn<ResolveConfigurationsModule>]
+#if (hasArtifacts)
 [DependsOn<CleanProjectModule>(Optional = true)]
+#endif
 public sealed class CompileProjectModule : Module
 {
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var configurationsResult = await context.GetModule<ResolveConfigurationsModule>();
-        var versioning = versioningResult.ValueOrDefault!;
-        var configurations = configurationsResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
+        var configurations = configurationsResult.Value;
 
         foreach (var configuration in configurations)
         {
-            await context.SubModule(configuration, async () => await CompileAsync(context, versioning, configuration, cancellationToken));
+            await context.RunSubModuleAsync(configuration, token => CompileAsync(context, versioning, configuration, token), cancellationToken);
         }
     }
 
@@ -37,7 +36,7 @@ public sealed class CompileProjectModule : Module
         string configuration,
         CancellationToken cancellationToken)
     {
-        await context.DotNet().Build(new DotNetBuildOptions
+        await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
         {
             ProjectSolution = Solutions.Nice3point_Revit_AddIn__1.FullName,
             Configuration = configuration,

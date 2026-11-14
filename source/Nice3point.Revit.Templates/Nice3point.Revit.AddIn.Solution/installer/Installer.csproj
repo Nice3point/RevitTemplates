@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>true</ImplicitUsings>
-        <TargetFramework>net10.0-windows</TargetFramework>
+        <TargetFramework>net11.0-windows</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

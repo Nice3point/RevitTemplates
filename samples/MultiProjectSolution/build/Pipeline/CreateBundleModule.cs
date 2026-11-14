@@ -3,16 +3,12 @@ using System.Text.RegularExpressions;
 using Autodesk.PackageBuilder;
 using Build.Options;
 using Microsoft.Extensions.Options;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
 using ModularPipelines.FileSystem;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
 using Shouldly;
 using Sourcy.DotNet;
-using File = ModularPipelines.FileSystem.File;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that packs the add-in into an Autodesk application bundle.
@@ -21,12 +17,12 @@ namespace Build.Modules;
 [DependsOn<CompileProjectModule>]
 public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptions, IOptions<BundleOptions> bundleOptions) : Module
 {
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
 
-        var bundleTarget = new File(Projects.RevitAddIn.FullName);
+        var bundleTarget = new FilePath(Projects.RevitAddIn.FullName);
         var contentRoot = bundleTarget.Folder!.GetFolder("bin");
         var targetDirectories = contentRoot
             .GetFolders(folder => folder.Name == "publish")
@@ -34,7 +30,8 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
 
         targetDirectories.ShouldNotBeEmpty($"Cannot create the bundle. No publish output was found in '{contentRoot.Path}'. Set 'PublishAddin' to 'true' in the add-in project.");
 
-        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
         var bundleFolder = outputFolder.CreateFolder($"{bundleTarget.NameWithoutExtension}.bundle");
         var contentFolder = bundleFolder.CreateFolder("Contents");
         var manifestFile = bundleFolder.GetFile("PackageContents.xml");
@@ -43,7 +40,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
         GenerateManifest(bundleTarget, targetDirectories, manifestFile, versioning);
 
         var outputFile = outputFolder.GetFile($"{bundleFolder.Name}.zip");
-        context.Files.Zip.ZipFolder(bundleFolder, outputFile.Path);
+        await context.Files.Zip.CreateFromDirectoryAsync(bundleFolder, outputFile.Path, cancellationToken: cancellationToken);
         await bundleFolder.DeleteAsync(cancellationToken);
 
         context.Summary.KeyValue("Artifacts", "Bundle", outputFile.Path);
@@ -52,7 +49,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
     /// <summary>
     ///     Copies the publish output of every Revit version to the bundle contents.
     /// </summary>
-    private static void PackFiles(Folder[] targetDirectories, Folder contentFolder)
+    private static void PackFiles(FolderPath[] targetDirectories, FolderPath contentFolder)
     {
         foreach (var targetDirectory in targetDirectories)
         {
@@ -75,7 +72,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
     /// <summary>
     ///     Creates the <c>PackageContents.xml</c> manifest of the bundle.
     /// </summary>
-    private void GenerateManifest(File bundleTarget, Folder[] targetDirectories, File manifestFile, ResolveVersioningResult versioning)
+    private void GenerateManifest(FilePath bundleTarget, FolderPath[] targetDirectories, FilePath manifestFile, ResolveVersioningResult versioning)
     {
         BuilderUtils.Build<PackageContentsBuilder>(builder =>
         {
@@ -109,7 +106,7 @@ public sealed partial class CreateBundleModule(IOptions<BuildOptions> buildOptio
     /// <summary>
     ///     Gets the four-digit Revit version of the specified publish directory.
     /// </summary>
-    private static string ResolveRevitVersion(Folder targetDirectory)
+    private static string ResolveRevitVersion(FolderPath targetDirectory)
     {
         TryParseVersion(targetDirectory.Path, out var version)
             .ShouldBeTrue($"Cannot create the bundle. The Revit version of '{targetDirectory.Path}' cannot be resolved. Name the build configuration after the Revit version, such as 'Release.R26'.");

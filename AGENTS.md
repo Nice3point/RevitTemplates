@@ -18,6 +18,7 @@ Each template is a real project annotated for the .NET template engine; the SDK 
 ## Template content
 
 * Generated code is a starting point the consumer extends. An extension point stays in place even where the IDE offers a shorter form: the `if` around an optional `StringBuilder`, the `{ }` body of an empty view model.
+* The pipeline steps of a build project are in `Pipeline/`. A tool ModularPipelines has no package for has a folder of its own named after the tool, such as `Wix/`, with its commands, their options, and the `[ModularPipelinesIntegration]` registration.
 * A build module is self-contained. Two modules may repeat a small helper, such as `VersionRegex`, and template content has no shared helper file.
 * An options type of the build declares its configuration section in `ConfigurationSectionName`, and `Program.cs` binds the options through it, never through a section name literal.
 * `samples/MultiProjectSolution/build` and `samples/MultiProjectSolution/installer` equal the Solution template with every option enabled; only the Sourcy solution name differs (`Solutions.MultiProjectSolution`).

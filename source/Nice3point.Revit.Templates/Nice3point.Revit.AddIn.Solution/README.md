@@ -46,7 +46,7 @@ Before you can build this project, you need to install .NET and IDE.
 If you haven't already installed these, you can do so by visiting the following:
 
 - [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
-- [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet)
+- [.NET 11](https://dotnet.microsoft.com/en-us/download/dotnet)
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
 ## Solution Structure

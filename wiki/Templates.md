@@ -114,6 +114,47 @@ More details about ModularPipelines [here](https://github.com/thomhurst/ModularP
 > [!NOTE]
 > You don't need to use the build system for the add-ins directly, it's only needs for publishing Releases.
 
+The build project runs on ModularPipelines 4 and requires the .NET 11 SDK.
+The add-in projects keep the target frameworks of their Revit versions.
+
+The following table lists the folders of the build project:
+
+| Folder     | Contents                                                                                    |
+|------------|---------------------------------------------------------------------------------------------|
+| `Pipeline` | The pipeline steps: versioning, compilation, tests, the bundle, the installer, the release. |
+| `Options`  | The settings the steps read from `appsettings.json`.                                        |
+| `Wix`      | The commands of the WiX Toolset. The folder exists in a solution with the installer.        |
+
+ModularPipelines has packages for `dotnet`, Git, and GitHub, and a step calls them through `context.Tools`.
+A tool without a package gets a folder of its own, named after the tool.
+The folder contains the commands of the tool, their options, and the registration.
+
+The following step accepts the WiX license and adds the UI extension through the commands of the `Wix` folder:
+
+```c#
+await context.Tools.Wix.EulaAcceptAsync(new WixEulaAcceptOptions("wix7")
+{
+    Tool = wixExe.Path
+}, cancellationToken: cancellationToken);
+
+await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
+{
+    Tool = wixExe.Path,
+    Global = true
+}, cancellationToken: cancellationToken);
+```
+
+In the preceding code:
+
+- `context.Tools.Wix` exists because the `RegisterWixContext` method of the folder has the `[ModularPipelinesIntegration]` attribute.
+- Every options record names its command in a `[CliSubCommand]` attribute, and its properties are the arguments of that command.
+- `Tool` is the path to the executable. Without it, the command runs `wix` from the `PATH` environment variable.
+
+To call another tool, copy the `Wix` folder, rename its types after the tool, and declare one options record per command.
+
+ModularPipelines saves a report of every run to the `.modularpipelines` folder at the root of the repository.
+The `.gitignore` of the solution excludes the folder.
+
 ### Installer
 
 WixSharp was chosen as the installer, it is based on a console application, this helps to make the creation of the installer automated and connect it to the build system.

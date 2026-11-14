@@ -1,3 +1,57 @@
+# 6.4.0
+
+The build project of the Solution template moves to ModularPipelines 4.0 and .NET 11.
+A solution created earlier keeps its build project. To update it, follow the ModularPipelines [migration guide](https://modularpipelines.tomlonghurst.dev/docs/migrating-to-v4).
+
+## Templates
+
+### ModularPipelines 4.0
+
+The build project references ModularPipelines 4.0.0 and targets `net11.0`, and `global.json` selects the .NET 11 SDK.
+The add-in projects keep the target frameworks of their Revit versions.
+
+The pipeline steps are in the `Pipeline` folder, and a step calls a tool through `context.Tools`:
+
+```c#
+var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
+
+await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
+{
+    ProjectSolution = Solutions.RevitAddIn.FullName,
+    Configuration = configuration
+}, cancellationToken: cancellationToken);
+```
+
+The build accepts the pipeline options of ModularPipelines next to its own arguments:
+
+```shell
+dotnet run -- pack --dry-run
+dotnet run -- pack publish --list-modules
+```
+
+### WiX commands
+
+The commands of the WiX Toolset have typed options in the `Wix` folder of the build project, and the installer step calls them through `context.Tools.Wix`.
+A tool ModularPipelines has no package for gets a folder of the same shape:
+
+```c#
+await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
+{
+    Tool = wixExe.Path,
+    Global = true
+}, cancellationToken: cancellationToken);
+```
+
+### Other changes
+
+- The installer step installs WiX through the typed `dotnet tool install` options.
+- The installer project targets `net11.0-windows`.
+- The clean step is created only in a solution with the installer or the bundle, the solutions that run it.
+- `.gitignore` excludes the `.modularpipelines` folder, where ModularPipelines saves the report of every run.
+- The solution readme lists .NET 11 as a prerequisite.
+- Updated dependencies.
+
 # 6.3.2
 
 Repacking fixes for large add-ins on Windows. In existing projects, update the SDK version.

@@ -1,10 +1,7 @@
 using System.Text;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.GitHub.Extensions;
-using ModularPipelines.Modules;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that formats the release notes for the GitHub release.
@@ -13,12 +10,12 @@ namespace Build.Modules;
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateGitHubChangelogModule : Module<string>
 {
-    protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var changelogResult = await context.GetModule<GenerateChangelogModule>();
-        var versioning = versioningResult.ValueOrDefault!;
-        var changelog = changelogResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
+        var changelog = changelogResult.Value;
 
         return AppendGitHubCompareUrl(context, changelog, versioning);
     }
@@ -28,7 +25,7 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
     /// </summary>
     private static string AppendGitHubCompareUrl(IModuleContext context, string changelog, ResolveVersioningResult versioning)
     {
-        var repositoryInfo = context.GitHub().RepositoryInfo;
+        var repositoryInfo = context.Tools.GitHub.RepositoryInfo;
         StringBuilder? changelogBuilder = null;
 
         if (!changelog.Contains("Full changelog", StringComparison.OrdinalIgnoreCase))
