@@ -1,11 +1,9 @@
-using Build.Modules;
 using Build.Options;
+using Build.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ModularPipelines;
-using ModularPipelines.Extensions;
 
-var builder = Pipeline.CreateBuilder();
+var builder = Pipeline.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
@@ -18,27 +16,27 @@ builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSect
 
 if (args.Length == 0)
 {
-    builder.Services.AddModule<CompileProjectModule>();
+    builder.AddModule<CompileProjectModule>();
 }
 
 if (args.Contains("pack"))
 {
-    builder.Services.AddModule<CleanProjectModule>();
-    builder.Services.AddModule<PackSdkModule>();
-    builder.Services.AddModule<PackTemplatesModule>();
-    builder.Services.AddModule<RestoreTemplatesReadmeModule>();
+    builder.AddModule<CleanProjectModule>();
+    builder.AddModule<PackSdkModule>();
+    builder.AddModule<PackTemplatesModule>();
+    builder.AddModule<RestoreTemplatesReadmeModule>();
 }
 
 if (args.Contains("test"))
 {
-    builder.Services.AddModule<TestTemplatesModule>();
+    builder.AddModule<TestTemplatesModule>();
 }
 
 if (args.Contains("publish"))
 {
-    builder.Services.AddModule<CompileSamplesModule>();
-    builder.Services.AddModule<PublishNugetModule>();
-    builder.Services.AddModule<PublishGithubModule>();
+    builder.AddModule<CompileSamplesModule>();
+    builder.AddModule<PublishNugetModule>();
+    builder.AddModule<PublishGithubModule>();
 }
 
-await builder.Build().RunAsync();
+await builder.RunAsync();

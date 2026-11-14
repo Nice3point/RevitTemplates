@@ -1,15 +1,11 @@
 using Build.Options;
 using Microsoft.Extensions.Options;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
+using ModularPipelines.FileSystem;
 using Sourcy.DotNet;
-using File = ModularPipelines.FileSystem.File;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that packs the SDK NuGet package.
@@ -20,23 +16,24 @@ namespace Build.Modules;
 [DependsOn<GenerateNugetChangelogModule>(Optional = true)]
 public sealed class PackSdkModule(IOptions<BuildOptions> buildOptions) : Module
 {
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var changelogModule = context.GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var changelogResult = changelogModule is null ? null : await changelogModule;
 
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
         var changelog = changelogResult?.ValueOrDefault ?? string.Empty;
-        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
-        var targetProject = new File(Projects.Nice3point_Revit_Sdk.FullName);
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
+        var targetProject = new FilePath(Projects.Nice3point_Revit_Sdk.FullName);
 
-        await context.DotNet().Pack(new DotNetPackOptions
+        await context.Tools.DotNet.PackAsync(new DotNetPackOptions
         {
             ProjectSolution = targetProject.Path,
             Configuration = "Release",
-            Output = outputFolder,
+            Output = outputFolder.Path,
             Properties =
             [
                 ("VersionPrefix", versioning.VersionPrefix),

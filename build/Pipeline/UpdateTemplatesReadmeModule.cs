@@ -1,8 +1,6 @@
 using ModularPipelines.Context;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that removes the logo block from the readme of the NuGet packages.
@@ -10,9 +8,10 @@ namespace Build.Modules;
 /// <remarks>The step returns the original readme, and <see cref="RestoreTemplatesReadmeModule" /> writes it back after the packages are packed.</remarks>
 public sealed class UpdateTemplatesReadmeModule : Module<string>
 {
-    protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var readmePath = context.Git().RootDirectory.GetFile("README.md");
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var readmePath = repository.Root.GetFile("README.md");
         var readme = await readmePath.ReadAsync(cancellationToken);
 
         const string startSymbol = "<p";

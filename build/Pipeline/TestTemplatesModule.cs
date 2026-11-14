@@ -1,19 +1,14 @@
 using System.Text.RegularExpressions;
 using Build.Options;
 using Microsoft.Extensions.Options;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
 using ModularPipelines.FileSystem;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
 using ModularPipelines.Options;
 using Shouldly;
 using Sourcy.DotNet;
-using File = ModularPipelines.FileSystem.File;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that creates a project for every template option set and compiles it.
@@ -23,10 +18,11 @@ namespace Build.Modules;
 [DependsOn<CompileSamplesModule>(Optional = true)]
 public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOptions) : Module
 {
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
-        var targetProject = new File(Projects.Nice3point_Revit_Templates.FullName);
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
+        var targetProject = new FilePath(Projects.Nice3point_Revit_Templates.FullName);
         var templatesPackage = outputFolder.GetFiles(file => file.Name.StartsWith(targetProject.NameWithoutExtension) && file.Extension == ".nupkg").First();
         var samplesFolder = outputFolder.CreateFolder("generated");
 
@@ -60,10 +56,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
     /// </summary>
     private static async Task InstallTemplatesAsync(IModuleContext context, string templatesPackage, CancellationToken cancellationToken)
     {
-        await context.DotNet().New.Execute(new DotNetNewOptions
-        {
-            Arguments = ["install", templatesPackage]
-        }, cancellationToken: cancellationToken);
+        await context.Tools.DotNet.New.InstallAsync(new DotNetNewInstallOptions([templatesPackage]), cancellationToken: cancellationToken);
     }
 
     /// <summary>
@@ -71,9 +64,9 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
     /// </summary>
     private static async Task UninstallTemplatesAsync(IModuleContext context, string templatesPackage, CancellationToken cancellationToken)
     {
-        await context.DotNet().New.Execute(new DotNetNewOptions
+        await context.Tools.DotNet.New.UninstallAsync(new DotNetNewUninstallOptions
             {
-                Arguments = ["uninstall", templatesPackage]
+                Package = [templatesPackage]
             },
             new CommandExecutionOptions
             {
@@ -84,15 +77,15 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
     /// <summary>
     ///     Creates a project from the specified template and options in a new folder.
     /// </summary>
-    private static async Task<Folder> GenerateProjectAsync(IModuleContext context, string template, Dictionary<string, string> options, Folder samplesFolder, CancellationToken cancellationToken)
+    private static async Task<FolderPath> GenerateProjectAsync(IModuleContext context, string template, Dictionary<string, string> options, FolderPath samplesFolder, CancellationToken cancellationToken)
     {
         var projectFolder = samplesFolder.CreateFolder($"{template}-{Guid.NewGuid():N}");
-        await context.DotNet().New.Execute(new DotNetNewOptions
+        await context.Tools.DotNet.New.ExecuteAsync(new DotNetNewOptions
         {
             TemplateShortName = template,
             Name = "Generated",
-            Output = projectFolder,
-            Arguments = options.SelectMany(pair => new[] { $"--{pair.Key}", pair.Value })
+            Output = projectFolder.Path,
+            TemplateArgs = options.SelectMany(pair => new[] { $"--{pair.Key}", pair.Value })
         }, cancellationToken: cancellationToken);
         return projectFolder;
     }
@@ -100,13 +93,13 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
     /// <summary>
     ///     Creates a project from the specified template in the <c>source</c> folder of a solution.
     /// </summary>
-    private static async Task GenerateSubProjectAsync(IModuleContext context, string template, Folder projectFolder, CancellationToken cancellationToken)
+    private static async Task GenerateSubProjectAsync(IModuleContext context, string template, FolderPath projectFolder, CancellationToken cancellationToken)
     {
-        await context.DotNet().New.Execute(new DotNetNewOptions
+        await context.Tools.DotNet.New.ExecuteAsync(new DotNetNewOptions
         {
             TemplateShortName = template,
             Name = "Generated",
-            Output = projectFolder.GetFolder("source")
+            Output = projectFolder.GetFolder("source").Path
         }, cancellationToken: cancellationToken);
     }
 
@@ -114,7 +107,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
     ///     Compiles every project of the folder in its first release configuration.
     /// </summary>
     /// <remarks>The add-in is not deployed to the Revit add-ins folder of the machine.</remarks>
-    private static async Task CompileGeneratedProjectsAsync(IModuleContext context, Folder projectFolder, CancellationToken cancellationToken)
+    private static async Task CompileGeneratedProjectsAsync(IModuleContext context, FolderPath projectFolder, CancellationToken cancellationToken)
     {
         var projectFiles = projectFolder.GetFiles(file => file.Extension is ".csproj").ToArray();
         projectFiles.Length.ShouldBeGreaterThan(0, $"Cannot compile the generated projects. The template created no project in '{projectFolder.Path}'.");
@@ -125,7 +118,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             var hasSdk = projectContent.Contains("Nice3point.Revit.Sdk");
             var configuration = hasSdk ? ParseProjectConfigurations(projectContent)[0] : "Release";
 
-            await context.DotNet().Build(new DotNetBuildOptions
+            await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
             {
                 ProjectSolution = projectFile.Path,
                 Configuration = configuration,
@@ -153,7 +146,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
     /// <summary>
     ///     Writes a NuGet configuration that adds the local packages as a package source.
     /// </summary>
-    private static async Task GenerateNuGetConfigAsync(Folder projectFolder, Folder outputFolder, CancellationToken cancellationToken)
+    private static async Task GenerateNuGetConfigAsync(FolderPath projectFolder, FolderPath outputFolder, CancellationToken cancellationToken)
     {
         var nugetConfigPath = projectFolder.GetFile("NuGet.config");
         await nugetConfigPath.WriteAsync($"""

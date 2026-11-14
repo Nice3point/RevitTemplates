@@ -1,9 +1,6 @@
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.GitHub.Extensions;
-using ModularPipelines.Modules;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that formats the release notes for the GitHub release.
@@ -12,13 +9,13 @@ namespace Build.Modules;
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateGitHubChangelogModule : Module<string>
 {
-    protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var changelogResult = await context.GetModule<GenerateChangelogModule>();
 
-        var versioning = versioningResult.ValueOrDefault!;
-        var changelog = changelogResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
+        var changelog = changelogResult.Value;
 
         return AppendGitHubCompareUrl(context, changelog, versioning);
     }
@@ -33,7 +30,7 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
             return changelog;
         }
 
-        var repositoryInfo = context.GitHub().RepositoryInfo;
+        var repositoryInfo = context.Tools.GitHub.RepositoryInfo;
         var url = $"https://github.com/{repositoryInfo.Identifier}/compare/{versioning.PreviousVersion}...{versioning.Version}";
 
         return $"{changelog}{Environment.NewLine}{Environment.NewLine}**Full changelog**: {url}";

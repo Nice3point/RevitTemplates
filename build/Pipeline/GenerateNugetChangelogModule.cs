@@ -1,8 +1,6 @@
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.Modules;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that formats the release notes for the NuGet package.
@@ -11,10 +9,10 @@ namespace Build.Modules;
 [DependsOn<GenerateChangelogModule>]
 public sealed class GenerateNugetChangelogModule : Module<string>
 {
-    protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var changelogResult = await context.GetModule<GenerateChangelogModule>();
-        var changelog = changelogResult.ValueOrDefault!;
+        var changelog = changelogResult.Value;
 
         var formattedChangelog = changelog
             .Split(Environment.NewLine)

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
-using ModularPipelines.Attributes;
+using ModularPipelines.Secrets;
 
 namespace Build.Options;
 

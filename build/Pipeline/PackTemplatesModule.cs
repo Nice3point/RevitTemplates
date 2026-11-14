@@ -1,16 +1,12 @@
 using Build.Options;
 using Microsoft.Extensions.Options;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
-using ModularPipelines.Git.Extensions;
+using ModularPipelines.FileSystem;
 using ModularPipelines.Git.Options;
-using ModularPipelines.Modules;
 using Sourcy.DotNet;
-using File = ModularPipelines.FileSystem.File;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that packs the templates NuGet package.
@@ -22,24 +18,25 @@ namespace Build.Modules;
 [DependsOn<GenerateNugetChangelogModule>(Optional = true)]
 public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : Module
 {
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var changelogModule = context.GetModuleIfRegistered<GenerateNugetChangelogModule>();
 
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
         var changelogResult = changelogModule is null ? null : await changelogModule;
 
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
         var changelog = changelogResult?.ValueOrDefault ?? string.Empty;
-        var outputFolder = context.Git().RootDirectory.GetFolder(buildOptions.Value.OutputDirectory);
-        var targetProject = new File(Projects.Nice3point_Revit_Templates.FullName);
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
+        var targetProject = new FilePath(Projects.Nice3point_Revit_Templates.FullName);
 
         List<string> updatedFiles = [];
 
         try
         {
             updatedFiles = await SetSdkVersionAsync(versioning.Version, cancellationToken);
-            await context.DotNet().Pack(new DotNetPackOptions
+            await context.Tools.DotNet.PackAsync(new DotNetPackOptions
             {
                 ProjectSolution = targetProject.Path,
                 Configuration = "Release",
@@ -49,7 +46,7 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
                     ("VersionSuffix", versioning.VersionSuffix ?? string.Empty),
                     ("PackageReleaseNotes", changelog)
                 ],
-                Output = outputFolder
+                Output = outputFolder.Path
             }, cancellationToken: cancellationToken);
 
             context.Summary.KeyValue("Artifacts", "Templates", outputFolder.FindFile(file => file.Name.StartsWith(targetProject.NameWithoutExtension))!.Path);
@@ -58,10 +55,10 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
         {
             if (updatedFiles.Count > 0)
             {
-                await context.Git().Commands.Restore(new GitRestoreOptions
+                await context.Tools.Git.Commands.WorkingTree.RestoreAsync(new GitRestoreOptions
                 {
                     Arguments = updatedFiles
-                }, token: cancellationToken);
+                }, cancellationToken: cancellationToken);
             }
         }
     }
@@ -74,7 +71,7 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
     {
         var modifiedFiles = new List<string>();
 
-        var templatesProjectFile = new File(Projects.Nice3point_Revit_Templates.FullName);
+        var templatesProjectFile = new FilePath(Projects.Nice3point_Revit_Templates.FullName);
         var templatesDirectory = templatesProjectFile.Folder!;
 
         var templateProjectFiles = templatesDirectory

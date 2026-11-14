@@ -157,7 +157,7 @@ A template change that alters the generated output updates the matching sample i
 ### Step 7: Extend the wiki, the CHANGELOG, and the option matrix
 
 Document the option in the consumer wiki page under `wiki/` and record it in `CHANGELOG.md` under the `## Templates` heading.
-Add the new combination to `GenerateMatrix()` in `build/Modules/TestTemplatesModule.cs`.
+Add the new combination to `GenerateMatrix()` in `build/Pipeline/TestTemplatesModule.cs`.
 The template test scaffolds and builds every combination that `GenerateMatrix()` returns.
 
 ### Step 8: Verify by scaffolding and compiling the matrix

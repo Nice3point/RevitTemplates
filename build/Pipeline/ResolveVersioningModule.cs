@@ -2,12 +2,10 @@ using Build.Options;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Context;
-using ModularPipelines.Git.Extensions;
 using ModularPipelines.Git.Options;
-using ModularPipelines.Modules;
 using ModularPipelines.Options;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that resolves the version the packages are compiled and published under.
@@ -15,13 +13,13 @@ namespace Build.Modules;
 /// <remarks>If <see cref="PublishOptions.Version" /> is set, the step uses that value; otherwise, GitVersion calculates the version from the Git history.</remarks>
 public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOptions) : Module<ResolveVersioningResult>
 {
-    protected override async Task<ResolveVersioningResult?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<ResolveVersioningResult> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var version = publishOptions.Value.Version;
         var versioning = string.IsNullOrEmpty(version) switch
         {
-            true => await CreateFromGitVersioningAsync(context),
-            false => await CreateFromVersionStringAsync(context, version)
+            true => await CreateFromGitVersioningAsync(context, cancellationToken),
+            false => await CreateFromVersionStringAsync(context, version, cancellationToken)
         };
 
         context.Summary.KeyValue("Build", "Version", versioning.Version);
@@ -31,7 +29,7 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
     /// <summary>
     ///     Resolves the versions from the specified version string.
     /// </summary>
-    private static async Task<ResolveVersioningResult> CreateFromVersionStringAsync(IModuleContext context, string version)
+    private static async Task<ResolveVersioningResult> CreateFromVersionStringAsync(IModuleContext context, string version, CancellationToken cancellationToken)
     {
         var versionParts = version.Split(separator: '-', count: 2);
 
@@ -41,16 +39,16 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
             VersionPrefix = versionParts[0],
             VersionSuffix = versionParts.Length > 1 ? versionParts[1] : null,
             IsPrerelease = versionParts.Length > 1,
-            PreviousVersion = await FetchPreviousVersionAsync(context)
+            PreviousVersion = await FetchPreviousVersionAsync(context, cancellationToken)
         };
     }
 
     /// <summary>
     ///     Resolves the versions from the Git history by using GitVersion.
     /// </summary>
-    private static async Task<ResolveVersioningResult> CreateFromGitVersioningAsync(IModuleContext context)
+    private static async Task<ResolveVersioningResult> CreateFromGitVersioningAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var gitVersioning = await context.Git().Versioning.GetGitVersioningInformation();
+        var gitVersioning = await context.Tools.Git.Versioning.GetVersioningInformationAsync(cancellationToken);
 
         return new ResolveVersioningResult
         {
@@ -58,16 +56,16 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
             VersionPrefix = gitVersioning.MajorMinorPatch!,
             VersionSuffix = gitVersioning.PreReleaseTag,
             IsPrerelease = !string.IsNullOrEmpty(gitVersioning.PreReleaseLabel),
-            PreviousVersion = await FetchPreviousVersionAsync(context)
+            PreviousVersion = await FetchPreviousVersionAsync(context, cancellationToken)
         };
     }
 
     /// <summary>
     ///     Gets the tag of the previous release, or the SHA of the root commit if no earlier commit has a tag.
     /// </summary>
-    private static async Task<string> FetchPreviousVersionAsync(IModuleContext context)
+    private static async Task<string> FetchPreviousVersionAsync(IModuleContext context, CancellationToken cancellationToken)
     {
-        var describeResult = await context.Git().Commands.Describe(
+        var describeResult = await context.Tools.Git.Commands.History.DescribeAsync(
             new GitDescribeOptions
             {
                 Tags = true,
@@ -77,8 +75,8 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
             new CommandExecutionOptions
             {
                 ThrowOnNonZeroExitCode = false,
-                LogSettings = CommandLoggingOptions.Silent
-            });
+                Logging = CommandLoggingOptions.Silent
+            }, cancellationToken);
 
         var previousTag = describeResult.StandardOutput.Trim();
         if (!string.IsNullOrWhiteSpace(previousTag))
@@ -86,19 +84,19 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
             return previousTag;
         }
 
-        var revisionResult = await context.Git().Commands.RevList(
+        var revisionResult = await context.Tools.Git.Commands.History.RevListAsync(
             new GitRevListOptions
             {
                 MaxParents = "0",
                 MaxCount = "1",
                 Pretty = "format:%H",
-                Arguments = ["HEAD"],
-                NoCommitHeader = true
+                NoCommitHeader = true,
+                Ref = "HEAD"
             },
             new CommandExecutionOptions
             {
-                LogSettings = CommandLoggingOptions.Silent
-            });
+                Logging = CommandLoggingOptions.Silent
+            }, cancellationToken);
 
         return revisionResult.StandardOutput.Trim();
     }

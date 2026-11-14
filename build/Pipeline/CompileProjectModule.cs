@@ -1,11 +1,8 @@
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.DotNet.Extensions;
 using ModularPipelines.DotNet.Options;
-using ModularPipelines.Modules;
 using Sourcy.DotNet;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that compiles the solution.
@@ -13,12 +10,12 @@ namespace Build.Modules;
 [DependsOn<ResolveVersioningModule>]
 public sealed class CompileProjectModule : Module
 {
-    protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
 
-        await context.DotNet().Build(new DotNetBuildOptions
+        await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
         {
             ProjectSolution = Solutions.Nice3point_Revit_Templates.FullName,
             Configuration = "Release",

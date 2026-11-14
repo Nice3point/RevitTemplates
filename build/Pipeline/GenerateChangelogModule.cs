@@ -1,13 +1,10 @@
 using System.Text;
 using System.Text.RegularExpressions;
-using ModularPipelines.Attributes;
 using ModularPipelines.Context;
-using ModularPipelines.Git.Extensions;
-using ModularPipelines.Modules;
+using ModularPipelines.FileSystem;
 using Shouldly;
-using File = ModularPipelines.FileSystem.File;
 
-namespace Build.Modules;
+namespace Build.Pipeline;
 
 /// <summary>
 ///     Represents the pipeline step that reads the release notes of the version from the changelog.
@@ -15,14 +12,15 @@ namespace Build.Modules;
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateChangelogModule : Module<string>
 {
-    protected override async Task<string?> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+    protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
-        var versioning = versioningResult.ValueOrDefault!;
+        var versioning = versioningResult.Value;
 
-        var changelogFile = context.Git().RootDirectory.GetFile("CHANGELOG.md");
+        var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
+        var changelogFile = repository.Root.GetFile("CHANGELOG.md");
 
-        var changelog = await ParseChangelogAsync(changelogFile, versioning.Version);
+        var changelog = await ParseChangelogAsync(changelogFile, versioning.Version, cancellationToken);
         changelog.Length.ShouldBePositive($"Cannot publish the release. CHANGELOG.md has no entry for version '{versioning.Version}'. Add a '# {versioning.Version}' heading with the release notes.");
 
         return changelog.ToString();
@@ -32,7 +30,7 @@ public sealed class GenerateChangelogModule : Module<string>
     ///     Reads the entry of the specified version from the changelog file.
     /// </summary>
     /// <remarks>The entry starts at the heading that contains the version and ends before the next heading.</remarks>
-    private static async Task<StringBuilder> ParseChangelogAsync(File changelogFile, string version)
+    private static async Task<StringBuilder> ParseChangelogAsync(FilePath changelogFile, string version, CancellationToken cancellationToken)
     {
         const string separator = "# ";
 
@@ -40,7 +38,7 @@ public sealed class GenerateChangelogModule : Module<string>
         var isChangelogEntryFound = false;
         var changelog = new StringBuilder();
 
-        await foreach (var line in changelogFile.ReadLinesAsync())
+        await foreach (var line in changelogFile.ReadLinesAsync(cancellationToken))
         {
             if (isChangelogEntryFound)
             {
