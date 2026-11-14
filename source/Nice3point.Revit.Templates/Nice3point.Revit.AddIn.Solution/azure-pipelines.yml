@@ -24,6 +24,12 @@ jobs:
         persistCredentials: true
         fetchDepth: 0
 
+      - task: UseDotNet@2
+        displayName: "Setup .NET SDK"
+        inputs:
+          packageType: sdk
+          useGlobalJson: true
+
       - bash: |
           set -e
           git tag ${{ parameters.version }}
