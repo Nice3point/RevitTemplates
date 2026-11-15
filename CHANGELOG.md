@@ -1,14 +1,14 @@
 # 7.0.0
 
-The build system of the Solution template moves to ModularPipelines 4.0 and .NET 11.
-The build shows its plan before it runs, checks its settings at startup, and passes the installer a typed manifest.
+Version 7.0 brings ModularPipelines 4.0 and .NET 11 to the Solution template: preview a release before a single step runs, export the dependency graph of your build, or run one step on its own.
+Source generators now catch a missing setting the moment the build starts, and the installer is split into layers that are easier to extend.
 To update an existing solution, follow the [migration guide](#migration-guide).
 
 ## Templates
 
 ### ModularPipelines 4.0 and .NET 11
 
-The build project runs on ModularPipelines 4.0 and .NET 11, and the installer project targets `net11.0-windows`.
+The build project runs on ModularPipelines 4.0 and .NET 11.
 The build accepts the command-line options of ModularPipelines next to `pack`, `test`, and `publish`.
 
 `--dry-run` prints the steps in the order they run, the reason a step is skipped, and an estimate of the duration. No step runs:
@@ -21,26 +21,6 @@ dotnet run -- pack publish --dry-run
 
 ```shell
 dotnet run -- pack publish --graph mermaid
-```
-
-The following diagram is the graph of a solution with the bundle and the installer:
-
-```mermaid
-flowchart TD
-    CleanProjectModule --> CompileProjectModule
-    CompileProjectModule --> CreateBundleModule
-    CompileProjectModule --> CreateInstallerModule
-    CreateBundleModule --> PublishGithubModule
-    CreateInstallerModule --> PublishGithubModule
-    GenerateChangelogModule --> GenerateGitHubChangelogModule
-    GenerateGitHubChangelogModule --> PublishGithubModule
-    ResolveConfigurationsModule --> CompileProjectModule
-    ResolveVersioningModule --> CompileProjectModule
-    ResolveVersioningModule --> CreateBundleModule
-    ResolveVersioningModule --> CreateInstallerModule
-    ResolveVersioningModule --> GenerateChangelogModule
-    ResolveVersioningModule --> GenerateGitHubChangelogModule
-    ResolveVersioningModule --> PublishGithubModule
 ```
 
 `--module` runs one step with the steps it depends on, and `--list-modules` lists the steps of the build:
