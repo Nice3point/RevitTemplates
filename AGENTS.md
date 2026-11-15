@@ -21,7 +21,7 @@ The rules below add the specifics of this repository.
 
 * Generated code is a starting point the consumer extends. An extension point stays in place even where the IDE offers a shorter form: the `if` around an optional `StringBuilder`, the `{ }` body of an empty view model.
 * The pipeline steps of a build project are in `Pipeline/`, grouped by capability: `Versioning/`, `Compilation/`, `Testing/`, `Packaging/`, and `Publishing/`. An options type and its generated validator are beside the steps that read them, and the options several capabilities share are at the root of `Pipeline/`.
-* A tool ModularPipelines has no package for has a folder of its own at the root of the build project, named after the tool, such as `Wix/`.
+* A tool ModularPipelines has no package for has a folder of its own at the root of the build project, named after the tool, such as `Wix/`. The folder has a subfolder per command group, and a command is a method of its group: `wix extension add` is `context.Tools.Wix.Extension.AddAsync`.
 * `Program.cs` binds and validates the options of the build; a build project has no registration extension.
 * The summary of a ModularPipelines module opens with `Represents the pipeline step that …`.
 * A Shouldly assertion message of the build and the text of the installer user interface are public messages. The text of the installer user interface uses sentence case: `Revit add-in`, `Installs the add-in for Revit 2026.`

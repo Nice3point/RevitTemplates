@@ -33,11 +33,11 @@ dotnet run -- pack publish --list-modules
 
 ### WiX commands
 
-The commands of the WiX Toolset have typed options in the `Wix` folder of the build project, and the installer step calls them through `context.Tools.Wix`.
+The commands of the WiX Toolset have typed options in the `Wix` folder of the build project, grouped as in the command line: `wix extension add` is `context.Tools.Wix.Extension.AddAsync`.
 A tool ModularPipelines has no package for gets a folder of the same shape:
 
 ```c#
-await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
+await context.Tools.Wix.Extension.AddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
 {
     Tool = wixExe.Path,
     Global = true

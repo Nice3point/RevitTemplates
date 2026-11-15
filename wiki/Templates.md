@@ -144,17 +144,18 @@ OptionsValidationException: UpgradeCode: The UpgradeCode field is required.
 
 ModularPipelines has packages for `dotnet`, Git, and GitHub, and a step calls them through `context.Tools`.
 A tool without a package gets a folder of its own, named after the tool.
-The folder contains the commands of the tool, their options, and the registration.
+The folder contains the registration of the tool and a subfolder per command group: `Eula` for `wix eula` and `Extension` for `wix extension`.
+A subfolder contains the commands of its group and one options record per command.
 
 The following step accepts the WiX license and adds the UI extension through the commands of the `Wix` folder:
 
 ```c#
-await context.Tools.Wix.EulaAcceptAsync(new WixEulaAcceptOptions("wix7")
+await context.Tools.Wix.Eula.AcceptAsync(new WixEulaAcceptOptions("wix7")
 {
     Tool = wixExe.Path
 }, cancellationToken: cancellationToken);
 
-await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
+await context.Tools.Wix.Extension.AddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
 {
     Tool = wixExe.Path,
     Global = true
@@ -164,10 +165,11 @@ await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolse
 In the preceding code:
 
 - `context.Tools.Wix` exists because the `RegisterWixContext` method of the folder has the `[ModularPipelinesIntegration]` attribute.
+- `Eula` and `Extension` are the command groups, and a method has the name of its command: `wix extension add` is `Extension.AddAsync`.
 - Every options record names its command in a `[CliSubCommand]` attribute, and its properties are the arguments of that command.
 - `Tool` is the path to the executable. Without it, the command runs `wix` from the `PATH` environment variable.
 
-To call another tool, copy the `Wix` folder, rename its types after the tool, and declare one options record per command.
+To call another tool, copy the `Wix` folder, rename its types after the tool, and declare one subfolder per command group and one options record per command.
 
 ModularPipelines saves a report of every run to the `.modularpipelines` folder at the root of the repository.
 The `.gitignore` of the solution excludes the folder.

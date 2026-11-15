@@ -1,6 +1,6 @@
 using ModularPipelines.Attributes;
 
-namespace Build.Wix;
+namespace Build.Wix.Extension;
 
 /// <summary>
 ///     Represents the options of the <c>wix extension add</c> command.

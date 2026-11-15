@@ -1,6 +1,6 @@
 using ModularPipelines.Attributes;
 
-namespace Build.Wix;
+namespace Build.Wix.Eula;
 
 /// <summary>
 ///     Represents the options of the <c>wix eula accept</c> command.

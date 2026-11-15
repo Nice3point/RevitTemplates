@@ -4,7 +4,8 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using Build.Pipeline.Compilation;
 using Build.Pipeline.Versioning;
-using Build.Wix;
+using Build.Wix.Eula;
+using Build.Wix.Extension;
 using Installer.Manifest;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Context;
@@ -160,12 +161,12 @@ public sealed partial class CreateInstallerModule(IOptions<BuildOptions> buildOp
         var wixExe = wixToolFolder.GetFile("wix.exe");
         var wixVersion = FileVersionInfo.GetVersionInfo(wixExe.Path).FileVersion!;
 
-        await context.Tools.Wix.EulaAcceptAsync(new WixEulaAcceptOptions("wix7")
+        await context.Tools.Wix.Eula.AcceptAsync(new WixEulaAcceptOptions("wix7")
         {
             Tool = wixExe.Path
         }, cancellationToken: cancellationToken);
 
-        await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
+        await context.Tools.Wix.Extension.AddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
         {
             Tool = wixExe.Path,
             Global = true

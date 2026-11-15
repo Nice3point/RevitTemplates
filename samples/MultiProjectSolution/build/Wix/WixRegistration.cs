@@ -1,3 +1,5 @@
+using Build.Wix.Eula;
+using Build.Wix.Extension;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ModularPipelines.Attributes;
@@ -22,6 +24,9 @@ public static class WixRegistration
     public static IServiceCollection RegisterWixContext(IServiceCollection services)
     {
         services.TryAddScoped<IWix, WixToolset>();
+        services.TryAddScoped<IWixEula, WixEula>();
+        services.TryAddScoped<IWixExtension, WixExtension>();
+
         return services;
     }
 }

@@ -1,22 +1,16 @@
-using ModularPipelines.Context;
-using ModularPipelines.Options;
+using Build.Wix.Eula;
+using Build.Wix.Extension;
 
 namespace Build.Wix;
 
 /// <summary>
-///     Provides the commands of the WiX Toolset that the pipeline runs through the command line.
+///     Provides the command groups of the WiX Toolset that the pipeline runs through the command line.
 /// </summary>
-internal sealed class WixToolset(ICommandContext command) : IWix
+internal sealed class WixToolset(IWixEula eula, IWixExtension extension) : IWix
 {
     /// <inheritdoc />
-    public Task<CommandResult> EulaAcceptAsync(WixEulaAcceptOptions options, CommandExecutionOptions? executionOptions = null, CancellationToken cancellationToken = default)
-    {
-        return command.ExecuteCommandLineToolAsync(options, executionOptions, cancellationToken);
-    }
+    public IWixEula Eula { get; } = eula;
 
     /// <inheritdoc />
-    public Task<CommandResult> ExtensionAddAsync(WixExtensionAddOptions options, CommandExecutionOptions? executionOptions = null, CancellationToken cancellationToken = default)
-    {
-        return command.ExecuteCommandLineToolAsync(options, executionOptions, cancellationToken);
-    }
+    public IWixExtension Extension { get; } = extension;
 }
