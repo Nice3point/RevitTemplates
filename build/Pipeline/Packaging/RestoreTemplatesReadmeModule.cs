@@ -1,6 +1,6 @@
 using ModularPipelines.Context;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Packaging;
 
 /// <summary>
 ///     Represents the pipeline step that restores the readme after the packages are packed.
@@ -11,6 +11,7 @@ namespace Build.Pipeline;
 [DependsOn<PackTemplatesModule>(Optional = true)]
 public sealed class RestoreTemplatesReadmeModule : Module
 {
+    /// <inheritdoc />
     protected override void Configure(ModuleConfigurationBuilder module)
     {
         module
@@ -22,6 +23,7 @@ public sealed class RestoreTemplatesReadmeModule : Module
             });
     }
 
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var nugetReadmeResult = await context.GetModule<UpdateTemplatesReadmeModule>();

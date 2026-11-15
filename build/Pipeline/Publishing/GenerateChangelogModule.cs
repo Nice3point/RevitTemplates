@@ -1,10 +1,11 @@
 using System.Text;
 using System.Text.RegularExpressions;
+using Build.Pipeline.Versioning;
 using ModularPipelines.Context;
 using ModularPipelines.FileSystem;
 using Shouldly;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Publishing;
 
 /// <summary>
 ///     Represents the pipeline step that reads the release notes of the version from the changelog.
@@ -12,6 +13,7 @@ namespace Build.Pipeline;
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateChangelogModule : Module<string>
 {
+    /// <inheritdoc />
     protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();

@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
-using Build.Options;
+using Build.Pipeline.Compilation;
+using Build.Pipeline.Packaging;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Context;
 using ModularPipelines.DotNet.Options;
@@ -8,7 +9,7 @@ using ModularPipelines.Options;
 using Shouldly;
 using Sourcy.DotNet;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Testing;
 
 /// <summary>
 ///     Represents the pipeline step that creates a project for every template option set and compiles it.
@@ -18,6 +19,7 @@ namespace Build.Pipeline;
 [DependsOn<CompileSamplesModule>(Optional = true)]
 public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOptions) : Module
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
@@ -87,6 +89,7 @@ public sealed partial class TestTemplatesModule(IOptions<BuildOptions> buildOpti
             Output = projectFolder.Path,
             TemplateArgs = options.SelectMany(pair => new[] { $"--{pair.Key}", pair.Value })
         }, cancellationToken: cancellationToken);
+
         return projectFolder;
     }
 

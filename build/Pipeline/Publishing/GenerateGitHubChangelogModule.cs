@@ -1,6 +1,7 @@
+using Build.Pipeline.Versioning;
 using ModularPipelines.Context;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Publishing;
 
 /// <summary>
 ///     Represents the pipeline step that formats the release notes for the GitHub release.
@@ -9,6 +10,7 @@ namespace Build.Pipeline;
 [DependsOn<ResolveVersioningModule>]
 public sealed class GenerateGitHubChangelogModule : Module<string>
 {
+    /// <inheritdoc />
     protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();

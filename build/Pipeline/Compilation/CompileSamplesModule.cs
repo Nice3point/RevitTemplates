@@ -1,13 +1,14 @@
 using ModularPipelines.Context;
 using ModularPipelines.DotNet.Options;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Compilation;
 
 /// <summary>
 ///     Represents the pipeline step that compiles every sample solution for Revit 2027.
 /// </summary>
 public sealed class CompileSamplesModule : Module
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);

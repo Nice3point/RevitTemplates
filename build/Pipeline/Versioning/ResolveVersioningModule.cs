@@ -1,11 +1,9 @@
-using Build.Options;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Context;
 using ModularPipelines.Git.Options;
 using ModularPipelines.Options;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Versioning;
 
 /// <summary>
 ///     Represents the pipeline step that resolves the version the packages are compiled and published under.
@@ -13,6 +11,7 @@ namespace Build.Pipeline;
 /// <remarks>If <see cref="PublishOptions.Version" /> is set, the step uses that value; otherwise, GitVersion calculates the version from the Git history.</remarks>
 public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOptions) : Module<ResolveVersioningResult>
 {
+    /// <inheritdoc />
     protected override async Task<ResolveVersioningResult> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var version = publishOptions.Value.Version;
@@ -100,50 +99,4 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
 
         return revisionResult.StandardOutput.Trim();
     }
-}
-
-/// <summary>
-///     Represents the versions the packages are compiled and published under.
-/// </summary>
-[PublicAPI]
-public sealed record ResolveVersioningResult
-{
-    /// <summary>
-    ///     Gets the release version with the optional prerelease label.
-    /// </summary>
-    /// <example>
-    ///     6.3.0-preview.1.20261007 <br />
-    ///     6.3.0
-    /// </example>
-    public required string Version { get; init; }
-
-    /// <summary>
-    ///     Gets the major, minor, and patch components of the release version.
-    /// </summary>
-    /// <example>
-    ///     6.3.0
-    /// </example>
-    public required string VersionPrefix { get; init; }
-
-    /// <summary>
-    ///     Gets the prerelease label of the release version, or <see langword="null" /> for a stable release.
-    /// </summary>
-    /// <example>
-    ///     preview.1.20261007
-    /// </example>
-    public required string? VersionSuffix { get; init; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the release version has a prerelease label.
-    /// </summary>
-    public required bool IsPrerelease { get; init; }
-
-    /// <summary>
-    ///     Gets the tag of the previous release, or the SHA of the root commit if no earlier commit has a tag.
-    /// </summary>
-    /// <example>
-    ///     6.2.3 <br />
-    ///     2f5c3e1a9b7d4c6e8f0a1b2c3d4e5f6a7b8c9d0e
-    /// </example>
-    public required string PreviousVersion { get; init; }
 }

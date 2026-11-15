@@ -1,6 +1,6 @@
 using ModularPipelines.Context;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Packaging;
 
 /// <summary>
 ///     Represents the pipeline step that removes the logo block from the readme of the NuGet packages.
@@ -8,6 +8,7 @@ namespace Build.Pipeline;
 /// <remarks>The step returns the original readme, and <see cref="RestoreTemplatesReadmeModule" /> writes it back after the packages are packed.</remarks>
 public sealed class UpdateTemplatesReadmeModule : Module<string>
 {
+    /// <inheritdoc />
     protected override async Task<string> ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);

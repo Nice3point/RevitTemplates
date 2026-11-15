@@ -1,7 +1,12 @@
-using Build.Options;
 using Build.Pipeline;
+using Build.Pipeline.Compilation;
+using Build.Pipeline.Packaging;
+using Build.Pipeline.Publishing;
+using Build.Pipeline.Testing;
+using Build.Pipeline.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 var builder = Pipeline.CreateBuilder(args);
 
@@ -10,9 +15,11 @@ builder.Configuration.AddUserSecrets<Program>();
 builder.Configuration.AddEnvironmentVariables();
 builder.Configuration.AddCommandLine(args);
 
-builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName)).ValidateDataAnnotations();
-builder.Services.AddOptions<NuGetOptions>().Bind(builder.Configuration.GetSection(NuGetOptions.ConfigurationSectionName)).ValidateDataAnnotations();
-builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+builder.Services.AddOptionsWithValidateOnStart<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName));
+builder.Services.AddSingleton<IValidateOptions<BuildOptions>, BuildOptionsValidator>();
+builder.Services.AddOptionsWithValidateOnStart<NuGetOptions>().Bind(builder.Configuration.GetSection(NuGetOptions.ConfigurationSectionName));
+builder.Services.AddSingleton<IValidateOptions<NuGetOptions>, NuGetOptionsValidator>();
+builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName));
 
 if (args.Length == 0)
 {

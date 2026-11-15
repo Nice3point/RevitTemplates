@@ -1,4 +1,6 @@
-using Build.Options;
+using Build.Pipeline.Compilation;
+using Build.Pipeline.Publishing;
+using Build.Pipeline.Versioning;
 using Microsoft.Extensions.Options;
 using ModularPipelines.Context;
 using ModularPipelines.DotNet.Options;
@@ -6,7 +8,7 @@ using ModularPipelines.FileSystem;
 using ModularPipelines.Git.Options;
 using Sourcy.DotNet;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Packaging;
 
 /// <summary>
 ///     Represents the pipeline step that packs the templates NuGet package.
@@ -18,6 +20,7 @@ namespace Build.Pipeline;
 [DependsOn<GenerateNugetChangelogModule>(Optional = true)]
 public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : Module
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var changelogModule = context.GetModuleIfRegistered<GenerateNugetChangelogModule>();
@@ -89,6 +92,7 @@ public sealed class PackTemplatesModule(IOptions<BuildOptions> buildOptions) : M
                 $"""
                  <Project Sdk="Nice3point.Revit.Sdk/{version}">
                  """), cancellationToken);
+
             modifiedFiles.Add(file.Path);
         }
 

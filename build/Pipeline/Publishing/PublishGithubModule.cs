@@ -1,4 +1,6 @@
-using Build.Options;
+using Build.Pipeline.Packaging;
+using Build.Pipeline.Testing;
+using Build.Pipeline.Versioning;
 using EnumerableAsyncProcessor.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -8,7 +10,7 @@ using ModularPipelines.GitHub;
 using Octokit;
 using Shouldly;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Publishing;
 
 /// <summary>
 ///     Represents the pipeline step that publishes the GitHub release of the packages.
@@ -23,6 +25,7 @@ namespace Build.Pipeline;
 [DependsOn<PublishNugetModule>(Optional = true)]
 public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOptions) : Module
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
@@ -30,6 +33,7 @@ public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOpti
 
         var versioning = versioningResult.Value;
         var changelog = changelogResult.Value;
+
         var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
         var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
         var targetFiles = outputFolder.ListFiles().ToArray();
@@ -65,6 +69,7 @@ public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOpti
         context.Summary.KeyValue("Deployment", "GitHub", release.HtmlUrl);
     }
 
+    /// <inheritdoc />
     protected override async Task OnFailedAsync(IModuleContext context, Exception exception, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
@@ -77,6 +82,6 @@ public sealed partial class PublishGithubModule(IOptions<BuildOptions> buildOpti
         }, cancellationToken: cancellationToken);
     }
 
-    [LoggerMessage(LogLevel.Information, "Uploading the release asset {Asset}.")]
+    [LoggerMessage(LogLevel.Information, "Uploading the release asset {Asset}")]
     private static partial void LogAssetUploading(ILogger logger, string asset);
 }

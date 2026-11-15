@@ -1,8 +1,9 @@
+using Build.Pipeline.Versioning;
 using ModularPipelines.Context;
 using ModularPipelines.DotNet.Options;
 using Sourcy.DotNet;
 
-namespace Build.Pipeline;
+namespace Build.Pipeline.Compilation;
 
 /// <summary>
 ///     Represents the pipeline step that compiles the solution.
@@ -10,6 +11,7 @@ namespace Build.Pipeline;
 [DependsOn<ResolveVersioningModule>]
 public sealed class CompileProjectModule : Module
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var versioningResult = await context.GetModule<ResolveVersioningModule>();
