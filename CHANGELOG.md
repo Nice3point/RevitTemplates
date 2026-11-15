@@ -1,41 +1,86 @@
-# 6.4.0
+# 7.0.0
 
-The build project of the Solution template moves to ModularPipelines 4.0 and .NET 11.
-A solution created earlier keeps its build project. To update it, follow the ModularPipelines [migration guide](https://modularpipelines.tomlonghurst.dev/docs/migrating-to-v4).
+The build system of the Solution template moves to ModularPipelines 4.0 and .NET 11.
+The build shows its plan before it runs, checks its settings at startup, and passes the installer a typed manifest.
+To update an existing solution, follow the [migration guide](#migration-guide).
 
 ## Templates
 
-### ModularPipelines 4.0
+### ModularPipelines 4.0 and .NET 11
 
-The build project references ModularPipelines 4.0.0 and targets `net11.0`, and `global.json` selects the .NET 11 SDK.
-The add-in projects keep the target frameworks of their Revit versions.
+The build project runs on ModularPipelines 4.0 and .NET 11, and the installer project targets `net11.0-windows`.
+The build accepts the command-line options of ModularPipelines next to `pack`, `test`, and `publish`.
 
-The pipeline steps are in the `Pipeline` folder, grouped into `Versioning`, `Compilation`, `Testing`, `Packaging`, and `Publishing`.
-A settings class is next to the steps that read it, and a step calls a tool through `context.Tools`:
-
-```c#
-var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
-var outputFolder = repository.Root.GetFolder(buildOptions.Value.OutputDirectory);
-
-await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
-{
-    ProjectSolution = Solutions.RevitAddIn.FullName,
-    Configuration = configuration
-}, cancellationToken: cancellationToken);
-```
-
-The build accepts the pipeline options of ModularPipelines next to its own arguments:
+`--dry-run` prints the steps in the order they run, the reason a step is skipped, and an estimate of the duration. No step runs:
 
 ```shell
-dotnet run -- pack --dry-run
-dotnet run -- pack publish --list-modules
+dotnet run -- pack publish --dry-run
 ```
 
-### Installer
+`--graph` writes the dependency graph of the steps as Mermaid, DOT, or JSON:
 
-The installer project is split into layers:
+```shell
+dotnet run -- pack publish --graph mermaid
+```
 
-- `Manifest` declares the manifest the build writes and the installer reads. The build project compiles the same files.
+The following diagram is the graph of a solution with the bundle and the installer:
+
+```mermaid
+flowchart TD
+    CleanProjectModule --> CompileProjectModule
+    CompileProjectModule --> CreateBundleModule
+    CompileProjectModule --> CreateInstallerModule
+    CreateBundleModule --> PublishGithubModule
+    CreateInstallerModule --> PublishGithubModule
+    GenerateChangelogModule --> GenerateGitHubChangelogModule
+    GenerateGitHubChangelogModule --> PublishGithubModule
+    ResolveConfigurationsModule --> CompileProjectModule
+    ResolveVersioningModule --> CompileProjectModule
+    ResolveVersioningModule --> CreateBundleModule
+    ResolveVersioningModule --> CreateInstallerModule
+    ResolveVersioningModule --> GenerateChangelogModule
+    ResolveVersioningModule --> GenerateGitHubChangelogModule
+    ResolveVersioningModule --> PublishGithubModule
+```
+
+`--module` runs one step with the steps it depends on, and `--list-modules` lists the steps of the build:
+
+```shell
+dotnet run -- pack --module CreateBundleModule
+dotnet run -- pack --list-modules
+```
+
+The ModularPipelines [command line](https://modularpipelines.tomlonghurst.dev/docs/how-to/command-line) page lists the other options.
+
+### Source generation
+
+The settings and the JSON of the build move from reflection to source generators.
+
+A generated validator checks the settings when the build starts.
+An empty upgrade code stops the build before the first step. Before, the build failed after the add-in was compiled for every Revit version:
+
+```c#
+[OptionsValidator]
+internal sealed partial class InstallerOptionsValidator : IValidateOptions<InstallerOptions>;
+```
+
+```text
+OptionsValidationException: UpgradeCode: The UpgradeCode field is required.
+```
+
+The manifest the build passes to the installer is a class with generated JSON metadata.
+The installer project turns reflection-based serialization off:
+
+```c#
+[JsonSerializable(typeof(InstallerManifest))]
+public sealed partial class InstallerJsonContext : JsonSerializerContext;
+```
+
+### Installer layers
+
+The installer project is split into layers, and a change touches one of them:
+
+- `Manifest` is the contract between the build and the installer. Both projects compile the same files, and a new value for the installer is one property of `InstallerManifest`.
 - `Layouts` creates the package of an installation scope, its features for every Revit version, and its cabinets.
 - `Program.cs` reads the manifest and builds a package for every installation scope:
 
@@ -51,15 +96,65 @@ foreach (var scope in scopes)
 
 ### Other changes
 
-- The build validates its settings before the first step runs, with source-generated validators, and reports every missing setting at once.
-- The installer declares its cabinets through the `Media` collection of WixSharp.
-- The installer project turns off reflection-based JSON serialization.
-- The installer step calls `dotnet tool` and the WiX Toolset through typed commands.
-- The installer project targets `net11.0-windows`.
-- The clean step is created only in a solution with the installer or the bundle, the solutions that run it.
-- `.gitignore` excludes the `.modularpipelines` folder, where ModularPipelines saves the report of every run.
-- The solution readme lists .NET 11 as a prerequisite.
+- The clean step is created only in a solution with the installer or the bundle.
+- `.gitignore` excludes the `.modularpipelines` folder with the run reports of ModularPipelines.
+- The readme of the solution lists .NET 11 as a prerequisite.
 - Updated dependencies.
+
+## Breaking changes
+
+- The build and installer projects require the .NET 11 SDK.
+- The build project uses the ModularPipelines 4.0 API. A step written for ModularPipelines 3 needs the changes of the migration guide.
+- The `Modules` and `Options` folders of the build project are replaced by the `Pipeline` folder.
+
+## Migration guide
+
+### Solution
+
+1. Install the .NET 11 SDK, and set the SDK version in `global.json` to `11.0.100`.
+2. Create a temporary solution with version 7.0.0 and the same options, and replace the `build` and `installer` folders of the solution with its folders. Keep `build/appsettings.json`.
+3. Add `/.modularpipelines/` to `.gitignore`.
+4. Move every step of your own to a folder of `build/Pipeline`, and register it on the builder:
+
+   ```c#
+   // Before
+   builder.Services.AddModule<SignInstallerModule>();
+
+   await builder.Build().RunAsync();
+
+   // After
+   builder.AddModule<SignInstallerModule>();
+
+   await builder.RunAsync();
+   ```
+
+5. Update the step to the ModularPipelines 4.0 API. The ModularPipelines [migration guide](https://modularpipelines.tomlonghurst.dev/docs/migrating-to-v4) lists every change:
+
+   ```c#
+   // Before
+   protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+   {
+       var versioningResult = await context.GetModule<ResolveVersioningModule>();
+       var versioning = versioningResult.ValueOrDefault!;
+
+       await context.DotNet().Build(new DotNetBuildOptions
+       {
+           Configuration = configuration
+       }, cancellationToken: cancellationToken);
+   }
+
+   // After
+   protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+   {
+       var versioningResult = await context.GetModule<ResolveVersioningModule>();
+       var versioning = versioningResult.Value;
+
+       await context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
+       {
+           Configuration = configuration
+       }, cancellationToken: cancellationToken);
+   }
+   ```
 
 # 6.3.2
 

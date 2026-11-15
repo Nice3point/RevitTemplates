@@ -115,7 +115,6 @@ More details about ModularPipelines [here](https://github.com/thomhurst/ModularP
 > You don't need to use the build system for the add-ins directly, it's only needs for publishing Releases.
 
 The build project requires the .NET 11 SDK.
-The add-in projects keep the target frameworks of their Revit versions.
 
 The following table lists the folders of the build project:
 
