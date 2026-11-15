@@ -10,7 +10,8 @@ A solution created earlier keeps its build project. To update it, follow the Mod
 The build project references ModularPipelines 4.0.0 and targets `net11.0`, and `global.json` selects the .NET 11 SDK.
 The add-in projects keep the target frameworks of their Revit versions.
 
-The pipeline steps are in the `Pipeline` folder, and a step calls a tool through `context.Tools`:
+The pipeline steps are in the `Pipeline` folder, grouped into `Versioning`, `Compilation`, `Testing`, `Packaging`, and `Publishing`.
+A settings class is next to the steps that read it, and a step calls a tool through `context.Tools`:
 
 ```c#
 var repository = await context.Tools.Git.Information.GetRequiredInfoAsync(cancellationToken);
@@ -43,8 +44,32 @@ await context.Tools.Wix.ExtensionAddAsync(new WixExtensionAddOptions($"WixToolse
 }, cancellationToken: cancellationToken);
 ```
 
+### Installer manifest
+
+The build and the installer share one manifest contract.
+The `installer/Manifest` folder declares `InstallerManifest` and its source-generated JSON metadata, and the build project compiles the same files:
+
+```c#
+var manifest = new InstallerManifest
+{
+    ProductName = productName,
+    ProductVersion = Version.Parse(versioning.VersionPrefix),
+    UpgradeCode = installerOptions.Value.UpgradeCode!.Value,
+    ReleaseVersion = versioning.Version,
+    OutputDirectory = outputFolder.Path,
+    Content = [.. targetDirectories.Select(targetDirectory => CreateAddinContent(contentRoot, targetDirectory))]
+};
+
+var manifestContent = JsonSerializer.Serialize(manifest, InstallerJsonContext.Default.InstallerManifest);
+```
+
+The installer project creates the package of each installation scope in `Layouts/PackageLayout.cs`, and `Program.cs` only reads the manifest and builds the packages.
+
 ### Other changes
 
+- The build validates its settings before the first step runs, with source-generated validators, and reports every missing setting at once.
+- The installer declares its cabinets through the `Media` collection of WixSharp.
+- The installer project turns off reflection-based JSON serialization.
 - The installer step installs WiX through the typed `dotnet tool install` options.
 - The installer project targets `net11.0-windows`.
 - The clean step is created only in a solution with the installer or the bundle, the solutions that run it.

@@ -16,13 +16,16 @@
         <PackageReference Include="ModularPipelines.DotNet" Version="4.0.0"/>
         <PackageReference Include="ModularPipelines.GitHub" Version="4.0.0"/>
         <PackageReference Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52"/>
-        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="11.0.0"/>
         <PackageReference Include="Autodesk.PackageBuilder" Version="2.0.2"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
         <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="..\installer\Manifest\*.cs" LinkBase="Installer\Manifest"/>
     </ItemGroup>
 
 </Project>

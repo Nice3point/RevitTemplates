@@ -1,4 +1,5 @@
-using System.Xml.Linq;
+using Installer.Manifest;
+using WixSharp;
 
 namespace Installer.Layouts;
 
@@ -11,24 +12,21 @@ namespace Installer.Layouts;
 /// </remarks>
 public sealed class MediaLayout
 {
-    private readonly string[] _cabinets;
     private readonly string[] _roles;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="MediaLayout" /> class.
     /// </summary>
-    /// <param name="content">The add-in content that defines the file set roles.</param>
-    public MediaLayout(IReadOnlyList<Manifest.AddinContent> content)
+    /// <param name="manifest">The manifest whose file sets define the roles.</param>
+    public MediaLayout(InstallerManifest manifest)
     {
         _roles =
         [
-            .. content
+            .. manifest.Content
                 .SelectMany(addin => addin.Files)
                 .Select(fileSet => fileSet.Role)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
         ];
-
-        _cabinets = [.. _roles.Select(role => $"{role}.cab")];
     }
 
     /// <summary>
@@ -49,41 +47,19 @@ public sealed class MediaLayout
     }
 
     /// <summary>
-    ///     Adds the cabinets to the generated WiX source.
+    ///     Creates the embedded cabinets of the package, one per file set role.
     /// </summary>
-    /// <param name="document">The generated WiX source document.</param>
-    /// <exception cref="InvalidDataException">The document has no <c>Package</c> element.</exception>
-    /// <remarks>A WixSharp project defines a single <c>Media</c> element. The method replaces it with one <c>Media</c> element per cabinet.</remarks>
-    public void WriteToWixSource(XDocument document)
+    /// <returns>The media of the package, in the order of their disk IDs.</returns>
+    public List<Media> CreateMedia()
     {
-        var package = document.Descendants().FirstOrDefault(element => element.Name.LocalName == "Package");
-        if (package is null)
-        {
-            throw new InvalidDataException("Cannot write the cabinets to the WiX source. The generated source has no Package element.");
-        }
-
-        var wixNamespace = package.Name.Namespace;
-        var generatedMedia = package.Elements(wixNamespace + "Media").ToList();
-        var replacement = _cabinets
-            .Select((cabinet, index) => new XElement(wixNamespace + "Media",
-                new XAttribute("Id", index + 1),
-                new XAttribute("Cabinet", cabinet),
-                new XAttribute("EmbedCab", "yes")))
-            .ToList();
-
-        var anchor = generatedMedia.LastOrDefault() ?? package.Elements(wixNamespace + "SummaryInformation").LastOrDefault();
-        if (anchor is null)
-        {
-            package.AddFirst(replacement);
-        }
-        else
-        {
-            anchor.AddAfterSelf(replacement);
-        }
-
-        foreach (var element in generatedMedia)
-        {
-            element.Remove();
-        }
+        return
+        [
+            .. _roles.Select(static (role, index) => new Media
+            {
+                Id = index + 1,
+                Cabinet = $"{role}.cab",
+                EmbedCab = true
+            })
+        ];
     }
 }

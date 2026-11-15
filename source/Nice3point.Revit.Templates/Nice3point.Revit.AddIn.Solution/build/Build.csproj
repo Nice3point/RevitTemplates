@@ -18,7 +18,6 @@
         <PackageReference Include="ModularPipelines.GitHub" Version="4.0.0"/>
 <!--#endif-->
         <PackageReference Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52"/>
-        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="11.0.0"/>
 <!--#if (includeBundle)-->
         <PackageReference Include="Autodesk.PackageBuilder" Version="2.0.2"/>
 <!--#endif-->
@@ -28,5 +27,11 @@
     <ItemGroup>
         <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
+<!--#if (includeInstaller)-->
+
+    <ItemGroup>
+        <Compile Include="..\installer\Manifest\*.cs" LinkBase="Installer\Manifest"/>
+    </ItemGroup>
+<!--#endif-->
 
 </Project>

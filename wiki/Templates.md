@@ -119,11 +119,28 @@ The add-in projects keep the target frameworks of their Revit versions.
 
 The following table lists the folders of the build project:
 
-| Folder     | Contents                                                                                    |
-|------------|---------------------------------------------------------------------------------------------|
-| `Pipeline` | The pipeline steps: versioning, compilation, tests, the bundle, the installer, the release. |
-| `Options`  | The settings the steps read from `appsettings.json`.                                        |
-| `Wix`      | The commands of the WiX Toolset. The folder exists in a solution with the installer.        |
+| Folder     | Contents                                                                             |
+|------------|--------------------------------------------------------------------------------------|
+| `Pipeline` | The pipeline steps and the settings they read from `appsettings.json`.               |
+| `Wix`      | The commands of the WiX Toolset. The folder exists in a solution with the installer. |
+
+The `Pipeline` folder groups the steps by what they do:
+
+| Folder        | Contents                                                                    |
+|---------------|-----------------------------------------------------------------------------|
+| `Versioning`  | The version of the release and the Revit configurations of the solution.    |
+| `Compilation` | The clean and compile steps.                                                |
+| `Testing`     | The test step. The folder exists in a solution with tests.                  |
+| `Packaging`   | The bundle and installer steps, with the `Bundle` and `Installer` settings. |
+| `Publishing`  | The release notes and the GitHub release, with the `Publish` settings.      |
+
+A settings class is in the folder of the steps that read it, and `BuildOptions`, which every folder reads, is in `Pipeline` itself.
+The build checks the required settings before the first step runs.
+A missing value stops the build with an error that names the setting:
+
+```text
+OptionsValidationException: UpgradeCode: The UpgradeCode field is required.
+```
 
 ModularPipelines has packages for `dotnet`, Git, and GitHub, and a step calls them through `context.Tools`.
 A tool without a package gets a folder of its own, named after the tool.
@@ -160,6 +177,16 @@ The `.gitignore` of the solution excludes the folder.
 WixSharp was chosen as the installer, it is based on a console application, this helps to make the creation of the installer automated and connect it to the build system.
 
 The build writes a manifest with the published add-in for every Revit version, and the `installer` project builds a per-user and a per-machine **.msi** package from it.
+
+The following table lists the folders of the installer project:
+
+| Folder      | Contents                                                                                      |
+|-------------|-----------------------------------------------------------------------------------------------|
+| `Manifest`  | The manifest classes and their JSON metadata. The build project compiles the same files.      |
+| `Layouts`   | The package of an installation scope, its features for every Revit version, and its cabinets. |
+| `Resources` | The icon and the images of the installer.                                                     |
+
+To add a value to the installer, such as a publisher name, add a property to `InstallerManifest`, set it in the installer step of the build, and read it in `PackageLayout`.
 
 Set the upgrade code of the product in the `Installer` section of `build/appsettings.json`.
 Keep the same code for every release: a release with the same code upgrades the installed product, and a release with a new code is installed side by side with it.
