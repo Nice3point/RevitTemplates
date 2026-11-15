@@ -114,65 +114,36 @@ More details about ModularPipelines [here](https://github.com/thomhurst/ModularP
 > [!NOTE]
 > You don't need to use the build system for the add-ins directly, it's only needs for publishing Releases.
 
-The build project runs on ModularPipelines 4 and requires the .NET 11 SDK.
+The build project requires the .NET 11 SDK.
 The add-in projects keep the target frameworks of their Revit versions.
 
 The following table lists the folders of the build project:
 
-| Folder     | Contents                                                                             |
-|------------|--------------------------------------------------------------------------------------|
-| `Pipeline` | The pipeline steps and the settings they read from `appsettings.json`.               |
-| `Wix`      | The commands of the WiX Toolset. The folder exists in a solution with the installer. |
+| Folder     | Contents                                                                                                |
+|------------|---------------------------------------------------------------------------------------------------------|
+| `Pipeline` | The pipeline steps, grouped into `Versioning`, `Compilation`, `Testing`, `Packaging`, and `Publishing`. |
+| `Wix`      | The commands of the WiX Toolset. The folder exists in a solution with the installer.                    |
 
-The `Pipeline` folder groups the steps by what they do:
-
-| Folder        | Contents                                                                    |
-|---------------|-----------------------------------------------------------------------------|
-| `Versioning`  | The version of the release and the Revit configurations of the solution.    |
-| `Compilation` | The clean and compile steps.                                                |
-| `Testing`     | The test step. The folder exists in a solution with tests.                  |
-| `Packaging`   | The bundle and installer steps, with the `Bundle` and `Installer` settings. |
-| `Publishing`  | The release notes and the GitHub release, with the `Publish` settings.      |
-
-A settings class is in the folder of the steps that read it, and `BuildOptions`, which every folder reads, is in `Pipeline` itself.
-The build checks the required settings before the first step runs.
-A missing value stops the build with an error that names the setting:
+The settings of the build are in `build/appsettings.json`.
+The build checks the required settings before the first step runs, and a missing value stops it with an error that names the setting:
 
 ```text
 OptionsValidationException: UpgradeCode: The UpgradeCode field is required.
 ```
 
-ModularPipelines has packages for `dotnet`, Git, and GitHub, and a step calls them through `context.Tools`.
-A tool without a package gets a folder of its own, named after the tool.
-The folder contains the registration of the tool and a subfolder per command group: `Eula` for `wix eula` and `Extension` for `wix extension`.
-A subfolder contains the commands of its group and one options record per command.
-
-The following step accepts the WiX license and adds the UI extension through the commands of the `Wix` folder:
+To change what an argument of the build runs, edit the list of its steps in `build/Program.cs`:
 
 ```c#
-await context.Tools.Wix.Eula.AcceptAsync(new WixEulaAcceptOptions("wix7")
+if (args.Contains("pack"))
 {
-    Tool = wixExe.Path
-}, cancellationToken: cancellationToken);
-
-await context.Tools.Wix.Extension.AddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
-{
-    Tool = wixExe.Path,
-    Global = true
-}, cancellationToken: cancellationToken);
+    builder.AddModule<CleanProjectModule>();
+    builder.AddModule<CreateBundleModule>();
+    builder.AddModule<CreateInstallerModule>();
+}
 ```
 
-In the preceding code:
-
-- `context.Tools.Wix` exists because the `RegisterWixContext` method of the folder has the `[ModularPipelinesIntegration]` attribute.
-- `Eula` and `Extension` are the command groups, and a method has the name of its command: `wix extension add` is `Extension.AddAsync`.
-- Every options record names its command in a `[CliSubCommand]` attribute, and its properties are the arguments of that command.
-- `Tool` is the path to the executable. Without it, the command runs `wix` from the `PATH` environment variable.
-
-To call another tool, copy the `Wix` folder, rename its types after the tool, and declare one subfolder per command group and one options record per command.
-
-ModularPipelines saves a report of every run to the `.modularpipelines` folder at the root of the repository.
-The `.gitignore` of the solution excludes the folder.
+In the preceding code, `dotnet run -- pack` creates the bundle and the installer.
+Remove a line to leave its step out, and add a line to run a step of your own.
 
 ### Installer
 

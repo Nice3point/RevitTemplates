@@ -31,46 +31,30 @@ dotnet run -- pack --dry-run
 dotnet run -- pack publish --list-modules
 ```
 
-### WiX commands
+### Installer
 
-The commands of the WiX Toolset have typed options in the `Wix` folder of the build project, grouped as in the command line: `wix extension add` is `context.Tools.Wix.Extension.AddAsync`.
-A tool ModularPipelines has no package for gets a folder of the same shape:
+The installer project is split into layers:
 
-```c#
-await context.Tools.Wix.Extension.AddAsync(new WixExtensionAddOptions($"WixToolset.UI.wixext/{wixVersion}")
-{
-    Tool = wixExe.Path,
-    Global = true
-}, cancellationToken: cancellationToken);
-```
-
-### Installer manifest
-
-The build and the installer share one manifest contract.
-The `installer/Manifest` folder declares `InstallerManifest` and its source-generated JSON metadata, and the build project compiles the same files:
+- `Manifest` declares the manifest the build writes and the installer reads. The build project compiles the same files.
+- `Layouts` creates the package of an installation scope, its features for every Revit version, and its cabinets.
+- `Program.cs` reads the manifest and builds a package for every installation scope:
 
 ```c#
-var manifest = new InstallerManifest
+var manifest = manifestFile.ReadJson(InstallerJsonContext.Default.InstallerManifest);
+
+foreach (var scope in scopes)
 {
-    ProductName = productName,
-    ProductVersion = Version.Parse(versioning.VersionPrefix),
-    UpgradeCode = installerOptions.Value.UpgradeCode!.Value,
-    ReleaseVersion = versioning.Version,
-    OutputDirectory = outputFolder.Path,
-    Content = [.. targetDirectories.Select(targetDirectory => CreateAddinContent(contentRoot, targetDirectory))]
-};
-
-var manifestContent = JsonSerializer.Serialize(manifest, InstallerJsonContext.Default.InstallerManifest);
+    var package = manifest.CreatePackageLayout(contentRoot, scope);
+    package.BuildMsi();
+}
 ```
-
-The installer project creates the package of each installation scope in `Layouts/PackageLayout.cs`, and `Program.cs` only reads the manifest and builds the packages.
 
 ### Other changes
 
 - The build validates its settings before the first step runs, with source-generated validators, and reports every missing setting at once.
 - The installer declares its cabinets through the `Media` collection of WixSharp.
 - The installer project turns off reflection-based JSON serialization.
-- The installer step installs WiX through the typed `dotnet tool install` options.
+- The installer step calls `dotnet tool` and the WiX Toolset through typed commands.
 - The installer project targets `net11.0-windows`.
 - The clean step is created only in a solution with the installer or the bundle, the solutions that run it.
 - `.gitignore` excludes the `.modularpipelines` folder, where ModularPipelines saves the report of every run.
