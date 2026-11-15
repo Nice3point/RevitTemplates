@@ -22,9 +22,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v6
-
       - name: Create release tag
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.version != ''
         shell: bash

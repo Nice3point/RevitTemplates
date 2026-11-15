@@ -74,7 +74,6 @@ The installer project creates the package of each installation scope in `Layouts
 - The installer project targets `net11.0-windows`.
 - The clean step is created only in a solution with the installer or the bundle, the solutions that run it.
 - `.gitignore` excludes the `.modularpipelines` folder, where ModularPipelines saves the report of every run.
-- The GitHub and Azure DevOps workflows install the .NET SDK that `global.json` selects.
 - The solution readme lists .NET 11 as a prerequisite.
 - Updated dependencies.
 

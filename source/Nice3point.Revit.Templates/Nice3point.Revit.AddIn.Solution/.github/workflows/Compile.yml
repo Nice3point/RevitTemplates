@@ -17,9 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v6
-
       - name: Cache packages
         uses: actions/cache@v6
         with:
