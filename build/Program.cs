@@ -42,6 +42,7 @@ if (args.Contains("test"))
 if (args.Contains("publish"))
 {
     builder.AddModule<CompileSamplesModule>();
+    builder.AddModule<GenerateNugetChangelogModule>();
     builder.AddModule<PublishNugetModule>();
     builder.AddModule<PublishGithubModule>();
 }
