@@ -5,6 +5,9 @@ Each template is a real project annotated for the .NET template engine; the SDK 
 
 ## Non-negotiables
 
+The installed agent skills define the C# style, the XML documentation, the logging, the options validation, the JSON serialization, and the writing standard.
+The rules below add the specifics of this repository.
+
 * A feature a consumer scaffolds is authored in the template content through `template.json` symbols and conditional content, never through a generator that runs outside the template engine.
 * The SDK owns the multi-version build. Configuration parsing, target-framework selection, implicit usings, manifest patching, and publishing live in the SDK, never duplicated into template content.
 * Templates and samples stay in sync. A template change that alters the output updates the matching sample in the same commit. A sample references the SDK by published version where a template references it by name.
@@ -12,48 +15,22 @@ Each template is a real project annotated for the .NET template engine; the SDK 
 * An MSBuild task returns, never throws. It reports failure through the task log and a `false` result, and returns `true` as a no-op when nothing applies.
 * The task assembly multi-targets to load under MSBuild on .NET Framework, older .NET Core hosts, and the current .NET SDK. The SDK props and targets hook the standard build with `AfterTargets`/`BeforeTargets`, never by replacing a built-in target.
 * Template content holds to the same code bar as shipped code; generated code is the consumer's first impression.
-* Confirm an unfamiliar Revit, MSBuild, or .NET API before use through official docs or `gh` (`gh api`, `gh search code`).
 * A consumer-facing change updates `README.md`, `CHANGELOG.md`, and the wiki in the same commit.
 
 ## Template content
 
 * Generated code is a starting point the consumer extends. An extension point stays in place even where the IDE offers a shorter form: the `if` around an optional `StringBuilder`, the `{ }` body of an empty view model.
-* The pipeline steps of a build project are in `Pipeline/`. A tool ModularPipelines has no package for has a folder of its own named after the tool, such as `Wix/`, with its commands, their options, and the `[ModularPipelinesIntegration]` registration.
+* The pipeline steps of a build project are in `Pipeline/`, grouped by capability: `Versioning/`, `Compilation/`, `Testing/`, `Packaging/`, and `Publishing/`. An options type and its generated validator are beside the steps that read them, and the options several capabilities share are at the root of `Pipeline/`.
+* A tool ModularPipelines has no package for has a folder of its own at the root of the build project, named after the tool, such as `Wix/`.
+* `Program.cs` binds and validates the options of the build; a build project has no registration extension.
+* The summary of a ModularPipelines module opens with `Represents the pipeline step that …`.
+* A Shouldly assertion message of the build and the text of the installer user interface are public messages. The text of the installer user interface uses sentence case: `Revit add-in`, `Installs the add-in for Revit 2026.`
+* The installer project declares the manifest contract and its JSON context in `installer/Manifest/`, and the build project compiles the same files as links. The installer project disables reflection-based JSON serialization.
+* The build projects keep reflection-based JSON serialization enabled: ModularPipelines.Git deserializes the GitVersion output through reflection. The JSON a build project owns is serialized through a source-generated context.
 * A build module is self-contained. Two modules may repeat a small helper, such as `VersionRegex`, and template content has no shared helper file.
-* An options type of the build declares its configuration section in `ConfigurationSectionName`, and `Program.cs` binds the options through it, never through a section name literal.
 * `samples/MultiProjectSolution/build` and `samples/MultiProjectSolution/installer` equal the Solution template with every option enabled; only the Sourcy solution name differs (`Solutions.MultiProjectSolution`).
 * Template content and samples use LF line endings and end with a newline. The package packs the files from the working tree, and a CRLF file on disk reaches the consumer.
 * Renovate skips a file that holds template directives, such as the `global.json` of the Solution template. Such a file is updated by hand together with its counterpart at the root.
-
-## Style
-
-### XML documentation
-
-The `writing-xml-doc-comments` skill applies, in the register of the Microsoft .NET API reference.
-
-* A tag uses the vocabulary of the domain: upgrade code, disk ID, installation scope, side by side, feature band. Figurative verbs such as *leaves*, *carries*, *holds*, *offers*, and *lays out* are replaced by *contains*, *stores*, *defines*, *has*, or a conditional sentence.
-* A tag states a condition as `If …, …` and contains no participial phrase: *including*, *preferring*, *selecting*, *targeting*.
-* A ModularPipelines module opens with `Represents the pipeline step that …`. ModularPipelines documents no base member, and an override in the build project has no `<inheritdoc />`.
-* An `<example>` lists the values a consumer reads in the code, one per line, separated by `<br />`, without `<c>`.
-
-### Public messages
-
-A public message is every text a consumer reads: an exception message, a Shouldly assertion message of the build, a log message, and the text of the installer user interface.
-It follows the Microsoft [Error Message Guidelines](https://learn.microsoft.com/windows/win32/debug/error-message-guidelines) and the [Microsoft Writing Style Guide](https://learn.microsoft.com/style-guide/welcome/).
-
-* A message states the operation that failed, the cause, and the action that resolves it, in complete sentences that end with a period: `Cannot create the bundle. No publish output was found in '{path}'. Set 'PublishAddin' to 'true' in the add-in project.` The action is omitted when no action of the consumer resolves the problem.
-* A message uses the terms of its reader: file, directory, project, configuration, property. The vocabulary of the code stays out of it.
-* A message contains no *please*, *sorry*, exclamation mark, or contraction, and blames no reader. *Not valid* replaces *invalid*.
-* A log message follows the same wording, and its placeholders are PascalCase: `{IsTerminating}`.
-* The text of the installer user interface uses sentence case: `Revit add-in`, `Installs the add-in for Revit 2026.`
-
-### Code
-
-* Every independent property of an object initializer stands on its own line.
-* Every call of a fluent or LINQ chain after its receiver stands on its own line.
-* Code logs through source-generated `[LoggerMessage]` methods, never through the `Log*` extension methods of `ILogger`. A ModularPipelines module passes `context.Logger` to a `private static partial` method of the module.
-* One guard reports one failure; clauses reporting different failures stand in separate guards.
-* A test reads as `// Arrange`, `// Act`, `// Assert`.
 
 ## CHANGELOG
 
