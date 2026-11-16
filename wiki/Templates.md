@@ -114,11 +114,51 @@ More details about ModularPipelines [here](https://github.com/thomhurst/ModularP
 > [!NOTE]
 > You don't need to use the build system for the add-ins directly, it's only needs for publishing Releases.
 
+The build project requires the .NET 11 SDK.
+
+The following table lists the folders of the build project:
+
+| Folder     | Contents                                                                                                |
+|------------|---------------------------------------------------------------------------------------------------------|
+| `Pipeline` | The pipeline steps, grouped into `Versioning`, `Compilation`, `Testing`, `Packaging`, and `Publishing`. |
+| `Wix`      | The commands of the WiX Toolset. The folder exists in a solution with the installer.                    |
+
+The settings of the build are in `build/appsettings.json`.
+The build checks the required settings before the first step runs, and a missing value stops it with an error that names the setting:
+
+```text
+OptionsValidationException: UpgradeCode: The UpgradeCode field is required.
+```
+
+To change what an argument of the build runs, edit the list of its steps in `build/Program.cs`:
+
+```c#
+if (args.Contains("pack"))
+{
+    builder.AddModule<CleanProjectModule>();
+    builder.AddModule<CreateBundleModule>();
+    builder.AddModule<CreateInstallerModule>();
+}
+```
+
+In the preceding code, `dotnet run -- pack` creates the bundle and the installer.
+Remove a line to leave its step out, and add a line to run a step of your own.
+
 ### Installer
 
 WixSharp was chosen as the installer, it is based on a console application, this helps to make the creation of the installer automated and connect it to the build system.
 
 The build writes a manifest with the published add-in for every Revit version, and the `installer` project builds a per-user and a per-machine **.msi** package from it.
+
+The following table lists the folders of the installer project:
+
+| Folder      | Contents                                                                                      |
+|-------------|-----------------------------------------------------------------------------------------------|
+| `Manifest`  | The manifest classes and their JSON metadata. The build project compiles the same files.      |
+| `Layouts`   | The package of an installation scope, its features for every Revit version, and its cabinets. |
+| `Resources` | The icon and the images of the installer.                                                     |
+
+To add a value to the installer, such as a publisher name, add a property to `InstallerManifest`, set it in the installer step of the build, and read it in `PackageLayout`.
 
 Set the upgrade code of the product in the `Installer` section of `build/appsettings.json`.
 Keep the same code for every release: a release with the same code upgrades the installed product, and a release with a new code is installed side by side with it.

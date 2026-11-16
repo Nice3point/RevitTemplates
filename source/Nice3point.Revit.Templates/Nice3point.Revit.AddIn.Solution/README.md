@@ -10,13 +10,7 @@ Autodesk Revit plugin project organized into a single solution with configuratio
 * [Solution Structure](#solution-structure)
 * [Project Structure](#project-structure)
 * [Building](#building)
----#if (includeInstaller && includeBundle)
-    * [Building the MSI installer and the Autodesk bundle on local machine](#building-the-msi-installer-and-the-autodesk-bundle-on-local-machine)
----#elseif (includeInstaller)
-    * [Building the MSI installer on local machine](#building-the-msi-installer-on-local-machine)
----#elseif (includeBundle)
-    * [Building the Autodesk bundle on local machine](#building-the-autodesk-bundle-on-local-machine)
----#endif
+    * [Building from the command line](#building-from-the-command-line)
 ---#if (isReleaseCi)
 * [Publishing Releases](#publishing-releases)
     * [Creating a new Release from the JetBrains Rider](#creating-a-new-release-from-the-jetbrains-rider)
@@ -46,7 +40,7 @@ Before you can build this project, you need to install .NET and IDE.
 If you haven't already installed these, you can do so by visiting the following:
 
 - [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
-- [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet)
+- [.NET 11](https://dotnet.microsoft.com/en-us/download/dotnet)
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
 ## Solution Structure
@@ -58,7 +52,7 @@ If you haven't already installed these, you can do so by visiting the following:
 | installer | Add-in installer, called by the ModularPipelines build                     |
 | source    | Project source code folder. Contains all solution projects                 |
 ---#if (includeTests)
-| tests     | Unit test projects, run implicitly by the ModularPipelines build           |
+| tests     | Unit test projects, run by the `test` command of the build                 |
 ---#endif
 | output    | Folder of generated files by the build system, such as bundles, installers |
 ---#else
@@ -67,7 +61,7 @@ If you haven't already installed these, you can do so by visiting the following:
 | build  | ModularPipelines build system. Used to automate project builds             |
 | source | Project source code folder. Contains all solution projects                 |
 ---#if (includeTests)
-| tests  | Unit test projects, run implicitly by the ModularPipelines build           |
+| tests  | Unit test projects, run by the `test` command of the build                 |
 ---#endif
 | output | Folder of generated files by the build system, such as bundles, installers |
 ---#endif
@@ -100,48 +94,40 @@ Also, you can use Visual Studio. If you don't have Visual Studio installed, down
 1. Open Visual Studio
 2. In the `Solutions Configuration` drop-down menu, select `Release.R27` or `Debug.R27`. Suffix `R27` means compiling for the Revit 2027.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
+
+### Building from the command line
+
+The `build` project builds the solution for every Revit version with [ModularPipelines](https://github.com/thomhurst/ModularPipelines).
+Run it from the `build` folder with a command:
+
+```shell
+cd build
+dotnet run -- compile
+```
+
+The build has the following commands:
+
+| Command   | Result                                                                    |
+|-----------|---------------------------------------------------------------------------|
+| `compile` | Compiles the solution for every Revit version.                            |
+---#if (includeTests)
+| `test`    | Runs the tests for every Revit version.                                   |
+---#endif
+---#if (includeInstaller && includeBundle)
+| `pack`    | Creates the MSI installers and the Autodesk bundle in the `output` folder. |
+---#elseif (includeInstaller)
+| `pack`    | Creates the MSI installers in the `output` folder.                        |
+---#elseif (includeBundle)
+| `pack`    | Creates the Autodesk bundle in the `output` folder.                       |
+---#endif
+
+To print the steps of a command without running them, add `--dry-run`, for example `dotnet run -- compile --dry-run`.
+The ModularPipelines [command line](https://modularpipelines.tomlonghurst.dev/docs/how-to/command-line) page lists the other options.
+
 ---#if (hasArtifacts)
----#if (includeInstaller && includeBundle)
-
-### Building the MSI installer and the Autodesk bundle on local machine
-
-To build the project for all versions, create the installer and bundle, this project uses [ModularPipelines](https://github.com/thomhurst/ModularPipelines)
----#elseif (includeInstaller)
-
-### Building the MSI installer on local machine
-
-To build the project for all versions, create the installer, this project uses [ModularPipelines](https://github.com/thomhurst/ModularPipelines)
----#elseif (includeBundle)
-
-### Building the Autodesk bundle on local machine
-
-To build the project for all versions, create the bundle, this project uses [ModularPipelines](https://github.com/thomhurst/ModularPipelines)
----#endif
-
-To execute your ModularPipelines build locally, you can follow these steps:
-
-1. **Navigate to your project directory**. Open a terminal / command prompt and navigate to your project's root directory.
-2. **Run the build**. Once you have navigated to your project's root directory, you can run the ModularPipelines build by calling:
-
-   Compile:
-   ```shell
-   cd build; dotnet run
-   ```
-
----#if (includeInstaller && includeBundle)
-   Create installer and bundle:
----#elseif (includeInstaller)
-   Create installer:
----#elseif (includeBundle)
-   Create bundle:
----#endif
----#if (includeInstaller || includeBundle)
-   ```shell
-   cd build; dotnet run -- pack
-   ```
-
----#endif
-   This command will execute the ModularPipelines build defined in your project.
+In Rider, the `Compile` and `Pack` run configurations run the `compile` and `pack` commands without the terminal.
+---#else
+In Rider, the `Compile` run configuration runs the `compile` command without the terminal.
 ---#endif
 ---#if (isReleaseCi)
 
@@ -189,7 +175,7 @@ To update the changelog manually:
 1. Navigate to the solution root.
 2. Open the file **CHANGELOG.md**.
 3. Add a section for your version. The version separator is the `#` symbol.
-4. Specify the release number e.g. `# 1.0.0` or `# 25.01.01 v1.0.0`, the format does not matter, the main thing is that it contains the version.
+4. Specify the release number, for example `# 1.0.0` or `# 1.0.0 (2025-01-01)`. The heading must contain the version as a separate word: `# v1.0.0` doesn't match the version `1.0.0`.
 5. In the lines below, write a changelog for your version, style to your taste.
 6. Commit your changes.
 
@@ -301,7 +287,7 @@ To support the latest APIs in legacy Revit versions:
 #endif
 ```
 
-`#if REVIT2021_OR_GREATER` сompiles a block of code for Revit versions 21, 22, 23 and greater.
+`#if REVIT2021_OR_GREATER` compiles a block of code for Revit versions 21, 22, 23 and greater.
 
 To support removed APIs in newer versions of Revit, you can invert the constant:
 
@@ -311,7 +297,7 @@ To support removed APIs in newer versions of Revit, you can invert the constant:
 #endif
 ```
 
-`#if !REVIT2023_OR_GREATER` сompiles a block of code for Revit versions 22, 21, 20 and lower.
+`#if !REVIT2023_OR_GREATER` compiles a block of code for Revit versions 22, 21, 20 and lower.
 
 ## Managing Supported Revit Versions
 

@@ -5,20 +5,19 @@
         <OutputType>Exe</OutputType>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>true</ImplicitUsings>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Sourcy.DotNet" Version="1.1.1"/>
         <PackageReference Include="Shouldly" Version="4.3.0"/>
-        <PackageReference Include="ModularPipelines" Version="3.2.8"/>
-        <PackageReference Include="ModularPipelines.Git" Version="3.2.8"/>
-        <PackageReference Include="ModularPipelines.DotNet" Version="3.2.8"/>
+        <PackageReference Include="ModularPipelines" Version="4.0.0"/>
+        <PackageReference Include="ModularPipelines.Git" Version="4.0.0"/>
+        <PackageReference Include="ModularPipelines.DotNet" Version="4.0.0"/>
 <!--#if (isGitHubCi)-->
-        <PackageReference Include="ModularPipelines.GitHub" Version="3.2.8"/>
+        <PackageReference Include="ModularPipelines.GitHub" Version="4.0.0"/>
 <!--#endif-->
         <PackageReference Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52"/>
-        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.12"/>
 <!--#if (includeBundle)-->
         <PackageReference Include="Autodesk.PackageBuilder" Version="2.0.2"/>
 <!--#endif-->
@@ -28,5 +27,11 @@
     <ItemGroup>
         <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
+<!--#if (includeInstaller)-->
+
+    <ItemGroup>
+        <Compile Include="..\installer\Manifest\*.cs" LinkBase="Installer\Manifest"/>
+    </ItemGroup>
+<!--#endif-->
 
 </Project>

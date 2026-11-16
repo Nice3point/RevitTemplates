@@ -1,3 +1,4 @@
+using Installer.Manifest;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
 using WixSharp;
@@ -5,19 +6,22 @@ using WixSharp;
 namespace Installer.Layouts;
 
 /// <summary>
-///     Provides extension methods for a list of <see cref="Manifest.AddinContent" /> to create one installation feature per Revit version.
+///     Provides extension methods for <see cref="InstallerManifest" /> to create one installation feature per Revit version.
 /// </summary>
 public static class FeatureLayout
 {
-    /// <param name="content">The add-in content to install.</param>
-    extension(IReadOnlyList<Manifest.AddinContent> content)
+    /// <summary>
+    ///     Defines extensions for <see cref="InstallerManifest" />.
+    /// </summary>
+    /// <param name="manifest">The manifest of the packages.</param>
+    extension(InstallerManifest manifest)
     {
         /// <summary>
         ///     Creates the <see cref="Dir" /> tree that installs the add-in for every Revit version.
         /// </summary>
         /// <param name="contentRoot">The root directory of the relative content paths.</param>
-        /// <param name="scope">The installation scope of the packages.</param>
-        /// <param name="mediaLayout">The cabinet layout of the packages.</param>
+        /// <param name="scope">The installation scope of the package.</param>
+        /// <param name="mediaLayout">The cabinet layout of the package.</param>
         /// <returns>The directories to install.</returns>
         /// <exception cref="DirectoryNotFoundException">The base directory of a file set doesn't exist.</exception>
         /// <exception cref="InvalidDataException">A file set matches no files.</exception>
@@ -33,7 +37,7 @@ public static class FeatureLayout
 
             return
             [
-                .. content
+                .. manifest.Content
                     .GroupBy(addin => ResolveAddinsRoot(addin.RevitVersion, scope))
                     .Select(addinsRoot => new Dir(addinsRoot.Key,
                     [
@@ -46,7 +50,7 @@ public static class FeatureLayout
     /// <summary>
     ///     Creates the installation directory of the add-in for a single Revit version.
     /// </summary>
-    private static Dir CreateVersionDirectory(Manifest.AddinContent addin, Feature revitFeature, DirectoryInfo contentRoot, MediaLayout mediaLayout)
+    private static Dir CreateVersionDirectory(InstallerManifest.AddinContent addin, Feature revitFeature, DirectoryInfo contentRoot, MediaLayout mediaLayout)
     {
         var fileVersion = addin.RevitVersion.ToString();
         var feature = new Feature
@@ -69,7 +73,7 @@ public static class FeatureLayout
     /// <summary>
     ///     Selects the files of a single file set and assigns them to the specified feature and cabinet.
     /// </summary>
-    private static Files CreateFiles(Manifest.FileSet fileSet, Feature feature, DirectoryInfo contentRoot, MediaLayout mediaLayout)
+    private static Files CreateFiles(InstallerManifest.FileSet fileSet, Feature feature, DirectoryInfo contentRoot, MediaLayout mediaLayout)
     {
         var basePath = Path.GetFullPath(Path.Combine(contentRoot.FullName, fileSet.BasePath));
         if (!Directory.Exists(basePath))
@@ -123,7 +127,7 @@ public static class FeatureLayout
     /// <summary>
     ///     Writes the selected files of a file set to the console.
     /// </summary>
-    private static void LogSelectedFiles(Manifest.FileSet fileSet, string[] selectedFiles)
+    private static void LogSelectedFiles(InstallerManifest.FileSet fileSet, string[] selectedFiles)
     {
         Console.WriteLine($"{fileSet.Role} files for Revit add-in ({selectedFiles.Length}):");
 

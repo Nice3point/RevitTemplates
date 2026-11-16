@@ -1,3 +1,238 @@
+# 7.0.0
+
+Version 7.0 brings ModularPipelines 4.0 and .NET 11 to the build of the Solution template: preview a release before a single step runs, build only the bundle, or export the dependency graph, all from the command line.
+A missing setting stops the build the moment it starts, long before the add-in is compiled for every Revit version.
+In existing projects, update the SDK version, and follow the [migration guide](#migration-guide) to update a solution.
+
+## Templates
+
+### ModularPipelines 4.0 and .NET 11
+
+The build project of a solution runs on ModularPipelines 4.0 and targets .NET 11.
+The build accepts the command-line options of ModularPipelines next to its commands: `compile`, `pack`, `test`, and `publish`.
+The new `compile` command compiles the solution for every Revit version, as in `dotnet run -- compile --dry-run`.
+
+#### Preview a release without running it
+
+`--dry-run` prints the steps in the order they run, the reason a step is skipped, and an estimate of its duration.
+No step runs, and no release is created:
+
+```shell
+dotnet run -- pack publish --dry-run
+```
+
+#### Run a single step
+
+`--module` runs one step and the steps it depends on.
+The following command builds the bundle and skips the installer:
+
+```shell
+dotnet run -- pack --module CreateBundleModule
+```
+
+`--list-modules` lists the steps of the arguments with their dependencies:
+
+```shell
+dotnet run -- pack --list-modules
+```
+
+#### Export the dependency graph
+
+`--graph` writes the dependency graph of the steps to a Mermaid, DOT, or JSON file:
+
+```shell
+dotnet run -- pack publish --graph mermaid
+```
+
+The ModularPipelines [command line](https://modularpipelines.tomlonghurst.dev/docs/how-to/command-line) page lists the other options, such as `--skip-module`.
+
+### Settings checked at startup
+
+The build checks `build/appsettings.json` when it starts and reports every missing setting before the first step runs.
+Before, an empty upgrade code stopped the installer step after the add-in was compiled for every Revit version:
+
+```text
+OptionsValidationException: UpgradeCode: The UpgradeCode field is required.
+```
+
+A source generator implements the check from the validation attributes of the options class.
+To make a setting required, mark its property with `[Required]`:
+
+```c#
+public sealed class InstallerOptions
+{
+    [Required]
+    public Guid? UpgradeCode { get; set; }
+}
+```
+
+### Build steps grouped by stage
+
+The steps of the build are grouped by the stage of the release they belong to: `Versioning`, `Compilation`, `Testing`, `Packaging`, and `Publishing` in `build/Pipeline`.
+An options class is in the folder of the steps that read it: `InstallerOptions` is in `Packaging` with `CreateInstallerModule`.
+
+#### WiX commands
+
+The build calls WiX through `context.Tools.Wix`, the same way it calls `dotnet` and `git`.
+Each command has an options record in `build/Wix`, in a folder per command group:
+
+```c#
+await context.Tools.Wix.Extension.AddAsync(new WixExtensionAddOptions("WixToolset.UI.wixext/7.0.1")
+{
+    Global = true
+}, cancellationToken: cancellationToken);
+```
+
+To run another WiX command, add its options record and a method to its command group.
+
+### Installer
+
+#### Typed manifest
+
+The build and the installer exchange the release data through one class.
+The installer project declares `InstallerManifest` in `installer/Manifest`, and the build project compiles the same files.
+A source-generated JSON context writes the manifest in the build and reads it in the installer:
+
+```c#
+public sealed record InstallerManifest
+{
+    public required string ProductName { get; init; }
+    public required Version ProductVersion { get; init; }
+    public required Guid UpgradeCode { get; init; }
+    public required string ReleaseVersion { get; init; }
+    public required string OutputDirectory { get; init; }
+    public required IReadOnlyList<AddinContent> Content { get; init; }
+}
+```
+
+A renamed or missing property is a compile error in the build project, not a failure of the installer step at the end of `pack`.
+To pass another value to the installer, such as the publisher name, add a `required` property to the manifest: the build doesn't compile until `CreateInstallerModule` sets it.
+
+#### A package per installation scope
+
+`installer/Layouts` defines the package of an installation scope, the feature of every Revit version, and the cabinets.
+`Program.cs` reads the manifest and builds a package for each scope:
+
+```c#
+var manifest = manifestFile.ReadJson(InstallerJsonContext.Default.InstallerManifest);
+
+foreach (var scope in scopes)
+{
+    var package = manifest.CreatePackageLayout(contentRoot, scope);
+    package.BuildMsi();
+}
+```
+
+- The per-user and the per-machine packages are separate WixSharp projects. A setting of one package doesn't reach the other.
+- The cabinets are declared in `Project.Media`. The installer doesn't edit the generated WiX source.
+
+### Other changes
+
+- The clean step is created only in a solution with the installer or the bundle, where `pack` runs it.
+- `.gitignore` excludes `.modularpipelines`, the folder where ModularPipelines saves a report of every run.
+- The readme of the solution lists .NET 11 as a prerequisite and the commands of the build for the options of the solution.
+- Updated dependencies.
+
+## SDK
+
+- Added .NET 11 support for MSBuild.
+- Updated dependencies.
+
+## Breaking changes
+
+- The build and installer projects require the .NET 11 SDK.
+- The build compiles the solution with the `compile` command. `dotnet run` without a command stops with `No modules are registered`.
+- The build steps use the ModularPipelines 4.0 API.
+- The `build/Modules` and `build/Options` folders are replaced by `build/Pipeline`, and the `Build.Modules` and `Build.Options` namespaces by `Build.Pipeline.*`.
+- The options of the build are classes that an `[OptionsValidator]` validator checks at startup. `ValidateDataAnnotations()` is removed.
+- The installer reads the manifest with `ReadJson()` and `InstallerJsonContext`. `ManifestReader` is removed.
+
+## Migration guide
+
+### Solution
+
+1. Install the .NET 11 SDK, and set the SDK version in `global.json` to `11.0.100`.
+2. Create a temporary solution with version 7.0.0 and the same options.
+   Replace the `build` and `installer` folders of your solution with its folders, and keep your `build/appsettings.json`: it stores the upgrade code of the installer.
+3. Add `/.modularpipelines/` to `.gitignore`.
+4. Run the build with the `compile` command in `.github/workflows/Compile.yml` and in the `.run/Compile.run.xml` configuration of Rider:
+
+   ```yaml
+   # Before
+   run: dotnet run -c Release
+
+   # After
+   run: dotnet run -c Release -- compile
+   ```
+
+5. Move every step of your own to a folder of `build/Pipeline`, and register it on the builder:
+
+   ```c#
+   // Before
+   builder.Services.AddModule<SignInstallerModule>();
+
+   await builder.Build().RunAsync();
+
+   // After
+   builder.AddModule<SignInstallerModule>();
+
+   await builder.RunAsync();
+   ```
+
+6. Update the step to the ModularPipelines 4.0 API. The ModularPipelines [migration guide](https://modularpipelines.tomlonghurst.dev/docs/migrating-to-v4) lists every change:
+
+   ```c#
+   // Before
+   protected override async Task ExecuteModuleAsync(IModuleContext context, CancellationToken cancellationToken)
+   {
+       var versioningResult = await context.GetModule<ResolveVersioningModule>();
+       var versioning = versioningResult.ValueOrDefault!;
+
+       await context.SubModule(configuration, async () => await context.DotNet().Build(new DotNetBuildOptions
+       {
+           Configuration = configuration
+       }, cancellationToken: cancellationToken));
+   }
+
+   // After
+   protected override async Task ExecuteAsync(IModuleContext context, CancellationToken cancellationToken)
+   {
+       var versioningResult = await context.GetModule<ResolveVersioningModule>();
+       var versioning = versioningResult.Value;
+
+       await context.RunSubModuleAsync(configuration, token => context.Tools.DotNet.BuildAsync(new DotNetBuildOptions
+       {
+           Configuration = configuration
+       }, cancellationToken: token), cancellationToken);
+   }
+   ```
+
+7. Turn every options record of your own into a class with `set` properties, add a validator, and validate the options at startup:
+
+   ```c#
+   // Before
+   public sealed record SigningOptions
+   {
+       [Required]
+       public string CertificatePath { get; init; } = null!;
+   }
+
+   builder.Services.AddOptions<SigningOptions>().Bind(builder.Configuration.GetSection("Signing")).ValidateDataAnnotations();
+
+   // After
+   public sealed class SigningOptions
+   {
+       [Required]
+       public string CertificatePath { get; set; } = null!;
+   }
+
+   [OptionsValidator]
+   internal sealed partial class SigningOptionsValidator : IValidateOptions<SigningOptions>;
+
+   builder.Services.AddOptionsWithValidateOnStart<SigningOptions>().Bind(builder.Configuration.GetSection("Signing"));
+   builder.Services.AddSingleton<IValidateOptions<SigningOptions>, SigningOptionsValidator>();
+   ```
+
 # 6.3.2
 
 Repacking fixes for large add-ins on Windows. In existing projects, update the SDK version.

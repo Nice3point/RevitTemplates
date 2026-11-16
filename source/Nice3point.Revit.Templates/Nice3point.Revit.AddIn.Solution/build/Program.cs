@@ -1,48 +1,65 @@
-using Build.Modules;
-using Build.Options;
+using Build.Pipeline;
+using Build.Pipeline.Compilation;
+#if (hasArtifacts)
+using Build.Pipeline.Packaging;
+#endif
+#if (isGitHubCi)
+using Build.Pipeline.Publishing;
+#endif
+#if (includeTests)
+using Build.Pipeline.Testing;
+#endif
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ModularPipelines;
-using ModularPipelines.Extensions;
+#if (hasArtifacts)
+using Microsoft.Extensions.Options;
+#endif
 
-var builder = Pipeline.CreateBuilder();
+var builder = Pipeline.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+#if (hasArtifacts)
+builder.Services.AddOptionsWithValidateOnStart<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName));
+builder.Services.AddSingleton<IValidateOptions<BuildOptions>, BuildOptionsValidator>();
+#else
+builder.Services.AddOptions<BuildOptions>().Bind(builder.Configuration.GetSection(BuildOptions.ConfigurationSectionName));
+#endif
 #if (includeBundle)
-builder.Services.AddOptions<BundleOptions>().Bind(builder.Configuration.GetSection(BundleOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+builder.Services.AddOptionsWithValidateOnStart<BundleOptions>().Bind(builder.Configuration.GetSection(BundleOptions.ConfigurationSectionName));
+builder.Services.AddSingleton<IValidateOptions<BundleOptions>, BundleOptionsValidator>();
 #endif
 #if (includeInstaller)
-builder.Services.AddOptions<InstallerOptions>().Bind(builder.Configuration.GetSection(InstallerOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+builder.Services.AddOptionsWithValidateOnStart<InstallerOptions>().Bind(builder.Configuration.GetSection(InstallerOptions.ConfigurationSectionName));
+builder.Services.AddSingleton<IValidateOptions<InstallerOptions>, InstallerOptionsValidator>();
 #endif
 #if (isGitHubCi)
-builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName)).ValidateDataAnnotations();
+builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName));
 #endif
 
-if (args.Length == 0)
+if (args.Contains("compile"))
 {
-    builder.Services.AddModule<CompileProjectModule>();
+    builder.AddModule<CompileProjectModule>();
 }
 #if (includeTests)
 
 if (args.Contains("test"))
 {
-    builder.Services.AddModule<TestProjectModule>();
+    builder.AddModule<TestProjectModule>();
 }
 #endif
 #if (hasArtifacts)
 
 if (args.Contains("pack"))
 {
-    builder.Services.AddModule<CleanProjectModule>();
+    builder.AddModule<CleanProjectModule>();
 #if (includeBundle)
-    builder.Services.AddModule<CreateBundleModule>();
+    builder.AddModule<CreateBundleModule>();
 #endif
 #if (includeInstaller)
-    builder.Services.AddModule<CreateInstallerModule>();
+    builder.AddModule<CreateInstallerModule>();
 #endif
 }
 #endif
@@ -50,8 +67,8 @@ if (args.Contains("pack"))
 
 if (args.Contains("publish"))
 {
-    builder.Services.AddModule<PublishGithubModule>();
+    builder.AddModule<PublishGithubModule>();
 }
 #endif
 
-await builder.Build().RunAsync();
+await builder.RunAsync();

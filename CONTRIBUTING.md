@@ -21,6 +21,7 @@ Thanks for taking the time to contribute. This guide covers issues and pull requ
 
 ## Development
 
-Run `dotnet run` from the `build` directory to compile. The SDK version is pinned in `global.json`.
+Run `dotnet run -- compile` from the `build` directory to compile the solution, and `dotnet run -- pack test` to pack the templates and compile every option set of the template matrix.
+The SDK version is pinned in `global.json`.
 
 Please keep issues and pull requests respectful and on topic.

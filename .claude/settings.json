@@ -15,10 +15,5 @@
       },
       "autoUpdate": true
     }
-  },
-  "enabledPlugins": {
-    "dotnet@revit-skills": true,
-    "dotnet-template-engine@dotnet-agent-skills": true,
-    "dotnet-msbuild@dotnet-agent-skills": true
   }
 }

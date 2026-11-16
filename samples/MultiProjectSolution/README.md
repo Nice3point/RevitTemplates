@@ -10,7 +10,7 @@ Autodesk Revit plugin project organized into a single solution with configuratio
 * [Solution Structure](#solution-structure)
 * [Project Structure](#project-structure)
 * [Building](#building)
-    * [Building the MSI installer and the Autodesk bundle on local machine](#building-the-msi-installer-and-the-autodesk-bundle-on-local-machine)
+    * [Building from the command line](#building-from-the-command-line)
 * [Publishing Releases](#publishing-releases)
     * [Creating a new Release from the JetBrains Rider](#creating-a-new-release-from-the-jetbrains-rider)
     * [Creating a new Release from the Terminal](#creating-a-new-release-from-the-terminal)
@@ -31,7 +31,7 @@ Before you can build this project, you need to install .NET and IDE.
 If you haven't already installed these, you can do so by visiting the following:
 
 - [.NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
-- [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet)
+- [.NET 11](https://dotnet.microsoft.com/en-us/download/dotnet)
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
 ## Solution Structure
@@ -41,6 +41,7 @@ If you haven't already installed these, you can do so by visiting the following:
 | build     | ModularPipelines build system. Used to automate project builds             |
 | installer | Add-in installer, called by the ModularPipelines build                     |
 | source    | Project source code folder. Contains all solution projects                 |
+| tests     | Unit test projects, run by the `test` command of the build                 |
 | output    | Folder of generated files by the build system, such as bundles, installers |
 
 ## Project Structure
@@ -60,7 +61,7 @@ We recommend JetBrains Rider as preferred IDE, since it has outstanding .NET sup
 If you don't have Rider installed, you can download it from [here](https://www.jetbrains.com/rider/).
 
 1. Open JetBrains Rider
-2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R27` or `Debug.R27`. Suffix `R27` means compiling for the Revit 2027.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 4. `Debug` button will start Revit add-in in the debug mode.
 
@@ -69,29 +70,31 @@ If you don't have Rider installed, you can download it from [here](https://www.j
 Also, you can use Visual Studio. If you don't have Visual Studio installed, download it from [here](https://visualstudio.microsoft.com/downloads/).
 
 1. Open Visual Studio
-2. In the `Solutions Configuration` drop-down menu, select `Release.R25` or `Debug.R25`. Suffix `R25` means compiling for the Revit 2025.
+2. In the `Solutions Configuration` drop-down menu, select `Release.R27` or `Debug.R27`. Suffix `R27` means compiling for the Revit 2027.
 3. After the solution loads, you can build it by clicking on `Build -> Build Solution`.
 
-### Building the MSI installer and the Autodesk bundle on local machine
+### Building from the command line
 
-To build the project for all versions, create the installer and bundle, this project uses [ModularPipelines](https://github.com/thomhurst/ModularPipelines)
+The `build` project builds the solution for every Revit version with [ModularPipelines](https://github.com/thomhurst/ModularPipelines).
+Run it from the `build` folder with a command:
 
-To execute your ModularPipelines build locally, you can follow these steps:
+```shell
+cd build
+dotnet run -- compile
+```
 
-1. **Navigate to your project directory**. Open a terminal / command prompt and navigate to your project's root directory.
-2. **Run the build**. Once you have navigated to your project's root directory, you can run the ModularPipelines build by calling:
+The build has the following commands:
 
-   Compile:
-   ```shell
-   cd build; dotnet run
-   ```
+| Command   | Result                                                                    |
+|-----------|---------------------------------------------------------------------------|
+| `compile` | Compiles the solution for every Revit version.                            |
+| `test`    | Runs the tests for every Revit version.                                   |
+| `pack`    | Creates the MSI installers and the Autodesk bundle in the `output` folder. |
 
-   Create installer and bundle:
-   ```shell
-   cd build; dotnet run -- pack
-   ```
+To print the steps of a command without running them, add `--dry-run`, for example `dotnet run -- compile --dry-run`.
+The ModularPipelines [command line](https://modularpipelines.tomlonghurst.dev/docs/how-to/command-line) page lists the other options.
 
-   This command will execute the ModularPipelines build defined in your project.
+In Rider, the `Compile` and `Pack` run configurations run the `compile` and `pack` commands without the terminal.
 
 ## Publishing Releases
 
@@ -137,7 +140,7 @@ To update the changelog manually:
 1. Navigate to the solution root.
 2. Open the file **CHANGELOG.md**.
 3. Add a section for your version. The version separator is the `#` symbol.
-4. Specify the release number e.g. `# 1.0.0` or `# 25.01.01 v1.0.0`, the format does not matter, the main thing is that it contains the version.
+4. Specify the release number, for example `# 1.0.0` or `# 1.0.0 (2025-01-01)`. The heading must contain the version as a separate word: `# v1.0.0` doesn't match the version `1.0.0`.
 5. In the lines below, write a changelog for your version, style to your taste.
 6. Commit your changes.
 
@@ -200,20 +203,20 @@ That way, you can check if the plugin is compatible with different API versions 
 To write code compatible with different Revit versions, use the directives **#if**, **#elif**, **#else**, **#endif**.
 
 ```c#
-#if REVIT2026
+#if REVIT2027
     //Your code here
 #endif
 ```
 
 To target a specific Revit version, set the solution configuration in your IDE interface to match that version.
-E.g., select the `Debug.R26` configuration for the Revit 2026 API.
+E.g., select the `Debug.R27` configuration for the Revit 2027 API.
 
-The project has available constants such as `REVIT2026`, `REVIT2026_OR_GREATER`.
+The project has available constants such as `REVIT2027`, `REVIT2027_OR_GREATER`.
 Create conditions, experiment to achieve the desired result.
 
 > [!NOTE]
 > For generating directives, a Revit MSBuild SDK is used.
-> You can find more detailed documentation about it here: [Revit MSBuild SDK](https://github.com/Nice3point/Revit.Build.Tasks)
+> You can find more detailed documentation about it here: [Revit MSBuild SDK](https://github.com/Nice3point/RevitTemplates/wiki/MsBuild-Sdk)
 
 To support the latest APIs in legacy Revit versions:
 
@@ -225,7 +228,7 @@ To support the latest APIs in legacy Revit versions:
 #endif
 ```
 
-`#if REVIT2021_OR_GREATER` сompiles a block of code for Revit versions 21, 22, 23 and greater.
+`#if REVIT2021_OR_GREATER` compiles a block of code for Revit versions 21, 22, 23 and greater.
 
 To support removed APIs in newer versions of Revit, you can invert the constant:
 
@@ -235,7 +238,7 @@ To support removed APIs in newer versions of Revit, you can invert the constant:
 #endif
 ```
 
-`#if !REVIT2023_OR_GREATER` сompiles a block of code for Revit versions 22, 21, 20 and lower.
+`#if !REVIT2023_OR_GREATER` compiles a block of code for Revit versions 22, 21, 20 and lower.
 
 ## Managing Supported Revit Versions
 
@@ -254,16 +257,16 @@ Example:
 
 ```text
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug.R24|Any CPU = Debug.R24|Any CPU
     Debug.R25|Any CPU = Debug.R25|Any CPU
     Debug.R26|Any CPU = Debug.R26|Any CPU
-    Release.R24|Any CPU = Release.R24|Any CPU
+    Debug.R27|Any CPU = Debug.R27|Any CPU
     Release.R25|Any CPU = Release.R25|Any CPU
     Release.R26|Any CPU = Release.R26|Any CPU
+    Release.R27|Any CPU = Release.R27|Any CPU
 EndGlobalSection
 ```
 
-For example `Debug.R26` is the Debug configuration for Revit 2026 version.
+For example `Debug.R27` is the Debug configuration for Revit 2027 version.
 
 > [!TIP]
 > If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
@@ -281,8 +284,8 @@ Example:
 
 ```xml
 <PropertyGroup>
-    <Configurations>Debug.R24;Debug.R25;Debug.R26</Configurations>
-    <Configurations>$(Configurations);Release.R24;Release.R25;Release.R26</Configurations>
+    <Configurations>Debug.R25;Debug.R26;Debug.R27</Configurations>
+    <Configurations>$(Configurations);Release.R25;Release.R26;Release.R27</Configurations>
 </PropertyGroup>
 ```
 
@@ -295,7 +298,7 @@ If you need to add support for an unreleased or unsupported version of Revit tha
 
 ```xml
 <PropertyGroup>
-    <TargetFramework Condition="$(RevitVersion) >= '2025'">net8.0-windows7.0</TargetFramework>
+    <TargetFramework Condition="$(RevitVersion) == '2027'">net10.0-windows7.0</TargetFramework>
 </PropertyGroup>
 ```
 
@@ -306,8 +309,7 @@ To support CI/CD pipelines and build a project for Revit versions not installed 
 > [!NOTE]
 > Revit API dependencies are available in the [Revit.API](https://github.com/Nice3point/RevitApi) repository.
 
-The Nuget package version must include wildcards `Version="$(RevitVersion).*"` to automatically include adding a specific package version, depending on the selected solution
-configuration.
+The Nuget package version must include wildcards `Version="$(RevitVersion).*"` to automatically include adding a specific package version, depending on the selected solution configuration.
 
 ```xml
 <ItemGroup>

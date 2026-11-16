@@ -103,7 +103,10 @@
         {
           "condition": "!hasArtifacts",
           "exclude": [
-            ".run/Pack.run.xml"
+            ".run/Pack.run.xml",
+            "build/Pipeline/BuildOptionsValidator.cs",
+            "build/Pipeline/Compilation/CleanProjectModule.cs",
+            "build/Pipeline/Packaging/**"
           ]
         },
         {
@@ -117,32 +120,32 @@
           "exclude": [
             ".github/**",
             "CHANGELOG.md",
-            "build/Modules/GenerateChangelogModule.cs",
-            "build/Modules/GenerateGitHubChangelogModule.cs",
-            "build/Modules/PublishGithubModule.cs",
-            "build/Options/PublishOptions.cs"
+            "build/Pipeline/Publishing/**"
           ]
         },
         {
           "condition": "!includeInstaller",
           "exclude": [
             "installer/**",
-            "build/Modules/CreateInstallerModule.cs",
-            "build/Options/InstallerOptions.cs"
+            "build/Pipeline/Packaging/CreateInstallerModule.cs",
+            "build/Pipeline/Packaging/InstallerOptions.cs",
+            "build/Pipeline/Packaging/InstallerOptionsValidator.cs",
+            "build/Wix/**"
           ]
         },
         {
           "condition": "!includeBundle",
           "exclude": [
-            "build/Modules/CreateBundleModule.cs",
-            "build/Options/BundleOptions.cs"
+            "build/Pipeline/Packaging/CreateBundleModule.cs",
+            "build/Pipeline/Packaging/BundleOptions.cs",
+            "build/Pipeline/Packaging/BundleOptionsValidator.cs"
           ]
         },
         {
           "condition": "!includeTests",
           "exclude": [
             "tests/**",
-            "build/Modules/TestProjectModule.cs"
+            "build/Pipeline/Testing/**"
           ]
         }
       ]

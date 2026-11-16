@@ -41,7 +41,7 @@ To support the latest APIs in legacy Revit versions:
 #endif
 ```
 
-`#if REVIT2021_OR_GREATER` сompiles a block of code for Revit versions 21, 22, 23 and greater.
+`#if REVIT2021_OR_GREATER` compiles a block of code for Revit versions 21, 22, 23 and greater.
 
 To support removed APIs in newer versions of Revit, you can invert the constant:
 
@@ -51,7 +51,7 @@ To support removed APIs in newer versions of Revit, you can invert the constant:
 #endif
 ```
 
-`#if !REVIT2023_OR_GREATER` сompiles a block of code for Revit versions 22, 21, 20 and lower.
+`#if !REVIT2023_OR_GREATER` compiles a block of code for Revit versions 22, 21, 20 and lower.
 
 ## Managing Supported Revit Versions
 

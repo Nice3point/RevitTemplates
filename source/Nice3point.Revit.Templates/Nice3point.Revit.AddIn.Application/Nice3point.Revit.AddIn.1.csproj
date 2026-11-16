@@ -28,12 +28,12 @@
 <!--#if (diContainer)-->
 
         <!-- Application Hosting -->
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.15"/>
 <!--#endif-->
 <!--#if (diHosting)-->
 
         <!-- Application Hosting -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.15"/>
 <!--#endif-->
 <!--#if (useDi)-->
 
@@ -43,7 +43,7 @@
 
         <!-- Development Dependencies -->
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" PrivateAssets="all"/>
-        <PackageReference Include="Polyfill" Version="11.4.3" PrivateAssets="all"/>
+        <PackageReference Include="Polyfill" Version="11.4.5" PrivateAssets="all"/>
     </ItemGroup>
 
 <!--#if (isApplicationAddin)-->
