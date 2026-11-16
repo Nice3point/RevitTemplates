@@ -38,7 +38,7 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
             VersionPrefix = versionParts[0],
             VersionSuffix = versionParts.Length > 1 ? versionParts[1] : null,
             IsPrerelease = versionParts.Length > 1,
-            PreviousVersion = await FetchPreviousVersionAsync(context, cancellationToken)
+            PreviousRelease = await FetchPreviousReleaseAsync(context, cancellationToken)
         };
     }
 
@@ -55,14 +55,14 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
             VersionPrefix = gitVersioning.MajorMinorPatch!,
             VersionSuffix = gitVersioning.PreReleaseTag,
             IsPrerelease = !string.IsNullOrEmpty(gitVersioning.PreReleaseLabel),
-            PreviousVersion = await FetchPreviousVersionAsync(context, cancellationToken)
+            PreviousRelease = await FetchPreviousReleaseAsync(context, cancellationToken)
         };
     }
 
     /// <summary>
-    ///     Gets the tag of the previous release, or the SHA of the root commit if no earlier commit has a tag.
+    ///     Gets the tag of the previous release, or the root commit if no earlier commit has a tag.
     /// </summary>
-    private static async Task<string> FetchPreviousVersionAsync(IModuleContext context, CancellationToken cancellationToken)
+    private static async Task<PreviousRelease> FetchPreviousReleaseAsync(IModuleContext context, CancellationToken cancellationToken)
     {
         var describeResult = await context.Tools.Git.Commands.History.DescribeAsync(
             new GitDescribeOptions
@@ -80,7 +80,7 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
         var previousTag = describeResult.StandardOutput.Trim();
         if (!string.IsNullOrWhiteSpace(previousTag))
         {
-            return previousTag;
+            return new ReleaseTag(previousTag);
         }
 
         var revisionResult = await context.Tools.Git.Commands.History.RevListAsync(
@@ -97,6 +97,6 @@ public sealed class ResolveVersioningModule(IOptions<PublishOptions> publishOpti
                 Logging = CommandLoggingOptions.Silent
             }, cancellationToken);
 
-        return revisionResult.StandardOutput.Trim();
+        return new RootCommit(revisionResult.StandardOutput.Trim());
     }
 }

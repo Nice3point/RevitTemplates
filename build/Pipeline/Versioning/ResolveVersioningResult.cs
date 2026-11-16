@@ -32,8 +32,7 @@ public sealed record ResolveVersioningResult
     public required bool IsPrerelease { get; init; }
 
     /// <summary>
-    ///     Gets or initializes the tag of the previous release, or the SHA of the root commit if no earlier commit has a tag.
+    ///     Gets or initializes the release the version is compared with: the tag of the previous release, or the root commit if no earlier commit has a tag.
     /// </summary>
-    /// <example><c>6.2.3</c> or <c>2f5c3e1a9b7d4c6e8f0a1b2c3d4e5f6a7b8c9d0e</c>.</example>
-    public required string PreviousVersion { get; init; }
+    public required PreviousRelease PreviousRelease { get; init; }
 }

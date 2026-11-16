@@ -124,14 +124,16 @@ public sealed partial class GenerateChangelogModule(IOptions<PublishOptions> pub
     private static async Task<string> GenerateReleaseNotesAsync(IModuleContext context, ResolveVersioningResult versioning)
     {
         var repositoryId = long.Parse(context.Tools.GitHub.EnvironmentVariables.RepositoryId!);
-
-        var previousVersion = versioning.PreviousVersion;
-        var isHashedVersion = previousVersion.Length >= 40 && previousVersion.All(character => char.IsDigit(character) || character is >= 'a' and <= 'f');
+        var previousTagName = versioning.PreviousRelease switch
+        {
+            ReleaseTag tag => tag.Name,
+            RootCommit => null
+        };
 
         var releaseNotes = await context.Tools.GitHub.Client.Repository.Release.GenerateReleaseNotes(repositoryId,
             new GenerateReleaseNotesRequest(versioning.Version)
             {
-                PreviousTagName = isHashedVersion ? null : previousVersion
+                PreviousTagName = previousTagName
             });
 
         return releaseNotes.Body;

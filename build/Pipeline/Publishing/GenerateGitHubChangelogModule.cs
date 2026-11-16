@@ -33,7 +33,13 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
         }
 
         var repositoryInfo = context.Tools.GitHub.RepositoryInfo;
-        var url = $"https://github.com/{repositoryInfo.Identifier}/compare/{versioning.PreviousVersion}...{versioning.Version}";
+        var previousRevision = versioning.PreviousRelease switch
+        {
+            ReleaseTag tag => tag.Name,
+            RootCommit commit => commit.Sha
+        };
+
+        var url = $"https://github.com/{repositoryInfo.Identifier}/compare/{previousRevision}...{versioning.Version}";
 
         return $"{changelog}{Environment.NewLine}{Environment.NewLine}**Full changelog**: {url}";
     }

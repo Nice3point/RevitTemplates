@@ -32,11 +32,17 @@ public sealed class GenerateGitHubChangelogModule : Module<string>
 
         if (!changelog.Contains("Full changelog", StringComparison.OrdinalIgnoreCase))
         {
+            var previousRevision = versioning.PreviousRelease switch
+            {
+                ReleaseTag tag => tag.Name,
+                RootCommit commit => commit.Sha
+            };
+
             changelogBuilder ??= new StringBuilder(changelog);
             changelogBuilder.AppendLine()
                 .AppendLine()
                 .Append("**Full changelog**: ")
-                .AppendLine($"https://github.com/{repositoryInfo.Identifier}/compare/{versioning.PreviousVersion}...{versioning.Version}");
+                .AppendLine($"https://github.com/{repositoryInfo.Identifier}/compare/{previousRevision}...{versioning.Version}");
         }
 
         return changelogBuilder?.ToString() ?? changelog;
