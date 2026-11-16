@@ -2,7 +2,7 @@
 
 Version 7.0 brings ModularPipelines 4.0 and .NET 11 to the build of the Solution template: preview a release before a single step runs, build only the bundle, or export the dependency graph, all from the command line.
 A missing setting stops the build the moment it starts, long before the add-in is compiled for every Revit version.
-To update an existing solution, follow the [migration guide](#migration-guide).
+In existing projects, update the SDK version, and follow the [migration guide](#migration-guide) to update a solution.
 
 ## Templates
 
@@ -131,6 +131,11 @@ foreach (var scope in scopes)
 - The clean step is created only in a solution with the installer or the bundle, where `pack` runs it.
 - `.gitignore` excludes `.modularpipelines`, the folder where ModularPipelines saves a report of every run.
 - The readme of the solution lists .NET 11 as a prerequisite and the commands of the build for the options of the solution.
+- Updated dependencies.
+
+## SDK
+
+- Added .NET 11 support for MSBuild.
 - Updated dependencies.
 
 ## Breaking changes
