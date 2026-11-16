@@ -39,7 +39,7 @@ builder.Services.AddSingleton<IValidateOptions<InstallerOptions>, InstallerOptio
 builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName));
 #endif
 
-if (args.Length == 0)
+if (args.Length == 0 || args.Contains("compile"))
 {
     builder.AddModule<CompileProjectModule>();
 }

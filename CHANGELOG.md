@@ -9,7 +9,8 @@ To update an existing solution, follow the [migration guide](#migration-guide).
 ### ModularPipelines 4.0 and .NET 11
 
 The build project of a solution runs on ModularPipelines 4.0 and targets .NET 11.
-The build accepts the command-line options of ModularPipelines next to `pack`, `test`, and `publish`.
+The build accepts the command-line options of ModularPipelines next to its commands: `compile`, `pack`, `test`, and `publish`.
+`compile` is the command that `dotnet run` runs without arguments, and it names the compilation next to an option, as in `dotnet run -- compile --dry-run`.
 
 #### Preview a release without running it
 
