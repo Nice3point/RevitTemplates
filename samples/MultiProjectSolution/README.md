@@ -140,7 +140,7 @@ To update the changelog manually:
 1. Navigate to the solution root.
 2. Open the file **CHANGELOG.md**.
 3. Add a section for your version. The version separator is the `#` symbol.
-4. Specify the release number e.g. `# 1.0.0` or `# 25.01.01 v1.0.0`, the format does not matter, the main thing is that it contains the version.
+4. Specify the release number, for example `# 1.0.0` or `# 1.0.0 (2025-01-01)`. The heading must contain the version as a separate word: `# v1.0.0` doesn't match the version `1.0.0`.
 5. In the lines below, write a changelog for your version, style to your taste.
 6. Commit your changes.
 
@@ -228,7 +228,7 @@ To support the latest APIs in legacy Revit versions:
 #endif
 ```
 
-`#if REVIT2021_OR_GREATER` сompiles a block of code for Revit versions 21, 22, 23 and greater.
+`#if REVIT2021_OR_GREATER` compiles a block of code for Revit versions 21, 22, 23 and greater.
 
 To support removed APIs in newer versions of Revit, you can invert the constant:
 
@@ -238,7 +238,7 @@ To support removed APIs in newer versions of Revit, you can invert the constant:
 #endif
 ```
 
-`#if !REVIT2023_OR_GREATER` сompiles a block of code for Revit versions 22, 21, 20 and lower.
+`#if !REVIT2023_OR_GREATER` compiles a block of code for Revit versions 22, 21, 20 and lower.
 
 ## Managing Supported Revit Versions
 
