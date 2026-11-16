@@ -10,7 +10,7 @@ To update an existing solution, follow the [migration guide](#migration-guide).
 
 The build project of a solution runs on ModularPipelines 4.0 and targets .NET 11.
 The build accepts the command-line options of ModularPipelines next to its commands: `compile`, `pack`, `test`, and `publish`.
-`compile` is the command that `dotnet run` runs without arguments, and it names the compilation next to an option, as in `dotnet run -- compile --dry-run`.
+The new `compile` command compiles the solution for every Revit version, as in `dotnet run -- compile --dry-run`.
 
 #### Preview a release without running it
 
@@ -130,12 +130,13 @@ foreach (var scope in scopes)
 
 - The clean step is created only in a solution with the installer or the bundle, where `pack` runs it.
 - `.gitignore` excludes `.modularpipelines`, the folder where ModularPipelines saves a report of every run.
-- The readme of the solution lists .NET 11 as a prerequisite.
+- The readme of the solution lists .NET 11 as a prerequisite and the commands of the build for the options of the solution.
 - Updated dependencies.
 
 ## Breaking changes
 
 - The build and installer projects require the .NET 11 SDK.
+- The build compiles the solution with the `compile` command. `dotnet run` without a command stops with `No modules are registered`.
 - The build steps use the ModularPipelines 4.0 API.
 - The `build/Modules` and `build/Options` folders are replaced by `build/Pipeline`, and the `Build.Modules` and `Build.Options` namespaces by `Build.Pipeline.*`.
 - The options of the build are classes that an `[OptionsValidator]` validator checks at startup. `ValidateDataAnnotations()` is removed.
@@ -149,7 +150,17 @@ foreach (var scope in scopes)
 2. Create a temporary solution with version 7.0.0 and the same options.
    Replace the `build` and `installer` folders of your solution with its folders, and keep your `build/appsettings.json`: it stores the upgrade code of the installer.
 3. Add `/.modularpipelines/` to `.gitignore`.
-4. Move every step of your own to a folder of `build/Pipeline`, and register it on the builder:
+4. Run the build with the `compile` command in `.github/workflows/Compile.yml` and in the `.run/Compile.run.xml` configuration of Rider:
+
+   ```yaml
+   # Before
+   run: dotnet run -c Release
+
+   # After
+   run: dotnet run -c Release -- compile
+   ```
+
+5. Move every step of your own to a folder of `build/Pipeline`, and register it on the builder:
 
    ```c#
    // Before
@@ -163,7 +174,7 @@ foreach (var scope in scopes)
    await builder.RunAsync();
    ```
 
-5. Update the step to the ModularPipelines 4.0 API. The ModularPipelines [migration guide](https://modularpipelines.tomlonghurst.dev/docs/migrating-to-v4) lists every change:
+6. Update the step to the ModularPipelines 4.0 API. The ModularPipelines [migration guide](https://modularpipelines.tomlonghurst.dev/docs/migrating-to-v4) lists every change:
 
    ```c#
    // Before
@@ -191,7 +202,7 @@ foreach (var scope in scopes)
    }
    ```
 
-6. Turn every options record of your own into a class with `set` properties, add a validator, and validate the options at startup:
+7. Turn every options record of your own into a class with `set` properties, add a validator, and validate the options at startup:
 
    ```c#
    // Before

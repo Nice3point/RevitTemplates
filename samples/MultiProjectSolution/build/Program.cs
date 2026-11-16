@@ -21,7 +21,7 @@ builder.Services.AddOptionsWithValidateOnStart<InstallerOptions>().Bind(builder.
 builder.Services.AddSingleton<IValidateOptions<InstallerOptions>, InstallerOptionsValidator>();
 builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName));
 
-if (args.Length == 0 || args.Contains("compile"))
+if (args.Contains("compile"))
 {
     builder.AddModule<CompileProjectModule>();
 }

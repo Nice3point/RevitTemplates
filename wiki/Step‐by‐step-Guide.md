@@ -148,15 +148,21 @@ Before running the build system, you must initialize a Git repository and make t
    git commit -m "Initial commit"
    ```
 3. Open the **README.md** file in your solution for instructions on building the installer, including publishing to GitHub.
-4. Run the following command:
+4. Run the following command to compile the solution for every Revit version:
    ```shell
-   cd build; dotnet run
+   cd build; dotnet run -- compile
    ```
    or alternatively, you can use the **Run configurations** in Rider to start the build process without using the terminal.
 
 ### Building the Installer
 
 The build system is based on a console application and does not require the installation of additional tools. You just need to have the .NET SDK installed on your computer.
+
+To build the installer, run the `pack` command:
+
+```shell
+cd build; dotnet run -- pack
+```
 
 ![image](https://github.com/user-attachments/assets/77a3a965-68cf-437b-9cad-9e8e03a6b14c)
 

@@ -21,7 +21,7 @@ builder.Services.AddOptionsWithValidateOnStart<NuGetOptions>().Bind(builder.Conf
 builder.Services.AddSingleton<IValidateOptions<NuGetOptions>, NuGetOptionsValidator>();
 builder.Services.AddOptions<PublishOptions>().Bind(builder.Configuration.GetSection(PublishOptions.ConfigurationSectionName));
 
-if (args.Length == 0 || args.Contains("compile"))
+if (args.Contains("compile"))
 {
     builder.AddModule<CompileProjectModule>();
 }
